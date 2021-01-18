@@ -1,5 +1,7 @@
 .cache
 .idea
 dist
+legeerklaering-saerlige-smittevernhensyn.iml
+lsp
 node_modules
 .DS_Store

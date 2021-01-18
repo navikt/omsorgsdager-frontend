@@ -4,7 +4,6 @@ on:
         paths-ignore:
             - '**.md'
             - '.gitignore'
-            - '.prettierrc'
         branches:
             - main
 env:
