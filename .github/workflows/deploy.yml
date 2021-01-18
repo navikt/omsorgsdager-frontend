@@ -33,14 +33,22 @@ jobs:
               run: npm run build
             - name: Sjekk om bygg finnes
               run: |
-                ls
+                echo
                 if [ ! -d "build" ]; then
                   echo "Build folder does not exist, aborting"
                   exit 1
                 fi
             - name: Sette versjon
+              if: contains(github.ref, 'main')
               run: |
+                  echo "Version från package.json"
                   echo "VERSION=$(npm run version --silent)" >> $GITHUB_ENV
+            - name: Sette versjon
+              if: contains(github.ref, 'refs/tags/')
+              run: |
+                echo "Version från tag"
+                echo ${GITHUB_REF:11}
+                echo "VERSION=$(npm run version --silent)" >> $GITHUB_ENV
             - name: Sjekke om tag fins fra før
               run: |
                   if git rev-parse "$VERSION" >/dev/null 2>&1; then
