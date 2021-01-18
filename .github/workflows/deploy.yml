@@ -9,7 +9,7 @@ on:
             - main
 env:
     IMAGE_BASE: docker.pkg.github.com/${{ github.repository }}/legeerklaering-saerlige-smittevernhensyn-frontend
-    CLUSTER: dev-fss
+    CLUSTER: dev-gcp
     NAMESPACE: default
 jobs:
     deploy-docker-image:
