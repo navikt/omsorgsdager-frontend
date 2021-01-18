@@ -39,7 +39,7 @@ jobs:
                     exit 1
                   fi
             - name: Sjekk om bygg finnes
-              run: |  
+              run: |
                   ls
                   if [ ! -d "build" ]; then
                     echo "Build folder with name $VERSION does not exist, aborting"
