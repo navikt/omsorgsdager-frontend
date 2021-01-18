@@ -27,6 +27,8 @@ jobs:
               run: npm install
             - name: Kjøre enhetstester
               run: npm test
+            - name: Skape build
+              run: npm run build
             - name: Sette versjon
               run: |
                   echo "VERSION=$(npm run version --silent)" >> $GITHUB_ENV
@@ -37,8 +39,9 @@ jobs:
                     exit 1
                   fi
             - name: Sjekk om bygg finnes
-              run: |
-                  if [ ! -d "build/$VERSION" ]; then
+              run: |  
+                  ls
+                  if [ ! -d "build" ]; then
                     echo "Build folder with name $VERSION does not exist, aborting"
                     exit 1
                   fi
