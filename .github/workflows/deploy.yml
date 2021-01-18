@@ -49,8 +49,9 @@ jobs:
                 echo VERSION=${GITHUB_REF:10}
                 echo "VERSION=${GITHUB_REF:10}" >> $GITHUB_ENV
             - name: Sjekke om tag finnes fra før
+              if: !contains(github.ref, 'refs/tags/')
               run: |
-                  if [[git rev-parse "$VERSION" >/dev/null 2>&1 && !contains(github.ref, 'refs/tags/')]]; then
+                  if git rev-parse "$VERSION" >/dev/null 2>&1; then
                     echo "Tag $VERSION already exists, aborting"
                     exit 1
                   fi
