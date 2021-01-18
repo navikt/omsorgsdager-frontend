@@ -1,6 +1,6 @@
 {
     "name": "legeerklaering-saerlige-smittevernhensyn-frontend",
-    "version": "1.4.7",
+    "version": "1.5.4",
     "main": "index.js",
     "scripts": {
         "test": "jest",
