@@ -6,6 +6,8 @@ on:
             - '.gitignore'
         branches:
             - main
+        tags:
+            - '*'
 env:
     IMAGE_BASE: docker.pkg.github.com/${{ github.repository }}/legeerklaering-saerlige-smittevernhensyn-frontend
     CLUSTER: dev-gcp
