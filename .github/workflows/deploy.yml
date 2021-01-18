@@ -30,12 +30,12 @@ jobs:
             - name: Skape build
               run: npm run build
             - name: Sjekk om bygg finnes
-                run: |
-                  ls
-                  if [ ! -d "build" ]; then
-                    echo "Build folder does not exist, aborting"
-                    exit 1
-                  fi
+              run: |
+                ls
+                if [ ! -d "build" ]; then
+                  echo "Build folder does not exist, aborting"
+                  exit 1
+                fi
             - name: Sette versjon
               run: |
                   echo "VERSION=$(npm run version --silent)" >> $GITHUB_ENV
