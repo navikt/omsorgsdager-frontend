@@ -29,6 +29,13 @@ jobs:
               run: npm test
             - name: Skape build
               run: npm run build
+            - name: Sjekk om bygg finnes
+                run: |
+                  ls
+                  if [ ! -d "build" ]; then
+                    echo "Build folder does not exist, aborting"
+                    exit 1
+                  fi
             - name: Sette versjon
               run: |
                   echo "VERSION=$(npm run version --silent)" >> $GITHUB_ENV
@@ -36,13 +43,6 @@ jobs:
               run: |
                   if git rev-parse "$VERSION" >/dev/null 2>&1; then
                     echo "Tag $VERSION already exists, aborting"
-                    exit 1
-                  fi
-            - name: Sjekk om bygg finnes
-              run: |
-                  ls
-                  if [ ! -d "build" ]; then
-                    echo "Build folder with name $VERSION does not exist, aborting"
                     exit 1
                   fi
             - name: Sette miljøvariabler
