@@ -38,18 +38,18 @@ jobs:
                   echo "Build folder does not exist, aborting"
                   exit 1
                 fi
-            - name: Sette versjon
+            - name: Sette versjon fra npm
               if: contains(github.ref, 'main')
               run: |
                   echo "Version från package.json"
                   echo "VERSION=$(npm run version --silent)" >> $GITHUB_ENV
-            - name: Sette versjon
+            - name: Sette versjon fra tag
               if: contains(github.ref, 'refs/tags/')
               run: |
                 echo "Version från tag"
-                echo ${GITHUB_REF:11}
-                echo "VERSION=$(npm run version --silent)" >> $GITHUB_ENV
-            - name: Sjekke om tag fins fra før
+                echo ${GITHUB_REF:10}
+                echo "VERSION=$(${GITHUB_REF:10})" >> $GITHUB_ENV
+            - name: Sjekke om tag finnes fra før
               run: |
                   if git rev-parse "$VERSION" >/dev/null 2>&1; then
                     echo "Tag $VERSION already exists, aborting"
