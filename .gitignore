@@ -1,7 +1,8 @@
 .cache
+.DS_Store
 .idea
+build
 dist
-legeerklaering-saerlige-smittevernhensyn.iml
+*.iml
 lsp
 node_modules
-.DS_Store
