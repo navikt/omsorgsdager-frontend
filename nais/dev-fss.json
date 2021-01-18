@@ -1,6 +1,6 @@
 {
     "app": "legeerklaering-saerlige-smittevernhensyn-frontend",
-    "cluster": "dev-fss",
+    "cluster": "dev-gcp",
     "namespace": "omsorgspenger",
     "team": "omsorgspenger",
     "minReplicas": "1",
