@@ -1,5 +1,8 @@
 FROM node:14-alpine
 
+
+WORKDIR /legeerklaering-saerlige-smittevernhensyn-app
+
 WORKDIR /medisinsk-vilkar-app
 
 COPY build ./build
