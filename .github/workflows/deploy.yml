@@ -46,9 +46,8 @@ jobs:
             - name: Sette versjon fra tag
               if: contains(github.ref, 'refs/tags/')
               run: |
-                echo "Version från tag"
-                echo ${GITHUB_REF:10}
-                echo "VERSION=$(${GITHUB_REF:10})" >> $GITHUB_ENV
+                echo VERSION=${GITHUB_REF:10}
+                echo "VERSION=${GITHUB_REF:10}" >> $GITHUB_ENV
             - name: Sjekke om tag finnes fra før
               run: |
                   if git rev-parse "$VERSION" >/dev/null 2>&1; then
