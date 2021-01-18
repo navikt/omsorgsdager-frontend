@@ -1,0 +1,12 @@
+{
+    "app": "medisinsk-vilkar-frontend",
+    "cluster": "dev-fss",
+    "namespace": "pleiepenger",
+    "team": "pleiepenger",
+    "minReplicas": "1",
+    "maxReplicas": "2",
+    "ingresses": [
+        "https://medisinsk-vilkar-frontend.dev.adeo.no",
+        "https://medisinsk-vilkar-frontend.intern.dev.adeo.no"
+    ]
+}
