@@ -8,8 +8,8 @@ on:
     branches:
       - main
 env:
-  IMAGE_BASE: docker.pkg.github.com/${{ github.repository }}/medisinsk-vilkar-frontend
-  CLUSTER: dev-fss
+  IMAGE_BASE: docker.pkg.github.com/${{ github.repository }}/legeerklaering-saerlige-smittevernhensyn-frontend
+  CLUSTER: dev-gcp
   NAMESPACE: default
 jobs:
   deploy-docker-image:
@@ -81,7 +81,7 @@ jobs:
             ```
             <script
               type="text/javascript"
-              src="https://medisinsk-vilkar-frontend.dev.adeo.no/${{ env.VERSION }}/app.js"
+              src="https://legeerklaering-saerlige-smittevernhensyn-frontend.dev.adeo.no/${{ env.VERSION }}/app.js"
               integrity="sha384-${{ env.JS_HASH }}"
               crossorigin="anonymous"
             ></script>
@@ -90,7 +90,7 @@ jobs:
             ```
             <link
               rel="stylesheet"
-              href="https://medisinsk-vilkar-frontend.dev.adeo.no/${{ env.VERSION }}/styles.css"
+              href="https://legeerklaering-saerlige-smittevernhensyn-frontend.dev.adeo.no/${{ env.VERSION }}/styles.css"
               integrity="sha384-${{ env.CSS_HASH }}"
               crossorigin="anonymous"
             >
