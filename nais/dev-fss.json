@@ -1,12 +1,12 @@
 {
-    "app": "legeerklaering-saerlige-smittevernhensyn-frontend",
+    "app": "omsorgsdager-frontend",
     "cluster": "dev-gcp",
     "namespace": "omsorgspenger",
     "team": "omsorgspenger",
     "minReplicas": "1",
     "maxReplicas": "2",
     "ingresses": [
-            "https://legeerklaering-saerlige-smittevernhensyn-frontend.dev.adeo.no",
-        "https://legeerklaering-saerlige-smittevernhensyn-frontend.intern.dev.adeo.no"
+            "https://omsorgsdager-frontend.dev.adeo.no",
+        "https://omsorgsdager-frontend.intern.dev.adeo.no"
     ]
 }

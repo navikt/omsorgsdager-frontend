@@ -1,6 +1,6 @@
 FROM node:14-alpine
 
-WORKDIR /legeerklaering-saerlige-smittevernhensyn-app
+WORKDIR /omsorgsdager-frontend-app
 
 COPY build ./build
 COPY server.js .
