@@ -62,7 +62,7 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
           RESOURCE: nais/naiserator.yml
-          VARS: nais/dev-fss.json
+          VARS: nais/dev-gcp.json
       - name: Set changelog
         run: |
           text="$(git --no-pager log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h %s")"
@@ -81,7 +81,7 @@ jobs:
             ```
             <script
               type="text/javascript"
-              src="https://omsorgsdager-frontend.dev.adeo.no/${{ env.VERSION }}/app.js"
+              src="https://omsorgsdager-frontend.dev.intern.nav.no/${{ env.VERSION }}/app.js"
               integrity="sha384-${{ env.JS_HASH }}"
               crossorigin="anonymous"
             ></script>
@@ -90,7 +90,7 @@ jobs:
             ```
             <link
               rel="stylesheet"
-              href="https://omsorgsdager-frontend.dev.adeo.no/${{ env.VERSION }}/styles.css"
+              href="https://omsorgsdager-frontend.dev.intern.nav.no/${{ env.VERSION }}/styles.css"
               integrity="sha384-${{ env.CSS_HASH }}"
               crossorigin="anonymous"
             >

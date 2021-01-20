@@ -6,7 +6,6 @@
     "minReplicas": "1",
     "maxReplicas": "2",
     "ingresses": [
-            "https://omsorgsdager-frontend.dev.adeo.no",
-        "https://omsorgsdager-frontend.intern.dev.adeo.no"
+        "https://omsorgsdager-frontend.dev.intern.nav.no"
     ]
 }
