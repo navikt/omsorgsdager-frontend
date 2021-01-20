@@ -1,6 +1,3 @@
-interface ContainerContract {
-    vurdering: string;
-    onVurderingValgt: (vurdering: string) => void;
-}
+interface ContainerContract {}
 
 export default ContainerContract;
