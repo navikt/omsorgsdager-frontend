@@ -22,7 +22,7 @@ const compiler = webpack(webpackConfig);
 const devServer = new WebpackDevServer(compiler, devServerOptions);
 compiler.close(() => console.info('Compiler closed'));
 
-const port = 8080;
+const port = 8088;
 devServer.listen(port, 'localhost', (error) => {
     if (error) {
         return console.error(error);
