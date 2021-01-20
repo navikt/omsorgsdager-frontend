@@ -55,12 +55,12 @@ jobs:
           docker push ${IMAGE}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Deploy til dev-fss
+      - name: Deploy til dev-gcp
         uses: nais/deploy/actions/deploy@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: dev-fss
+          CLUSTER: dev-gcp
           RESOURCE: nais/naiserator.yml
           VARS: nais/dev-fss.json
       - name: Set changelog
