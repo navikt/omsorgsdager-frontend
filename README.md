@@ -10,11 +10,9 @@
 
 `npm run start`
 
-###To deploy production build of the app:
+###To deploy production build of the app with a new version
 
-Update package.json with a new version.
+`npm run buildNewVersion`
 
-Run:
-`npm run build`
-
+Will increase patch version in package.json and generate a new build. 
 

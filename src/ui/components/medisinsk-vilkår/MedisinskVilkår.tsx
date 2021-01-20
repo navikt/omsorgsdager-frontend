@@ -1,9 +1,10 @@
 import React from 'react';
+import styles from './medisinskVilkår.less';
 
 const MedisinskVilkår = () => {
     return (
         <>
-            <h3>Hello</h3>
+            <h3 className={styles.medisinskVilkår}>Hello</h3>
         </>
     );
 };
