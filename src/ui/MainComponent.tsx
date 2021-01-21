@@ -1,7 +1,7 @@
 import React from 'react';
 import ContainerContext from './context/ContainerContext';
 import ContainerContract from '../types/ContainerContract';
-import MedisinskVilkår from './components/medisinsk-vilkår/MedisinskVilkår';
+import KorrigerePerioder from './components/korrigere-perioder/KorrigerePerioder';
 
 interface MainComponentProps {
     containerData: ContainerContract;
@@ -9,11 +9,9 @@ interface MainComponentProps {
 
 const MainComponent = ({ containerData }: MainComponentProps): JSX.Element => {
     return (
-        <div style={{ padding: '1rem' }}>
-            <ContainerContext.Provider value={containerData}>
-                <MedisinskVilkår />
-            </ContainerContext.Provider>
-        </div>
+        <ContainerContext.Provider value={containerData}>
+            <KorrigerePerioder/>
+        </ContainerContext.Provider>
     );
 };
 

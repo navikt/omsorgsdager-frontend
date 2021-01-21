@@ -12,16 +12,7 @@
         <div id="app"></div>
         <script type="text/javascript">
             setTimeout(() => {
-                window.renderMicrofrontendOmsorgsdagerApp('app', {
-                    onVurderingValgt: (vurdering) => {
-                        if (vurdering !== null) {
-                            history.pushState('', '', `#vurdering=${vurdering}`);
-                        } else {
-                            window.location.hash = '';
-                        }
-                    },
-                    vurdering: new URLSearchParams(`?${window.location.hash.substr(1)}`).get('vurdering')
-                });
+                window.renderMicrofrontendOmsorgsdagerApp('app', {});
             }, 300);
         </script>
     </body>
