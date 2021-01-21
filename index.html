@@ -1,21 +1,18 @@
 <html>
     <head>
         <title>Sykdom</title>
-
         <style>
             body {
                 font-family: 'Source Sans Pro', Arial, sans-serif;
                 font-size: 1rem;
             }
-
-
         </style>
     </head>
     <body>
         <div id="app"></div>
         <script type="text/javascript">
             setTimeout(() => {
-                window.renderMedisinskVilkarApp('app', {
+                window.renderMicrofrontendOmsorgsdagerApp('app', {
                     onVurderingValgt: (vurdering) => {
                         if (vurdering !== null) {
                             history.pushState('', '', `#vurdering=${vurdering}`);
