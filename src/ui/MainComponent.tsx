@@ -1,7 +1,7 @@
 import React from 'react';
 import ContainerContext from './context/ContainerContext';
 import ContainerContract from '../types/ContainerContract';
-import KorrigerePerioder from './components/korrigere-perioder/KorrigerePerioder';
+import KomponentToggle from "./components/komponent-toggle/KomponentToggle";
 
 interface MainComponentProps {
     containerData: ContainerContract;
@@ -10,7 +10,7 @@ interface MainComponentProps {
 const MainComponent = ({ containerData }: MainComponentProps): JSX.Element => {
     return (
         <ContainerContext.Provider value={containerData}>
-            <KorrigerePerioder/>
+          <KomponentToggle/>
         </ContainerContext.Provider>
     );
 };
