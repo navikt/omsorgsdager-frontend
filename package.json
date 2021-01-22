@@ -1,6 +1,6 @@
 {
     "name": "omsorgsdager-frontend",
-    "version": "1.5.15",
+    "version": "1.5.16",
     "main": "index.js",
     "scripts": {
         "test": "jest",
@@ -8,7 +8,7 @@
         "build": "webpack --config webpack/webpack-config.production.js",
         "buildNewVersion": "npm version patch --no-git-tag-version && webpack --config webpack/webpack-config.production.js",
         "buildDev": "webpack --config webpack/webpack-config.production.js && yarn calculateHashOnLatestBuild && yarn dev",
-        "calculateHashOnLatestBuild" : "node calculateHashFromBuild.js app.js && node calculateHashFromBuild.js styles.css",
+        "calculateHashOnLatestBuild": "node calculateHashFromBuild.js app.js && node calculateHashFromBuild.js styles.css",
         "dev": "node webpack/webpack-config.development.js",
         "version": "node ./version.js",
         "lint": "eslint 'src/**/*.{ts,tsx,js,jsx}'",
