@@ -1,3 +1,5 @@
-interface ContainerContract {} // eslint-disable-line @typescript-eslint/no-empty-interface
+interface ContainerContract {
+  visKomponent: string;
+}
 
 export default ContainerContract;

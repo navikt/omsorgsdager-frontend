@@ -1,7 +1,8 @@
 import React from 'react';
-import ContainerContext from './context/ContainerContext';
 import ContainerContract from '../types/ContainerContract';
-import KorrigerePerioder from './components/korrigere-perioder/KorrigerePerioder';
+import Komponenter from "../types/Komponenter";
+import KorrigerePerioder from "../ui/components/korrigere-perioder/KorrigerePerioder";
+import ContainerContext from './context/ContainerContext';
 
 interface MainComponentProps {
     containerData: ContainerContract;
@@ -10,7 +11,7 @@ interface MainComponentProps {
 const MainComponent = ({ containerData }: MainComponentProps): JSX.Element => {
     return (
         <ContainerContext.Provider value={containerData}>
-            <KorrigerePerioder/>
+            {containerData.visKomponent == Komponenter.KORRIGERE_PERIODER && <KorrigerePerioder/>}
         </ContainerContext.Provider>
     );
 };
