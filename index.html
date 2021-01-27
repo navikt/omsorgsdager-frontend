@@ -12,7 +12,10 @@
         <div id="app"></div>
         <script type="text/javascript">
             setTimeout(() => {
-                window.renderMicrofrontendOmsorgsdagerApp('app', {visKomponent: 'KorrigerePerioder'});
+                window.renderMicrofrontendOmsorgsdagerApp('app', {
+                    visKomponent: 'VilkarKroniskSyktBarn',
+                    props: {onSubmit: (harDokumentasjon, harSammenheng, harBegrunnelse) => console.log(harDokumentasjon, harSammenheng, harBegrunnelse)}
+                });
             }, 300);
         </script>
     </body>
