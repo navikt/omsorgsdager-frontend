@@ -3,6 +3,7 @@ import {Datepicker} from 'nav-datovelger';
 import {Radio, RadioGruppe} from "nav-frontend-skjema";
 import React, {useState} from 'react';
 import styles from './vilkarMidlertidigAlene.less'
+import OpplysningerFraSoknad from "./opplysninger-fra-soknad/opplysningerFraSoknad";
 
 const VilkarMidlertidigAlene = () => {
   const [fraDato, setFraDato] = useState('');
@@ -11,7 +12,7 @@ const VilkarMidlertidigAlene = () => {
   return (
     <div className={styles.vilkarMidlerTidigAleneContainer}>
       <AlertStripe type="advarsel">Vurder om vilkår om aleneomsorg er oppfylt.</AlertStripe>
-      <p>Opplysninger</p>
+      <OpplysningerFraSoknad/>
       <RadioGruppe className={styles.vilkarAleneOmsorgRadioButtons} legend="Er vilkårene om aleneomsorg oppfylt?">
         <Radio label={"Ja"} name="vilkarAleneomsorg"/>
         <Radio label={"Nei"} name="vilkarAleneomsorg"/>
