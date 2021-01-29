@@ -1,31 +1,22 @@
 import React from 'react';
 import styles from './opplysningerFraSoknad.less';
 
-const OpplysningerFraSoknad = () => {
-
+const OpplysningerFraSoknad = ({årsak, beskrivelse, periode}) => {
   return (
     <>
-      <span className={styles.overskrift}>Opplysninger fra søknaden:</span>
+      <span>Opplysninger fra søknaden:</span>
       <div className={styles.arsakRad}>
-        <div>
-          <h4>Årsak</h4>
-          <span>Avtjener verneplikt</span>
-        </div>
-        <div>
-          <h4>Årsak</h4>
-          <span>Avtjener verneplikt</span>
-        </div>
-      </div>
+        <h4>Oppgitt årsak</h4>
+        <span>{årsak}</span>
 
-      <div className={styles.arsakRad}>
-        <div>
-          <h4>Varighet/Periode</h4>
-          <span>Avtjener verneplikt</span>
-        </div>
-        <div>
-          <h4>Varighet/Periode</h4>
-          <span>Avtjener verneplikt</span>
-        </div>
+        {beskrivelse.length!=0 && <>
+            <h4>Beskrivelse</h4>
+            <span>{beskrivelse}</span>
+          </>
+        }
+
+        <h4>Oppgitt periode</h4>
+        <span>{periode}</span>
       </div>
     </>
   );
