@@ -15,7 +15,7 @@ const OpplysningerFraSoknad: React.FunctionComponent<Props> = ({årsak, beskrive
         <h4>Oppgitt årsak</h4>
         <span>{årsak}</span>
 
-        {beskrivelse.length!=0 && <>
+        {beskrivelse !== undefined && beskrivelse.length !== 0 && <>
             <h4>Beskrivelse</h4>
             <span>{beskrivelse}</span>
           </>

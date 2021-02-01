@@ -1,10 +1,10 @@
 import AlertStripe, {AlertStripeAdvarsel} from "nav-frontend-alertstriper";
 import {Datepicker} from 'nav-datovelger';
+import {Hovedknapp} from "nav-frontend-knapper";
+import OpplysningerFraSoknad from "./opplysninger-fra-soknad/opplysningerFraSoknad";
 import {Radio, RadioGruppe, Textarea} from "nav-frontend-skjema";
 import React, {useState} from 'react';
 import styles from './vilkarMidlertidigAlene.less'
-import OpplysningerFraSoknad from "./opplysninger-fra-soknad/opplysningerFraSoknad";
-import {Hovedknapp} from "nav-frontend-knapper";
 import {VilkarMidlertidigAleneProps} from "../../../types/VilkarMidlertidigAleneProps";
 
 const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProps> = props => {
