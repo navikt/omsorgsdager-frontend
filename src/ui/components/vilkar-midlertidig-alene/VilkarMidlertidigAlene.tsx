@@ -1,48 +1,74 @@
-import AlertStripe from "nav-frontend-alertstriper";
+import AlertStripe, {AlertStripeAdvarsel} from "nav-frontend-alertstriper";
 import {Datepicker} from 'nav-datovelger';
 import {Radio, RadioGruppe, Textarea} from "nav-frontend-skjema";
 import React, {useState} from 'react';
 import styles from './vilkarMidlertidigAlene.less'
 import OpplysningerFraSoknad from "./opplysninger-fra-soknad/opplysningerFraSoknad";
 import {Hovedknapp} from "nav-frontend-knapper";
+import {VilkarMidlertidigAleneProps} from "../../../types/VilkarMidlertidigAleneProps";
 
-const VilkarMidlertidigAlene = () => {
-  const [fraDato, setFraDato] = useState('DD.MM.ÅÅÅÅ');
-  const [tilDato, setTilDato] = useState('DD.MM.ÅÅÅÅ');
+const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProps> = props => {
+
+  const [begrunnelse, endreBegrunnelse] = useState('');
+  const [feilmedling, endreFeilmedling] = useState('');
+  const [fraDato, endreFraDato] = useState('DD.MM.ÅÅÅÅ');
+  const [tilDato, endreTilDato] = useState('DD.MM.ÅÅÅÅ');
+  const [vilkarOppfylt, endreVilkarOppfylt] = useState(true);
+
   const soknedsopplysninger = {
     årsak: "Avtjener verneplikt",
     beskrivelse: "",
     periode: "01.01.2021-01.08.2021"
   }
 
+  const sjekkHvisVurderingErKomplett = () => {
+    if ((tilDato == 'DD.MM.ÅÅÅÅ' || fraDato == 'DD.MM.ÅÅÅÅ') && vilkarOppfylt) {
+      endreFeilmedling('Mangler i hvilken periode vedtaket er gyldig.');
+    } else if (begrunnelse.length === 0) {
+      endreFeilmedling('Mangler begrunnelse.');
+    } else {
+      endreFeilmedling('');
+      const dato = {
+        til: vilkarOppfylt ? tilDato : '',
+        fra: vilkarOppfylt ? fraDato : ''
+      };
+      props.onSubmit(vilkarOppfylt, dato, begrunnelse)
+    }
+  }
+  
   return (
     <div className={styles.vilkarMidlerTidigAleneContainer}>
       <AlertStripe type="advarsel">Vurder om vilkår om aleneomsorg er oppfylt.</AlertStripe>
+      {feilmedling !== '' && <AlertStripe type="feil">{feilmedling}</AlertStripe>}
+
       <OpplysningerFraSoknad {...soknedsopplysninger}/>
+
       <RadioGruppe className={styles.vilkarAleneOmsorgRadioButtons} legend="Er vilkårene om aleneomsorg oppfylt?">
-        <Radio label={"Ja"} name="vilkarAleneomsorg"/>
-        <Radio label={"Nei"} name="vilkarAleneomsorg"/>
+        <Radio label={"Ja"} checked={vilkarOppfylt} onChange={() => endreVilkarOppfylt(true)} name="vilkarAleneomsorg"/>
+        <Radio label={"Nei"} checked={!vilkarOppfylt} onChange={() => endreVilkarOppfylt(false)}
+               name="vilkarAleneomsorg"/>
       </RadioGruppe>
 
-      <div className={styles.gyldigVedtaksPeriodeContainer}>
-        <p className={styles.tests}>I hvilken periode er vedtaket gyldig?</p>
+      {vilkarOppfylt && <div className={styles.gyldigVedtaksPeriodeContainer}>
+        <span className={styles.gyldigVedtaksPeriodeOverskrift}>I hvilken periode er vedtaket gyldig?</span>
         <div>
-          <label className={styles.gyldigVedtaksPeriodeTilFra}>Fra</label>
-          <Datepicker onChange={setFraDato} value={fraDato}/>
+          <span className={styles.gyldigVedtaksPeriodeTilFra}>Fra</span>
+          <Datepicker onChange={endreFraDato} value={fraDato}/>
         </div>
         <div>
-          <label className={styles.gyldigVedtaksPeriodeTilFra}>Til</label>
-          <Datepicker onChange={setTilDato} value={tilDato}/>
+          <span className={styles.gyldigVedtaksPeriodeTilFra}>Til</span>
+          <Datepicker onChange={endreTilDato} value={tilDato}/>
         </div>
-      </div>
+      </div>}
 
-      <>
-        <Textarea label="Begrunnelse" value={"Hi"} onChange={() => {
-          console.log('hi')
-        }}/>
-      </>
+      <Textarea label="Begrunnelse"
+                value={begrunnelse}
+                onChange={e => endreBegrunnelse(e.target.value)}
+      />
 
-      <Hovedknapp className={styles.bekreftKnapp}>Bekreft og fortsett</Hovedknapp>
+      <Hovedknapp className={styles.bekreftKnapp} onClick={sjekkHvisVurderingErKomplett}>
+        Bekreft og fortsett
+      </Hovedknapp>
     </div>
   )
 }

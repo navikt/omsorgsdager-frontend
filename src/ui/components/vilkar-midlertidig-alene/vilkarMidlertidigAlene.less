@@ -1,20 +1,20 @@
 @import '@{coreModulePath}nav-frontend-core/less/_variabler';
 
 .bekreftKnapp {
-  width: 12rem;
   text-transform: none;
+  width: 12rem;
 }
 
 .vilkarMidlerTidigAleneContainer {
   display: flex;
   flex-direction: column;
 
-  > * {
-    margin-bottom: 1rem;
-  }
-
   label, legend {
     font-weight: normal !important;
+  }
+
+  > * {
+    margin-bottom: 1rem;
   }
 }
 
@@ -25,21 +25,24 @@
   div {
     margin-right: 1rem;
   }
-
 }
-
-.tests{
-  align-self: flex-end;  }
 
 .gyldigVedtaksPeriodeContainer {
   display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
 
   div {
     margin-right: 1rem;
   }
 }
-.gyldigVedtaksPeriodeTilFra{
+
+.gyldigVedtaksPeriodeOverskrift{
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.gyldigVedtaksPeriodeTilFra {
   display: block;
+  font-weight: bold;
   margin-bottom: 0.5rem;
 }
