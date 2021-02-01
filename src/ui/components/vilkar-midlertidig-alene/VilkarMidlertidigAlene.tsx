@@ -15,12 +15,6 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   const [tilDato, endreTilDato] = useState('DD.MM.ÅÅÅÅ');
   const [vilkarOppfylt, endreVilkarOppfylt] = useState(true);
 
-  const soknedsopplysninger = {
-    årsak: "Avtjener verneplikt",
-    beskrivelse: "",
-    periode: "01.01.2021-01.08.2021"
-  }
-
   const sjekkHvisVurderingErKomplett = () => {
     if ((tilDato == 'DD.MM.ÅÅÅÅ' || fraDato == 'DD.MM.ÅÅÅÅ') && vilkarOppfylt) {
       endreFeilmedling('Mangler i hvilken periode vedtaket er gyldig.');
@@ -32,16 +26,16 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
         til: vilkarOppfylt ? tilDato : '',
         fra: vilkarOppfylt ? fraDato : ''
       };
-      props.onSubmit(vilkarOppfylt, dato, begrunnelse)
+      props.onSubmit(vilkarOppfylt, dato, begrunnelse);
     }
   }
-  
+
   return (
     <div className={styles.vilkarMidlerTidigAleneContainer}>
       <AlertStripe type="advarsel">Vurder om vilkår om aleneomsorg er oppfylt.</AlertStripe>
       {feilmedling !== '' && <AlertStripe type="feil">{feilmedling}</AlertStripe>}
 
-      <OpplysningerFraSoknad {...soknedsopplysninger}/>
+      <OpplysningerFraSoknad {...props.soknedsopplysninger}/>
 
       <RadioGruppe className={styles.vilkarAleneOmsorgRadioButtons} legend="Er vilkårene om aleneomsorg oppfylt?">
         <Radio label={"Ja"} checked={vilkarOppfylt} onChange={() => endreVilkarOppfylt(true)} name="vilkarAleneomsorg"/>

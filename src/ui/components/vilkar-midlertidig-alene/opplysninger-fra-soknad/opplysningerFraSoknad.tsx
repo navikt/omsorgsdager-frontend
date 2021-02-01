@@ -1,7 +1,13 @@
 import React from 'react';
 import styles from './opplysningerFraSoknad.less';
 
-const OpplysningerFraSoknad = ({årsak, beskrivelse, periode}) => {
+interface Props{
+  årsak: string,
+  beskrivelse?: string,
+  periode: string
+}
+
+const OpplysningerFraSoknad: React.FunctionComponent<Props> = ({årsak, beskrivelse, periode}) => {
   return (
     <>
       <span>Opplysninger fra søknaden:</span>
