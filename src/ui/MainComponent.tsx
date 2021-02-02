@@ -31,7 +31,7 @@ const MainComponent = ({containerData}: MainComponentProps): JSX.Element => {
 
     return (
       <ContainerContext.Provider value={containerData}>
-        {<VilkarMidlertidigAlene {...containerData.props} />}
+        {innhold}
       </ContainerContext.Provider>
     );
   }
