@@ -7,10 +7,12 @@ export interface VilkarMidlertidigAleneProps {
   },
   onSubmit: (
     vilkarOppfylt: boolean,
-    dato: {
-      til: string,
-      fra: string
-    },
+    dato: VilkarMidlertidigAleneDato,
     begrunnelse: string
   ) => void;
+}
+
+export interface VilkarMidlertidigAleneDato {
+    til: string,
+    fra: string
 }
