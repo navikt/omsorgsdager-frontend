@@ -9,21 +9,19 @@ interface Props {
 
 const OpplysningerFraSoknad: React.FunctionComponent<Props> = ({årsak, beskrivelse, periode}) => {
   return (
-    <>
-      <div className={styles.arsakRad}>
-        <span>Opplysninger fra søknaden:</span>
-        <h4>Oppgitt årsak</h4>
-        <span>{"Heihei"}</span>
+    <div className={styles.opplysningerFraSoknad}>
+      <span>Opplysninger fra søknaden:</span>
+      <h4>Oppgitt årsak</h4>
+      {"Heihei"}
 
-        {beskrivelse !== undefined && beskrivelse.length !== 0 && <>
-          <h4>Beskrivelse</h4>
-          <span>{"heihei"}</span>
-        </>}
+      {beskrivelse !== undefined && beskrivelse.length !== 0 && <>
+        <h4>Beskrivelse</h4>
+        {"heihei"}
+      </>}
 
-        <h4>Oppgitt periode</h4>
-        <span>{"Heihei"}</span>
-      </div>
-    </>
+      <h4>Oppgitt periode</h4>
+      {"Heihei"}
+    </div>
   );
 }
 export default OpplysningerFraSoknad;

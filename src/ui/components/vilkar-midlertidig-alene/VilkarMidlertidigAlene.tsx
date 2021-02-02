@@ -13,7 +13,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   const [feilmedling, endreFeilmedling] = useState('');
   const [fraDato, endreFraDato] = useState('DD.MM.ÅÅÅÅ');
   const [tilDato, endreTilDato] = useState('DD.MM.ÅÅÅÅ');
-  const [vilkarOppfylt, endreVilkarOppfylt] = useState(true);
+  const [vilkarOppfylt, endreVilkarOppfylt] = useState(false);
 
   const sjekkHvisVurderingErKomplett = () => {
     if ((tilDato == 'DD.MM.ÅÅÅÅ' || fraDato == 'DD.MM.ÅÅÅÅ') && vilkarOppfylt) {
@@ -31,19 +31,19 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   }
 
   return (
-    <div className={styles.vilkarMidlerTidigAleneContainer}>
+    <div className={styles.vilkarMidlerTidigAlene}>
       <AlertStripe type="advarsel">Vurder om vilkår om aleneomsorg er oppfylt.</AlertStripe>
       {feilmedling !== '' && <AlertStripe type="feil">{feilmedling}</AlertStripe>}
 
       <OpplysningerFraSoknad {...props.soknedsopplysninger}/>
 
-      <RadioGruppe className={styles.vilkarAleneOmsorgRadioButtons} legend="Er vilkårene om aleneomsorg oppfylt?">
+      <RadioGruppe className={styles.radioButtons} legend="Er vilkårene om aleneomsorg oppfylt?">
         <Radio label={"Ja"} checked={vilkarOppfylt} onChange={() => endreVilkarOppfylt(true)} name="vilkarAleneomsorg"/>
         <Radio label={"Nei"} checked={!vilkarOppfylt} onChange={() => endreVilkarOppfylt(false)}
                name="vilkarAleneomsorg"/>
       </RadioGruppe>
 
-      {vilkarOppfylt && <div className={styles.gyldigVedtaksPeriodeContainer}>
+      {vilkarOppfylt && <div className={styles.gyldigVedtaksPeriode}>
         <span className={styles.gyldigVedtaksPeriodeOverskrift}>I hvilken periode er vedtaket gyldig?</span>
         <div>
           <span className={styles.gyldigVedtaksPeriodeTilFra}>Fra</span>

@@ -1,21 +1,11 @@
 @import '@{coreModulePath}nav-frontend-core/less/_variabler';
 
 .bekreftKnapp {
+  margin-bottom: 2.5rem;
   margin-top: 2.5rem;
-  text-transform: none;
-  width: 12rem;
 }
 
-.vilkarMidlerTidigAleneContainer {
-  display: flex;
-  flex-direction: column;
-
-  label, legend {
-    font-weight: normal !important;
-  }
-}
-
-.vilkarAleneOmsorgRadioButtons {
+.radioButtons {
   display: flex;
   flex-direction: row;
   margin-bottom: 1.5rem;
@@ -25,7 +15,11 @@
   }
 }
 
-.gyldigVedtaksPeriodeContainer {
+.vilkarMidlerTidigAlene label, legend {
+  font-weight: normal !important;
+}
+
+.gyldigVedtaksPeriode {
   display: flex;
   flex-wrap: wrap;
   margin-bottom: 2.5rem;
@@ -35,7 +29,7 @@
   }
 }
 
-.gyldigVedtaksPeriodeOverskrift{
+.gyldigVedtaksPeriodeOverskrift {
   margin-bottom: 1rem;
   width: 100%;
 }
