@@ -1,6 +1,6 @@
 export const localDevConfig = {
   lokalUtvikling: true,
-  visVilkarKroniskSyktBarn: true,
+  visVilkarKroniskSyktBarn: false,
   visVilkarMidlertidigAlene: false,
-  visKorrigerePerioder: true
+  visKorrigerePerioder: false
 };

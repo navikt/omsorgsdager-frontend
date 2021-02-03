@@ -1,22 +1,45 @@
 <html>
-    <head>
-        <title>Sykdom</title>
-        <style>
-            body {
-                font-family: 'Source Sans Pro', Arial, sans-serif;
-                font-size: 1rem;
-            }
-        </style>
-    </head>
-    <body>
-        <div id="app"></div>
-        <script type="text/javascript">
-            setTimeout(() => {
-                window.renderMicrofrontendOmsorgsdagerApp('app', {
-                    visKomponent: 'VilkarMidlertidigAlene',
-                    props: {onSubmit: (harDokumentasjon, harSammenheng, harBegrunnelse) => console.log(harDokumentasjon, harSammenheng, harBegrunnelse)}
-                });
-            }, 300);
-        </script>
-    </body>
+<head>
+    <title>Sykdom</title>
+    <style>
+        body {
+            font-family: 'Source Sans Pro', Arial, sans-serif;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+<div id="app"></div>
+<script type="text/javascript">
+  const inputMocks = {
+    korrigerePerioder: {visKomponent: 'KorrigerePerioder'},
+    vilkarKroniskSyktBarn: {
+      visKomponent: 'VilkarKroniskSyktBarn',
+      props: {
+        type: 'VilkarKroniskSyktBarn',
+        onSubmit: (harDokumentasjon, harSammenheng, harBegrunnelse) => console.log(harDokumentasjon, harSammenheng, harBegrunnelse)
+      }
+    },
+    vilkarMidlertidigAlene: {
+      visKomponent: 'VilkarMidlertidigAlene',
+      props: {
+        type: 'VilkarMidlertidigAlene',
+        soknedsopplysninger: {
+          årsak: 'Årsak',
+          beskrivelse: 'Beskrivelse',
+          periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ'
+        },
+        onSubmit: (vilkarOppfylt, dato, begrunnelse) => console.log(vilkarOppfylt, dato, begrunnelse)
+      }
+    }
+  };
+
+  setTimeout(() => {
+    window.renderMicrofrontendOmsorgsdagerApp('app', {
+      visKomponent: 'VilkarMidlertidigAlene',
+      props: inputMocks.vilkarMidlertidigAlene.props
+    });
+  }, 300);
+</script>
+</body>
 </html>
