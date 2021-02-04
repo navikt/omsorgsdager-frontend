@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { Dokumenttype, Dokumentoversikt } from '../types/Dokument';
+import { Dokumentoversikt, Dokumenttype } from '../types/Dokument';
 
 const mockedDokumentoversikt: Dokumentoversikt = {
     dokumenterMedMedisinskeOpplysninger: [
