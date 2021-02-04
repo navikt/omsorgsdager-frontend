@@ -3,6 +3,12 @@
         "stylelint-order"
     ],
     "rules": {
+        "declaration-colon-space-after": "always",
+        "declaration-colon-space-before": "never",
+        "indentation": 2,
+        "max-empty-lines": 1,
+        "number-leading-zero": "always",
+        "order/properties-alphabetical-order": true,
         "order/order": [
             "custom-properties",
             "declarations"
