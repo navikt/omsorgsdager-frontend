@@ -11,36 +11,32 @@
             "impliedStrict": true
         }
     },
-    "plugins": ["@typescript-eslint", "react-hooks"],
-    "extends": ["plugin:@typescript-eslint/recommended"],
+    "plugins": ["eslint-plugin-react", "@typescript-eslint", "react-hooks"],
+    "extends": ["plugin:react/recommended","plugin:@typescript-eslint/recommended"],
     "rules": {
-        "@typescript-eslint/explicit-function-return-type": 0,
         "@typescript-eslint/explicit-module-boundary-types": 0,
         "@typescript-eslint/no-explicit-any": 0,
         "@typescript-eslint/no-use-before-define": ["error"],
-        "global-require": "off",
         "import/extensions": 0,
         "linebreak-style": "off",
-        "no-use-before-define": "off",
         "react-hooks/exhaustive-deps": "warn",
         "react-hooks/rules-of-hooks": "error",
-        "react/jsx-filename-extension": 0,
-        "react/jsx-indent-props": 0,
-        "react/jsx-indent": 0,
-        "react/jsx-props-no-spreading": 0,
-        "react/no-array-index-key": 0,
+        "react/jsx-max-props-per-line": ["error", {"maximum": 1, "when": "multiline"}],
         "react/prop-types": 0,
-        "react/require-default-props": 0,
-        "react/jsx-wrap-multilines": 0,
-        "import/prefer-default-export": 0,
         "@typescript-eslint/no-shadow": "error",
-        "no-shadow": "off"
+        "jsx-quotes": [2, "prefer-double"],
+        "no-var": 2,
+        "prefer-const": 2,
+        "sort-imports": [2, {"allowSeparatedGroups": true, "ignoreDeclarationSort": true}]
     },
     "settings": {
         "import/resolver": {
             "node": {
                 "extensions": [".js", ".jsx", ".ts", ".tsx", ".less", ".scss"]
             }
+        },
+        "react": {
+            "version": "detect"
         }
     }
 }
