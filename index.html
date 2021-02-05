@@ -14,7 +14,10 @@
             setTimeout(() => {
                 window.renderMicrofrontendOmsorgsdagerApp('app', {
                     visKomponent: 'VilkarKroniskSyktBarn',
-                    props: {onSubmit: (harDokumentasjon, harSammenheng, harBegrunnelse) => console.log(harDokumentasjon, harSammenheng, harBegrunnelse)}
+                    props: {
+                        behandlingsid: '123',
+                        stiTilEndepunkt: 'api'
+                    }
                 });
             }, 300);
         </script>
