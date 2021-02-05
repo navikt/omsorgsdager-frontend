@@ -1,9 +1,9 @@
 export interface VilkarMidlertidigAleneProps {
   type: 'VilkarMidlertidigAlene',
   soknedsopplysninger: {
-    årsak: string,
-    beskrivelse?: string,
-    periode: string
+    årsak: string;
+    beskrivelse?: string;
+    periode: string;
   },
   onSubmit: (
     vilkarOppfylt: boolean,
@@ -13,6 +13,6 @@ export interface VilkarMidlertidigAleneProps {
 }
 
 export interface VilkarMidlertidigAleneDato {
-    til: string,
-    fra: string
+    til: string;
+    fra: string;
 }

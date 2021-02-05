@@ -18,12 +18,10 @@ const MainComponent = ({containerData}: MainComponentProps): JSX.Element => {
       innhold = <KorrigerePerioder/>;
       break;
     case Komponenter.VILKAR_KRONISK_SYKT_BARN:
-      innhold = containerData.props.type === 'VilkarKroniskSyktBarn' &&
-        <VilkarKroniskSyktBarn {...containerData.props}/>;
+      innhold = <VilkarKroniskSyktBarn {...containerData.props}/>;
       break;
     case Komponenter.VILKAR_MIDLERTIDIG_ALENE:
-      innhold = containerData.props.type === 'VilkarMidlertidigAlene' &&
-        <VilkarMidlertidigAlene {...containerData.props} />;
+      innhold = <VilkarMidlertidigAlene {...containerData.props} />;
       break;
     default:
       innhold = <></>;
