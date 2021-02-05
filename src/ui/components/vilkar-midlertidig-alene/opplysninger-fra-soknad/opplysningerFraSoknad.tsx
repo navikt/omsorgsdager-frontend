@@ -2,25 +2,25 @@ import React from 'react';
 import styles from './opplysningerFraSoknad.less';
 
 interface Props {
-  årsak: string,
-  beskrivelse?: string,
-  periode: string
+  årsak: string;
+  beskrivelse?: string;
+  periode: string;
 }
 
 const OpplysningerFraSoknad: React.FunctionComponent<Props> = ({årsak, beskrivelse, periode}) => {
   return (
     <div className={styles.opplysningerFraSoknad}>
-      <span>Opplysninger fra søknaden:</span>
+      <div>Opplysninger fra søknaden:</div>
       <h4>Oppgitt årsak</h4>
-      {årsak}
+      <p>{årsak}</p>
 
       {årsak != undefined && årsak.toLowerCase() === 'annet' && beskrivelse !== undefined && beskrivelse.length !== 0 && <>
         <h4>Beskrivelse</h4>
-        {beskrivelse}
+        <p>{beskrivelse}</p>
       </>}
 
       <h4>Oppgitt periode</h4>
-      {periode}
+      <p>{periode}</p>
     </div>
   );
 }
