@@ -1,10 +1,10 @@
 export interface VilkarMidlertidigAleneProps {
-  type: 'VilkarMidlertidigAlene',
+  type: 'VilkarMidlertidigAlene';
   soknedsopplysninger: {
     årsak: string;
     beskrivelse?: string;
     periode: string;
-  },
+  };
   onSubmit: (
     vilkarOppfylt: boolean,
     dato: VilkarMidlertidigAleneDato,

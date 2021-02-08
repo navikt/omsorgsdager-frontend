@@ -23,5 +23,5 @@ const OpplysningerFraSoknad: React.FunctionComponent<Props> = ({årsak, beskrive
       <p>{periode}</p>
     </div>
   );
-}
+};
 export default OpplysningerFraSoknad;

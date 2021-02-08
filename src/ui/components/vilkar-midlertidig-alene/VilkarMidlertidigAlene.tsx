@@ -1,10 +1,10 @@
-import AlertStripe, {AlertStripeAdvarsel} from "nav-frontend-alertstriper";
+import AlertStripe from "nav-frontend-alertstriper";
 import {Datepicker} from 'nav-datovelger';
 import {Hovedknapp} from "nav-frontend-knapper";
 import OpplysningerFraSoknad from "./opplysninger-fra-soknad/opplysningerFraSoknad";
-import {Radio, RadioGruppe, Textarea, SkjemaGruppe} from "nav-frontend-skjema";
+import {Radio, RadioGruppe, SkjemaGruppe, Textarea} from "nav-frontend-skjema";
 import React, {useState} from 'react';
-import styles from './vilkarMidlertidigAlene.less'
+import styles from './vilkarMidlertidigAlene.less';
 import {VilkarMidlertidigAleneProps} from "../../../types/VilkarMidlertidigAleneProps";
 
 interface Feilmeldinger {
@@ -12,7 +12,7 @@ interface Feilmeldinger {
   dato: {
     til: boolean;
     fra: boolean;
-  }
+  };
 }
 
 const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProps> = props => {
@@ -38,7 +38,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
 
   const sjekkHvisVurderingErKomplett = () => vurderingKomplett ?
     props.onSubmit(vilkarOppfylt, {til: vilkarOppfylt ? tilDato : '', fra: vilkarOppfylt ? fraDato : ''}, begrunnelse) :
-    endreVisFeilmedlinger(true)
+    endreVisFeilmedlinger(true);
 
   return (
     <div className={styles.vilkarMidlerTidigAlene}>
@@ -47,9 +47,13 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
       <OpplysningerFraSoknad {...props.soknedsopplysninger}/>
 
       <RadioGruppe className={styles.radioButtons} legend="Er vilkårene om aleneomsorg oppfylt?">
-        <Radio label={"Ja"} checked={vilkarOppfylt} onChange={() => endreVilkarOppfylt(true)}
+        <Radio label={"Ja"}
+               checked={vilkarOppfylt}
+               onChange={() => endreVilkarOppfylt(true)}
                name="vilkarAleneomsorg"/>
-        <Radio label={"Nei"} checked={!vilkarOppfylt} onChange={() => endreVilkarOppfylt(false)}
+        <Radio label={"Nei"}
+               checked={!vilkarOppfylt}
+               onChange={() => endreVilkarOppfylt(false)}
                name="vilkarAleneomsorg"/>
       </RadioGruppe>
 
@@ -78,7 +82,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
         Bekreft og fortsett
       </Hovedknapp>
     </div>
-  )
-}
+  );
+};
 
 export default VilkarMidlertidigAlene;

@@ -1,5 +1,5 @@
 export interface VilkarKroniskSyktBarnProps {
-  type: 'VilkarKroniskSyktBarn',
+  type: 'VilkarKroniskSyktBarn';
   onSubmit: (
     harDokumentasjon: boolean,
     harSammenheng: boolean,
