@@ -1,10 +1,16 @@
 @import '@{coreModulePath}nav-frontend-core/less/_variabler';
 
 .korrigerePerioder {
-  background-color: @navLysGra;
-  padding: 1rem;
+
+  > * {
+    margin-bottom: 1rem;
+  }
 
   .varselstripe div {
     max-width: 100%;
+  }
+
+  input[type="radio"] + label::before {
+    box-sizing: border-box;
   }
 }
