@@ -15,18 +15,23 @@
     "extends": ["plugin:react/recommended","plugin:@typescript-eslint/recommended"],
     "rules": {
         "@typescript-eslint/explicit-module-boundary-types": 0,
+        "@typescript-eslint/member-delimiter-style": ["error", {
+            "multiline": {"delimiter": "semi", "requireLast": true},
+            "singleline": {"delimiter": "semi", "requireLast": false}
+        }],
         "@typescript-eslint/no-explicit-any": 0,
+        "@typescript-eslint/no-shadow": "error",
         "@typescript-eslint/no-use-before-define": ["error"],
+        "@typescript-eslint/semi": ["error"],
         "import/extensions": 0,
+        "jsx-quotes": [2, "prefer-double"],
         "linebreak-style": "off",
+        "no-var": 2,
+        "prefer-const": 2,
         "react-hooks/exhaustive-deps": "warn",
         "react-hooks/rules-of-hooks": "error",
         "react/jsx-max-props-per-line": ["error", {"maximum": 1, "when": "multiline"}],
         "react/prop-types": 0,
-        "@typescript-eslint/no-shadow": "error",
-        "jsx-quotes": [2, "prefer-double"],
-        "no-var": 2,
-        "prefer-const": 2,
         "sort-imports": [2, {"allowSeparatedGroups": true, "ignoreDeclarationSort": true}]
     },
     "settings": {
