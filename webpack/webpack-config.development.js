@@ -4,6 +4,7 @@ const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackDevServer = require('webpack-dev-server');
 const commonWebpackConfig = require('./webpack.common.js');
+const mockedKroniskSyktBarnLost = require('../src/mock/mockedKroniskSyktBarnLost');
 
 const webpackConfig = merge(commonWebpackConfig, {
     mode: 'development',
@@ -15,7 +16,12 @@ const webpackConfig = merge(commonWebpackConfig, {
     ],
 });
 
-const devServerOptions = { hot: true };
+const devServerOptions = {
+    hot: true,
+    before(app) {
+        mockedKroniskSyktBarnLost(app);
+    }
+};
 WebpackDevServer.addDevServerEntrypoints(webpackConfig, devServerOptions);
 
 const compiler = webpack(webpackConfig);
