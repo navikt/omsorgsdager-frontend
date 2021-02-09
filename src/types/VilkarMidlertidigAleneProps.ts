@@ -1,5 +1,4 @@
 export interface VilkarMidlertidigAleneProps {
-  type: 'VilkarMidlertidigAlene';
   soknedsopplysninger: {
     årsak: string;
     beskrivelse?: string;
