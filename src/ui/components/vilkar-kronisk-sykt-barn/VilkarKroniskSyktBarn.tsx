@@ -2,9 +2,11 @@ import {AlertStripeAdvarsel} from "nav-frontend-alertstriper";
 import {Hovedknapp} from "nav-frontend-knapper";
 import {Radio, RadioGruppe, Textarea} from "nav-frontend-skjema";
 import React, {useState} from 'react';
+import {KroniskSyktBarnAksjonspunktRequest} from "../../../types/KroniskSyktBarnAksjonspunktRequest";
+import {VilkarKroniskSyktBarnProps} from "../../../types/VilkarKroniskSyktBarnProps";
+import {patch} from "../../../util/apiUtils";
 import Feilikon from "../../icons/Feilikon";
 import Suksessikon from "../../icons/Suksessikon";
-import {VilkarKroniskSyktBarnProps} from "../../../types/VilkarKroniskSyktBarnProps";
 import styles from './vilkarKronisSyktBarn.less';
 
 interface Feilmeldinger {
@@ -19,6 +21,25 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
     const [begrunnelse, endreBegrunnelse] = useState<string>("");
     const [visFeilmeldinger, endreVisFeilmeldinger] = useState<boolean>(false);
 
+    const onSubmit = () => {
+        const request: KroniskSyktBarnAksjonspunktRequest = {
+            LEGEERKLÆRING: {
+                vurdering: begrunnelse,
+                barnetErKroniskSyktEllerHarEnFunksjonshemning: harDokumentasjon,
+                erSammenhengMedSøkersRisikoForFraværeFraArbeid: harSammenheng
+            },
+            OMSORGEN_FOR: {}
+        };
+        try {
+            patch(
+                `${props.stiTilEndepunkt}/kronisk-sykt-barn/${props.behandlingsid}/aksjonspunkt`,
+                request
+            );
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
     const byttHarDokumentasjon = () => endreHarDokumentasjon(!harDokumentasjon);
     const byttHarSammenheng = () => endreHarSammenheng(!harSammenheng);
 
@@ -29,7 +50,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
     };
 
     const onGaVidere = () => kanManGaVidere
-        ? props.onSubmit(harDokumentasjon, harSammenheng, begrunnelse)
+        ? onSubmit()
         : endreVisFeilmeldinger(true);
 
     return <div className={styles.vilkarKroniskSyktBarn}>
