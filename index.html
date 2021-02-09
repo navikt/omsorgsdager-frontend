@@ -11,15 +11,35 @@
     <body>
         <div id="app"></div>
         <script type="text/javascript">
+            const inputMocks = {
+              korrigerePerioder: {visKomponent: 'KorrigerePerioder'},
+              vilkarKroniskSyktBarn: {
+                visKomponent: 'VilkarKroniskSyktBarn',
+                props: {
+                  type: 'VilkarKroniskSyktBarn',
+                  behandlingsid: '123',
+                  stiTilEndepunkt: 'api',
+                  lesemodus: false
+                }
+              },
+              vilkarMidlertidigAlene: {
+                visKomponent: 'VilkarMidlertidigAlene',
+                props: {
+                  soknedsopplysninger: {
+                    årsak: 'Årsak',
+                    beskrivelse: 'Beskrivelse',
+                    periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ'
+                  },
+                  onSubmit: (vilkarOppfylt, dato, begrunnelse) => console.log(vilkarOppfylt, dato, begrunnelse)
+                }
+              }
+            };
+
             setTimeout(() => {
-                window.renderMicrofrontendOmsorgsdagerApp('app', {
-                    visKomponent: 'VilkarKroniskSyktBarn',
-                    props: {
-                        behandlingsid: '123',
-                        stiTilEndepunkt: 'api',
-                        lesemodus: false
-                    }
-                });
+              window.renderMicrofrontendOmsorgsdagerApp('app', {
+                visKomponent: 'VilkarMidlertidigAlene',
+                props: inputMocks.vilkarMidlertidigAlene.props
+              });
             }, 300);
         </script>
     </body>
