@@ -16,9 +16,9 @@ interface VilkarKroniskSyktBarnContract {
   props: VilkarKroniskSyktBarnProps;
 }
 
-interface ContainerContract {
-  visKomponent: string;
-  props?: KorrigerePerioderContract | VilkarMidlertidigAleneContract | VilkarKroniskSyktBarnContract;
-}
+type ContainerContract =
+  KorrigerePerioderContract |
+  VilkarMidlertidigAleneContract |
+  VilkarKroniskSyktBarnContract;
 
 export default ContainerContract;
