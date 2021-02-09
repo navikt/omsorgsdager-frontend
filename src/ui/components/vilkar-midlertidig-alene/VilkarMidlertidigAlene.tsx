@@ -1,7 +1,7 @@
 import AlertStripe from "nav-frontend-alertstriper";
 import {Datepicker} from 'nav-datovelger';
 import {Hovedknapp} from "nav-frontend-knapper";
-import OpplysningerFraSoknad from "./opplysninger-fra-soknad/opplysningerFraSoknad";
+import OpplysningerFraSoknad from "./opplysninger-fra-soknad/OpplysningerFraSoknad";
 import {Radio, RadioGruppe, SkjemaGruppe, Textarea} from "nav-frontend-skjema";
 import React, {useState} from 'react';
 import styles from './vilkarMidlertidigAlene.less';
