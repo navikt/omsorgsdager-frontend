@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import {AlertStripeAdvarsel, AlertStripeFeil, AlertStripeSuksess} from "nav-frontend-alertstriper";
 import {Hovedknapp} from "nav-frontend-knapper";
 import {Radio, RadioGruppe, Textarea} from "nav-frontend-skjema";
@@ -8,6 +9,7 @@ import {VilkarKroniskSyktBarnProps} from "../../../types/VilkarKroniskSyktBarnPr
 import {patch} from "../../../util/apiUtils";
 import Feilikon from "../../icons/Feilikon";
 import Suksessikon from "../../icons/Suksessikon";
+import styleLesemodus from '../lesemodus/lesemodusboks.less';
 import styles from './vilkarKronisSyktBarn.less';
 
 interface Feilmeldinger {
@@ -61,7 +63,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
         }
     };
 
-    return <div className={styles.vilkarKroniskSyktBarn}>
+    return <div className={classNames(styles.vilkarKroniskSyktBarn, props.lesemodus && styleLesemodus.lesemodusboks)}>
         <AlertStripeAdvarsel className={styles.varselstripe}>
             Se på vedlagt legeerklæring og vurder om barnet har en kronisk sykdom eller en funksjonshemmelse, og om det er økt risiko for fravær.
         </AlertStripeAdvarsel>
