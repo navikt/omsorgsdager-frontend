@@ -1,10 +1,15 @@
-import {AlertStripeAdvarsel} from "nav-frontend-alertstriper";
+import classNames from 'classnames';
+import {AlertStripeAdvarsel, AlertStripeFeil, AlertStripeSuksess} from "nav-frontend-alertstriper";
 import {Hovedknapp} from "nav-frontend-knapper";
 import {Radio, RadioGruppe, Textarea} from "nav-frontend-skjema";
 import React, {useState} from 'react';
+import ApiErrorMessage from "../api-error-message/ApiErrorMessage";
+import {KroniskSyktBarnAksjonspunktRequest} from "../../../types/KroniskSyktBarnAksjonspunktRequest";
+import {VilkarKroniskSyktBarnProps} from "../../../types/VilkarKroniskSyktBarnProps";
+import {patch} from "../../../util/apiUtils";
 import Feilikon from "../../icons/Feilikon";
 import Suksessikon from "../../icons/Suksessikon";
-import {VilkarKroniskSyktBarnProps} from "../../../types/VilkarKroniskSyktBarnProps";
+import styleLesemodus from '../lesemodus/lesemodusboks.less';
 import styles from './vilkarKronisSyktBarn.less';
 
 interface Feilmeldinger {
@@ -18,6 +23,22 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
     const [harSammenheng, endreHarSammenheng] = useState<boolean>(false);
     const [begrunnelse, endreBegrunnelse] = useState<string>("");
     const [visFeilmeldinger, endreVisFeilmeldinger] = useState<boolean>(false);
+    const [responsFraEndepunkt, endreResponsFraEndepunkt] = useState<Response | null>(null);
+
+    const onSubmit = () => {
+        const request: KroniskSyktBarnAksjonspunktRequest = {
+            LEGEERKLÆRING: {
+                vurdering: begrunnelse,
+                barnetErKroniskSyktEllerHarEnFunksjonshemning: harDokumentasjon,
+                erSammenhengMedSøkersRisikoForFraværeFraArbeid: harSammenheng
+            },
+            OMSORGEN_FOR: {}
+        };
+        patch(
+            `${props.stiTilEndepunkt}/kronisk-sykt-barn/${props.behandlingsid}/aksjonspunkt`,
+            request
+        ).then(endreResponsFraEndepunkt);
+    };
 
     const byttHarDokumentasjon = () => endreHarDokumentasjon(!harDokumentasjon);
     const byttHarSammenheng = () => endreHarSammenheng(!harSammenheng);
@@ -29,10 +50,20 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
     };
 
     const onGaVidere = () => kanManGaVidere
-        ? props.onSubmit(harDokumentasjon, harSammenheng, begrunnelse)
+        ? onSubmit()
         : endreVisFeilmeldinger(true);
 
-    return <div className={styles.vilkarKroniskSyktBarn}>
+    const genererResponsmelding = () => {
+        if (responsFraEndepunkt !== null) {
+            switch (responsFraEndepunkt.status) {
+                case 200: return <AlertStripeSuksess>Vedtaket er løst.</AlertStripeSuksess>;
+                case 409: return <AlertStripeFeil>Vedtaket har en annen status enn <i>foreslått</i>.</AlertStripeFeil>;
+                default: return <ApiErrorMessage response={responsFraEndepunkt}/>;
+            }
+        }
+    };
+
+    return <div className={classNames(styles.vilkarKroniskSyktBarn, props.lesemodus && styleLesemodus.lesemodusboks)}>
         <AlertStripeAdvarsel className={styles.varselstripe}>
             Se på vedlagt legeerklæring og vurder om barnet har en kronisk sykdom eller en funksjonshemmelse, og om det er økt risiko for fravær.
         </AlertStripeAdvarsel>
@@ -65,6 +96,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
             maxLength={0}
             feil={visFeilmeldinger && feilmeldinger.begrunnelse && "Begrunnelse må oppgis."}
         />
+        {genererResponsmelding()}
         <Hovedknapp onClick={onGaVidere}>Gå videre</Hovedknapp>
     </div>;
 };
