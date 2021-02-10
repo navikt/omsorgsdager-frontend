@@ -1,4 +1,7 @@
 export interface VilkarMidlertidigAleneProps {
+  behandlingsid: string;
+  lesemodus?: boolean;
+  stiTilEndepunkt: string;
   soknedsopplysninger: {
     årsak: string;
     beskrivelse?: string;
@@ -12,6 +15,6 @@ export interface VilkarMidlertidigAleneProps {
 }
 
 export interface VilkarMidlertidigAleneDato {
-    til: string;
-    fra: string;
+  til: string;
+  fra: string;
 }
