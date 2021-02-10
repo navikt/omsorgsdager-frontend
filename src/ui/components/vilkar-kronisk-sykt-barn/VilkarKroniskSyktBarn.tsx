@@ -2,102 +2,114 @@ import classNames from 'classnames';
 import {AlertStripeAdvarsel, AlertStripeFeil, AlertStripeSuksess} from "nav-frontend-alertstriper";
 import {Hovedknapp} from "nav-frontend-knapper";
 import {Radio, RadioGruppe, Textarea} from "nav-frontend-skjema";
-import React, {useState} from 'react';
-import ApiErrorMessage from "../api-error-message/ApiErrorMessage";
-import {KroniskSyktBarnAksjonspunktRequest} from "../../../types/KroniskSyktBarnAksjonspunktRequest";
+import React, {useEffect, useState} from 'react';
+import KroniskSyktBarnApi from "../../../api/KroniskSyktBarnApi";
 import {VilkarKroniskSyktBarnProps} from "../../../types/VilkarKroniskSyktBarnProps";
-import {patch} from "../../../util/apiUtils";
 import Feilikon from "../../icons/Feilikon";
 import Suksessikon from "../../icons/Suksessikon";
+import ApiErrorMessage from "../api-error-message/ApiErrorMessage";
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
+import Spinner from "../spinner/Spinner";
 import styles from './vilkarKronisSyktBarn.less';
 
 interface Feilmeldinger {
-    vilkar: boolean;
-    begrunnelse: boolean;
+  vilkar: boolean;
+  begrunnelse: boolean;
 }
+
+enum Visningsstatus {SPINNER, FEIL, UTEN_FEIL}
 
 const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps> = props => {
 
-    const [harDokumentasjon, endreHarDokumentasjon] = useState<boolean>(false);
-    const [harSammenheng, endreHarSammenheng] = useState<boolean>(false);
-    const [begrunnelse, endreBegrunnelse] = useState<string>("");
-    const [visFeilmeldinger, endreVisFeilmeldinger] = useState<boolean>(false);
-    const [responsFraEndepunkt, endreResponsFraEndepunkt] = useState<Response | null>(null);
+  const [visningsstatus, endreVisningsstatus] = useState<Visningsstatus>(Visningsstatus.SPINNER);
+  const [harDokumentasjon, endreHarDokumentasjon] = useState<boolean>(false);
+  const [harSammenheng, endreHarSammenheng] = useState<boolean>(false);
+  const [begrunnelse, endreBegrunnelse] = useState<string>("");
+  const [visFeilmeldinger, endreVisFeilmeldinger] = useState<boolean>(false);
+  const [responsFraEndepunkt, endreResponsFraEndepunkt] = useState<Response | null>(null);
 
-    const onSubmit = () => {
-        const request: KroniskSyktBarnAksjonspunktRequest = {
-            LEGEERKLÆRING: {
-                vurdering: begrunnelse,
-                barnetErKroniskSyktEllerHarEnFunksjonshemning: harDokumentasjon,
-                erSammenhengMedSøkersRisikoForFraværeFraArbeid: harSammenheng
-            },
-            OMSORGEN_FOR: {}
-        };
-        patch(
-            `${props.stiTilEndepunkt}/kronisk-sykt-barn/${props.behandlingsid}/aksjonspunkt`,
-            request
-        ).then(endreResponsFraEndepunkt);
-    };
+  const kroniskSyktBarnApi = new KroniskSyktBarnApi(props.stiTilEndepunkt, props.behandlingsid);
 
-    const byttHarDokumentasjon = () => endreHarDokumentasjon(!harDokumentasjon);
-    const byttHarSammenheng = () => endreHarSammenheng(!harSammenheng);
+  useEffect(() => {
+    kroniskSyktBarnApi
+      .hentInfoOmLegeerklaering()
+      .then(legeerklaeringsinfo => {
+        endreHarDokumentasjon(legeerklaeringsinfo.harDokumentasjon);
+        endreHarSammenheng(legeerklaeringsinfo.harSammenheng);
+        endreBegrunnelse(legeerklaeringsinfo.begrunnelse);
+        endreVisningsstatus(Visningsstatus.UTEN_FEIL);
+      })
+      .catch(() => endreVisningsstatus(Visningsstatus.FEIL));
+  }, []);
 
-    const kanManGaVidere = harDokumentasjon && harSammenheng && begrunnelse;
-    const feilmeldinger: Feilmeldinger = {
-        vilkar: !harDokumentasjon || !harSammenheng,
-        begrunnelse: begrunnelse.length === 0
-    };
+  switch (visningsstatus) {
+    case Visningsstatus.SPINNER: return <Spinner/>;
+    case Visningsstatus.FEIL: return <AlertStripeFeil>Kunne ikke hente vedtak.</AlertStripeFeil>;
+  }
 
-    const onGaVidere = () => kanManGaVidere
-        ? onSubmit()
-        : endreVisFeilmeldinger(true);
+  const onSubmit = () => kroniskSyktBarnApi
+    .losAksjonspunkt(harDokumentasjon, harSammenheng, begrunnelse)
+    .then(endreResponsFraEndepunkt);
 
-    const genererResponsmelding = () => {
-        if (responsFraEndepunkt !== null) {
-            switch (responsFraEndepunkt.status) {
-                case 200: return <AlertStripeSuksess>Vedtaket er løst.</AlertStripeSuksess>;
-                case 409: return <AlertStripeFeil>Vedtaket har en annen status enn <i>foreslått</i>.</AlertStripeFeil>;
-                default: return <ApiErrorMessage response={responsFraEndepunkt}/>;
-            }
-        }
-    };
+  const byttHarDokumentasjon = () => endreHarDokumentasjon(!harDokumentasjon);
+  const byttHarSammenheng = () => endreHarSammenheng(!harSammenheng);
 
-    return <div className={classNames(styles.vilkarKroniskSyktBarn, props.lesemodus && styleLesemodus.lesemodusboks)}>
-        <AlertStripeAdvarsel className={styles.varselstripe}>
-            Se på vedlagt legeerklæring og vurder om barnet har en kronisk sykdom eller en funksjonshemmelse, og om det er økt risiko for fravær.
-        </AlertStripeAdvarsel>
-        <RadioGruppe
-            className={styles.jaellernei}
-            legend="Er det dokumentert at barnets sykdom er kronisk eller at barnet har en funksjonshemmelse?"
-        >
-            <Radio label="Ja" name="harDokumentasjon" checked={harDokumentasjon} onChange={byttHarDokumentasjon}/>
-            <Radio label="Nei" name="harIkkeDokumentasjon" checked={!harDokumentasjon} onChange={byttHarDokumentasjon}/>
-        </RadioGruppe>
-        <RadioGruppe
-            className={styles.jaellernei}
-            legend="Henger søkers risiko for fravær fra arbeid sammen med barnets kroniske sykdom eller funksjonshemmelse?"
-        >
-            <Radio label="Ja" name="harSammenheng" checked={harSammenheng} onChange={byttHarSammenheng}/>
-            <Radio label="Nei" name="harIkkeSammenheng" checked={!harSammenheng} onChange={byttHarSammenheng}/>
-        </RadioGruppe>
-        {harDokumentasjon && harSammenheng && <div className={styles.vilkarOppfylt}>
-            <Suksessikon/>
-            <span>Vilkåret er oppfylt</span>
-        </div>}
-        {visFeilmeldinger && feilmeldinger.vilkar && <div className={styles.vilkarOppfylt}>
-            <Feilikon/>
-            <span>Vilkåret er ikke oppfylt</span>
-        </div>}
-        <Textarea
-            label="Begrunnelse"
-            onChange={e => endreBegrunnelse(e.target.value)}
-            value={begrunnelse}
-            maxLength={0}
-            feil={visFeilmeldinger && feilmeldinger.begrunnelse && "Begrunnelse må oppgis."}
-        />
-        {genererResponsmelding()}
-        <Hovedknapp onClick={onGaVidere}>Gå videre</Hovedknapp>
-    </div>;
+  const kanManGaVidere = harDokumentasjon && harSammenheng && begrunnelse;
+  const feilmeldinger: Feilmeldinger = {
+    vilkar: !harDokumentasjon || !harSammenheng,
+    begrunnelse: begrunnelse.length === 0
+  };
+
+  const onGaVidere = () => kanManGaVidere
+    ? onSubmit()
+    : endreVisFeilmeldinger(true);
+
+  const genererResponsmelding = () => {
+    if (responsFraEndepunkt !== null) {
+      switch (responsFraEndepunkt.status) {
+        case 200: return <AlertStripeSuksess>Vedtaket er løst.</AlertStripeSuksess>;
+        case 409: return <AlertStripeFeil>Vedtaket har en annen status enn <i>foreslått</i>.</AlertStripeFeil>;
+        default: return <ApiErrorMessage response={responsFraEndepunkt}/>;
+      }
+    }
+  };
+
+  return <div className={classNames(styles.vilkarKroniskSyktBarn, props.lesemodus && styleLesemodus.lesemodusboks)}>
+    <AlertStripeAdvarsel className={styles.varselstripe}>
+      Se på vedlagt legeerklæring og vurder om barnet har en kronisk sykdom eller en funksjonshemmelse, og om det er økt
+      risiko for fravær.
+    </AlertStripeAdvarsel>
+    <RadioGruppe
+      className={styles.jaellernei}
+      legend="Er det dokumentert at barnets sykdom er kronisk eller at barnet har en funksjonshemmelse?"
+    >
+      <Radio label="Ja" name="harDokumentasjon" checked={harDokumentasjon} onChange={byttHarDokumentasjon}/>
+      <Radio label="Nei" name="harIkkeDokumentasjon" checked={!harDokumentasjon} onChange={byttHarDokumentasjon}/>
+    </RadioGruppe>
+    <RadioGruppe
+      className={styles.jaellernei}
+      legend="Henger søkers risiko for fravær fra arbeid sammen med barnets kroniske sykdom eller funksjonshemmelse?"
+    >
+      <Radio label="Ja" name="harSammenheng" checked={harSammenheng} onChange={byttHarSammenheng}/>
+      <Radio label="Nei" name="harIkkeSammenheng" checked={!harSammenheng} onChange={byttHarSammenheng}/>
+    </RadioGruppe>
+    {harDokumentasjon && harSammenheng && <div className={styles.vilkarOppfylt}>
+        <Suksessikon/>
+        <span>Vilkåret er oppfylt</span>
+    </div>}
+    {visFeilmeldinger && feilmeldinger.vilkar && <div className={styles.vilkarOppfylt}>
+        <Feilikon/>
+        <span>Vilkåret er ikke oppfylt</span>
+    </div>}
+    <Textarea
+      label="Begrunnelse"
+      onChange={e => endreBegrunnelse(e.target.value)}
+      value={begrunnelse}
+      maxLength={0}
+      feil={visFeilmeldinger && feilmeldinger.begrunnelse && "Begrunnelse må oppgis."}
+    />
+    {genererResponsmelding()}
+    <Hovedknapp onClick={onGaVidere}>Gå videre</Hovedknapp>
+  </div>;
 };
 export default VilkarKroniskSyktBarn;

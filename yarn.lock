@@ -6201,6 +6201,16 @@ nav-frontend-skjema@^3.0.46:
   resolved "https://registry.npmjs.org/nav-frontend-skjema/-/nav-frontend-skjema-3.0.46.tgz"
   integrity sha512-u5Hy1KzAksozdzN/l8l3r+w7QrSI2CDtwyOuro+rPrEMhEXmM1On600V7nlEfxBhHtrsjvXPdDIEn4WOYuxmDg==
 
+nav-frontend-spinner-style@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/nav-frontend-spinner-style/-/nav-frontend-spinner-style-1.0.2.tgz#af58a3f7cf043122c0aa87b32ba4dc119cdf2baa"
+  integrity sha512-7zHnZdV2vF5kAOq0KCVBBpU2g6eI8rilmFx88oTTRTVPwKjCGcbYW6BzFUSN9rGuuI6AxiWQRu5mnxRPNZW9BA==
+
+nav-frontend-spinner@^2.0.16:
+  version "2.0.16"
+  resolved "https://registry.yarnpkg.com/nav-frontend-spinner/-/nav-frontend-spinner-2.0.16.tgz#71dad64ec5730f336309db63d79765c576105eb7"
+  integrity sha512-En0IMZI5oFzf7rTtmKYOYWKGUn+GbiwdzEuXwdTYa1UGAVVl9FZcxTStt08upgdsmoH8bwkulB7B3zWXoMDsOA==
+
 nav-frontend-typografi-style@^1.0.32:
   version "1.0.32"
   resolved "https://registry.npmjs.org/nav-frontend-typografi-style/-/nav-frontend-typografi-style-1.0.32.tgz"
