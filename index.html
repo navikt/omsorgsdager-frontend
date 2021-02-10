@@ -16,10 +16,9 @@
               vilkarKroniskSyktBarn: {
                 visKomponent: 'VilkarKroniskSyktBarn',
                 props: {
-                  type: 'VilkarKroniskSyktBarn',
                   behandlingsid: '123',
                   stiTilEndepunkt: 'api',
-                  lesemodus: false
+                  lesemodus: true
                 }
               },
               vilkarMidlertidigAlene: {
@@ -37,8 +36,8 @@
 
             setTimeout(() => {
               window.renderMicrofrontendOmsorgsdagerApp('app', {
-                visKomponent: 'VilkarMidlertidigAlene',
-                props: inputMocks.vilkarMidlertidigAlene.props
+                visKomponent: 'VilkarKroniskSyktBarn',
+                props: inputMocks.VilkarKroniskSyktBarn
               });
             }, 300);
         </script>
