@@ -12,7 +12,12 @@
         <div id="app"></div>
         <script type="text/javascript">
             const inputMocks = {
-              korrigerePerioder: {visKomponent: 'KorrigerePerioder'},
+              korrigerePerioder: {
+                visKomponent: 'KorrigerePerioder',
+                props: {
+                  lesemodus: true
+                }
+              },
               vilkarKroniskSyktBarn: {
                 visKomponent: 'VilkarKroniskSyktBarn',
                 props: {
@@ -38,7 +43,7 @@
             };
 
             setTimeout(() => {
-              window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.vilkarKroniskSyktBarn);
+              window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.korrigerePerioder);
             }, 300);
         </script>
     </body>
