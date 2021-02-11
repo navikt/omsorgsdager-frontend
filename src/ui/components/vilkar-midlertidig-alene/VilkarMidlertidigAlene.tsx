@@ -57,9 +57,9 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
 
   return (
     <div className={classNames(styles.vilkarMidlerTidigAlene, lesemodus && styleLesemodus.lesemodusboks)}>
-      {lesemodus ?
-        <p><b>Behandlet aksjonspunkt:</b> Vurder om vilkår om midlertidig alene om omsorgen er oppfylt.</p> :
-        <AlertStripe type="advarsel">Vurder om vilkår om aleneomsorg er oppfylt.</AlertStripe>}
+      {lesemodus
+        ? <p><b>Behandlet aksjonspunkt:</b> Vurder om vilkår om midlertidig alene om omsorgen er oppfylt.</p>
+        : <AlertStripe type="advarsel">Vurder om vilkår om aleneomsorg er oppfylt.</AlertStripe>}
 
       <OpplysningerFraSoknad {...soknedsopplysninger}/>
       {lesemodus && <OpplysningerFraVedtak {...opplysningerFraVedtak}/>}
