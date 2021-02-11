@@ -47,6 +47,8 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
     case Visningsstatus.FEIL: return <AlertStripeFeil>Kunne ikke hente vedtak.</AlertStripeFeil>;
   }
 
+  const {lesemodus} = props;
+
   const onSubmit = () => kroniskSyktBarnApi
     .losAksjonspunkt(harDokumentasjon, harSammenheng, begrunnelse)
     .then(endreResponsFraEndepunkt);
@@ -74,25 +76,43 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
     }
   };
 
+  const tekst = {
+    instruksjon: "Se på vedlagt legeerklæring og vurder om barnet har en kronisk sykdom eller en funksjonshemmelse, og om det er økt risiko for fravær.",
+    sporsmalHarDokumentasjon: "Er det dokumentert at barnets sykdom er kronisk eller at barnet har en funksjonshemmelse?",
+    sporsmalHarSammenheng: "Henger søkers risiko for fravær fra arbeid sammen med barnets kroniske sykdom eller funksjonshemmelse?",
+    begrunnelse: "Begrunnelse"
+  };
+
   return <div className={classNames(styles.vilkarKroniskSyktBarn, props.lesemodus && styleLesemodus.lesemodusboks)}>
-    <AlertStripeAdvarsel className={styles.varselstripe}>
-      Se på vedlagt legeerklæring og vurder om barnet har en kronisk sykdom eller en funksjonshemmelse, og om det er økt
-      risiko for fravær.
-    </AlertStripeAdvarsel>
-    <RadioGruppe
-      className={styles.jaellernei}
-      legend="Er det dokumentert at barnets sykdom er kronisk eller at barnet har en funksjonshemmelse?"
-    >
-      <Radio label="Ja" name="harDokumentasjon" checked={harDokumentasjon} onChange={byttHarDokumentasjon}/>
-      <Radio label="Nei" name="harIkkeDokumentasjon" checked={!harDokumentasjon} onChange={byttHarDokumentasjon}/>
-    </RadioGruppe>
-    <RadioGruppe
-      className={styles.jaellernei}
-      legend="Henger søkers risiko for fravær fra arbeid sammen med barnets kroniske sykdom eller funksjonshemmelse?"
-    >
-      <Radio label="Ja" name="harSammenheng" checked={harSammenheng} onChange={byttHarSammenheng}/>
-      <Radio label="Nei" name="harIkkeSammenheng" checked={!harSammenheng} onChange={byttHarSammenheng}/>
-    </RadioGruppe>
+
+    {lesemodus
+      ? <>
+          <p><b>Behandlet aksjonspunkt:</b> {tekst.instruksjon}</p>
+          <p className={styleLesemodus.label}>{tekst.sporsmalHarDokumentasjon}</p>
+          <p>{harDokumentasjon ? "Ja" : "Nei"}</p>
+          <p className={styleLesemodus.label}>{tekst.sporsmalHarSammenheng}</p>
+          <p>{harSammenheng ? "Ja" : "Nei"}</p>
+        </>
+      : <>
+          <AlertStripeAdvarsel className={styles.varselstripe}>
+            {tekst.instruksjon}
+          </AlertStripeAdvarsel>
+          <RadioGruppe
+            className={styles.jaellernei}
+            legend={tekst.sporsmalHarDokumentasjon}
+          >
+            <Radio label="Ja" name="harDokumentasjon" checked={harDokumentasjon} onChange={byttHarDokumentasjon}/>
+            <Radio label="Nei" name="harIkkeDokumentasjon" checked={!harDokumentasjon} onChange={byttHarDokumentasjon}/>
+          </RadioGruppe>
+          <RadioGruppe
+            className={styles.jaellernei}
+            legend={tekst.sporsmalHarSammenheng}
+          >
+            <Radio label="Ja" name="harSammenheng" checked={harSammenheng} onChange={byttHarSammenheng}/>
+            <Radio label="Nei" name="harIkkeSammenheng" checked={!harSammenheng} onChange={byttHarSammenheng}/>
+          </RadioGruppe>
+        </>}
+
     {harDokumentasjon && harSammenheng && <div className={styles.vilkarOppfylt}>
         <Suksessikon/>
         <span>Vilkåret er oppfylt</span>
@@ -101,13 +121,20 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
         <Feilikon/>
         <span>Vilkåret er ikke oppfylt</span>
     </div>}
-    <Textarea
-      label="Begrunnelse"
-      onChange={e => endreBegrunnelse(e.target.value)}
-      value={begrunnelse}
-      maxLength={0}
-      feil={visFeilmeldinger && feilmeldinger.begrunnelse && "Begrunnelse må oppgis."}
-    />
+
+    {lesemodus
+      ? <>
+          <p className={styleLesemodus.label}>{tekst.begrunnelse}</p>
+          <p className={styleLesemodus.fritekst}>{begrunnelse}</p>
+        </>
+      : <Textarea
+          label={tekst.begrunnelse}
+          onChange={e => endreBegrunnelse(e.target.value)}
+          value={begrunnelse}
+          maxLength={0}
+          feil={visFeilmeldinger && feilmeldinger.begrunnelse && "Begrunnelse må oppgis."}
+        />}
+
     {genererResponsmelding()}
     <Hovedknapp onClick={onGaVidere}>Gå videre</Hovedknapp>
   </div>;
