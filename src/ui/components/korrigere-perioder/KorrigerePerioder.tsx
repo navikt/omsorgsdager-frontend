@@ -1,12 +1,12 @@
-import {AlertStripeAdvarsel} from "nav-frontend-alertstriper";
-import {Radio, RadioGruppe, Textarea} from "nav-frontend-skjema";
+import {AlertStripeAdvarsel} from 'nav-frontend-alertstriper';
+import {Radio, RadioGruppe, Textarea} from 'nav-frontend-skjema';
 import React, {useState} from 'react';
 import styles from './korrigerePerioder.less';
 
 const KorrigerePerioder = () => {
 
-    const [innvilgedePerioder, endreInnvilgedePerioder] = useState<"alle" | "ingen">("ingen");
-    const [begrunnelse, endreBegrunnelse] = useState<string>("");
+    const [innvilgedePerioder, endreInnvilgedePerioder] = useState<'alle' | 'ingen'>('ingen');
+    const [begrunnelse, endreBegrunnelse] = useState<string>('');
 
     // TODO: Avventer avklaringer på hvordan denne skal se ut
 
@@ -18,14 +18,14 @@ const KorrigerePerioder = () => {
             <Radio
                 label="Ja"
                 name="alle"
-                checked={innvilgedePerioder === "alle"}
-                onChange={e => e.target.value && endreInnvilgedePerioder("alle")}
+                checked={innvilgedePerioder === 'alle'}
+                onChange={e => e.target.value && endreInnvilgedePerioder('alle')}
             />
             <Radio
                 label="Nei"
                 name="ingen"
-                checked={innvilgedePerioder === "ingen"}
-                onChange={e => e.target.value && endreInnvilgedePerioder("ingen")}
+                checked={innvilgedePerioder === 'ingen'}
+                onChange={e => e.target.value && endreInnvilgedePerioder('ingen')}
             />
         </RadioGruppe>
         <Textarea

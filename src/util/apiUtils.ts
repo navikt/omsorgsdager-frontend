@@ -1,4 +1,4 @@
-import querystring from "querystring";
+import querystring from 'querystring';
 
 export async function get<T>(
   path: string,
