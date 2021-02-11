@@ -1,9 +1,9 @@
-import HentKroniskSyktBarnResponse from "../types/HentKroniskSyktBarnResponse";
-import {KroniskSyktBarnAksjonspunktRequest} from "../types/KroniskSyktBarnAksjonspunktRequest";
+import HentMidlertidigAleneResponse from "../types/HentMidlertidigAleneResponse";
+import {MidlertidigAleneAksjonspunktRequest} from "../types/HentMidlertidigAleneResponse";
 import Legeerklaeringsinfo from "../types/Legeerklaeringsinfo";
 import {get, patch} from "../util/apiUtils";
 
-export default class KroniskSyktBarnApi {
+export default class MidlertidigAleneApi {
 
   stiTilEndepunkt: string;
   behandlingsid: string;
@@ -16,8 +16,8 @@ export default class KroniskSyktBarnApi {
     this.behandlingsid = behandlingsid;
   }
 
-  async getVedtak(): Promise<HentKroniskSyktBarnResponse> {
-    return get<HentKroniskSyktBarnResponse>(
+  async getVedtak(): Promise<HentMidlertidigAleneResponse> {
+    return get<HentMidlertidigAleneResponse>(
       `${this.stiTilEndepunkt}/kronisk-sykt-barn`,
       {behandlingId: this.behandlingsid}
     );
