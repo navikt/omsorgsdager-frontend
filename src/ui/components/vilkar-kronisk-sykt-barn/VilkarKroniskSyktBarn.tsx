@@ -127,16 +127,18 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
           <p className={styleLesemodus.label}>{tekst.begrunnelse}</p>
           <p className={styleLesemodus.fritekst}>{begrunnelse}</p>
         </>
-      : <Textarea
-          label={tekst.begrunnelse}
-          onChange={e => endreBegrunnelse(e.target.value)}
-          value={begrunnelse}
-          maxLength={0}
-          feil={visFeilmeldinger && feilmeldinger.begrunnelse && "Begrunnelse må oppgis."}
-        />}
+      : <>
+          <Textarea
+            label={tekst.begrunnelse}
+            onChange={e => endreBegrunnelse(e.target.value)}
+            value={begrunnelse}
+            maxLength={0}
+            feil={visFeilmeldinger && feilmeldinger.begrunnelse && "Begrunnelse må oppgis."}
+          />
+          {genererResponsmelding()}
+          <Hovedknapp onClick={onGaVidere}>Gå videre</Hovedknapp>
+        </>}
 
-    {genererResponsmelding()}
-    <Hovedknapp onClick={onGaVidere}>Gå videre</Hovedknapp>
   </div>;
 };
 export default VilkarKroniskSyktBarn;
