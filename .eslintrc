@@ -25,7 +25,6 @@
         "linebreak-style": "off",
         "no-var": 2,
         "prefer-const": 2,
-        "react-hooks/exhaustive-deps": "warn",
         "react-hooks/rules-of-hooks": "error",
         "react/jsx-max-props-per-line": ["error", {"maximum": 1, "when": "multiline"}],
         "react/prop-types": 0,

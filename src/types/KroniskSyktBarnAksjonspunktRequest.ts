@@ -1,10 +1,3 @@
-/* eslint-disable */
+import {Behovsliste} from "./Behov";
 
-export type KroniskSyktBarnAksjonspunktRequest = {
-  LEGEERKLÆRING: {
-    vurdering: string;
-    barnetErKroniskSyktEllerHarEnFunksjonshemning: boolean;
-    erSammenhengMedSøkersRisikoForFraværeFraArbeid: boolean;
-  };
-  OMSORGEN_FOR: {};
-}
+export type KroniskSyktBarnAksjonspunktRequest = Required<Behovsliste>;
