@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './opplysningerFraVedtak.less';
+import styleLesemodus from '../../lesemodus/lesemodusboks.less';
 import {VilkarMidlertidigAleneDato} from '../../../../types/VilkarMidlertidigAleneProps';
 
 interface Props {
@@ -18,7 +19,7 @@ const OpplysningerFraVedtak: React.FunctionComponent<Props> = ({vilkarOppfylt, d
       <p>{`${dato.fra}-${dato.til}`}</p>
 
       <h4>Begrunnelse</h4>
-      <p>{begrunnelse}</p>
+      <p className={styleLesemodus.fritekst}>{begrunnelse}</p>
     </div>
   );
 };
