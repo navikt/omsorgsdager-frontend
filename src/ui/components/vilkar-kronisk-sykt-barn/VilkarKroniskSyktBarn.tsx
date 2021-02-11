@@ -83,7 +83,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
     begrunnelse: "Begrunnelse"
   };
 
-  return <div className={classNames(styles.vilkarKroniskSyktBarn, props.lesemodus && styleLesemodus.lesemodusboks)}>
+  return <div className={classNames(styles.vilkarKroniskSyktBarn, lesemodus && styleLesemodus.lesemodusboks)}>
 
     {lesemodus
       ? <>
