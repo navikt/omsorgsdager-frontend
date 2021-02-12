@@ -39,11 +39,19 @@
                   },
                   onSubmit: (vilkarOppfylt, dato, begrunnelse) => console.log(vilkarOppfylt, dato, begrunnelse)
                 }
+              },
+              omsorg: {
+                visKomponent: 'Omsorg',
+                props: {
+                  behandlingsid: '123',
+                  stiTilEndepunkt: 'api',
+                  lesemodus: true
+                }
               }
             };
 
             setTimeout(() => {
-              window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.korrigerePerioder);
+              window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.omsorg);
             }, 300);
         </script>
     </body>

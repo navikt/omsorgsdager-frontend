@@ -9,4 +9,6 @@ interface Legeerklaering {
   erSammenhengMedSøkersRisikoForFraværFraArbeid: boolean;
 }
 
-export interface OmsorgenFor {} // eslint-disable-line @typescript-eslint/no-empty-interface
+export interface OmsorgenFor {
+  harOmsorgen?: boolean; // TODO: Avklare formatet på dette aksjonspunktet
+}
