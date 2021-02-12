@@ -1,14 +1,14 @@
-import AlertStripe from "nav-frontend-alertstriper";
+import AlertStripe from 'nav-frontend-alertstriper';
 import classNames from 'classnames';
 import {Datepicker} from 'nav-datovelger';
-import {Hovedknapp} from "nav-frontend-knapper";
-import OpplysningerFraVedtak from "./opplysninger-fra-vedtak/OpplysningerFraVedtak";
-import OpplysningerFraSoknad from "./opplysninger-fra-soknad/OpplysningerFraSoknad";
-import {Radio, RadioGruppe, SkjemaGruppe, Textarea} from "nav-frontend-skjema";
+import {Hovedknapp} from 'nav-frontend-knapper';
+import OpplysningerFraVedtak from './opplysninger-fra-vedtak/OpplysningerFraVedtak';
+import OpplysningerFraSoknad from './opplysninger-fra-soknad/OpplysningerFraSoknad';
+import {Radio, RadioGruppe, SkjemaGruppe, Textarea} from 'nav-frontend-skjema';
 import React, {useState} from 'react';
 import styles from './vilkarMidlertidigAlene.less';
-import styleLesemodus from "../lesemodus/lesemodusboks.less";
-import {VilkarMidlertidigAleneProps} from "../../../types/VilkarMidlertidigAleneProps";
+import styleLesemodus from '../lesemodus/lesemodusboks.less';
+import {VilkarMidlertidigAleneProps} from '../../../types/VilkarMidlertidigAleneProps';
 
 const opplysningerFraVedtak = {
   vilkarOppfylt: true,
@@ -66,11 +66,11 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
 
       {!lesemodus &&
       <RadioGruppe className={styles.radioButtons} legend="Er vilkårene om aleneomsorg oppfylt?">
-        <Radio label={"Ja"}
+        <Radio label="Ja"
                checked={vilkarOppfylt}
                onChange={() => endreVilkarOppfylt(true)}
                name="vilkarAleneomsorg"/>
-        <Radio label={"Nei"}
+        <Radio label="Nei"
                checked={!vilkarOppfylt}
                onChange={() => endreVilkarOppfylt(false)}
                name="vilkarAleneomsorg"/>

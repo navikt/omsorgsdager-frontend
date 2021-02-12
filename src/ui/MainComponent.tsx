@@ -1,10 +1,10 @@
 import React from 'react';
 import ContainerContract from '../types/ContainerContract';
 import ContainerContext from './context/ContainerContext';
-import Komponenter from "../types/Komponenter";
-import KorrigerePerioder from "../ui/components/korrigere-perioder/KorrigerePerioder";
-import VilkarKroniskSyktBarn from "../ui/components/vilkar-kronisk-sykt-barn/VilkarKroniskSyktBarn";
-import VilkarMidlertidigAlene from "./components/vilkar-midlertidig-alene/VilkarMidlertidigAlene";
+import Komponenter from '../types/Komponenter';
+import KorrigerePerioder from '../ui/components/korrigere-perioder/KorrigerePerioder';
+import VilkarKroniskSyktBarn from '../ui/components/vilkar-kronisk-sykt-barn/VilkarKroniskSyktBarn';
+import VilkarMidlertidigAlene from './components/vilkar-midlertidig-alene/VilkarMidlertidigAlene';
 
 interface MainComponentProps {
   containerData: ContainerContract;
