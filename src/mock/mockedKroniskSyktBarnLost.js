@@ -6,7 +6,7 @@ module.exports = app =>
       case 'PATCH':
         res.status(200);
         res.send({
-          status: "FORESLÅTT",
+          status: 'FORESLÅTT',
           potensielleStatuser: {
             INNVILGET: {},
             AVSLÅTT: {},

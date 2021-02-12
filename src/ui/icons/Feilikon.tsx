@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const Feilikon = () => (
     <svg height="1.5rem" width="1.5rem" viewBox="0 0 24 24">

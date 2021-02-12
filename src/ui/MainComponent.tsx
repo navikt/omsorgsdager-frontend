@@ -1,10 +1,10 @@
 import React from 'react';
 import ContainerContract from '../types/ContainerContract';
 import ContainerContext from './context/ContainerContext';
-import Komponenter from "../types/Komponenter";
-import KorrigerePerioder from "../ui/components/korrigere-perioder/KorrigerePerioder";
-import VilkarKroniskSyktBarn from "../ui/components/vilkar-kronisk-sykt-barn/VilkarKroniskSyktBarn";
-import VilkarMidlertidigAlene from "./components/vilkar-midlertidig-alene/VilkarMidlertidigAlene";
+import Komponenter from '../types/Komponenter';
+import KorrigerePerioder from '../ui/components/korrigere-perioder/KorrigerePerioder';
+import VilkarKroniskSyktBarn from '../ui/components/vilkar-kronisk-sykt-barn/VilkarKroniskSyktBarn';
+import VilkarMidlertidigAlene from './components/vilkar-midlertidig-alene/VilkarMidlertidigAlene';
 
 interface MainComponentProps {
   containerData: ContainerContract;
@@ -15,7 +15,7 @@ const MainComponent = ({containerData}: MainComponentProps): JSX.Element => {
   let innhold;
   switch (containerData.visKomponent) {
     case Komponenter.KORRIGERE_PERIODER:
-      innhold = <KorrigerePerioder/>;
+      innhold = <KorrigerePerioder {...containerData.props}/>;
       break;
     case Komponenter.VILKAR_KRONISK_SYKT_BARN:
       innhold = <VilkarKroniskSyktBarn {...containerData.props}/>;

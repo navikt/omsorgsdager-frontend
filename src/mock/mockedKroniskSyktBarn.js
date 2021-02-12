@@ -9,27 +9,27 @@ module.exports = app =>
           vedtak: [
             {
               barn: {
-                identitetsnummer: "29099011111",
-                fødselsdato: "2021-02-10",
+                identitetsnummer: '29099011111',
+                fødselsdato: '2021-02-10',
                 harSammeBosted: true
               },
-              behandlingId: "UUID-123-123",
-              gyldigFraOgMed: "2021-02-10",
-              gyldigTilOgMed: "2021-02-10",
-              status: "FORESLÅTT",
+              behandlingId: 'UUID-123-123',
+              gyldigFraOgMed: '2021-02-10',
+              gyldigTilOgMed: '2021-02-10',
+              status: 'FORESLÅTT',
               uløsteBehov: {
                 OMSORGEN_FOR: {}
               },
               løsteBehov: {
                 LEGEERKLÆRING: {
-                  vurdering: "Dette er saksbehandlers vurdering",
+                  vurdering: 'Dette er saksbehandlers vurdering',
                   barnetErKroniskSyktEllerHarEnFunksjonshemning: true,
                   erSammenhengMedSøkersRisikoForFraværFraArbeid: true
                 }
               },
               lovhenvisnigner: {
-                "FTL 9-5 3.ledd": "søkeren bor ikke i norge",
-                "FTL 9-5 2.ledd": "ikke omsorgen for barnet"
+                'FTL 9-5 3.ledd': 'søkeren bor ikke i norge',
+                'FTL 9-5 2.ledd': 'ikke omsorgen for barnet'
               }
             }
           ]
