@@ -2,16 +2,17 @@ import AlertStripe, {AlertStripeFeil} from "nav-frontend-alertstriper";
 import classNames from 'classnames';
 import {Datepicker} from 'nav-datovelger';
 import {Hovedknapp} from "nav-frontend-knapper";
+import MidlertidigAleneApi from "../../../api/MidlertidigAleneApi";
 import OpplysningerFraVedtak from "./opplysninger-fra-vedtak/OpplysningerFraVedtak";
 import OpplysningerFraSoknad from "./opplysninger-fra-soknad/OpplysningerFraSoknad";
 import {Radio, RadioGruppe, SkjemaGruppe, Textarea} from "nav-frontend-skjema";
 import React, {useEffect, useState} from 'react';
+import Spinner from "../spinner/Spinner";
 import styles from './vilkarMidlertidigAlene.less';
 import styleLesemodus from "../lesemodus/lesemodusboks.less";
+import {tekst} from './vilkar-midlertidig-alene-tekst';
 import {VilkarMidlertidigAleneProps} from "../../../types/VilkarMidlertidigAleneProps";
-import MidlertidigAleneApi from "../../../api/MidlertidigAleneApi";
 import {VilkarMidlertidigAleneSoknedsopplysninger} from "../../../types/MidlertidigAleneVurderingInfo";
-import Spinner from "../spinner/Spinner";
 import {Visningsstatus} from "../../../types/Visningsstatus";
 
 interface Feilmeldinger {
@@ -23,10 +24,10 @@ interface Feilmeldinger {
 }
 
 const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProps> = ({
-                                                                                        behandlingsid,
-                                                                                        lesemodus,
-                                                                                        stiTilEndepunkt
-                                                                                      }) => {
+  behandlingsid,
+  lesemodus,
+  stiTilEndepunkt
+}) => {
   const [begrunnelse, endreBegrunnelse] = useState('');
   const [fraDato, endreFraDato] = useState('DD.MM.ÅÅÅÅ');
   const [tilDato, endreTilDato] = useState('DD.MM.ÅÅÅÅ');
@@ -37,13 +38,14 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   const [responsFraEndepunkt, endreResponsFraEndepunkt] = useState<Response | null>(null);
 
   const midlertidigAleneApi = new MidlertidigAleneApi(stiTilEndepunkt, behandlingsid);
+
   useEffect(() => {
     midlertidigAleneApi
       .hentInfoOmMidlertidigAleneVurdering()
       .then(midlertidigAleneInfo => {
-        if(midlertidigAleneInfo.dato.fra === '' && midlertidigAleneInfo.dato.til === '' && midlertidigAleneInfo.begrunnelse == ''){
+        if (midlertidigAleneInfo.dato.fra === '' && midlertidigAleneInfo.dato.til === '' && midlertidigAleneInfo.begrunnelse == '') {
           endreSoknedsopplysninger(midlertidigAleneInfo.soknedsopplysninger);
-        }else{
+        } else {
           endreFraDato(midlertidigAleneInfo.dato.fra);
           endreTilDato(midlertidigAleneInfo.dato.til);
           endreErSokerenMidlertidigAleneOmOmsorgen(midlertidigAleneInfo.erSokerenMidlertidigAleneOmOmsorgen);
@@ -54,15 +56,6 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
       })
       .catch(() => endreVisningsstatus(Visningsstatus.FEIL));
   }, []);
-
-  const opplysningerFraVedtak = {
-    erSokerenMidlertidigAleneOmOmsorgen: erSokerenMidlertidigAleneOmOmsorgen,
-    dato: {
-      fra: fraDato,
-      til: tilDato
-    },
-    begrunnelse: begrunnelse
-  };
 
   const feilmedlinger: Feilmeldinger = {
     begrunnelse: begrunnelse.length === 0,
@@ -80,22 +73,16 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   }
 
   const vurderingKomplett = !feilmedlinger.begrunnelse && !feilmedlinger.dato.til && !feilmedlinger.dato.fra;
-  const visFeilmedlingForDato = visFeilmedlinger && feilmedlinger.dato.fra && feilmedlinger.dato.til && 'Mangler dato.'
-    || visFeilmedlinger && feilmedlinger.dato.til && !feilmedlinger.dato.fra && 'Manger til dato.'
-    || visFeilmedlinger && feilmedlinger.dato.fra && !feilmedlinger.dato.til && 'Mangler fra dato.';
+  const visFeilmedlingForDato = visFeilmedlinger && feilmedlinger.dato.fra && feilmedlinger.dato.til && tekst.feilmedlingManglerDato
+    || visFeilmedlinger && feilmedlinger.dato.til && !feilmedlinger.dato.fra && tekst.feilmedlingManglerFraDato
+    || visFeilmedlinger && feilmedlinger.dato.fra && !feilmedlinger.dato.til && tekst.feilmeldingManglerTilDato;
 
   const sjekkHvisVurderingErKomplett = () => vurderingKomplett ?
-    console.log(erSokerenMidlertidigAleneOmOmsorgen, {til: erSokerenMidlertidigAleneOmOmsorgen ? tilDato : '', fra: erSokerenMidlertidigAleneOmOmsorgen ? fraDato : ''}, begrunnelse) :
+    console.log(erSokerenMidlertidigAleneOmOmsorgen, {
+      til: erSokerenMidlertidigAleneOmOmsorgen ? tilDato : '',
+      fra: erSokerenMidlertidigAleneOmOmsorgen ? fraDato : ''
+    }, begrunnelse) :
     endreVisFeilmedlinger(true);
-
-  const tekst = {
-    aksjonspunkt: 'Vurder om vilkår om midlertidig alene om omsorgen er oppfylt.',
-    sporsmålVilkarOppfylt: 'Er vilkårene om aleneomsorg oppfylt?',
-    sporsmalPeriodeVedtakGyldig: 'I hvilken periode er vedtaket gyldig?',
-    begrunnelse: 'Begrunnelse',
-    feilmedlingBegrunnelse: 'Begrunnelse må oppgis.',
-    bekreftFortsettKnapp: 'Bekreft og fortsett'
-  };
 
   return (
     <div className={classNames(styles.vilkarMidlerTidigAlene, lesemodus && styleLesemodus.lesemodusboks)}>
@@ -104,7 +91,11 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
         : <AlertStripe type="advarsel">{tekst.aksjonspunkt}</AlertStripe>}
 
       <OpplysningerFraSoknad {...soknedsopplysninger}/>
-      {lesemodus && <OpplysningerFraVedtak {...opplysningerFraVedtak}/>}
+      {lesemodus && <OpplysningerFraVedtak
+        erSokerenMidlertidigAleneOmOmsorgen={erSokerenMidlertidigAleneOmOmsorgen}
+        dato={{fra: fraDato, til: tilDato}}
+        begrunnelse={begrunnelse}
+      />}
 
       {!lesemodus &&
       <RadioGruppe className={styles.radioButtons} legend={tekst.sporsmålVilkarOppfylt}>

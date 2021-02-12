@@ -8,14 +8,18 @@ interface Props {
   begrunnelse: string;
 }
 
-const OpplysningerFraVedtak: React.FunctionComponent<Props> = ({erSokerenMidlertidigAleneOmOmsorgen, dato, begrunnelse}) => {
+const OpplysningerFraVedtak: React.FunctionComponent<Props> = ({
+  erSokerenMidlertidigAleneOmOmsorgen,
+  dato,
+  begrunnelse
+}) => {
   return (
     <div className={styles.opplysningerFraVedtak}>
       <h4>Er vilkåret om midlertidig alene om omsorgen oppfylt?</h4>
       <p>{erSokerenMidlertidigAleneOmOmsorgen ? 'Ja' : 'Nei'}</p>
 
       <h4>I hvilken periode er vedtaket gyldig?</h4>
-      <p>{`${dato.fra}-${dato.til}`}</p>
+      <p>{`${dato.fra} - ${dato.til}`}</p>
 
       <h4>Begrunnelse</h4>
       <p>{begrunnelse}</p>
