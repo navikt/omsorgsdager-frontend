@@ -1,4 +1,5 @@
 import AlertStripe, {AlertStripeFeil} from "nav-frontend-alertstriper";
+import ApiResponseMessage from "../api-response-message/ApiResponseMessage";
 import classNames from 'classnames';
 import {Datepicker} from 'nav-datovelger';
 import {Hovedknapp} from "nav-frontend-knapper";
@@ -29,8 +30,8 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   stiTilEndepunkt
 }) => {
   const [begrunnelse, endreBegrunnelse] = useState('');
-  const [fraDato, endreFraDato] = useState('DD.MM.ÅÅÅÅ');
-  const [tilDato, endreTilDato] = useState('DD.MM.ÅÅÅÅ');
+  const [fraDato, endreFraDato] = useState('DD-MM-ÅÅÅÅ');
+  const [tilDato, endreTilDato] = useState('DD-MM-ÅÅÅÅ');
   const [visFeilmedlinger, endreVisFeilmedlinger] = useState<boolean>(false);
   const [erSokerenMidlertidigAleneOmOmsorgen, endreErSokerenMidlertidigAleneOmOmsorgen] = useState<boolean>(true);
   const [visningsstatus, endreVisningsstatus] = useState<Visningsstatus>(Visningsstatus.SPINNER);
@@ -77,12 +78,18 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
     || visFeilmedlinger && feilmedlinger.dato.til && !feilmedlinger.dato.fra && tekst.feilmedlingManglerFraDato
     || visFeilmedlinger && feilmedlinger.dato.fra && !feilmedlinger.dato.til && tekst.feilmeldingManglerTilDato;
 
-  const sjekkHvisVurderingErKomplett = () => vurderingKomplett ?
-    console.log(erSokerenMidlertidigAleneOmOmsorgen, {
-      til: erSokerenMidlertidigAleneOmOmsorgen ? tilDato : '',
-      fra: erSokerenMidlertidigAleneOmOmsorgen ? fraDato : ''
-    }, begrunnelse) :
-    endreVisFeilmedlinger(true);
+  const onSubmit = () => midlertidigAleneApi
+    .losAksjonspunktMidlertidigAlene(begrunnelse,
+      {
+        fra: erSokerenMidlertidigAleneOmOmsorgen ? fraDato : '',
+        til: erSokerenMidlertidigAleneOmOmsorgen ? tilDato : ''
+      },
+      erSokerenMidlertidigAleneOmOmsorgen)
+    .then(endreResponsFraEndepunkt);
+
+  const sjekkHvisVurderingErKomplett = () => vurderingKomplett
+    ? onSubmit()
+    : endreVisFeilmedlinger(true);
 
   return (
     <div className={classNames(styles.vilkarMidlerTidigAlene, lesemodus && styleLesemodus.lesemodusboks)}>
@@ -130,6 +137,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
                   onChange={e => endreBegrunnelse(e.target.value)}
                   feil={visFeilmedlinger && feilmedlinger.begrunnelse && tekst.feilmedlingBegrunnelse}
         />
+        <ApiResponseMessage response={responsFraEndepunkt}/>
         <Hovedknapp className={styles.bekreftKnapp} onClick={sjekkHvisVurderingErKomplett}>
           {tekst.bekreftFortsettKnapp}
         </Hovedknapp>
