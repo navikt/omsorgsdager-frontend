@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './opplysningerFraVedtak.less';
-import {VilkarMidlertidigAleneDato} from "../../../../types/MidlertidigAleneVurderingInfo";
+import {VilkarMidlertidigAleneDato} from '../../../../types/MidlertidigAleneVurderingInfo';
 
 interface Props {
   erSokerenMidlertidigAleneOmOmsorgen: boolean;

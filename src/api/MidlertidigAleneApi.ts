@@ -1,7 +1,7 @@
-import HentMidlertidigAleneResponse from "../types/HentMidlertidigAleneResponse";
-import {MidlertidigAleneAksjonspunktRequest} from "../types/MidlertidigAleneAksjonspunktRequest";
-import MidlertidigAleneVurderingInfo, {VilkarMidlertidigAleneDato} from "../types/MidlertidigAleneVurderingInfo";
-import {get, patch} from "../util/apiUtils";
+import HentMidlertidigAleneResponse from '../types/HentMidlertidigAleneResponse';
+import {MidlertidigAleneAksjonspunktRequest} from '../types/MidlertidigAleneAksjonspunktRequest';
+import MidlertidigAleneVurderingInfo, {VilkarMidlertidigAleneDato} from '../types/MidlertidigAleneVurderingInfo';
+import {get, patch} from '../util/apiUtils';
 
 export default class MidlertidigAleneApi {
 

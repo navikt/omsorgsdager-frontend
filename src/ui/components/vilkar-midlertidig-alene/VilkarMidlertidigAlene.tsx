@@ -1,20 +1,20 @@
-import AlertStripe, {AlertStripeFeil} from "nav-frontend-alertstriper";
-import ApiResponseMessage from "../api-response-message/ApiResponseMessage";
+import AlertStripe, {AlertStripeFeil} from 'nav-frontend-alertstriper';
+import ApiResponseMessage from '../api-response-message/ApiResponseMessage';
 import classNames from 'classnames';
 import {Datepicker} from 'nav-datovelger';
-import {Hovedknapp} from "nav-frontend-knapper";
-import MidlertidigAleneApi from "../../../api/MidlertidigAleneApi";
-import OpplysningerFraVedtak from "./opplysninger-fra-vedtak/OpplysningerFraVedtak";
-import OpplysningerFraSoknad from "./opplysninger-fra-soknad/OpplysningerFraSoknad";
-import {Radio, RadioGruppe, SkjemaGruppe, Textarea} from "nav-frontend-skjema";
+import {Hovedknapp} from 'nav-frontend-knapper';
+import MidlertidigAleneApi from '../../../api/MidlertidigAleneApi';
+import OpplysningerFraVedtak from './opplysninger-fra-vedtak/OpplysningerFraVedtak';
+import OpplysningerFraSoknad from './opplysninger-fra-soknad/OpplysningerFraSoknad';
+import {Radio, RadioGruppe, SkjemaGruppe, Textarea} from 'nav-frontend-skjema';
 import React, {useEffect, useState} from 'react';
-import Spinner from "../spinner/Spinner";
+import Spinner from '../spinner/Spinner';
 import styles from './vilkarMidlertidigAlene.less';
-import styleLesemodus from "../lesemodus/lesemodusboks.less";
+import styleLesemodus from '../lesemodus/lesemodusboks.less';
 import {tekst} from './vilkar-midlertidig-alene-tekst';
-import {VilkarMidlertidigAleneProps} from "../../../types/VilkarMidlertidigAleneProps";
-import {VilkarMidlertidigAleneSoknedsopplysninger} from "../../../types/MidlertidigAleneVurderingInfo";
-import {Visningsstatus} from "../../../types/Visningsstatus";
+import {VilkarMidlertidigAleneProps} from '../../../types/VilkarMidlertidigAleneProps';
+import {VilkarMidlertidigAleneSoknedsopplysninger} from '../../../types/MidlertidigAleneVurderingInfo';
+import {Visningsstatus} from '../../../types/Visningsstatus';
 
 interface Feilmeldinger {
   begrunnelse: boolean;
@@ -106,11 +106,11 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
 
       {!lesemodus &&
       <RadioGruppe className={styles.radioButtons} legend={tekst.sporsmålVilkarOppfylt}>
-        <Radio label={"Ja"}
+        <Radio label={'Ja'}
                checked={erSokerenMidlertidigAleneOmOmsorgen}
                onChange={() => endreErSokerenMidlertidigAleneOmOmsorgen(true)}
                name="vilkarAleneomsorg"/>
-        <Radio label={"Nei"}
+        <Radio label={'Nei'}
                checked={!erSokerenMidlertidigAleneOmOmsorgen}
                onChange={() => endreErSokerenMidlertidigAleneOmOmsorgen(false)}
                name="vilkarAleneomsorg"/>

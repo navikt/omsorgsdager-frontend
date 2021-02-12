@@ -1,5 +1,5 @@
 import {AlertStripeFeil, AlertStripeSuksess} from 'nav-frontend-alertstriper';
-import ApiErrorMessage from "../api-error-message/ApiErrorMessage";
+import ApiErrorMessage from '../api-error-message/ApiErrorMessage';
 import styles from './apiResponseMessage.less';
 import React from 'react';
 
