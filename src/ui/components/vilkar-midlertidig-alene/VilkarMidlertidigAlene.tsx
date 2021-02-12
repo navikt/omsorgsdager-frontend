@@ -31,7 +31,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   const [fraDato, endreFraDato] = useState('DD.MM.ÅÅÅÅ');
   const [tilDato, endreTilDato] = useState('DD.MM.ÅÅÅÅ');
   const [visFeilmedlinger, endreVisFeilmedlinger] = useState<boolean>(false);
-  const [vilkarOppfylt, endreVilkarOppfylt] = useState<boolean>(true);
+  const [erSokerenMidlertidigAleneOmOmsorgen, endreErSokerenMidlertidigAleneOmOmsorgen] = useState<boolean>(true);
   const [visningsstatus, endreVisningsstatus] = useState<Visningsstatus>(Visningsstatus.SPINNER);
   const [soknedsopplysninger, endreSoknedsopplysninger] = useState<VilkarMidlertidigAleneSoknedsopplysninger>(null);
   const [responsFraEndepunkt, endreResponsFraEndepunkt] = useState<Response | null>(null);
@@ -41,18 +41,22 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
     midlertidigAleneApi
       .hentInfoOmMidlertidigAleneVurdering()
       .then(midlertidigAleneInfo => {
-        endreFraDato(midlertidigAleneInfo.dato.fra);
-        endreTilDato(midlertidigAleneInfo.dato.til);
-        endreVilkarOppfylt(midlertidigAleneInfo.vilkarOppfylt);
-        endreBegrunnelse(midlertidigAleneInfo.begrunnelse);
-        endreSoknedsopplysninger(midlertidigAleneInfo.soknedsopplysninger);
+        if(midlertidigAleneInfo.dato.fra === '' && midlertidigAleneInfo.dato.til === '' && midlertidigAleneInfo.begrunnelse == ''){
+          endreSoknedsopplysninger(midlertidigAleneInfo.soknedsopplysninger);
+        }else{
+          endreFraDato(midlertidigAleneInfo.dato.fra);
+          endreTilDato(midlertidigAleneInfo.dato.til);
+          endreErSokerenMidlertidigAleneOmOmsorgen(midlertidigAleneInfo.erSokerenMidlertidigAleneOmOmsorgen);
+          endreBegrunnelse(midlertidigAleneInfo.begrunnelse);
+          endreSoknedsopplysninger(midlertidigAleneInfo.soknedsopplysninger);
+        }
         endreVisningsstatus(Visningsstatus.UTEN_FEIL);
       })
       .catch(() => endreVisningsstatus(Visningsstatus.FEIL));
   }, []);
 
   const opplysningerFraVedtak = {
-    vilkarOppfylt: vilkarOppfylt,
+    erSokerenMidlertidigAleneOmOmsorgen: erSokerenMidlertidigAleneOmOmsorgen,
     dato: {
       fra: fraDato,
       til: tilDato
@@ -63,8 +67,8 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   const feilmedlinger: Feilmeldinger = {
     begrunnelse: begrunnelse.length === 0,
     dato: {
-      til: tilDato == 'DD.MM.ÅÅÅÅ' && vilkarOppfylt,
-      fra: fraDato == 'DD.MM.ÅÅÅÅ' && vilkarOppfylt
+      til: tilDato == 'DD.MM.ÅÅÅÅ' && erSokerenMidlertidigAleneOmOmsorgen,
+      fra: fraDato == 'DD.MM.ÅÅÅÅ' && erSokerenMidlertidigAleneOmOmsorgen
     }
   };
 
@@ -81,7 +85,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
     || visFeilmedlinger && feilmedlinger.dato.fra && !feilmedlinger.dato.til && 'Mangler fra dato.';
 
   const sjekkHvisVurderingErKomplett = () => vurderingKomplett ?
-    console.log(vilkarOppfylt, {til: vilkarOppfylt ? tilDato : '', fra: vilkarOppfylt ? fraDato : ''}, begrunnelse) :
+    console.log(erSokerenMidlertidigAleneOmOmsorgen, {til: erSokerenMidlertidigAleneOmOmsorgen ? tilDato : '', fra: erSokerenMidlertidigAleneOmOmsorgen ? fraDato : ''}, begrunnelse) :
     endreVisFeilmedlinger(true);
 
   const tekst = {
@@ -105,16 +109,16 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
       {!lesemodus &&
       <RadioGruppe className={styles.radioButtons} legend={tekst.sporsmålVilkarOppfylt}>
         <Radio label={"Ja"}
-               checked={vilkarOppfylt}
-               onChange={() => endreVilkarOppfylt(true)}
+               checked={erSokerenMidlertidigAleneOmOmsorgen}
+               onChange={() => endreErSokerenMidlertidigAleneOmOmsorgen(true)}
                name="vilkarAleneomsorg"/>
         <Radio label={"Nei"}
-               checked={!vilkarOppfylt}
-               onChange={() => endreVilkarOppfylt(false)}
+               checked={!erSokerenMidlertidigAleneOmOmsorgen}
+               onChange={() => endreErSokerenMidlertidigAleneOmOmsorgen(false)}
                name="vilkarAleneomsorg"/>
       </RadioGruppe>}
 
-      {!lesemodus && vilkarOppfylt &&
+      {!lesemodus && erSokerenMidlertidigAleneOmOmsorgen &&
       <SkjemaGruppe className={styles.gyldigVedtaksPeriode}
                     legend={tekst.sporsmalPeriodeVedtakGyldig}
                     feil={visFeilmedlingForDato}>

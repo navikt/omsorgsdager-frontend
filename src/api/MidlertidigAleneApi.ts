@@ -32,7 +32,7 @@ export default class MidlertidigAleneApi {
           const soknedsopplysninger = vedtak.soknedsopplysninger;
           return {
             begrunnelse: midlertidigAleneBehov.vurdering,
-            vilkarOppfylt: midlertidigAleneBehov.erSøkerenMidlertidigAleneOmOmsorgen,
+            erSokerenMidlertidigAleneOmOmsorgen: midlertidigAleneBehov.erSøkerenMidlertidigAleneOmOmsorgen,
             dato: {
               fra: midlertidigAleneBehov.gyldigFraOgMed,
               til: midlertidigAleneBehov.gyldigTilOgMed
@@ -47,7 +47,7 @@ export default class MidlertidigAleneApi {
       }
       return {
         begrunnelse: '',
-        vilkarOppfylt: false,
+        erSokerenMidlertidigAleneOmOmsorgen: false,
         dato: {
           fra: '',
           til: ''
@@ -64,12 +64,12 @@ export default class MidlertidigAleneApi {
   async losAksjonspunktMidlertidigAlene(
     begrunnelse: string,
     dato: VilkarMidlertidigAleneDato,
-    vilkarOppfylt: boolean
+    erSokerenMidlertidigAleneOmOmsorgen: boolean
   ): Promise<Response> {
     const request: MidlertidigAleneAksjonspunktRequest = {
       VURDER_MIDLERTIDIG_ALENE: {
         vurdering: begrunnelse,
-        erSøkerenMidlertidigAleneOmOmsorgen: vilkarOppfylt,
+        erSøkerenMidlertidigAleneOmOmsorgen: erSokerenMidlertidigAleneOmOmsorgen,
         gyldigFraOgMed: dato.fra,
         gyldigTilOgMed: dato.til
       },

@@ -1,5 +1,5 @@
 export default interface MidlertidigAleneVurderingInfo {
-  vilkarOppfylt: boolean;
+  erSokerenMidlertidigAleneOmOmsorgen: boolean;
   begrunnelse: string;
   dato: VilkarMidlertidigAleneDato;
   soknedsopplysninger: VilkarMidlertidigAleneSoknedsopplysninger;
