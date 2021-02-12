@@ -1,5 +1,6 @@
 import {AlertStripeFeil, AlertStripeSuksess} from 'nav-frontend-alertstriper';
 import ApiErrorMessage from "../api-error-message/ApiErrorMessage";
+import styles from './apiResponseMessage.less';
 import React from 'react';
 
 interface ApiResponseMessageProps {
@@ -22,9 +23,9 @@ const ApiResponseMessage: React.FunctionComponent<ApiResponseMessageProps> = ({r
   };
 
   return (
-    <>
+    <div className={styles.apiResponseMessage}>
       {hentResponsBasertPåStatus()}
-    </>
+    </div>
   );
 };
 
