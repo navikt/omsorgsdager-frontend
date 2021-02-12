@@ -1,6 +1,6 @@
 import HentMidlertidigAleneResponse from "../types/HentMidlertidigAleneResponse";
-import {MidlertidigAleneAksjonspunktRequest} from "../types/HentMidlertidigAleneResponse";
-import Legeerklaeringsinfo from "../types/Legeerklaeringsinfo";
+import {MidlertidigAleneAksjonspunktRequest} from "../types/MidlertidigAleneAksjonspunktRequest";
+import MidlertidigAleneVurderingInfo, {VilkarMidlertidigAleneDato} from "../types/MidlertidigAleneVurderingInfo";
 import {get, patch} from "../util/apiUtils";
 
 export default class MidlertidigAleneApi {
@@ -18,47 +18,65 @@ export default class MidlertidigAleneApi {
 
   async getVedtak(): Promise<HentMidlertidigAleneResponse> {
     return get<HentMidlertidigAleneResponse>(
-      `${this.stiTilEndepunkt}/kronisk-sykt-barn`,
+      `${this.stiTilEndepunkt}/midlertidig-alene`,
       {behandlingId: this.behandlingsid}
     );
   }
 
-  async hentInfoOmLegeerklaering(): Promise<Legeerklaeringsinfo> {
+  async hentInfoOmMidlertidigAleneVurdering(): Promise<MidlertidigAleneVurderingInfo> {
     return this.getVedtak().then(response => {
       if (response.vedtak.length && response.vedtak[0]) {
         const vedtak = response.vedtak[0];
-        const legeerklaering = vedtak.løsteBehov.LEGEERKLÆRING || vedtak.uløsteBehov.LEGEERKLÆRING;
-        if (legeerklaering) {
+        const midlertidigAleneBehov = vedtak.løsteBehov.VURDER_MIDLERTIDIG_ALENE || vedtak.uløsteBehov.VURDER_MIDLERTIDIG_ALENE;
+        if (midlertidigAleneBehov) {
+          const soknedsopplysninger = vedtak.soknedsopplysninger;
           return {
-            harDokumentasjon: legeerklaering.barnetErKroniskSyktEllerHarEnFunksjonshemning,
-            harSammenheng: legeerklaering.erSammenhengMedSøkersRisikoForFraværFraArbeid,
-            begrunnelse: legeerklaering.vurdering
+            begrunnelse: midlertidigAleneBehov.vurdering,
+            vilkarOppfylt: midlertidigAleneBehov.erSøkerenMidlertidigAleneOmOmsorgen,
+            dato: {
+              fra: midlertidigAleneBehov.gyldigFraOgMed,
+              til: midlertidigAleneBehov.gyldigTilOgMed
+            },
+            soknedsopplysninger: {
+              årsak: soknedsopplysninger.årsak,
+              beskrivelse: soknedsopplysninger.beskrivelse,
+              periode: soknedsopplysninger.periode
+            },
           };
         }
       }
       return {
-        harDokumentasjon: false,
-        harSammenheng: false,
-        begrunnelse: ""
+        begrunnelse: '',
+        vilkarOppfylt: false,
+        dato: {
+          fra: '',
+          til: ''
+        },
+        soknedsopplysninger: {
+          årsak: '',
+          beskrivelse: '',
+          periode: '',
+        },
       };
     });
   }
 
-  async losAksjonspunkt(
-    harDokumentasjon: boolean,
-    harSammenheng: boolean,
-    begrunnelse: string
+  async losAksjonspunktMidlertidigAlene(
+    begrunnelse: string,
+    dato: VilkarMidlertidigAleneDato,
+    vilkarOppfylt: boolean
   ): Promise<Response> {
-    const request: KroniskSyktBarnAksjonspunktRequest = {
-      LEGEERKLÆRING: {
+    const request: MidlertidigAleneAksjonspunktRequest = {
+      VURDER_MIDLERTIDIG_ALENE: {
         vurdering: begrunnelse,
-        barnetErKroniskSyktEllerHarEnFunksjonshemning: harDokumentasjon,
-        erSammenhengMedSøkersRisikoForFraværFraArbeid: harSammenheng
+        erSøkerenMidlertidigAleneOmOmsorgen: vilkarOppfylt,
+        gyldigFraOgMed: dato.fra,
+        gyldigTilOgMed: dato.til
       },
       OMSORGEN_FOR: {}
     };
     return patch(
-      `${this.stiTilEndepunkt}/kronisk-sykt-barn/${this.behandlingsid}/aksjonspunkt`,
+      `${this.stiTilEndepunkt}/midlertidig-alene/${this.behandlingsid}/aksjonspunkt`,
       request
     );
   }

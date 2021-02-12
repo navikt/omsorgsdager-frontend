@@ -24,21 +24,15 @@
               vilkarMidlertidigAlene: {
                 visKomponent: 'VilkarMidlertidigAlene',
                 props: {
-                  behandlingsid: '111',
-                  lesemodus: false,
+                  behandlingsid: '123',
+                  lesemodus: true,
                   stiTilEndepunkt: 'api',
-                  soknedsopplysninger: {
-                    årsak: 'Årsak',
-                    beskrivelse: 'Beskrivelse',
-                    periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ'
-                  },
-                  onSubmit: (vilkarOppfylt, dato, begrunnelse) => console.log(vilkarOppfylt, dato, begrunnelse)
                 }
               }
             };
 
             setTimeout(() => {
-              window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.vilkarKroniskSyktBarn);
+              window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.vilkarMidlertidigAlene);
             }, 300);
         </script>
     </body>

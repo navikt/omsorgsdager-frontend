@@ -1,9 +1,14 @@
-import {VilkarMidlertidigAleneDato} from "./VilkarMidlertidigAleneProps";
-
 export default interface MidlertidigAleneVurderingInfo {
   vilkarOppfylt: boolean;
-  dato: VilkarMidlertidigAleneDato;
   begrunnelse: string;
+  dato: VilkarMidlertidigAleneDato;
+  soknedsopplysninger: VilkarMidlertidigAleneSoknedsopplysninger;
+}
+
+export interface VilkarMidlertidigAleneSoknedsopplysninger {
+  årsak: string;
+  beskrivelse?: string;
+  periode: string;
 }
 
 export interface VilkarMidlertidigAleneDato {

@@ -1,3 +1,3 @@
 import {Behovsliste} from "./Behov";
 
-export type MidlertidigAleneAksjonspunktRequest = Required<Behovsliste>;
+export type MidlertidigAleneAksjonspunktRequest = Behovsliste;

@@ -1,23 +1,18 @@
-import AlertStripe from "nav-frontend-alertstriper";
+import AlertStripe, {AlertStripeFeil} from "nav-frontend-alertstriper";
 import classNames from 'classnames';
 import {Datepicker} from 'nav-datovelger';
 import {Hovedknapp} from "nav-frontend-knapper";
 import OpplysningerFraVedtak from "./opplysninger-fra-vedtak/OpplysningerFraVedtak";
 import OpplysningerFraSoknad from "./opplysninger-fra-soknad/OpplysningerFraSoknad";
 import {Radio, RadioGruppe, SkjemaGruppe, Textarea} from "nav-frontend-skjema";
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './vilkarMidlertidigAlene.less';
 import styleLesemodus from "../lesemodus/lesemodusboks.less";
 import {VilkarMidlertidigAleneProps} from "../../../types/VilkarMidlertidigAleneProps";
-
-const opplysningerFraVedtak = {
-  vilkarOppfylt: true,
-  dato: {
-    fra: 'DD.MM.ÅÅÅÅ',
-    til: 'DD.MM.ÅÅÅÅ'
-  },
-  begrunnelse: 'Begrunnelse'
-};
+import MidlertidigAleneApi from "../../../api/MidlertidigAleneApi";
+import {VilkarMidlertidigAleneSoknedsopplysninger} from "../../../types/MidlertidigAleneVurderingInfo";
+import Spinner from "../spinner/Spinner";
+import {Visningsstatus} from "../../../types/Visningsstatus";
 
 interface Feilmeldinger {
   begrunnelse: boolean;
@@ -28,15 +23,42 @@ interface Feilmeldinger {
 }
 
 const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProps> = ({
-  soknedsopplysninger,
-  onSubmit,
-  lesemodus
+  behandlingsid,
+  lesemodus,
+  stiTilEndepunkt
 }) => {
   const [begrunnelse, endreBegrunnelse] = useState('');
   const [fraDato, endreFraDato] = useState('DD.MM.ÅÅÅÅ');
   const [tilDato, endreTilDato] = useState('DD.MM.ÅÅÅÅ');
   const [visFeilmedlinger, endreVisFeilmedlinger] = useState<boolean>(false);
-  const [vilkarOppfylt, endreVilkarOppfylt] = useState(true);
+  const [vilkarOppfylt, endreVilkarOppfylt] = useState<boolean>(true);
+  const [visningsstatus, endreVisningsstatus] = useState<Visningsstatus>(Visningsstatus.SPINNER);
+  const [soknedsopplysninger, endreSoknedsopplysninger] = useState<VilkarMidlertidigAleneSoknedsopplysninger>(null);
+  const [responsFraEndepunkt, endreResponsFraEndepunkt] = useState<Response | null>(null);
+
+  const midlertidigAleneApi = new MidlertidigAleneApi(stiTilEndepunkt, behandlingsid);
+  useEffect(() => {
+    midlertidigAleneApi
+      .hentInfoOmMidlertidigAleneVurdering()
+      .then(midlertidigAleneInfo => {
+        endreFraDato(midlertidigAleneInfo.dato.fra);
+        endreTilDato(midlertidigAleneInfo.dato.til);
+        endreVilkarOppfylt(midlertidigAleneInfo.vilkarOppfylt);
+        endreBegrunnelse(midlertidigAleneInfo.begrunnelse);
+        endreSoknedsopplysninger(midlertidigAleneInfo.soknedsopplysninger);
+        endreVisningsstatus(Visningsstatus.UTEN_FEIL);
+      })
+      .catch(() => endreVisningsstatus(Visningsstatus.FEIL));
+  }, []);
+
+  const opplysningerFraVedtak = {
+    vilkarOppfylt: vilkarOppfylt,
+    dato: {
+      fra: fraDato,
+      til: tilDato
+    },
+    begrunnelse: begrunnelse
+  };
 
   const feilmedlinger: Feilmeldinger = {
     begrunnelse: begrunnelse.length === 0,
@@ -46,13 +68,18 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
     }
   };
 
+  switch (visningsstatus) {
+    case Visningsstatus.SPINNER: return <Spinner/>;
+    case Visningsstatus.FEIL: return <AlertStripeFeil>Kunne ikke hente vedtak.</AlertStripeFeil>;
+  }
+
   const vurderingKomplett = !feilmedlinger.begrunnelse && !feilmedlinger.dato.til && !feilmedlinger.dato.fra;
   const visFeilmedlingForDato = visFeilmedlinger && feilmedlinger.dato.fra && feilmedlinger.dato.til && 'Mangler dato.'
     || visFeilmedlinger && feilmedlinger.dato.til && !feilmedlinger.dato.fra && 'Manger til dato.'
     || visFeilmedlinger && feilmedlinger.dato.fra && !feilmedlinger.dato.til && 'Mangler fra dato.';
 
   const sjekkHvisVurderingErKomplett = () => vurderingKomplett ?
-    onSubmit(vilkarOppfylt, {til: vilkarOppfylt ? tilDato : '', fra: vilkarOppfylt ? fraDato : ''}, begrunnelse) :
+    console.log(vilkarOppfylt, {til: vilkarOppfylt ? tilDato : '', fra: vilkarOppfylt ? fraDato : ''}, begrunnelse) :
     endreVisFeilmedlinger(true);
 
   return (
