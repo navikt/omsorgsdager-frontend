@@ -30,8 +30,8 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   stiTilEndepunkt
 }) => {
   const [begrunnelse, endreBegrunnelse] = useState('');
-  const [fraDato, endreFraDato] = useState('DD-MM-ÅÅÅÅ');
-  const [tilDato, endreTilDato] = useState('DD-MM-ÅÅÅÅ');
+  const [fraDato, endreFraDato] = useState('DD.MM.ÅÅÅÅ');
+  const [tilDato, endreTilDato] = useState('DD.MM.ÅÅÅÅ');
   const [visFeilmedlinger, endreVisFeilmedlinger] = useState<boolean>(false);
   const [erSokerenMidlertidigAleneOmOmsorgen, endreErSokerenMidlertidigAleneOmOmsorgen] = useState<boolean>(true);
   const [visningsstatus, endreVisningsstatus] = useState<Visningsstatus>(Visningsstatus.SPINNER);
@@ -44,13 +44,13 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
     midlertidigAleneApi
       .hentInfoOmMidlertidigAleneVurdering()
       .then(midlertidigAleneInfo => {
-        if (midlertidigAleneInfo.dato.fra === '' && midlertidigAleneInfo.dato.til === '' && midlertidigAleneInfo.begrunnelse == '') {
-          endreSoknedsopplysninger(midlertidigAleneInfo.soknedsopplysninger);
-        } else {
-          endreFraDato(midlertidigAleneInfo.dato.fra);
-          endreTilDato(midlertidigAleneInfo.dato.til);
+        if (lesemodus) {
+          endreFraDato(midlertidigAleneInfo.dato.fra.replaceAll('-', '.'));
+          endreTilDato(midlertidigAleneInfo.dato.til.replaceAll('-', '.'));
           endreErSokerenMidlertidigAleneOmOmsorgen(midlertidigAleneInfo.erSokerenMidlertidigAleneOmOmsorgen);
           endreBegrunnelse(midlertidigAleneInfo.begrunnelse);
+          endreSoknedsopplysninger(midlertidigAleneInfo.soknedsopplysninger);
+        } else {
           endreSoknedsopplysninger(midlertidigAleneInfo.soknedsopplysninger);
         }
         endreVisningsstatus(Visningsstatus.UTEN_FEIL);
@@ -61,8 +61,8 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   const feilmedlinger: Feilmeldinger = {
     begrunnelse: begrunnelse.length === 0,
     dato: {
-      til: tilDato == 'DD.MM.ÅÅÅÅ' && erSokerenMidlertidigAleneOmOmsorgen,
-      fra: fraDato == 'DD.MM.ÅÅÅÅ' && erSokerenMidlertidigAleneOmOmsorgen
+      fra: (fraDato === 'DD.MM.ÅÅÅÅ' || fraDato === '') && erSokerenMidlertidigAleneOmOmsorgen,
+      til: (tilDato === 'DD.MM.ÅÅÅÅ' || tilDato === '') && erSokerenMidlertidigAleneOmOmsorgen
     }
   };
 
@@ -75,17 +75,19 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
 
   const vurderingKomplett = !feilmedlinger.begrunnelse && !feilmedlinger.dato.til && !feilmedlinger.dato.fra;
   const visFeilmedlingForDato = visFeilmedlinger && feilmedlinger.dato.fra && feilmedlinger.dato.til && tekst.feilmedlingManglerDato
-    || visFeilmedlinger && feilmedlinger.dato.til && !feilmedlinger.dato.fra && tekst.feilmedlingManglerFraDato
-    || visFeilmedlinger && feilmedlinger.dato.fra && !feilmedlinger.dato.til && tekst.feilmeldingManglerTilDato;
+    || visFeilmedlinger && feilmedlinger.dato.til && !feilmedlinger.dato.fra && tekst.feilmeldingManglerTilDato
+    || visFeilmedlinger && feilmedlinger.dato.fra && !feilmedlinger.dato.til && tekst.feilmedlingManglerFraDato;
 
-  const onSubmit = () => midlertidigAleneApi
-    .losAksjonspunktMidlertidigAlene(begrunnelse,
-      {
-        fra: erSokerenMidlertidigAleneOmOmsorgen ? fraDato : '',
-        til: erSokerenMidlertidigAleneOmOmsorgen ? tilDato : ''
-      },
-      erSokerenMidlertidigAleneOmOmsorgen)
-    .then(endreResponsFraEndepunkt);
+  const onSubmit = () => {
+    midlertidigAleneApi
+      .losAksjonspunktMidlertidigAlene(begrunnelse,
+        {
+          fra: erSokerenMidlertidigAleneOmOmsorgen ? fraDato.replaceAll('.', '-') : '',
+          til: erSokerenMidlertidigAleneOmOmsorgen ? tilDato.replaceAll('.', '-') : ''
+        },
+        erSokerenMidlertidigAleneOmOmsorgen)
+      .then(endreResponsFraEndepunkt);
+  };
 
   const sjekkHvisVurderingErKomplett = () => vurderingKomplett
     ? onSubmit()

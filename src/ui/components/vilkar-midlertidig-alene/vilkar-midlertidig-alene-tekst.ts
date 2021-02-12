@@ -6,7 +6,7 @@ export default tekst = {
   begrunnelse: 'Begrunnelse',
   bekreftFortsettKnapp: 'Bekreft og fortsett',
   feilmedlingBegrunnelse: 'Begrunnelse må oppgis.',
-  feilmedlingManglerDato: '',
+  feilmedlingManglerDato: 'Mangler dato.',
   feilmeldingManglerTilDato: 'Manger til dato.',
   feilmedlingManglerFraDato: 'Mangler fra dato.'
 };
