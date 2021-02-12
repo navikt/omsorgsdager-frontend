@@ -1,7 +1,7 @@
-import HentKroniskSyktBarnResponse from "../types/HentKroniskSyktBarnResponse";
-import {KroniskSyktBarnAksjonspunktRequest} from "../types/KroniskSyktBarnAksjonspunktRequest";
-import Legeerklaeringsinfo from "../types/Legeerklaeringsinfo";
-import {get, patch} from "../util/apiUtils";
+import HentKroniskSyktBarnResponse from '../types/HentKroniskSyktBarnResponse';
+import {KroniskSyktBarnAksjonspunktRequest} from '../types/KroniskSyktBarnAksjonspunktRequest';
+import Legeerklaeringsinfo from '../types/Legeerklaeringsinfo';
+import {get, patch} from '../util/apiUtils';
 
 export default class KroniskSyktBarnApi {
 
@@ -39,7 +39,7 @@ export default class KroniskSyktBarnApi {
       return {
         harDokumentasjon: false,
         harSammenheng: false,
-        begrunnelse: ""
+        begrunnelse: ''
       };
     });
   }

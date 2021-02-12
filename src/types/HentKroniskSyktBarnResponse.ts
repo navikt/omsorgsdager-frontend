@@ -1,5 +1,5 @@
-import {Behovsliste} from "./Behov";
-import Vedtaksstatus from "./Vedtaksstatus";
+import {Behovsliste} from './Behov';
+import Vedtaksstatus from './Vedtaksstatus';
 
 export default interface HentKroniskSyktBarnResponse {
   vedtak: {

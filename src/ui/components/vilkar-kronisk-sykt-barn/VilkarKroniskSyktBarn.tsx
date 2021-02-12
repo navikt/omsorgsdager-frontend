@@ -1,15 +1,15 @@
 import classNames from 'classnames';
-import {AlertStripeAdvarsel, AlertStripeFeil, AlertStripeSuksess} from "nav-frontend-alertstriper";
-import {Hovedknapp} from "nav-frontend-knapper";
-import {Radio, RadioGruppe, Textarea} from "nav-frontend-skjema";
+import {AlertStripeAdvarsel, AlertStripeFeil, AlertStripeSuksess} from 'nav-frontend-alertstriper';
+import {Hovedknapp} from 'nav-frontend-knapper';
+import {Radio, RadioGruppe, Textarea} from 'nav-frontend-skjema';
 import React, {useEffect, useState} from 'react';
-import KroniskSyktBarnApi from "../../../api/KroniskSyktBarnApi";
-import {VilkarKroniskSyktBarnProps} from "../../../types/VilkarKroniskSyktBarnProps";
-import Feilikon from "../../icons/Feilikon";
-import Suksessikon from "../../icons/Suksessikon";
-import ApiErrorMessage from "../api-error-message/ApiErrorMessage";
+import KroniskSyktBarnApi from '../../../api/KroniskSyktBarnApi';
+import {VilkarKroniskSyktBarnProps} from '../../../types/VilkarKroniskSyktBarnProps';
+import Feilikon from '../../icons/Feilikon';
+import Suksessikon from '../../icons/Suksessikon';
+import ApiErrorMessage from '../api-error-message/ApiErrorMessage';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
-import Spinner from "../spinner/Spinner";
+import Spinner from '../spinner/Spinner';
 import styles from './vilkarKronisSyktBarn.less';
 
 interface Feilmeldinger {
@@ -24,7 +24,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   const [visningsstatus, endreVisningsstatus] = useState<Visningsstatus>(Visningsstatus.SPINNER);
   const [harDokumentasjon, endreHarDokumentasjon] = useState<boolean>(false);
   const [harSammenheng, endreHarSammenheng] = useState<boolean>(false);
-  const [begrunnelse, endreBegrunnelse] = useState<string>("");
+  const [begrunnelse, endreBegrunnelse] = useState<string>('');
   const [visFeilmeldinger, endreVisFeilmeldinger] = useState<boolean>(false);
   const [responsFraEndepunkt, endreResponsFraEndepunkt] = useState<Response | null>(null);
 
@@ -77,10 +77,10 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   };
 
   const tekst = {
-    instruksjon: "Se på vedlagt legeerklæring og vurder om barnet har en kronisk sykdom eller en funksjonshemmelse, og om det er økt risiko for fravær.",
-    sporsmalHarDokumentasjon: "Er det dokumentert at barnets sykdom er kronisk eller at barnet har en funksjonshemmelse?",
-    sporsmalHarSammenheng: "Henger søkers risiko for fravær fra arbeid sammen med barnets kroniske sykdom eller funksjonshemmelse?",
-    begrunnelse: "Begrunnelse"
+    instruksjon: 'Se på vedlagt legeerklæring og vurder om barnet har en kronisk sykdom eller en funksjonshemmelse, og om det er økt risiko for fravær.',
+    sporsmalHarDokumentasjon: 'Er det dokumentert at barnets sykdom er kronisk eller at barnet har en funksjonshemmelse?',
+    sporsmalHarSammenheng: 'Henger søkers risiko for fravær fra arbeid sammen med barnets kroniske sykdom eller funksjonshemmelse?',
+    begrunnelse: 'Begrunnelse'
   };
 
   return <div className={classNames(styles.vilkarKroniskSyktBarn, lesemodus && styleLesemodus.lesemodusboks)}>
@@ -89,9 +89,9 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
       ? <>
           <p><b>Behandlet aksjonspunkt:</b> {tekst.instruksjon}</p>
           <p className={styleLesemodus.label}>{tekst.sporsmalHarDokumentasjon}</p>
-          <p>{harDokumentasjon ? "Ja" : "Nei"}</p>
+          <p>{harDokumentasjon ? 'Ja' : 'Nei'}</p>
           <p className={styleLesemodus.label}>{tekst.sporsmalHarSammenheng}</p>
-          <p>{harSammenheng ? "Ja" : "Nei"}</p>
+          <p>{harSammenheng ? 'Ja' : 'Nei'}</p>
         </>
       : <>
           <AlertStripeAdvarsel className={styles.varselstripe}>
@@ -133,7 +133,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
             onChange={e => endreBegrunnelse(e.target.value)}
             value={begrunnelse}
             maxLength={0}
-            feil={visFeilmeldinger && feilmeldinger.begrunnelse && "Begrunnelse må oppgis."}
+            feil={visFeilmeldinger && feilmeldinger.begrunnelse && 'Begrunnelse må oppgis.'}
           />
           {genererResponsmelding()}
           <Hovedknapp onClick={onGaVidere}>Gå videre</Hovedknapp>

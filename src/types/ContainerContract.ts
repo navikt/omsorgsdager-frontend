@@ -1,6 +1,6 @@
-import Komponenter from "./Komponenter";
-import {VilkarKroniskSyktBarnProps} from "./VilkarKroniskSyktBarnProps";
-import {VilkarMidlertidigAleneProps} from "./VilkarMidlertidigAleneProps";
+import Komponenter from './Komponenter';
+import {VilkarKroniskSyktBarnProps} from './VilkarKroniskSyktBarnProps';
+import {VilkarMidlertidigAleneProps} from './VilkarMidlertidigAleneProps';
 
 interface KorrigerePerioderContract {
   visKomponent: Komponenter.KORRIGERE_PERIODER;

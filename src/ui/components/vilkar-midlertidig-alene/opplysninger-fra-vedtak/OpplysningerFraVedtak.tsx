@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './opplysningerFraVedtak.less';
-import styleLesemodus from "../../lesemodus/lesemodusboks.less";
-import {VilkarMidlertidigAleneDato} from "../../../../types/VilkarMidlertidigAleneProps";
+import styleLesemodus from '../../lesemodus/lesemodusboks.less';
+import {VilkarMidlertidigAleneDato} from '../../../../types/VilkarMidlertidigAleneProps';
 
 interface Props {
   vilkarOppfylt: boolean;
