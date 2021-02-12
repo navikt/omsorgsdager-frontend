@@ -1,5 +1,6 @@
 import Komponenter from './Komponenter';
 import {KorrigerePerioderProps} from './KorrigerePerioderProps';
+import {OmsorgProps} from './OmsorgProps';
 import {VilkarKroniskSyktBarnProps} from './VilkarKroniskSyktBarnProps';
 import {VilkarMidlertidigAleneProps} from './VilkarMidlertidigAleneProps';
 
@@ -18,9 +19,16 @@ interface VilkarKroniskSyktBarnContract {
   props: VilkarKroniskSyktBarnProps;
 }
 
+interface OmsorgContract {
+  visKomponent: Komponenter.OMSORG;
+  props: OmsorgProps;
+}
+
+
 type ContainerContract =
   KorrigerePerioderContract |
   VilkarMidlertidigAleneContract |
-  VilkarKroniskSyktBarnContract;
+  VilkarKroniskSyktBarnContract |
+  OmsorgContract;
 
 export default ContainerContract;

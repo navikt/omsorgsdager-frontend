@@ -1,6 +1,7 @@
 import HentKroniskSyktBarnResponse from '../types/HentKroniskSyktBarnResponse';
 import {KroniskSyktBarnAksjonspunktRequest} from '../types/KroniskSyktBarnAksjonspunktRequest';
 import Legeerklaeringsinfo from '../types/Legeerklaeringsinfo';
+import Omsorgsinfo from '../types/Omsorgsinfo';
 import {get, patch} from '../util/apiUtils';
 
 export default class KroniskSyktBarnApi {
@@ -41,6 +42,19 @@ export default class KroniskSyktBarnApi {
         harSammenheng: false,
         begrunnelse: ''
       };
+    });
+  }
+
+  async hentInfoOmOmsorg(): Promise<Omsorgsinfo> {
+    return this.getVedtak().then(response => {
+      if (response.vedtak.length && response.vedtak[0]) {
+        const vedtak = response.vedtak[0];
+        const omsorgen = vedtak.løsteBehov.OMSORGEN_FOR || vedtak.uløsteBehov.OMSORGEN_FOR;
+        if (omsorgen) {
+          return {harOmsorgen: omsorgen?.harOmsorgen};
+        }
+      }
+      return {harOmsorgen: false};
     });
   }
 
