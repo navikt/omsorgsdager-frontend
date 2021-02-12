@@ -17,20 +17,20 @@ module.exports = app =>
               gyldigTilOgMed: "2021-02-10",
               status: "FORESLÅTT",
               soknedsopplysninger: {
-                årsak: 'Årsak',
+                årsak: 'Annet',
                 beskrivelse: 'Beskrivelse',
                 periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ'
               },
               uløsteBehov: {
-                OMSORGEN_FOR: {}
-              },
-              løsteBehov: {
+                OMSORGEN_FOR: {},
                 VURDER_MIDLERTIDIG_ALENE: {
                   "vurdering": "Saksbehandler sin input",
                   "erSøkerenMidlertidigAleneOmOmsorgen": true,
                   "gyldigFraOgMed": "2021-02-02",
                   "gyldigTilOgMed": "2022-02-03"
                 }
+              },
+              løsteBehov: {
               },
               lovhenvisnigner: {
                 "FTL 9-5 3.ledd": "søkeren bor ikke i norge",

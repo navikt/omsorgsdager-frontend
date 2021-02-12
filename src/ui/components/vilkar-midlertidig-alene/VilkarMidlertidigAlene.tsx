@@ -23,10 +23,10 @@ interface Feilmeldinger {
 }
 
 const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProps> = ({
-  behandlingsid,
-  lesemodus,
-  stiTilEndepunkt
-}) => {
+                                                                                        behandlingsid,
+                                                                                        lesemodus,
+                                                                                        stiTilEndepunkt
+                                                                                      }) => {
   const [begrunnelse, endreBegrunnelse] = useState('');
   const [fraDato, endreFraDato] = useState('DD.MM.ÅÅÅÅ');
   const [tilDato, endreTilDato] = useState('DD.MM.ÅÅÅÅ');
@@ -69,8 +69,10 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   };
 
   switch (visningsstatus) {
-    case Visningsstatus.SPINNER: return <Spinner/>;
-    case Visningsstatus.FEIL: return <AlertStripeFeil>Kunne ikke hente vedtak.</AlertStripeFeil>;
+    case Visningsstatus.SPINNER:
+      return <Spinner/>;
+    case Visningsstatus.FEIL:
+      return <AlertStripeFeil>Kunne ikke hente vedtak.</AlertStripeFeil>;
   }
 
   const vurderingKomplett = !feilmedlinger.begrunnelse && !feilmedlinger.dato.til && !feilmedlinger.dato.fra;
@@ -82,17 +84,26 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
     console.log(vilkarOppfylt, {til: vilkarOppfylt ? tilDato : '', fra: vilkarOppfylt ? fraDato : ''}, begrunnelse) :
     endreVisFeilmedlinger(true);
 
+  const tekst = {
+    aksjonspunkt: 'Vurder om vilkår om midlertidig alene om omsorgen er oppfylt.',
+    sporsmålVilkarOppfylt: 'Er vilkårene om aleneomsorg oppfylt?',
+    sporsmalPeriodeVedtakGyldig: 'I hvilken periode er vedtaket gyldig?',
+    begrunnelse: 'Begrunnelse',
+    feilmedlingBegrunnelse: 'Begrunnelse må oppgis.',
+    bekreftFortsettKnapp: 'Bekreft og fortsett'
+  };
+
   return (
     <div className={classNames(styles.vilkarMidlerTidigAlene, lesemodus && styleLesemodus.lesemodusboks)}>
       {lesemodus
-        ? <p><b>Behandlet aksjonspunkt:</b> Vurder om vilkår om midlertidig alene om omsorgen er oppfylt.</p>
-        : <AlertStripe type="advarsel">Vurder om vilkår om aleneomsorg er oppfylt.</AlertStripe>}
+        ? <p><b>Behandlet aksjonspunkt:</b>{tekst.aksjonspunkt}</p>
+        : <AlertStripe type="advarsel">{tekst.aksjonspunkt}</AlertStripe>}
 
       <OpplysningerFraSoknad {...soknedsopplysninger}/>
       {lesemodus && <OpplysningerFraVedtak {...opplysningerFraVedtak}/>}
 
       {!lesemodus &&
-      <RadioGruppe className={styles.radioButtons} legend="Er vilkårene om aleneomsorg oppfylt?">
+      <RadioGruppe className={styles.radioButtons} legend={tekst.sporsmålVilkarOppfylt}>
         <Radio label={"Ja"}
                checked={vilkarOppfylt}
                onChange={() => endreVilkarOppfylt(true)}
@@ -105,7 +116,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
 
       {!lesemodus && vilkarOppfylt &&
       <SkjemaGruppe className={styles.gyldigVedtaksPeriode}
-                    legend={'I hvilken periode er vedtaket gyldig?'}
+                    legend={tekst.sporsmalPeriodeVedtakGyldig}
                     feil={visFeilmedlingForDato}>
         <div>
           <span className={styles.gyldigVedtaksPeriodeTilFra}>Fra</span>
@@ -119,13 +130,13 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
 
       {!lesemodus &&
       <>
-        <Textarea label="Begrunnelse"
+        <Textarea label={tekst.begrunnelse}
                   value={begrunnelse}
                   onChange={e => endreBegrunnelse(e.target.value)}
-                  feil={visFeilmedlinger && feilmedlinger.begrunnelse && 'Begrunnelse må oppgis.'}
+                  feil={visFeilmedlinger && feilmedlinger.begrunnelse && tekst.feilmedlingBegrunnelse}
         />
         <Hovedknapp className={styles.bekreftKnapp} onClick={sjekkHvisVurderingErKomplett}>
-          Bekreft og fortsett
+          {tekst.bekreftFortsettKnapp}
         </Hovedknapp>
       </>}
     </div>
