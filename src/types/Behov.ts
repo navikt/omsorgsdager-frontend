@@ -5,10 +5,10 @@ export interface Behovsliste {
 }
 
 interface MidlertidigAlene {
-  'vurdering': string;
-  'erSøkerenMidlertidigAleneOmOmsorgen': boolean;
-  'gyldigFraOgMed': string;
-  'gyldigTilOgMed': string;
+  vurdering: string;
+  erSøkerenMidlertidigAleneOmOmsorgen: boolean;
+  gyldigFraOgMed: string;
+  gyldigTilOgMed: string;
 }
 
 interface Legeerklaering {

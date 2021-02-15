@@ -1,26 +1,16 @@
+import OmsorgApi from '../api/OmsorgApi';
 import HentMidlertidigAleneResponse from '../types/HentMidlertidigAleneResponse';
 import {MidlertidigAleneAksjonspunktRequest} from '../types/MidlertidigAleneAksjonspunktRequest';
 import MidlertidigAleneVurderingInfo, {VilkarMidlertidigAleneDato} from '../types/MidlertidigAleneVurderingInfo';
-import {get, patch} from '../util/apiUtils';
+import {patch} from '../util/apiUtils';
 
-export default class MidlertidigAleneApi {
-
-  stiTilEndepunkt: string;
-  behandlingsid: string;
+export default class MidlertidigAleneApi extends OmsorgApi<HentMidlertidigAleneResponse> {
 
   constructor(
     stiTilEndepunkt: string,
     behandlingsid: string
   ) {
-    this.stiTilEndepunkt = stiTilEndepunkt;
-    this.behandlingsid = behandlingsid;
-  }
-
-  async getVedtak(): Promise<HentMidlertidigAleneResponse> {
-    return get<HentMidlertidigAleneResponse>(
-      `${this.stiTilEndepunkt}/midlertidig-alene`,
-      {behandlingId: this.behandlingsid}
-    );
+    super(`${stiTilEndepunkt}/midlertidig-alene`, behandlingsid);
   }
 
   async hentInfoOmMidlertidigAleneVurdering(): Promise<MidlertidigAleneVurderingInfo> {
@@ -72,7 +62,7 @@ export default class MidlertidigAleneApi {
       OMSORGEN_FOR: {}
     };
     return patch(
-      `${this.stiTilEndepunkt}/midlertidig-alene/${this.behandlingsid}/aksjonspunkt`,
+      `${this.stiTilEndepunkt}/${this.behandlingsid}/aksjonspunkt`,
       request
     );
   }

@@ -23,7 +23,7 @@
                 props: {
                   behandlingsid: '123',
                   stiTilEndepunkt: 'api',
-                  lesemodus: true
+                  lesemodus: false
                 }
               },
               vilkarMidlertidigAlene: {
@@ -39,13 +39,14 @@
                 props: {
                   behandlingsid: '123',
                   stiTilEndepunkt: 'api',
+                  prosesstype: 'KRONISK_SYKT_BARN',
                   lesemodus: true
                 }
               }
             };
 
             setTimeout(() => {
-              window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.vilkarMidlertidigAlene);
+              window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.omsorg);
             }, 300);
         </script>
     </body>
