@@ -13,7 +13,7 @@ import styles from './vilkarMidlertidigAlene.less';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
 import {tekst} from './vilkar-midlertidig-alene-tekst';
 import {VilkarMidlertidigAleneProps} from '../../../types/VilkarMidlertidigAleneProps';
-import {VilkarMidlertidigAleneSoknedsopplysninger} from '../../../types/MidlertidigAleneVurderingInfo';
+import {VilkarMidlertidigAleneSoknadsopplysninger} from '../../../types/MidlertidigAleneVurderingInfo';
 import {Visningsstatus} from '../../../types/Visningsstatus';
 
 interface Feilmeldinger {
@@ -35,7 +35,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   const [visFeilmedlinger, endreVisFeilmedlinger] = useState<boolean>(false);
   const [erSokerenMidlertidigAleneOmOmsorgen, endreErSokerenMidlertidigAleneOmOmsorgen] = useState<boolean>(true);
   const [visningsstatus, endreVisningsstatus] = useState<Visningsstatus>(Visningsstatus.SPINNER);
-  const [soknedsopplysninger, endreSoknedsopplysninger] = useState<VilkarMidlertidigAleneSoknedsopplysninger>(null);
+  const [soknadsopplysninger, endreSoknadsopplysninger] = useState<VilkarMidlertidigAleneSoknadsopplysninger>(null);
   const [responsFraEndepunkt, endreResponsFraEndepunkt] = useState<Response | null>(null);
 
   const midlertidigAleneApi = new MidlertidigAleneApi(stiTilEndepunkt, behandlingsid);
@@ -49,9 +49,9 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
           endreTilDato(midlertidigAleneInfo.dato.til.replaceAll('-', '.'));
           endreErSokerenMidlertidigAleneOmOmsorgen(midlertidigAleneInfo.erSokerenMidlertidigAleneOmOmsorgen);
           endreBegrunnelse(midlertidigAleneInfo.begrunnelse);
-          endreSoknedsopplysninger(midlertidigAleneInfo.soknedsopplysninger);
+          endreSoknadsopplysninger(midlertidigAleneInfo.soknadsopplysninger);
         } else {
-          endreSoknedsopplysninger(midlertidigAleneInfo.soknedsopplysninger);
+          endreSoknadsopplysninger(midlertidigAleneInfo.soknadsopplysninger);
         }
         endreVisningsstatus(Visningsstatus.UTEN_FEIL);
       })
@@ -99,7 +99,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
         ? <p><b>Behandlet aksjonspunkt:</b>{tekst.aksjonspunkt}</p>
         : <AlertStripe type="advarsel">{tekst.aksjonspunkt}</AlertStripe>}
 
-      <OpplysningerFraSoknad {...soknedsopplysninger}/>
+      <OpplysningerFraSoknad {...soknadsopplysninger}/>
       {lesemodus && <OpplysningerFraVedtak
         erSokerenMidlertidigAleneOmOmsorgen={erSokerenMidlertidigAleneOmOmsorgen}
         dato={{fra: fraDato, til: tilDato}}

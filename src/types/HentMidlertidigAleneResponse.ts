@@ -12,7 +12,7 @@ export default interface HentMidlertidigAleneResponse {
     gyldigFraOgMed: string;
     gyldigTilOgMed: string;
     status: Vedtaksstatus;
-    soknedsopplysninger: {
+    soknadsopplysninger: {
       årsak: string;
       beskrivelse?: string;
       periode: string;

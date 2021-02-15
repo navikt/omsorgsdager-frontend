@@ -2,10 +2,10 @@ export default interface MidlertidigAleneVurderingInfo {
   erSokerenMidlertidigAleneOmOmsorgen: boolean;
   begrunnelse: string;
   dato: VilkarMidlertidigAleneDato;
-  soknedsopplysninger: VilkarMidlertidigAleneSoknedsopplysninger;
+  soknadsopplysninger: VilkarMidlertidigAleneSoknadsopplysninger;
 }
 
-export interface VilkarMidlertidigAleneSoknedsopplysninger {
+export interface VilkarMidlertidigAleneSoknadsopplysninger {
   årsak: string;
   beskrivelse?: string;
   periode: string;

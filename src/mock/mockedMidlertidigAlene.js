@@ -16,7 +16,7 @@ module.exports = app =>
               gyldigFraOgMed: '2021-02-10',
               gyldigTilOgMed: '2021-02-10',
               status: 'FORESLÅTT',
-              soknedsopplysninger: {
+              soknadsopplysninger: {
                 årsak: 'Annet',
                 beskrivelse: 'Beskrivelse',
                 periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ'

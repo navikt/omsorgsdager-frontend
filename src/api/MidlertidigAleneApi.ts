@@ -29,7 +29,7 @@ export default class MidlertidigAleneApi {
         const vedtak = response.vedtak[0];
         const midlertidigAleneBehov = vedtak.løsteBehov.VURDER_MIDLERTIDIG_ALENE || vedtak.uløsteBehov.VURDER_MIDLERTIDIG_ALENE;
         if (midlertidigAleneBehov) {
-          const soknedsopplysninger = vedtak.soknedsopplysninger;
+          const soknadsopplysninger = vedtak.soknadsopplysninger;
           return {
             begrunnelse: midlertidigAleneBehov.vurdering,
             erSokerenMidlertidigAleneOmOmsorgen: midlertidigAleneBehov.erSøkerenMidlertidigAleneOmOmsorgen,
@@ -37,11 +37,7 @@ export default class MidlertidigAleneApi {
               fra: midlertidigAleneBehov.gyldigFraOgMed,
               til: midlertidigAleneBehov.gyldigTilOgMed
             },
-            soknedsopplysninger: {
-              årsak: soknedsopplysninger.årsak,
-              beskrivelse: soknedsopplysninger.beskrivelse,
-              periode: soknedsopplysninger.periode
-            },
+            soknadsopplysninger,
           };
         }
       }
@@ -52,7 +48,7 @@ export default class MidlertidigAleneApi {
           fra: '',
           til: ''
         },
-        soknedsopplysninger: {
+        soknadsopplysninger: {
           årsak: '',
           beskrivelse: '',
           periode: '',
