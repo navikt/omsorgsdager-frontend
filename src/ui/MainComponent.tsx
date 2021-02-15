@@ -1,10 +1,11 @@
 import React from 'react';
 import ContainerContract from '../types/ContainerContract';
-import ContainerContext from './context/ContainerContext';
 import Komponenter from '../types/Komponenter';
 import KorrigerePerioder from '../ui/components/korrigere-perioder/KorrigerePerioder';
+import Omsorg from '../ui/components/omsorg/Omsorg';
 import VilkarKroniskSyktBarn from '../ui/components/vilkar-kronisk-sykt-barn/VilkarKroniskSyktBarn';
 import VilkarMidlertidigAlene from './components/vilkar-midlertidig-alene/VilkarMidlertidigAlene';
+import ContainerContext from './context/ContainerContext';
 
 interface MainComponentProps {
   containerData: ContainerContract;
@@ -21,7 +22,10 @@ const MainComponent = ({containerData}: MainComponentProps): JSX.Element => {
       innhold = <VilkarKroniskSyktBarn {...containerData.props}/>;
       break;
     case Komponenter.VILKAR_MIDLERTIDIG_ALENE:
-      innhold = <VilkarMidlertidigAlene {...containerData.props} />;
+      innhold = <VilkarMidlertidigAlene {...containerData.props}/>;
+      break;
+    case Komponenter.OMSORG:
+      innhold = <Omsorg {...containerData.props}/>;
       break;
     default:
       innhold = <></>;
