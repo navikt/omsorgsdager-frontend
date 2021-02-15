@@ -1,27 +1,16 @@
+import OmsorgApi from '../api/OmsorgApi';
 import HentKroniskSyktBarnResponse from '../types/HentKroniskSyktBarnResponse';
 import {KroniskSyktBarnAksjonspunktRequest} from '../types/KroniskSyktBarnAksjonspunktRequest';
 import Legeerklaeringsinfo from '../types/Legeerklaeringsinfo';
-import Omsorgsinfo from '../types/Omsorgsinfo';
-import {get, patch} from '../util/apiUtils';
+import {patch} from '../util/apiUtils';
 
-export default class KroniskSyktBarnApi {
-
-  stiTilEndepunkt: string;
-  behandlingsid: string;
+export default class KroniskSyktBarnApi extends OmsorgApi<HentKroniskSyktBarnResponse> {
 
   constructor(
     stiTilEndepunkt: string,
     behandlingsid: string
   ) {
-    this.stiTilEndepunkt = stiTilEndepunkt;
-    this.behandlingsid = behandlingsid;
-  }
-
-  async getVedtak(): Promise<HentKroniskSyktBarnResponse> {
-    return get<HentKroniskSyktBarnResponse>(
-      `${this.stiTilEndepunkt}/kronisk-sykt-barn`,
-      {behandlingId: this.behandlingsid}
-    );
+    super(`${stiTilEndepunkt}/kronisk-sykt-barn`, behandlingsid);
   }
 
   async hentInfoOmLegeerklaering(): Promise<Legeerklaeringsinfo> {
@@ -45,19 +34,6 @@ export default class KroniskSyktBarnApi {
     });
   }
 
-  async hentInfoOmOmsorg(): Promise<Omsorgsinfo> {
-    return this.getVedtak().then(response => {
-      if (response.vedtak.length && response.vedtak[0]) {
-        const vedtak = response.vedtak[0];
-        const omsorgen = vedtak.løsteBehov.OMSORGEN_FOR || vedtak.uløsteBehov.OMSORGEN_FOR;
-        if (omsorgen) {
-          return {harOmsorgen: omsorgen?.harOmsorgen};
-        }
-      }
-      return {harOmsorgen: false};
-    });
-  }
-
   async losAksjonspunkt(
     harDokumentasjon: boolean,
     harSammenheng: boolean,
@@ -72,7 +48,7 @@ export default class KroniskSyktBarnApi {
       OMSORGEN_FOR: {}
     };
     return patch(
-      `${this.stiTilEndepunkt}/kronisk-sykt-barn/${this.behandlingsid}/aksjonspunkt`,
+      `${this.stiTilEndepunkt}/${this.behandlingsid}/aksjonspunkt`,
       request
     );
   }

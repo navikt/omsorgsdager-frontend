@@ -3,12 +3,12 @@ import {Hovedknapp} from 'nav-frontend-knapper';
 import {Radio, RadioGruppe, Textarea} from 'nav-frontend-skjema';
 import React, {useEffect, useState} from 'react';
 import KroniskSyktBarnApi from '../../../api/KroniskSyktBarnApi';
-import {OmsorgProps} from '../../../types/OmsorgProps';
-import Spinner from '../spinner/Spinner';
+import MidlertidigAleneApi from '../../../api/MidlertidigAleneApi';
+import {OmsorgProps, Prosesstype} from '../../../types/OmsorgProps';
+import {Visningsstatus} from '../../../types/Visningsstatus';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
+import Spinner from '../spinner/Spinner';
 import styles from './omsorg.less';
-
-enum Visningsstatus {SPINNER, FEIL, UTEN_FEIL}
 
 const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
 
@@ -16,10 +16,14 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
   const [harOmsorgen, endreHarOmsorgen] = useState<boolean>(false);
   const [begrunnelse, endreBegrunnelse] = useState<string>('');
 
-  const kroniskSyktBarnApi = new KroniskSyktBarnApi(props.stiTilEndepunkt, props.behandlingsid);
+  const omsorgApi =
+    new (props.prosesstype === Prosesstype.KRONISK_SYKT_BARN ? KroniskSyktBarnApi : MidlertidigAleneApi)(
+      props.stiTilEndepunkt,
+      props.behandlingsid
+    );
 
   useEffect(() => {
-    kroniskSyktBarnApi
+    omsorgApi
       .hentInfoOmOmsorg()
       .then(omsorgsinfo => {
         endreHarOmsorgen(omsorgsinfo.harOmsorgen);
