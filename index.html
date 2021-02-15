@@ -29,15 +29,9 @@
               vilkarMidlertidigAlene: {
                 visKomponent: 'VilkarMidlertidigAlene',
                 props: {
-                  behandlingsid: '111',
+                  behandlingsid: '123',
                   lesemodus: false,
                   stiTilEndepunkt: 'api',
-                  soknedsopplysninger: {
-                    årsak: 'Årsak',
-                    beskrivelse: 'Beskrivelse',
-                    periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ'
-                  },
-                  onSubmit: (vilkarOppfylt, dato, begrunnelse) => console.log(vilkarOppfylt, dato, begrunnelse)
                 }
               },
               omsorg: {
@@ -51,7 +45,7 @@
             };
 
             setTimeout(() => {
-              window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.omsorg);
+              window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.vilkarMidlertidigAlene);
             }, 300);
         </script>
     </body>

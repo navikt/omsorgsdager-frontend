@@ -1,23 +1,20 @@
-import AlertStripe from 'nav-frontend-alertstriper';
+import AlertStripe, {AlertStripeFeil} from 'nav-frontend-alertstriper';
+import ApiResponseMessage from '../api-response-message/ApiResponseMessage';
 import classNames from 'classnames';
 import {Datepicker} from 'nav-datovelger';
 import {Hovedknapp} from 'nav-frontend-knapper';
+import MidlertidigAleneApi from '../../../api/MidlertidigAleneApi';
 import OpplysningerFraVedtak from './opplysninger-fra-vedtak/OpplysningerFraVedtak';
 import OpplysningerFraSoknad from './opplysninger-fra-soknad/OpplysningerFraSoknad';
 import {Radio, RadioGruppe, SkjemaGruppe, Textarea} from 'nav-frontend-skjema';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import Spinner from '../spinner/Spinner';
 import styles from './vilkarMidlertidigAlene.less';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
+import {tekst} from './vilkar-midlertidig-alene-tekst';
 import {VilkarMidlertidigAleneProps} from '../../../types/VilkarMidlertidigAleneProps';
-
-const opplysningerFraVedtak = {
-  vilkarOppfylt: true,
-  dato: {
-    fra: 'DD.MM.ÅÅÅÅ',
-    til: 'DD.MM.ÅÅÅÅ'
-  },
-  begrunnelse: 'Begrunnelse'
-};
+import {VilkarMidlertidigAleneSoknadsopplysninger} from '../../../types/MidlertidigAleneVurderingInfo';
+import {Visningsstatus} from '../../../types/Visningsstatus';
 
 interface Feilmeldinger {
   begrunnelse: boolean;
@@ -28,57 +25,102 @@ interface Feilmeldinger {
 }
 
 const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProps> = ({
-  soknedsopplysninger,
-  onSubmit,
-  lesemodus
+  behandlingsid,
+  lesemodus,
+  stiTilEndepunkt
 }) => {
   const [begrunnelse, endreBegrunnelse] = useState('');
   const [fraDato, endreFraDato] = useState('DD.MM.ÅÅÅÅ');
   const [tilDato, endreTilDato] = useState('DD.MM.ÅÅÅÅ');
   const [visFeilmedlinger, endreVisFeilmedlinger] = useState<boolean>(false);
-  const [vilkarOppfylt, endreVilkarOppfylt] = useState(true);
+  const [erSokerenMidlertidigAleneOmOmsorgen, endreErSokerenMidlertidigAleneOmOmsorgen] = useState<boolean>(true);
+  const [visningsstatus, endreVisningsstatus] = useState<Visningsstatus>(Visningsstatus.SPINNER);
+  const [soknadsopplysninger, endreSoknadsopplysninger] = useState<VilkarMidlertidigAleneSoknadsopplysninger>(null);
+  const [responsFraEndepunkt, endreResponsFraEndepunkt] = useState<Response | null>(null);
+
+  const midlertidigAleneApi = new MidlertidigAleneApi(stiTilEndepunkt, behandlingsid);
+
+  useEffect(() => {
+    midlertidigAleneApi
+      .hentInfoOmMidlertidigAleneVurdering()
+      .then(midlertidigAleneInfo => {
+        if (lesemodus) {
+          endreFraDato(midlertidigAleneInfo.dato.fra.replaceAll('-', '.'));
+          endreTilDato(midlertidigAleneInfo.dato.til.replaceAll('-', '.'));
+          endreErSokerenMidlertidigAleneOmOmsorgen(midlertidigAleneInfo.erSokerenMidlertidigAleneOmOmsorgen);
+          endreBegrunnelse(midlertidigAleneInfo.begrunnelse);
+          endreSoknadsopplysninger(midlertidigAleneInfo.soknadsopplysninger);
+        } else {
+          endreSoknadsopplysninger(midlertidigAleneInfo.soknadsopplysninger);
+        }
+        endreVisningsstatus(Visningsstatus.UTEN_FEIL);
+      })
+      .catch(() => endreVisningsstatus(Visningsstatus.FEIL));
+  }, []);
 
   const feilmedlinger: Feilmeldinger = {
     begrunnelse: begrunnelse.length === 0,
     dato: {
-      til: tilDato == 'DD.MM.ÅÅÅÅ' && vilkarOppfylt,
-      fra: fraDato == 'DD.MM.ÅÅÅÅ' && vilkarOppfylt
+      fra: (fraDato === 'DD.MM.ÅÅÅÅ' || fraDato === '') && erSokerenMidlertidigAleneOmOmsorgen,
+      til: (tilDato === 'DD.MM.ÅÅÅÅ' || tilDato === '') && erSokerenMidlertidigAleneOmOmsorgen
     }
   };
 
-  const vurderingKomplett = !feilmedlinger.begrunnelse && !feilmedlinger.dato.til && !feilmedlinger.dato.fra;
-  const visFeilmedlingForDato = visFeilmedlinger && feilmedlinger.dato.fra && feilmedlinger.dato.til && 'Mangler dato.'
-    || visFeilmedlinger && feilmedlinger.dato.til && !feilmedlinger.dato.fra && 'Manger til dato.'
-    || visFeilmedlinger && feilmedlinger.dato.fra && !feilmedlinger.dato.til && 'Mangler fra dato.';
+  switch (visningsstatus) {
+    case Visningsstatus.SPINNER:
+      return <Spinner/>;
+    case Visningsstatus.FEIL:
+      return <AlertStripeFeil>Kunne ikke hente vedtak.</AlertStripeFeil>;
+  }
 
-  const sjekkHvisVurderingErKomplett = () => vurderingKomplett ?
-    onSubmit(vilkarOppfylt, {til: vilkarOppfylt ? tilDato : '', fra: vilkarOppfylt ? fraDato : ''}, begrunnelse) :
-    endreVisFeilmedlinger(true);
+  const vurderingKomplett = !feilmedlinger.begrunnelse && !feilmedlinger.dato.til && !feilmedlinger.dato.fra;
+  const visFeilmedlingForDato = visFeilmedlinger && feilmedlinger.dato.fra && feilmedlinger.dato.til && tekst.feilmedlingManglerDato
+    || visFeilmedlinger && feilmedlinger.dato.til && !feilmedlinger.dato.fra && tekst.feilmeldingManglerTilDato
+    || visFeilmedlinger && feilmedlinger.dato.fra && !feilmedlinger.dato.til && tekst.feilmedlingManglerFraDato;
+
+  const onSubmit = () => {
+    midlertidigAleneApi
+      .losAksjonspunktMidlertidigAlene(begrunnelse,
+        {
+          fra: erSokerenMidlertidigAleneOmOmsorgen ? fraDato.replaceAll('.', '-') : '',
+          til: erSokerenMidlertidigAleneOmOmsorgen ? tilDato.replaceAll('.', '-') : ''
+        },
+        erSokerenMidlertidigAleneOmOmsorgen)
+      .then(endreResponsFraEndepunkt);
+  };
+
+  const sjekkHvisVurderingErKomplett = () => vurderingKomplett
+    ? onSubmit()
+    : endreVisFeilmedlinger(true);
 
   return (
     <div className={classNames(styles.vilkarMidlerTidigAlene, lesemodus && styleLesemodus.lesemodusboks)}>
       {lesemodus
-        ? <p><b>Behandlet aksjonspunkt:</b> Vurder om vilkår om midlertidig alene om omsorgen er oppfylt.</p>
-        : <AlertStripe type="advarsel">Vurder om vilkår om aleneomsorg er oppfylt.</AlertStripe>}
+        ? <p><b>Behandlet aksjonspunkt:</b>{tekst.aksjonspunkt}</p>
+        : <AlertStripe type="advarsel">{tekst.aksjonspunkt}</AlertStripe>}
 
-      <OpplysningerFraSoknad {...soknedsopplysninger}/>
-      {lesemodus && <OpplysningerFraVedtak {...opplysningerFraVedtak}/>}
+      <OpplysningerFraSoknad {...soknadsopplysninger}/>
+      {lesemodus && <OpplysningerFraVedtak
+        erSokerenMidlertidigAleneOmOmsorgen={erSokerenMidlertidigAleneOmOmsorgen}
+        dato={{fra: fraDato, til: tilDato}}
+        begrunnelse={begrunnelse}
+      />}
 
       {!lesemodus &&
-      <RadioGruppe className={styles.radioButtons} legend="Er vilkårene om aleneomsorg oppfylt?">
-        <Radio label="Ja"
-               checked={vilkarOppfylt}
-               onChange={() => endreVilkarOppfylt(true)}
+      <RadioGruppe className={styles.radioButtons} legend={tekst.sporsmålVilkarOppfylt}>
+        <Radio label={'Ja'}
+               checked={erSokerenMidlertidigAleneOmOmsorgen}
+               onChange={() => endreErSokerenMidlertidigAleneOmOmsorgen(true)}
                name="vilkarAleneomsorg"/>
-        <Radio label="Nei"
-               checked={!vilkarOppfylt}
-               onChange={() => endreVilkarOppfylt(false)}
+        <Radio label={'Nei'}
+               checked={!erSokerenMidlertidigAleneOmOmsorgen}
+               onChange={() => endreErSokerenMidlertidigAleneOmOmsorgen(false)}
                name="vilkarAleneomsorg"/>
       </RadioGruppe>}
 
-      {!lesemodus && vilkarOppfylt &&
+      {!lesemodus && erSokerenMidlertidigAleneOmOmsorgen &&
       <SkjemaGruppe className={styles.gyldigVedtaksPeriode}
-                    legend={'I hvilken periode er vedtaket gyldig?'}
+                    legend={tekst.sporsmalPeriodeVedtakGyldig}
                     feil={visFeilmedlingForDato}>
         <div>
           <span className={styles.gyldigVedtaksPeriodeTilFra}>Fra</span>
@@ -92,13 +134,14 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
 
       {!lesemodus &&
       <>
-        <Textarea label="Begrunnelse"
+        <Textarea label={tekst.begrunnelse}
                   value={begrunnelse}
                   onChange={e => endreBegrunnelse(e.target.value)}
-                  feil={visFeilmedlinger && feilmedlinger.begrunnelse && 'Begrunnelse må oppgis.'}
+                  feil={visFeilmedlinger && feilmedlinger.begrunnelse && tekst.feilmedlingBegrunnelse}
         />
+        <ApiResponseMessage response={responsFraEndepunkt}/>
         <Hovedknapp className={styles.bekreftKnapp} onClick={sjekkHvisVurderingErKomplett}>
-          Bekreft og fortsett
+          {tekst.bekreftFortsettKnapp}
         </Hovedknapp>
       </>}
     </div>

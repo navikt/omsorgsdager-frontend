@@ -1,10 +1,3 @@
-/* eslint-disable */
+import {Behovsliste} from './Behov';
 
-export type MidlertidigAleneAksjonspunktRequest = {
-  "VURDER_MIDLERTIDIG_ALENE": {
-    "vurdering": string;
-    "erSøkerenMidlertidigAleneOmOmsorgen": boolean;
-    "gyldigFraOgMed": string;
-    "gyldigTilOgMed:": string;
-  }
-}
+export type MidlertidigAleneAksjonspunktRequest = Behovsliste;
