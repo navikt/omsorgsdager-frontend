@@ -13,7 +13,7 @@ module.exports = app =>
           },
           uløsteBehov: {
             VURDER_MIDLERTIDIG_ALENE: {},
-            OMSORGEN_FOR: {},
+            VURDERE_OMSORGEN_FOR: {},
           }
         });
         res.end();

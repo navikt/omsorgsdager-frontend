@@ -18,14 +18,15 @@ export default class MidlertidigAleneApi extends OmsorgApi<HentMidlertidigAleneR
       if (response.vedtak.length && response.vedtak[0]) {
         const vedtak = response.vedtak[0];
         const midlertidigAleneBehov = vedtak.løsteBehov.VURDER_MIDLERTIDIG_ALENE || vedtak.uløsteBehov.VURDER_MIDLERTIDIG_ALENE;
-        if (midlertidigAleneBehov) {
-          const soknadsopplysninger = vedtak.soknadsopplysninger;
+        const losning = midlertidigAleneBehov?.løsning;
+        if (losning) {
+          const {soknadsopplysninger} = vedtak;
           return {
-            begrunnelse: midlertidigAleneBehov.vurdering,
-            erSokerenMidlertidigAleneOmOmsorgen: midlertidigAleneBehov.erSøkerenMidlertidigAleneOmOmsorgen,
+            begrunnelse: losning.vurdering,
+            erSokerenMidlertidigAleneOmOmsorgen: losning.erSøkerenMidlertidigAleneOmOmsorgen,
             dato: {
-              fra: midlertidigAleneBehov.gyldigFraOgMed,
-              til: midlertidigAleneBehov.gyldigTilOgMed
+              fra: losning.gyldigFraOgMed,
+              til: losning.gyldigTilOgMed
             },
             soknadsopplysninger,
           };
@@ -59,7 +60,7 @@ export default class MidlertidigAleneApi extends OmsorgApi<HentMidlertidigAleneR
         gyldigFraOgMed: dato.fra,
         gyldigTilOgMed: dato.til
       },
-      OMSORGEN_FOR: {}
+      VURDERE_OMSORGEN_FOR: {}
     };
     return patch(
       `${this.stiTilEndepunkt}/${this.behandlingsid}/aksjonspunkt`,

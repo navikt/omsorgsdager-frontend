@@ -22,7 +22,7 @@ module.exports = app =>
                 periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ'
               },
               uløsteBehov: {
-                OMSORGEN_FOR: {},
+                VURDERE_OMSORGEN_FOR: {},
                 VURDER_MIDLERTIDIG_ALENE: {
                   'vurdering': 'Saksbehandler sin input',
                   'erSøkerenMidlertidigAleneOmOmsorgen': true,

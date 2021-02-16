@@ -1,4 +1,4 @@
-import {Behovsliste} from './Behov';
+import {LosteBehovsliste, UlosteBehovsliste} from './Behov';
 import Vedtaksstatus from './Vedtaksstatus';
 
 export default interface HentMidlertidigAleneResponse {
@@ -17,8 +17,8 @@ export default interface HentMidlertidigAleneResponse {
       beskrivelse?: string;
       periode: string;
     };
-    uløsteBehov: Behovsliste;
-    løsteBehov: Behovsliste;
+    uløsteBehov: UlosteBehovsliste;
+    løsteBehov: LosteBehovsliste;
     lovhenvisninger: {[henvisning: string]: string};
   }[];
 }
