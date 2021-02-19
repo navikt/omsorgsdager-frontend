@@ -17,14 +17,14 @@ const OpplysningerFraVedtak: React.FunctionComponent<Props> = ({
 }) => {
   return (
     <div className={styles.opplysningerFraVedtak}>
-      <h4>Er vilkåret om midlertidig alene om omsorgen oppfylt?</h4>
+      <h4>Begrunn om vilkåret for midlertidig aleneomsorg er oppfylt</h4>
+      <p className={styleLesemodus.fritekst}>{begrunnelse}</p>
+
+      <h4>Er vilkåret om midlertidig aleneomsorg oppfylt?</h4>
       <p>{erSokerenMidlertidigAleneOmOmsorgen ? 'Ja' : 'Nei'}</p>
 
       <h4>I hvilken periode er vedtaket gyldig?</h4>
       <p>{`${dato.fra} - ${dato.til}`}</p>
-
-      <h4>Begrunnelse</h4>
-      <p className={styleLesemodus.fritekst}>{begrunnelse}</p>
     </div>
   );
 };

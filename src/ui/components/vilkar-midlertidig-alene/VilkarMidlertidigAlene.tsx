@@ -25,13 +25,13 @@ interface Feilmeldinger {
 }
 
 const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProps> = ({
-  behandlingsid,
-  lesemodus,
-  stiTilEndepunkt
-}) => {
+                                                                                        behandlingsid,
+                                                                                        lesemodus,
+                                                                                        stiTilEndepunkt
+                                                                                      }) => {
   const [begrunnelse, endreBegrunnelse] = useState('');
-  const [fraDato, endreFraDato] = useState('DD.MM.ÅÅÅÅ');
-  const [tilDato, endreTilDato] = useState('DD.MM.ÅÅÅÅ');
+  const [fraDato, endreFraDato] = useState('dd.mm.åååå');
+  const [tilDato, endreTilDato] = useState('dd.mm.åååå');
   const [visFeilmedlinger, endreVisFeilmedlinger] = useState<boolean>(false);
   const [erSokerenMidlertidigAleneOmOmsorgen, endreErSokerenMidlertidigAleneOmOmsorgen] = useState<boolean>(true);
   const [visningsstatus, endreVisningsstatus] = useState<Visningsstatus>(Visningsstatus.SPINNER);
@@ -61,8 +61,8 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   const feilmedlinger: Feilmeldinger = {
     begrunnelse: begrunnelse.length === 0,
     dato: {
-      fra: (fraDato === 'DD.MM.ÅÅÅÅ' || fraDato === '') && erSokerenMidlertidigAleneOmOmsorgen,
-      til: (tilDato === 'DD.MM.ÅÅÅÅ' || tilDato === '') && erSokerenMidlertidigAleneOmOmsorgen
+      fra: (fraDato.toLowerCase() === 'dd.mm.åååå' || fraDato === '') && erSokerenMidlertidigAleneOmOmsorgen,
+      til: (tilDato.toLowerCase() === 'dd.mm.åååå' || tilDato === '') && erSokerenMidlertidigAleneOmOmsorgen
     }
   };
 
@@ -70,7 +70,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
     case Visningsstatus.SPINNER:
       return <Spinner/>;
     case Visningsstatus.FEIL:
-      return <AlertStripeFeil>Kunne ikke hente vedtak.</AlertStripeFeil>;
+      return <AlertStripe type="feil">Kunne ikke hente vedtak.</AlertStripe>;
   }
 
   const vurderingKomplett = !feilmedlinger.begrunnelse && !feilmedlinger.dato.til && !feilmedlinger.dato.fra;
@@ -96,7 +96,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   return (
     <div className={classNames(styles.vilkarMidlerTidigAlene, lesemodus && styleLesemodus.lesemodusboks)}>
       {lesemodus
-        ? <p><b>Behandlet aksjonspunkt:</b>{tekst.aksjonspunkt}</p>
+        ? <p><b>Behandlet aksjonspunkt: </b>{tekst.aksjonspunkt}</p>
         : <AlertStripe type="advarsel">{tekst.aksjonspunkt}</AlertStripe>}
 
       <OpplysningerFraSoknad {...soknadsopplysninger}/>
@@ -106,17 +106,26 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
         begrunnelse={begrunnelse}
       />}
 
-      {!lesemodus &&
-      <RadioGruppe className={styles.radioButtons} legend={tekst.sporsmålVilkarOppfylt}>
-        <Radio label={'Ja'}
-               checked={erSokerenMidlertidigAleneOmOmsorgen}
-               onChange={() => endreErSokerenMidlertidigAleneOmOmsorgen(true)}
-               name="vilkarAleneomsorg"/>
-        <Radio label={'Nei'}
-               checked={!erSokerenMidlertidigAleneOmOmsorgen}
-               onChange={() => endreErSokerenMidlertidigAleneOmOmsorgen(false)}
-               name="vilkarAleneomsorg"/>
-      </RadioGruppe>}
+      {!lesemodus && <>
+        <Textarea label={tekst.begrunnelse}
+                  value={begrunnelse}
+                  onChange={e => endreBegrunnelse(e.target.value)}
+                  feil={visFeilmedlinger && feilmedlinger.begrunnelse && tekst.feilmedlingBegrunnelse}
+        />
+
+        <RadioGruppe className={styles.radioButtons} legend={tekst.sporsmålVilkarOppfylt}>
+          <Radio label={'Ja'}
+                 checked={erSokerenMidlertidigAleneOmOmsorgen}
+                 onChange={() => endreErSokerenMidlertidigAleneOmOmsorgen(true)}
+                 name="vilkarAleneomsorg"/>
+          <Radio label={'Nei'}
+                 checked={!erSokerenMidlertidigAleneOmOmsorgen}
+                 onChange={() => endreErSokerenMidlertidigAleneOmOmsorgen(false)}
+                 name="vilkarAleneomsorg"/>
+        </RadioGruppe>
+
+      </>
+      }
 
       {!lesemodus && erSokerenMidlertidigAleneOmOmsorgen &&
       <SkjemaGruppe className={styles.gyldigVedtaksPeriode}
@@ -134,11 +143,6 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
 
       {!lesemodus &&
       <>
-        <Textarea label={tekst.begrunnelse}
-                  value={begrunnelse}
-                  onChange={e => endreBegrunnelse(e.target.value)}
-                  feil={visFeilmedlinger && feilmedlinger.begrunnelse && tekst.feilmedlingBegrunnelse}
-        />
         <ApiResponseMessage response={responsFraEndepunkt}/>
         <Hovedknapp className={styles.bekreftKnapp} onClick={sjekkHvisVurderingErKomplett}>
           {tekst.bekreftFortsettKnapp}

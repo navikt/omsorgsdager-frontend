@@ -30,7 +30,7 @@
                 visKomponent: 'VilkarMidlertidigAlene',
                 props: {
                   behandlingsid: '123',
-                  lesemodus: false,
+                  lesemodus: true,
                   stiTilEndepunkt: 'api',
                 }
               },
@@ -46,7 +46,7 @@
             };
 
             setTimeout(() => {
-              window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.omsorg);
+              window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.vilkarMidlertidigAlene);
             }, 300);
         </script>
     </body>
