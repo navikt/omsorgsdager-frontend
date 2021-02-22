@@ -25,9 +25,10 @@ export default class OmsorgApi<T extends {vedtak: any[]}> {
     return this.getVedtak().then(response => {
       if (response.vedtak.length && response.vedtak[0]) {
         const vedtak = response.vedtak[0];
-        const omsorgen = vedtak.løsteBehov.OMSORGEN_FOR || vedtak.uløsteBehov.OMSORGEN_FOR;
-        if (omsorgen) {
-          return {harOmsorgen: omsorgen?.harOmsorgen};
+        const omsorgen = vedtak.løsteBehov.VURDERE_OMSORGEN_FOR || vedtak.uløsteBehov.VURDERE_OMSORGEN_FOR;
+        const losning = omsorgen?.losning;
+        if (losning) {
+          return {harOmsorgen: losning?.harOmsorgen};
         }
       }
       return {harOmsorgen: false};
