@@ -13,8 +13,8 @@ module.exports = app =>
             FORKASTET: {}
           },
           uløsteBehov: {
-            LEGEERKLÆRING: {},
-            OMSORGEN_FOR: {}
+            VURDERE_KRONISK_SYKT_BARN: {},
+            VURDERE_OMSORGEN_FOR: {}
           }
         });
         res.end();

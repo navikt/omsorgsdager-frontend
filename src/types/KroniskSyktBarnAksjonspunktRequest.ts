@@ -1,3 +1,3 @@
-import {Behovsliste} from './Behov';
+import {BehovslisteInnsending} from './Behov';
 
-export type KroniskSyktBarnAksjonspunktRequest = Behovsliste;
+export type KroniskSyktBarnAksjonspunktRequest = BehovslisteInnsending;
