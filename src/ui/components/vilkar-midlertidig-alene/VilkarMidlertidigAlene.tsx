@@ -25,10 +25,10 @@ interface Feilmeldinger {
 }
 
 const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProps> = ({
-                                                                                        behandlingsid,
-                                                                                        lesemodus,
-                                                                                        stiTilEndepunkt
-                                                                                      }) => {
+  behandlingsid,
+  lesemodus,
+  stiTilEndepunkt
+}) => {
   const [begrunnelse, endreBegrunnelse] = useState('');
   const [fraDato, endreFraDato] = useState('dd.mm.åååå');
   const [tilDato, endreTilDato] = useState('dd.mm.åååå');
@@ -70,7 +70,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
     case Visningsstatus.SPINNER:
       return <Spinner/>;
     case Visningsstatus.FEIL:
-      return <AlertStripe type="feil">Kunne ikke hente vedtak.</AlertStripe>;
+      return <AlertStripeFeil>Kunne ikke hente vedtak.</AlertStripeFeil>;
   }
 
   const vurderingKomplett = !feilmedlinger.begrunnelse && !feilmedlinger.dato.til && !feilmedlinger.dato.fra;
