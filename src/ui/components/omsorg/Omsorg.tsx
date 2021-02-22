@@ -3,7 +3,6 @@ import {Hovedknapp} from 'nav-frontend-knapper';
 import {Radio, RadioGruppe, Textarea} from 'nav-frontend-skjema';
 import React, {useEffect, useState} from 'react';
 import KroniskSyktBarnApi from '../../../api/KroniskSyktBarnApi';
-import MidlertidigAleneApi from '../../../api/MidlertidigAleneApi';
 import {OmsorgProps, Prosesstype} from '../../../types/OmsorgProps';
 import {Visningsstatus} from '../../../types/Visningsstatus';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
@@ -17,7 +16,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
   const [begrunnelse, endreBegrunnelse] = useState<string>('');
 
   const omsorgApi =
-    new (props.prosesstype === Prosesstype.KRONISK_SYKT_BARN ? KroniskSyktBarnApi : MidlertidigAleneApi)(
+    new (props.prosesstype === Prosesstype.KRONISK_SYKT_BARN ? KroniskSyktBarnApi : null)(
       props.stiTilEndepunkt,
       props.behandlingsid
     );
