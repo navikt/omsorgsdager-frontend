@@ -21,9 +21,9 @@
               vilkarKroniskSyktBarn: {
                 visKomponent: 'VilkarKroniskSyktBarn',
                 props: {
-                  behandlingsid: '123',
-                  stiTilEndepunkt: 'api',
-                  lesemodus: false
+                  lesemodus: false,
+                  legeerklaeringsinfo: {harDokumentasjon: true, harSammenheng: true, begrunnelse: ""},
+                  losAksjonspunkt: (harDokumentasjon, harSammenheng, begrunnelse) => console.log(harDokumentasjon, harSammenheng, begrunnelse)
                 }
               },
               vilkarMidlertidigAlene: {

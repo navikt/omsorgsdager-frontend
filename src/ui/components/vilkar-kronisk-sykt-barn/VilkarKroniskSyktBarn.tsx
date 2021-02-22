@@ -1,15 +1,12 @@
 import classNames from 'classnames';
-import {AlertStripeAdvarsel, AlertStripeFeil, AlertStripeSuksess} from 'nav-frontend-alertstriper';
+import {AlertStripeAdvarsel} from 'nav-frontend-alertstriper';
 import {Hovedknapp} from 'nav-frontend-knapper';
 import {Radio, RadioGruppe, Textarea} from 'nav-frontend-skjema';
-import React, {useEffect, useState} from 'react';
-import KroniskSyktBarnApi from '../../../api/KroniskSyktBarnApi';
+import React, {useState} from 'react';
 import {VilkarKroniskSyktBarnProps} from '../../../types/VilkarKroniskSyktBarnProps';
 import Feilikon from '../../icons/Feilikon';
 import Suksessikon from '../../icons/Suksessikon';
-import ApiErrorMessage from '../api-error-message/ApiErrorMessage';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
-import Spinner from '../spinner/Spinner';
 import styles from './vilkarKronisSyktBarn.less';
 
 interface Feilmeldinger {
@@ -17,41 +14,16 @@ interface Feilmeldinger {
   begrunnelse: boolean;
 }
 
-enum Visningsstatus {SPINNER, FEIL, UTEN_FEIL}
-
 const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps> = props => {
 
-  const [visningsstatus, endreVisningsstatus] = useState<Visningsstatus>(Visningsstatus.SPINNER);
-  const [harDokumentasjon, endreHarDokumentasjon] = useState<boolean>(false);
-  const [harSammenheng, endreHarSammenheng] = useState<boolean>(false);
-  const [begrunnelse, endreBegrunnelse] = useState<string>('');
+  const {lesemodus, legeerklaeringsinfo} = props;
+
+  const [harDokumentasjon, endreHarDokumentasjon] = useState<boolean>(legeerklaeringsinfo.harDokumentasjon);
+  const [harSammenheng, endreHarSammenheng] = useState<boolean>(legeerklaeringsinfo.harSammenheng);
+  const [begrunnelse, endreBegrunnelse] = useState<string>(legeerklaeringsinfo.begrunnelse);
   const [visFeilmeldinger, endreVisFeilmeldinger] = useState<boolean>(false);
-  const [responsFraEndepunkt, endreResponsFraEndepunkt] = useState<Response | null>(null);
 
-  const kroniskSyktBarnApi = new KroniskSyktBarnApi(props.stiTilEndepunkt, props.behandlingsid);
-
-  useEffect(() => {
-    kroniskSyktBarnApi
-      .hentInfoOmLegeerklaering()
-      .then(legeerklaeringsinfo => {
-        endreHarDokumentasjon(legeerklaeringsinfo.harDokumentasjon);
-        endreHarSammenheng(legeerklaeringsinfo.harSammenheng);
-        endreBegrunnelse(legeerklaeringsinfo.begrunnelse);
-        endreVisningsstatus(Visningsstatus.UTEN_FEIL);
-      })
-      .catch(() => endreVisningsstatus(Visningsstatus.FEIL));
-  }, []);
-
-  switch (visningsstatus) {
-    case Visningsstatus.SPINNER: return <Spinner/>;
-    case Visningsstatus.FEIL: return <AlertStripeFeil>Kunne ikke hente vedtak.</AlertStripeFeil>;
-  }
-
-  const {lesemodus} = props;
-
-  const onSubmit = () => kroniskSyktBarnApi
-    .losAksjonspunkt(harDokumentasjon, harSammenheng, begrunnelse)
-    .then(endreResponsFraEndepunkt);
+  const onSubmit = props.losAksjonspunkt;
 
   const byttHarDokumentasjon = () => endreHarDokumentasjon(!harDokumentasjon);
   const byttHarSammenheng = () => endreHarSammenheng(!harSammenheng);
@@ -63,18 +35,8 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   };
 
   const onGaVidere = () => kanManGaVidere
-    ? onSubmit()
+    ? onSubmit(harDokumentasjon, harSammenheng, begrunnelse)
     : endreVisFeilmeldinger(true);
-
-  const genererResponsmelding = () => {
-    if (responsFraEndepunkt !== null) {
-      switch (responsFraEndepunkt.status) {
-        case 200: return <AlertStripeSuksess>Vedtaket er løst.</AlertStripeSuksess>;
-        case 409: return <AlertStripeFeil>Vedtaket har en annen status enn <i>foreslått</i>.</AlertStripeFeil>;
-        default: return <ApiErrorMessage response={responsFraEndepunkt}/>;
-      }
-    }
-  };
 
   const tekst = {
     instruksjon: 'Se på vedlagt legeerklæring og vurder om barnet har en kronisk sykdom eller en funksjonshemmelse, og om det er økt risiko for fravær.',
@@ -135,7 +97,6 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
             maxLength={0}
             feil={visFeilmeldinger && feilmeldinger.begrunnelse && 'Begrunnelse må oppgis.'}
           />
-          {genererResponsmelding()}
           <Hovedknapp onClick={onGaVidere}>Gå videre</Hovedknapp>
         </>}
 

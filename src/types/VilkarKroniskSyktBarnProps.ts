@@ -1,5 +1,7 @@
+import Legeerklaeringsinfo from './Legeerklaeringsinfo';
+
 export interface VilkarKroniskSyktBarnProps {
-  behandlingsid: string;
-  stiTilEndepunkt: string;
   lesemodus?: boolean;
+  legeerklaeringsinfo: Legeerklaeringsinfo;
+  losAksjonspunkt: (harDokumentasjon, harSammenheng, begrunnelse) => void;
 }
