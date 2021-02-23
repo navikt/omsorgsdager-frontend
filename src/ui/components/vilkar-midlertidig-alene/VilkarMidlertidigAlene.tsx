@@ -24,7 +24,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   soknadsopplysninger,
   informasjonTilLesemodus,
   onSubmit
-                                                                                      }) => {
+}) => {
     const [visFeilmedlinger, endreVisFeilmedlinger] = useState<boolean>(false);
     const [erSokerenMidlertidigAleneOmOmsorgen, endreErSokerenMidlertidigAleneOmOmsorgen] = useState<boolean>(true);
     const [begrunnelse, endreBegrunnelse] = useState('');
