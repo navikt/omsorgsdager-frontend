@@ -6,8 +6,6 @@ const WebpackDevServer = require('webpack-dev-server');
 const commonWebpackConfig = require('./webpack.common.js');
 const mockedKroniskSyktBarn = require('../src/mock/mockedKroniskSyktBarn');
 const mockedKroniskSyktBarnLost = require('../src/mock/mockedKroniskSyktBarnLost');
-const mockedMidlertidigAlene = require('../src/mock/mockedMidlertidigAlene');
-const mockedMidlertidigAleneLost = require('../src/mock/mockedMidlertidigAleneLost');
 
 
 const webpackConfig = merge(commonWebpackConfig, {
@@ -23,8 +21,6 @@ const webpackConfig = merge(commonWebpackConfig, {
 const devServerOptions = {
     hot: true,
     before(app) {
-        mockedMidlertidigAlene(app);
-        mockedMidlertidigAleneLost(app);
         mockedKroniskSyktBarn(app);
         mockedKroniskSyktBarnLost(app);
     }

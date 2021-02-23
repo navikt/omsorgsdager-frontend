@@ -28,10 +28,22 @@
               },
               vilkarMidlertidigAlene: {
                 visKomponent: 'VilkarMidlertidigAlene',
-                props: {
-                  behandlingsid: '123',
-                  lesemodus: true,
-                  stiTilEndepunkt: 'api',
+                props:  {
+                  lesemodus: false,
+                  soknadsopplysninger: {
+                    årsak: 'Årsak',
+                    beskrivelse: 'Beskrivelse',
+                    periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ'
+                  },
+                  informasjonTilLesemodus: {
+                    begrunnelse: 'Begrunnelse',
+                    vilkarOppfylt: true,
+                    dato: {
+                      fra: '22.03.1993',
+                      til: '22.12.1994'
+                    }
+                  },
+                  onSubmit: () => {}
                 }
               },
               omsorg: {
