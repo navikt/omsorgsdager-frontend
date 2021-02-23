@@ -37,16 +37,14 @@
               omsorg: {
                 visKomponent: 'Omsorg',
                 props: {
-                  behandlingsid: '123',
-                  stiTilEndepunkt: 'api',
-                  prosesstype: 'KRONISK_SYKT_BARN',
-                  lesemodus: true
+                  lesemodus: false,
+                  harOmsorgen: false
                 }
               }
             };
 
             setTimeout(() => {
-              window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.vilkarKroniskSyktBarn);
+              window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.omsorg);
             }, 300);
         </script>
     </body>

@@ -1,41 +1,15 @@
-import {AlertStripeAdvarsel, AlertStripeFeil} from 'nav-frontend-alertstriper';
+import {AlertStripeAdvarsel} from 'nav-frontend-alertstriper';
 import {Hovedknapp} from 'nav-frontend-knapper';
 import {Radio, RadioGruppe, Textarea} from 'nav-frontend-skjema';
-import React, {useEffect, useState} from 'react';
-import KroniskSyktBarnApi from '../../../api/KroniskSyktBarnApi';
-import MidlertidigAleneApi from '../../../api/MidlertidigAleneApi';
-import {OmsorgProps, Prosesstype} from '../../../types/OmsorgProps';
-import {Visningsstatus} from '../../../types/Visningsstatus';
+import React, {useState} from 'react';
+import {OmsorgProps} from '../../../types/OmsorgProps';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
-import Spinner from '../spinner/Spinner';
 import styles from './omsorg.less';
 
 const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
 
-  const [visningsstatus, endreVisningsstatus] = useState<Visningsstatus>(Visningsstatus.SPINNER);
-  const [harOmsorgen, endreHarOmsorgen] = useState<boolean>(false);
+  const [harOmsorgen, endreHarOmsorgen] = useState<boolean>(props.harOmsorgen);
   const [begrunnelse, endreBegrunnelse] = useState<string>('');
-
-  const omsorgApi =
-    new (props.prosesstype === Prosesstype.KRONISK_SYKT_BARN ? KroniskSyktBarnApi : MidlertidigAleneApi)(
-      props.stiTilEndepunkt,
-      props.behandlingsid
-    );
-
-  useEffect(() => {
-    omsorgApi
-      .hentInfoOmOmsorg()
-      .then(omsorgsinfo => {
-        endreHarOmsorgen(omsorgsinfo.harOmsorgen);
-        endreVisningsstatus(Visningsstatus.UTEN_FEIL);
-      })
-      .catch(() => endreVisningsstatus(Visningsstatus.FEIL));
-  }, []);
-
-  switch (visningsstatus) {
-    case Visningsstatus.SPINNER: return <Spinner/>;
-    case Visningsstatus.FEIL: return <AlertStripeFeil>Kunne ikke hente vedtak.</AlertStripeFeil>;
-  }
 
   const tekst = {
     instruksjon: 'Barnet er ikke registrert på samme adresse som søker. Vurder om søkeren har omsorgen for barnet.',

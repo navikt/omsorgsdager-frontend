@@ -4,8 +4,6 @@ const {merge} = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackDevServer = require('webpack-dev-server');
 const commonWebpackConfig = require('./webpack.common.js');
-const mockedKroniskSyktBarn = require('../src/mock/mockedKroniskSyktBarn');
-const mockedKroniskSyktBarnLost = require('../src/mock/mockedKroniskSyktBarnLost');
 const mockedMidlertidigAlene = require('../src/mock/mockedMidlertidigAlene');
 const mockedMidlertidigAleneLost = require('../src/mock/mockedMidlertidigAleneLost');
 
@@ -25,8 +23,6 @@ const devServerOptions = {
     before(app) {
         mockedMidlertidigAlene(app);
         mockedMidlertidigAleneLost(app);
-        mockedKroniskSyktBarn(app);
-        mockedKroniskSyktBarnLost(app);
     }
 };
 WebpackDevServer.addDevServerEntrypoints(webpackConfig, devServerOptions);
