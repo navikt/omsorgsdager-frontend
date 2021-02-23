@@ -26,12 +26,12 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   informasjonTilLesemodus,
   vedtakFattetVilkarOppfylt,
   onSubmit
-                                                                                      }) => {
+}) => {
     const [visFeilmedlinger, endreVisFeilmedlinger] = useState<boolean>(false);
     const [erSokerenMidlertidigAleneOmOmsorgen, endreErSokerenMidlertidigAleneOmOmsorgen] = useState<boolean>(true);
     const [begrunnelse, endreBegrunnelse] = useState('');
     const [fraDato, endreFraDato] = useState('dd.mm.åååå');
-    const [tilDato, endreTilDato] = useState('dd.mm.ååå');
+    const [tilDato, endreTilDato] = useState('dd.mm.åååå');
 
     const feilmedlinger: Feilmeldinger = {
       begrunnelse: begrunnelse.length === 0,
@@ -68,12 +68,18 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
           begrunnelse={'Begrunnelse'}
         />}
 
-        {lesemodus && !vedtakFattetVilkarOppfylt &&<VilkarMidlertidigAleneLesemodus soknadsopplysninger={soknadsopplysninger}
+        {lesemodus && !vedtakFattetVilkarOppfylt && <VilkarMidlertidigAleneLesemodus soknadsopplysninger={soknadsopplysninger}
                                                        informasjonTilLesemodus={informasjonTilLesemodus}/>}
         {!lesemodus && !vedtakFattetVilkarOppfylt && <>
           <AlertStripe type="advarsel">{tekst.aksjonspunkt}</AlertStripe>
 
           <OpplysningerFraSoknad {...soknadsopplysninger}/>
+          
+          <Textarea label={tekst.begrunnelse}
+                    value={begrunnelse}
+                    onChange={e => endreBegrunnelse(e.target.value)}
+                    feil={visFeilmedlinger && feilmedlinger.begrunnelse && tekst.feilmedlingBegrunnelse}
+          />
 
           <RadioGruppe className={styles.radioButtons} legend={tekst.sporsmålVilkarOppfylt}>
             <Radio label={'Ja'}
@@ -101,12 +107,6 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
           </SkjemaGruppe>
           }
 
-          <Textarea label={tekst.begrunnelse}
-                    value={begrunnelse}
-                    onChange={e => endreBegrunnelse(e.target.value)}
-                    feil={visFeilmedlinger && feilmedlinger.begrunnelse && tekst.feilmedlingBegrunnelse}
-          />
-
           <Hovedknapp className={styles.bekreftKnapp} onClick={sjekkHvisVurderingErKomplett}>
             {tekst.bekreftFortsettKnapp}
           </Hovedknapp>
@@ -114,7 +114,5 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
         </>}
       </div>
     );
-  }
-;
-
+  };
 export default VilkarMidlertidigAlene;
