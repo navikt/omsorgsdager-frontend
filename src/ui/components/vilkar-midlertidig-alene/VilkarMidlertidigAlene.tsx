@@ -10,6 +10,7 @@ import styleLesemodus from '../lesemodus/lesemodusboks.less';
 import {tekst} from './vilkar-midlertidig-alene-tekst';
 import {VilkarMidlertidigAleneProps} from '../../../types/VilkarMidlertidigAleneProps';
 import VilkarMidlertidigAleneLesemodus from '../vilkar-midlertidig-alene-lesemodus/VilkarMidlertidigAleneLesemodus';
+import VilkarStatus from '../vilkar-status/VilkarStatus';
 
 interface Feilmeldinger {
   begrunnelse: boolean;
@@ -31,6 +32,9 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
     const [fraDato, endreFraDato] = useState('dd.mm.åååå');
     const [tilDato, endreTilDato] = useState('dd.mm.ååå');
 
+    //Legger till tillfälligt her tillsvidere.
+    const vedtakFattet = true;
+
     const feilmedlinger: Feilmeldinger = {
       begrunnelse: begrunnelse.length === 0,
       dato: {
@@ -48,10 +52,8 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
       onSubmit({
         begrunnelse,
         erSokerenMidlertidigAleneOmOmsorgen,
-        dato: {
-          fra: erSokerenMidlertidigAleneOmOmsorgen ? fraDato.replaceAll('.', '-') : '',
-          til: erSokerenMidlertidigAleneOmOmsorgen ? tilDato.replaceAll('.', '-') : ''
-        }
+        fra: erSokerenMidlertidigAleneOmOmsorgen ? fraDato.replaceAll('.', '-') : '',
+        til: erSokerenMidlertidigAleneOmOmsorgen ? tilDato.replaceAll('.', '-') : ''
       });
     };
 
@@ -61,9 +63,16 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
 
     return (
       <div className={classNames(styles.vilkarMidlerTidigAlene, lesemodus && styleLesemodus.lesemodusboks)}>
-        {lesemodus && <VilkarMidlertidigAleneLesemodus soknadsopplysninger={soknadsopplysninger}
+        {vedtakFattet && <VilkarStatus
+          vilkarOppfylt={false}
+          aksjonspunktNavn={'Opptjening'}
+          vilkarReferanse={'§ 9-2 jamfør 8-2'}
+          begrunnelse={'Begrunnelse'}
+        />}
+
+        {lesemodus && !vedtakFattet &&<VilkarMidlertidigAleneLesemodus soknadsopplysninger={soknadsopplysninger}
                                                        informasjonTilLesemodus={informasjonTilLesemodus}/>}
-        {!lesemodus && <>
+        {!lesemodus && !vedtakFattet && <>
           <AlertStripe type="advarsel">{tekst.aksjonspunkt}</AlertStripe>
 
           <OpplysningerFraSoknad {...soknadsopplysninger}/>

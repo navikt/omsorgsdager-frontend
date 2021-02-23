@@ -1,7 +1,7 @@
 export interface VilkarMidlertidigAleneProps {
   lesemodus: boolean;
   soknadsopplysninger: VilkarMidlertidigSoknadsopplysninger;
-  informasjonTilLesemodus?: VilkarMidlertidigGrunnlagForBeslutt;
+  informasjonTilLesemodus?: VilkarMidlertidigInformasjonTilLesemodus;
   onSubmit: (VilkarMidlertidigGrunnlagForBeslutt) => void;
 }
 
@@ -16,7 +16,7 @@ export interface VilkarMidlertidigSoknadsopplysninger {
   periode: string;
 }
 
-export interface VilkarMidlertidigGrunnlagForBeslutt{
+export interface VilkarMidlertidigInformasjonTilLesemodus {
   begrunnelse: string;
   vilkarOppfylt: boolean;
   dato: VilkarMidlertidigAleneDato;
