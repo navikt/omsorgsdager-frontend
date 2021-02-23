@@ -6,6 +6,7 @@ import Omsorg from '../ui/components/omsorg/Omsorg';
 import VilkarKroniskSyktBarn from '../ui/components/vilkar-kronisk-sykt-barn/VilkarKroniskSyktBarn';
 import VilkarMidlertidigAlene from './components/vilkar-midlertidig-alene/VilkarMidlertidigAlene';
 import ContainerContext from './context/ContainerContext';
+import styles from './global.less';
 
 interface MainComponentProps {
   containerData: ContainerContract;
@@ -33,7 +34,9 @@ const MainComponent = ({containerData}: MainComponentProps): JSX.Element => {
 
   return (
     <ContainerContext.Provider value={containerData}>
-      {innhold}
+     <div className={styles.global}>
+       {innhold}
+     </div>
     </ContainerContext.Provider>
   );
 };
