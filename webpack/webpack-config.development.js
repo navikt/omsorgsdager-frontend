@@ -4,8 +4,6 @@ const {merge} = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackDevServer = require('webpack-dev-server');
 const commonWebpackConfig = require('./webpack.common.js');
-const mockedMidlertidigAlene = require('../src/mock/mockedMidlertidigAlene');
-const mockedMidlertidigAleneLost = require('../src/mock/mockedMidlertidigAleneLost');
 
 
 const webpackConfig = merge(commonWebpackConfig, {
@@ -19,11 +17,7 @@ const webpackConfig = merge(commonWebpackConfig, {
 });
 
 const devServerOptions = {
-    hot: true,
-    before(app) {
-        mockedMidlertidigAlene(app);
-        mockedMidlertidigAleneLost(app);
-    }
+    hot: true
 };
 WebpackDevServer.addDevServerEntrypoints(webpackConfig, devServerOptions);
 
