@@ -10,7 +10,7 @@ interface OwnProps {
   aksjonspunktNavn: string;
   vilkarReferanse: string;
   begrunnelse: string;
-};
+}
 
 const VilkarStatus: React.FunctionComponent<OwnProps> = ({
                                                            vilkarOppfylt,
