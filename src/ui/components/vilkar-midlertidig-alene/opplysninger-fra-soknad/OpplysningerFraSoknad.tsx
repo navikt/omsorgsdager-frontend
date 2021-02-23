@@ -12,7 +12,7 @@ const OpplysningerFraSoknad: React.FunctionComponent<Props> = ({årsak, beskrive
     <div className={styles.opplysningerFraSoknad}>
       <div>Opplysninger fra søknaden:</div>
       <h4>Oppgitt årsak</h4>
-      <p>lsjdaskjd</p>
+      <p>{årsak}</p>
 
       {årsak != undefined && årsak.toLowerCase() === 'annet' && beskrivelse !== undefined && beskrivelse.length !== 0 && <>
         <h4>Beskrivelse</h4>
@@ -20,7 +20,7 @@ const OpplysningerFraSoknad: React.FunctionComponent<Props> = ({årsak, beskrive
       </>}
 
       <h4>Oppgitt periode</h4>
-      <p>lsjdajoisjd</p>
+      <p>{periode}</p>
     </div>
   );
 };
