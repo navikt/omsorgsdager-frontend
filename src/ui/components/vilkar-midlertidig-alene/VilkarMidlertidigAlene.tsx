@@ -24,6 +24,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   lesemodus,
   soknadsopplysninger,
   informasjonTilLesemodus,
+  vedtakFattetVilkarOppfylt,
   onSubmit
                                                                                       }) => {
     const [visFeilmedlinger, endreVisFeilmedlinger] = useState<boolean>(false);
@@ -31,9 +32,6 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
     const [begrunnelse, endreBegrunnelse] = useState('');
     const [fraDato, endreFraDato] = useState('dd.mm.åååå');
     const [tilDato, endreTilDato] = useState('dd.mm.ååå');
-
-    //Legger till tillfälligt her tillsvidere.
-    const vedtakFattet = true;
 
     const feilmedlinger: Feilmeldinger = {
       begrunnelse: begrunnelse.length === 0,
@@ -63,16 +61,16 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
 
     return (
       <div className={classNames(styles.vilkarMidlerTidigAlene, lesemodus && styleLesemodus.lesemodusboks)}>
-        {vedtakFattet && <VilkarStatus
-          vilkarOppfylt={false}
+        {vedtakFattetVilkarOppfylt && <VilkarStatus
+          vilkarOppfylt={vedtakFattetVilkarOppfylt}
           aksjonspunktNavn={'Opptjening'}
           vilkarReferanse={'§ 9-2 jamfør 8-2'}
           begrunnelse={'Begrunnelse'}
         />}
 
-        {lesemodus && !vedtakFattet &&<VilkarMidlertidigAleneLesemodus soknadsopplysninger={soknadsopplysninger}
+        {lesemodus && !vedtakFattetVilkarOppfylt &&<VilkarMidlertidigAleneLesemodus soknadsopplysninger={soknadsopplysninger}
                                                        informasjonTilLesemodus={informasjonTilLesemodus}/>}
-        {!lesemodus && !vedtakFattet && <>
+        {!lesemodus && !vedtakFattetVilkarOppfylt && <>
           <AlertStripe type="advarsel">{tekst.aksjonspunkt}</AlertStripe>
 
           <OpplysningerFraSoknad {...soknadsopplysninger}/>

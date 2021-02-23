@@ -2,6 +2,7 @@ export interface VilkarMidlertidigAleneProps {
   lesemodus: boolean;
   soknadsopplysninger: VilkarMidlertidigSoknadsopplysninger;
   informasjonTilLesemodus?: VilkarMidlertidigInformasjonTilLesemodus;
+  vedtakFattetVilkarOppfylt: boolean;
   onSubmit: (VilkarMidlertidigGrunnlagForBeslutt) => void;
 }
 
