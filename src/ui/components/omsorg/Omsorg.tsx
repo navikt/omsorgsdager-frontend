@@ -11,20 +11,26 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
   const [harOmsorgen, endreHarOmsorgen] = useState<boolean>(props.harOmsorgen);
   const [begrunnelse, endreBegrunnelse] = useState<string>('');
 
+  const barnetEllerBarna = props.barn.length === 1 ? 'barnet' : 'barna';
+
   const tekst = {
     instruksjon: 'Barnet er ikke registrert på samme adresse som søker. Vurder om søkeren har omsorgen for barnet.',
     opplysningerFraSoknaden: 'Opplysninger fra søknaden:',
     sokersBarn: 'Søkers barn:',
-    sporsmalHarOmsorgen: 'Har søker omsorgen for barnet?',
-    begrunnelse: 'Begrunn om søker har omsorgen for barnet'
+    sporsmalHarOmsorgen: `Har søker omsorgen for ${barnetEllerBarna}?`,
+    begrunnelse: `Begrunn om søker har omsorgen for ${barnetEllerBarna}`
   };
+
+  const opplysningerFraSoknaden = <>
+    <p>{tekst.opplysningerFraSoknaden}</p>
+    <p className={styleLesemodus.label}>{tekst.sokersBarn}</p>
+    {props.barn.map(fnr => <p>{fnr}</p>)}
+  </>;
 
   if (props.lesemodus) {
     return <div className={`${styleLesemodus.lesemodusboks} ${styles.omsorg}`}>
       <p><b>Behandlet aksjonspunkt:</b> {tekst.instruksjon}</p>
-      <p>{tekst.opplysningerFraSoknaden}</p>
-      <p className={styleLesemodus.label}>{tekst.sokersBarn}</p>
-      <p>{props.barnetsFnr}</p>
+      {opplysningerFraSoknaden}
       <hr/>
       <p className={styleLesemodus.label}>{tekst.begrunnelse}</p>
       <p className={styleLesemodus.fritekst}>{begrunnelse}</p>
@@ -37,9 +43,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
 
   return <div className={styles.omsorg}>
     <AlertStripeAdvarsel className={styles.varselstripe}>{tekst.instruksjon}</AlertStripeAdvarsel>
-    <p>{tekst.opplysningerFraSoknaden}</p>
-    <p className={styleLesemodus.label}>{tekst.sokersBarn}</p>
-    <p>{props.barnetsFnr}</p>
+    {opplysningerFraSoknaden}
     <hr/>
     <Textarea
       label={tekst.begrunnelse}

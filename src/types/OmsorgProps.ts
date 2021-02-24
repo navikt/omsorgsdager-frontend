@@ -1,5 +1,6 @@
 export interface OmsorgProps {
   lesemodus?: boolean;
   harOmsorgen?: boolean;
-  barnetsFnr: string;
+  barn: string[];
+  losAksjonspunkt: (harOmsorgen, begrunnelse) => void;
 }
