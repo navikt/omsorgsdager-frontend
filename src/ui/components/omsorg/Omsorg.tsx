@@ -24,7 +24,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
   const opplysningerFraSoknaden = <>
     <p>{tekst.opplysningerFraSoknaden}</p>
     <p className={styleLesemodus.label}>{tekst.sokersBarn}</p>
-    {props.barn.map(fnr => <p>{fnr}</p>)}
+    {props.barn.map(fnr => <p key={fnr}>{fnr}</p>)}
   </>;
 
   if (props.lesemodus) {
