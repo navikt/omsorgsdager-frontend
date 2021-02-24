@@ -58,7 +58,8 @@
                 props: {
                   lesemodus: false,
                   harOmsorgen: false,
-                  barnetsFnr: '01010050053'
+                  barn: ['01010050053'],
+                  losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse)
                 }
               }
             };
