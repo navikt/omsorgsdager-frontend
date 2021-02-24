@@ -10,6 +10,7 @@ import styleLesemodus from '../lesemodus/lesemodusboks.less';
 import {tekst} from './vilkar-midlertidig-alene-tekst';
 import {VilkarMidlertidigAleneProps} from '../../../types/VilkarMidlertidigAleneProps';
 import VilkarMidlertidigAleneLesemodus from '../vilkar-midlertidig-alene-lesemodus/VilkarMidlertidigAleneLesemodus';
+import VilkarStatus from '../vilkar-status/VilkarStatus';
 
 interface Feilmeldinger {
   begrunnelse: boolean;
@@ -20,16 +21,18 @@ interface Feilmeldinger {
 }
 
 const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProps> = ({
-                                                                                        lesemodus,
-                                                                                        soknadsopplysninger,
-                                                                                        informasjonTilLesemodus,
-                                                                                        onSubmit
-                                                                                      }) => {
+  lesemodus,
+  soknadsopplysninger,
+  informasjonTilLesemodus,
+  vedtakFattetVilkarOppfylt,
+  informasjonOmVilkar,
+  onSubmit
+}) => {
   const [visFeilmedlinger, endreVisFeilmedlinger] = useState<boolean>(false);
   const [erSokerenMidlertidigAleneOmOmsorgen, endreErSokerenMidlertidigAleneOmOmsorgen] = useState<boolean>(true);
   const [begrunnelse, endreBegrunnelse] = useState('');
   const [fraDato, endreFraDato] = useState('dd.mm.åååå');
-  const [tilDato, endreTilDato] = useState('dd.mm.ååå');
+  const [tilDato, endreTilDato] = useState('dd.mm.åååå');
 
   const feilmedlinger: Feilmeldinger = {
     begrunnelse: begrunnelse.length === 0,
@@ -48,10 +51,8 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
     onSubmit({
       begrunnelse,
       erSokerenMidlertidigAleneOmOmsorgen,
-      dato: {
-        fra: erSokerenMidlertidigAleneOmOmsorgen ? fraDato.replaceAll('.', '-') : '',
-        til: erSokerenMidlertidigAleneOmOmsorgen ? tilDato.replaceAll('.', '-') : ''
-      }
+      fra: erSokerenMidlertidigAleneOmOmsorgen ? fraDato.replaceAll('.', '-') : '',
+      til: erSokerenMidlertidigAleneOmOmsorgen ? tilDato.replaceAll('.', '-') : ''
     });
   };
 
@@ -60,10 +61,18 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
     : endreVisFeilmedlinger(true);
 
   return (
-    <div className={classNames(styles.vilkarMidlerTidigAlene, lesemodus && styleLesemodus.lesemodusboks)}>
-      {lesemodus && <VilkarMidlertidigAleneLesemodus soknadsopplysninger={soknadsopplysninger}
-                                                     informasjonTilLesemodus={informasjonTilLesemodus}/>}
-      {!lesemodus && <>
+    <div className={classNames(styles.vilkarMidlerTidigAlene, lesemodus && !vedtakFattetVilkarOppfylt && styleLesemodus.lesemodusboks)}>
+      {vedtakFattetVilkarOppfylt && <VilkarStatus
+        vilkarOppfylt={informasjonOmVilkar.vilkarOppfylt}
+        aksjonspunktNavn={informasjonOmVilkar.navnPåAksjonspunkt}
+        vilkarReferanse={informasjonOmVilkar.vilkar}
+        begrunnelse={informasjonOmVilkar.begrunnelse}
+      />}
+
+      {lesemodus && !vedtakFattetVilkarOppfylt &&
+      <VilkarMidlertidigAleneLesemodus soknadsopplysninger={soknadsopplysninger}
+                                       informasjonTilLesemodus={informasjonTilLesemodus}/>}
+      {!lesemodus && !vedtakFattetVilkarOppfylt && <>
         <AlertStripe type="advarsel">{tekst.aksjonspunkt}</AlertStripe>
 
         <OpplysningerFraSoknad {...soknadsopplysninger}/>
@@ -108,6 +117,4 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
     </div>
   );
 };
-
-
 export default VilkarMidlertidigAlene;

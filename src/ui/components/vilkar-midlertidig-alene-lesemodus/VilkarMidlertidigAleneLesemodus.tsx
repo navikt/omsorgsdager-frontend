@@ -1,11 +1,11 @@
 import React  from 'react';
 import OpplysningerFraVedtak from '../opplysninger-fra-vedtak/OpplysningerFraVedtak';
 import OpplysningerFraSoknad from '../opplysninger-fra-soknad/OpplysningerFraSoknad';
-import {VilkarMidlertidigGrunnlagForBeslutt, VilkarMidlertidigSoknadsopplysninger} from '../../../types/VilkarMidlertidigAleneProps';
+import {VilkarMidlertidigInformasjonTilLesemodus, VilkarMidlertidigSoknadsopplysninger} from '../../../types/VilkarMidlertidigAleneProps';
 
 interface OwnProps {
   soknadsopplysninger: VilkarMidlertidigSoknadsopplysninger;
-  informasjonTilLesemodus: VilkarMidlertidigGrunnlagForBeslutt;
+  informasjonTilLesemodus: VilkarMidlertidigInformasjonTilLesemodus;
 }
 
 const VilkarMidlertidigAleneLesemodus: React.FunctionComponent<OwnProps> = ({
