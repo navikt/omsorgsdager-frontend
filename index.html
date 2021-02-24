@@ -21,9 +21,9 @@
               vilkarKroniskSyktBarn: {
                 visKomponent: 'VilkarKroniskSyktBarn',
                 props: {
-                  behandlingsid: '123',
-                  stiTilEndepunkt: 'api',
-                  lesemodus: false
+                  lesemodus: false,
+                  legeerklaeringsinfo: {harDokumentasjon: true, harSammenheng: true, begrunnelse: ""},
+                  losAksjonspunkt: (harDokumentasjon, harSammenheng, begrunnelse) => console.log(harDokumentasjon, harSammenheng, begrunnelse)
                 }
               },
               vilkarMidlertidigAlene: {
@@ -56,16 +56,14 @@
               omsorg: {
                 visKomponent: 'Omsorg',
                 props: {
-                  behandlingsid: '123',
-                  stiTilEndepunkt: 'api',
-                  prosesstype: 'KRONISK_SYKT_BARN',
-                  lesemodus: true
+                  lesemodus: false,
+                  harOmsorgen: false
                 }
               }
             };
 
             setTimeout(() => {
-              window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.vilkarMidlertidigAlene);
+              window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.omsorg);
             }, 300);
         </script>
     </body>
