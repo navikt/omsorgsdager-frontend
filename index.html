@@ -23,7 +23,14 @@
                 props: {
                   lesemodus: false,
                   legeerklaeringsinfo: {harDokumentasjon: true, harSammenheng: true, begrunnelse: ""},
-                  losAksjonspunkt: (harDokumentasjon, harSammenheng, begrunnelse) => console.log(harDokumentasjon, harSammenheng, begrunnelse)
+                  losAksjonspunkt: (harDokumentasjon, harSammenheng, begrunnelse) => console.log(harDokumentasjon, harSammenheng, begrunnelse),
+                  vedtakFattetVilkarOppfylt: false,
+                  informasjonOmVilkar:{
+                    begrunnelse: 'begrunnelse',
+                    navnPåAksjonspunkt: 'Utvidet rett',
+                    vilkarOppfylt: true,
+                    vilkar: '§ 9-3 vilkar'
+                  }
                 }
               },
               vilkarMidlertidigAlene: {
@@ -59,7 +66,14 @@
                   lesemodus: false,
                   harOmsorgen: false,
                   barn: ['01010050053'],
-                  losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse)
+                  losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse),
+                  vedtakFattetVilkarOppfylt: true,
+                  informasjonOmVilkar:{
+                    begrunnelse: 'begrunnelse',
+                    navnPåAksjonspunkt: 'Utvidet rett',
+                    vilkarOppfylt: true,
+                    vilkar: '§ 9-3 vilkar'
+                  }
                 }
               }
             };
