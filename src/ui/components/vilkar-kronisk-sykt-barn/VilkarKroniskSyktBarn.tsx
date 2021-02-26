@@ -4,10 +4,9 @@ import {Hovedknapp} from 'nav-frontend-knapper';
 import {Radio, RadioGruppe, Textarea} from 'nav-frontend-skjema';
 import React, {useState} from 'react';
 import {VilkarKroniskSyktBarnProps} from '../../../types/VilkarKroniskSyktBarnProps';
-import Feilikon from '../../icons/Feilikon';
-import Suksessikon from '../../icons/Suksessikon';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
 import styles from './vilkarKronisSyktBarn.less';
+import VilkarStatus from '../vilkar-status/VilkarStatus';
 
 interface Feilmeldinger {
   begrunnelse: boolean;
@@ -15,7 +14,7 @@ interface Feilmeldinger {
 
 const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps> = props => {
 
-  const {lesemodus, legeerklaeringsinfo} = props;
+  const {lesemodus, legeerklaeringsinfo, vedtakFattetVilkarOppfylt, informasjonOmVilkar} = props;
 
   const [harDokumentasjon, endreHarDokumentasjon] = useState<boolean>(legeerklaeringsinfo.harDokumentasjon);
   const [harSammenheng, endreHarSammenheng] = useState<boolean>(legeerklaeringsinfo.harSammenheng);
@@ -43,57 +42,55 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
     begrunnelse: 'Begrunnelse'
   };
 
-  return <div className={classNames(styles.vilkarKroniskSyktBarn, lesemodus && styleLesemodus.lesemodusboks)}>
+  return <div className={classNames(styles.vilkarKroniskSyktBarn, lesemodus && !vedtakFattetVilkarOppfylt && styleLesemodus.lesemodusboks)}>
 
-    {lesemodus
-      ? <>
-        <p><b>Behandlet aksjonspunkt:</b> {tekst.instruksjon}</p>
-        <p className={styleLesemodus.label}>{tekst.begrunnelse}</p>
-        <p className={styleLesemodus.fritekst}>{begrunnelse}</p>
-        <p className={styleLesemodus.label}>{tekst.sporsmalHarDokumentasjon}</p>
-        <p>{harDokumentasjon ? 'Ja' : 'Nei'}</p>
-        <p className={styleLesemodus.label}>{tekst.sporsmalHarSammenheng}</p>
-        <p>{harSammenheng ? 'Ja' : 'Nei'}</p>
-      </>
-      : <>
-        <AlertStripeAdvarsel className={styles.varselstripe}>
-          {tekst.instruksjon}
-        </AlertStripeAdvarsel>
-        <Textarea
-          label={tekst.begrunnelse}
-          onChange={e => endreBegrunnelse(e.target.value)}
-          value={begrunnelse}
-          maxLength={0}
-          feil={visFeilmeldinger && feilmeldinger.begrunnelse && 'Begrunnelse må oppgis.'}
-        />
-        <RadioGruppe
-          className={styles.jaellernei}
-          legend={tekst.sporsmalHarDokumentasjon}
-        >
-          <Radio label="Ja" name="harDokumentasjon" checked={harDokumentasjon} onChange={byttHarDokumentasjon}/>
-          <Radio label="Nei" name="harIkkeDokumentasjon" checked={!harDokumentasjon} onChange={byttHarDokumentasjon}/>
-        </RadioGruppe>
-        <RadioGruppe
-          className={styles.jaellernei}
-          legend={tekst.sporsmalHarSammenheng}
-        >
-          <Radio label="Ja" name="harSammenheng" checked={harSammenheng} onChange={byttHarSammenheng}/>
-          <Radio label="Nei" name="harIkkeSammenheng" checked={!harSammenheng} onChange={byttHarSammenheng}/>
-        </RadioGruppe>
-      </>}
+    {vedtakFattetVilkarOppfylt && <VilkarStatus
+      vilkarOppfylt={informasjonOmVilkar.vilkarOppfylt}
+      aksjonspunktNavn={informasjonOmVilkar.navnPåAksjonspunkt}
+      vilkarReferanse={informasjonOmVilkar.vilkar}
+      begrunnelse={informasjonOmVilkar.begrunnelse}
+      erVilkaretForOmsorgenFor={false}
+    />}
 
-    {harDokumentasjon && harSammenheng
-      ? <div className={styles.vilkarOppfylt}>
-          <Suksessikon/>
-          <span>Vilkåret er oppfylt</span>
-        </div>
-      : <div className={styles.vilkarOppfylt}>
-          <Feilikon/>
-          <span>Vilkåret er ikke oppfylt</span>
-        </div>}
+    {lesemodus && !vedtakFattetVilkarOppfylt && <>
+      <p><b>Behandlet aksjonspunkt:</b> {tekst.instruksjon}</p>
+      <p className={styleLesemodus.label}>{tekst.begrunnelse}</p>
+      <p className={styleLesemodus.fritekst}>{begrunnelse}</p>
+      <p className={styleLesemodus.label}>{tekst.sporsmalHarDokumentasjon}</p>
+      <p>{harDokumentasjon ? 'Ja' : 'Nei'}</p>
+      <p className={styleLesemodus.label}>{tekst.sporsmalHarSammenheng}</p>
+      <p>{harSammenheng ? 'Ja' : 'Nei'}</p>
+    </>}
 
-    {!lesemodus && <Hovedknapp onClick={onGaVidere}>Gå videre</Hovedknapp>}
+    {!lesemodus && !vedtakFattetVilkarOppfylt && <>
+      <AlertStripeAdvarsel className={styles.varselstripe}>
+        {tekst.instruksjon}
+      </AlertStripeAdvarsel>
 
+      <Textarea
+        label={tekst.begrunnelse}
+        onChange={e => endreBegrunnelse(e.target.value)}
+        value={begrunnelse}
+        maxLength={0}
+        feil={visFeilmeldinger && feilmeldinger.begrunnelse && 'Begrunnelse må oppgis.'}
+      />
+
+      <RadioGruppe
+        className={styles.jaellernei}
+        legend={tekst.sporsmalHarDokumentasjon}>
+        <Radio label="Ja" name="harDokumentasjon" checked={harDokumentasjon} onChange={byttHarDokumentasjon}/>
+        <Radio label="Nei" name="harIkkeDokumentasjon" checked={!harDokumentasjon} onChange={byttHarDokumentasjon}/>
+      </RadioGruppe>
+
+      <RadioGruppe
+        className={styles.jaellernei}
+        legend={tekst.sporsmalHarSammenheng}>
+        <Radio label="Ja" name="harSammenheng" checked={harSammenheng} onChange={byttHarSammenheng}/>
+        <Radio label="Nei" name="harIkkeSammenheng" checked={!harSammenheng} onChange={byttHarSammenheng}/>
+      </RadioGruppe>
+
+      <Hovedknapp onClick={onGaVidere}>Gå videre</Hovedknapp>
+    </>}
   </div>;
 };
 export default VilkarKroniskSyktBarn;

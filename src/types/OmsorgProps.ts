@@ -1,6 +1,10 @@
+import {InformasjonOmVurdertVilkar} from './InformasjonOmVurdertVilkar';
+
 export interface OmsorgProps {
-  lesemodus?: boolean;
-  harOmsorgen?: boolean;
   barn: string[];
+  harOmsorgen?: boolean;
+  informasjonOmVilkar?: InformasjonOmVurdertVilkar;
+  lesemodus?: boolean;
   losAksjonspunkt: (harOmsorgen, begrunnelse) => void;
+  vedtakFattetVilkarOppfylt: boolean;
 }
