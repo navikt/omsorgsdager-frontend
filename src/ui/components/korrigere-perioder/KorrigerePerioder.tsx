@@ -4,24 +4,41 @@ import {Radio, RadioGruppe, Textarea} from 'nav-frontend-skjema';
 import React, {useState} from 'react';
 import {KorrigerePerioderProps} from '../../../types/KorrigerePerioderProps';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
+import styleRadioknapper from '../styles/radioknapper/radioknapper.less';
 import styles from './korrigerePerioder.less';
+
+interface Feilmeldinger {
+  begrunnelse: boolean;
+}
 
 const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = props => {
 
-  const [innvilgedePerioder, endreInnvilgedePerioder] = useState<'alle' | 'ingen'>('ingen');
+  const [fravaerGrunnetSmittevernhensynEllerStengt, endrefravaerGrunnetSmittevernhensynEllerStengt] = useState<boolean>(false);
   const [begrunnelse, endreBegrunnelse] = useState<string>('');
+  const [visFeilmeldinger, endreVisFeilmeldinger] = useState<boolean>(false);
+
+  const onSubmit = props.losAksjonspunkt;
+
+  const feilmeldinger: Feilmeldinger = {
+    begrunnelse: begrunnelse.length === 0
+  };
+  const kanManGaVidere = !feilmeldinger.begrunnelse;
+
+  const onGaVidere = () => kanManGaVidere
+    ? onSubmit(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse)
+    : endreVisFeilmeldinger(true);
 
   const tekst = {
-    instruksjon: 'Se på dokumentasjonen og vurder om den dekker alle fraværsperioder.',
-    sporsmalErInnvilget: 'Er periodene innvilget pga. særlige smittevernshensyn eller stengt barnehage/skole/sfo?',
-    begrunnelse: 'Begrunnelse'
+    instruksjon: 'Se på dokumentasjon og vurder om fraværet skyldes særlig smittevernhensyn eller stengte barnehager/skoler/SFO',
+    sporsmalErInnvilget: 'Skyldes fraværet særlig smittevernhensyn eller stengte barnehager/skole/SFO?',
+    begrunnelse: 'Begrunn om fraværet skyldes særlig smittevernhensyn eller stengte barnehager/skole/SFO'
   };
 
   if (props.lesemodus) {
     return <div className={styleLesemodus.lesemodusboks}>
       <p><b>Behandlet aksjonspunkt:</b> {tekst.instruksjon}</p>
       <p className={styleLesemodus.label}>{tekst.sporsmalErInnvilget}</p>
-      <p>{innvilgedePerioder === 'alle' ? 'Ja' : 'Nei'}</p>
+      <p>{fravaerGrunnetSmittevernhensynEllerStengt ? 'Ja' : 'Nei'}</p>
       <p className={styleLesemodus.label}>{tekst.begrunnelse}</p>
       <p className={styleLesemodus.fritekst}>{begrunnelse}</p>
     </div>;
@@ -31,27 +48,39 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = props
     <AlertStripeAdvarsel className={styles.varselstripe}>
       {tekst.instruksjon}
     </AlertStripeAdvarsel>
-    <RadioGruppe legend={tekst.sporsmalErInnvilget}>
-      <Radio
-        label="Ja"
-        name="alle"
-        checked={innvilgedePerioder === 'alle'}
-        onChange={e => e.target.value && endreInnvilgedePerioder('alle')}
-      />
-      <Radio
-        label="Nei"
-        name="ingen"
-        checked={innvilgedePerioder === 'ingen'}
-        onChange={e => e.target.value && endreInnvilgedePerioder('ingen')}
-      />
-    </RadioGruppe>
+
+    <div className={styles.opplysningerFraSoknad}>
+      <div>Opplysninger fra søknaden:</div>
+      <h4>Oppgitt årsak</h4>
+      <p>{props.årsakFraSoknad}</p>
+    </div>
+
     <Textarea
       label={tekst.begrunnelse}
       onChange={e => endreBegrunnelse(e.target.value)}
       value={begrunnelse}
       maxLength={0}
+      feil={visFeilmeldinger && feilmeldinger.begrunnelse && 'Begrunnelse må oppgis.'}
     />
-    <Hovedknapp>Bekreft</Hovedknapp>
+
+    <RadioGruppe
+      className={styleRadioknapper.horisontalPlassering}
+      legend={tekst.sporsmalErInnvilget}>
+      <Radio
+        label="Ja"
+        name="fravaerGrunnetSmittevernhensynEllerStengt"
+        checked={fravaerGrunnetSmittevernhensynEllerStengt}
+        onChange={() => endrefravaerGrunnetSmittevernhensynEllerStengt(true)}
+      />
+      <Radio
+        label="Nei"
+        name="ikkeFravaerGrunnetSmittevernhensynEllerStengt"
+        checked={!fravaerGrunnetSmittevernhensynEllerStengt}
+        onChange={() => endrefravaerGrunnetSmittevernhensynEllerStengt(false)}
+      />
+    </RadioGruppe>
+
+    <Hovedknapp onClick={onGaVidere}>Bekreft</Hovedknapp>
   </div>;
 };
 export default KorrigerePerioder;

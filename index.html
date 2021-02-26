@@ -15,7 +15,9 @@
               korrigerePerioder: {
                 visKomponent: 'KorrigerePerioder',
                 props: {
-                  lesemodus: true
+                  lesemodus: true,
+                  årsakFraSoknad: 'Årsak',
+                  losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse),
                 }
               },
               vilkarKroniskSyktBarn: {
@@ -79,7 +81,7 @@
             };
 
             setTimeout(() => {
-              window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.omsorg);
+              window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.korrigerePerioder);
             }, 300);
         </script>
     </body>

@@ -7,6 +7,7 @@ import {VilkarKroniskSyktBarnProps} from '../../../types/VilkarKroniskSyktBarnPr
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
 import styles from './vilkarKronisSyktBarn.less';
 import VilkarStatus from '../vilkar-status/VilkarStatus';
+import styleRadioknapper from '../styles/radioknapper/radioknapper.less';
 
 interface Feilmeldinger {
   begrunnelse: boolean;
@@ -76,14 +77,14 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
       />
 
       <RadioGruppe
-        className={styles.jaellernei}
+        className={styleRadioknapper.horisontalPlassering}
         legend={tekst.sporsmalHarDokumentasjon}>
         <Radio label="Ja" name="harDokumentasjon" checked={harDokumentasjon} onChange={byttHarDokumentasjon}/>
         <Radio label="Nei" name="harIkkeDokumentasjon" checked={!harDokumentasjon} onChange={byttHarDokumentasjon}/>
       </RadioGruppe>
 
       <RadioGruppe
-        className={styles.jaellernei}
+        className={styleRadioknapper.horisontalPlassering}
         legend={tekst.sporsmalHarSammenheng}>
         <Radio label="Ja" name="harSammenheng" checked={harSammenheng} onChange={byttHarSammenheng}/>
         <Radio label="Nei" name="harIkkeSammenheng" checked={!harSammenheng} onChange={byttHarSammenheng}/>
