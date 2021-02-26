@@ -4,7 +4,7 @@ import React from 'react';
 import styles from './vilkarStatus.less';
 import Suksessikon from '../../icons/Suksessikon';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
-import SjekkIkon from "../../icons/SjekkIkon";
+import SjekkIkon from '../../icons/SjekkIkon';
 
 interface OwnProps {
   aksjonspunktNavn: string;

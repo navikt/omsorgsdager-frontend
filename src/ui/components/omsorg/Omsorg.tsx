@@ -45,8 +45,8 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
   const byttHarOmsorgen = () => endreHarOmsorgen(!harOmsorgen);
 
   return (
-
     <div className={styles.omsorg}>
+
       {vedtakFattetVilkarOppfylt && <VilkarStatus
         vilkarOppfylt={informasjonOmVilkar.vilkarOppfylt}
         aksjonspunktNavn={informasjonOmVilkar.navnPåAksjonspunkt}

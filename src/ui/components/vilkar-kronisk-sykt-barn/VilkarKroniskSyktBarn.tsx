@@ -90,8 +90,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
       </RadioGruppe>
 
       <Hovedknapp onClick={onGaVidere}>Gå videre</Hovedknapp>
-    </>
-    }
+    </>}
   </div>;
 };
 export default VilkarKroniskSyktBarn;
