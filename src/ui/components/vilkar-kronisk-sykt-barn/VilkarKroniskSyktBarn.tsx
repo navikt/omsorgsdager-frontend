@@ -7,6 +7,7 @@ import {VilkarKroniskSyktBarnProps} from '../../../types/VilkarKroniskSyktBarnPr
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
 import styles from './vilkarKronisSyktBarn.less';
 import VilkarStatus from '../vilkar-status/VilkarStatus';
+import styleRadioknapper from '../styles/radioknapper/radioknapper.less';
 
 interface Feilmeldinger {
   begrunnelse: boolean;
@@ -70,7 +71,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
       />
 
       <RadioGruppe
-        className={styles.jaellernei}
+        className={styleRadioknapper.horisontalPlassering}
         legend={tekst.sporsmalHarDokumentasjonOgFravaerRisiko}>
         <Radio label="Ja"
                name="harDokumentasjonOgFravaerRisiko"
