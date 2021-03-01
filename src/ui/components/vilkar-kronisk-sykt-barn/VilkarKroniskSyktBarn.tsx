@@ -17,15 +17,11 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
 
   const {lesemodus, legeerklaeringsinfo, vedtakFattetVilkarOppfylt, informasjonOmVilkar} = props;
 
-  const [harDokumentasjon, endreHarDokumentasjon] = useState<boolean>(legeerklaeringsinfo.harDokumentasjon);
-  const [harSammenheng, endreHarSammenheng] = useState<boolean>(legeerklaeringsinfo.harSammenheng);
+  const [harDokumentasjonOgFravaerRisiko, endreHarDokumentasjonOgFravaerRisiko] = useState<boolean>(legeerklaeringsinfo.harDokumentasjon);
   const [begrunnelse, endreBegrunnelse] = useState<string>(legeerklaeringsinfo.begrunnelse);
   const [visFeilmeldinger, endreVisFeilmeldinger] = useState<boolean>(false);
 
   const onSubmit = props.losAksjonspunkt;
-
-  const byttHarDokumentasjon = () => endreHarDokumentasjon(!harDokumentasjon);
-  const byttHarSammenheng = () => endreHarSammenheng(!harSammenheng);
 
   const feilmeldinger: Feilmeldinger = {
     begrunnelse: begrunnelse.length === 0
@@ -33,17 +29,17 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   const kanManGaVidere = !feilmeldinger.begrunnelse;
 
   const onGaVidere = () => kanManGaVidere
-    ? onSubmit(harDokumentasjon, harSammenheng, begrunnelse)
+    ? onSubmit(harDokumentasjonOgFravaerRisiko, begrunnelse)
     : endreVisFeilmeldinger(true);
 
   const tekst = {
     instruksjon: 'Se på vedlagt legeerklæring og vurder om barnet har en kronisk sykdom eller en funksjonshemmelse, og om det er økt risiko for fravær.',
-    sporsmalHarDokumentasjon: 'Er det dokumentert at barnets sykdom er kronisk eller at barnet har en funksjonshemmelse?',
-    sporsmalHarSammenheng: 'Henger søkers risiko for fravær fra arbeid sammen med barnets kroniske sykdom eller funksjonshemmelse?',
+    sporsmalHarDokumentasjonOgFravaerRisiko: 'Henger søkers risiko for fravær fra arbeid sammen med barnets kroniske sykdom eller funksjonshemmelse?',
     begrunnelse: 'Begrunnelse'
   };
 
-  return <div className={classNames(styles.vilkarKroniskSyktBarn, lesemodus && !vedtakFattetVilkarOppfylt && styleLesemodus.lesemodusboks)}>
+  return <div
+    className={classNames(styles.vilkarKroniskSyktBarn, lesemodus && !vedtakFattetVilkarOppfylt && styleLesemodus.lesemodusboks)}>
 
     {vedtakFattetVilkarOppfylt && <VilkarStatus
       vilkarOppfylt={informasjonOmVilkar.vilkarOppfylt}
@@ -57,10 +53,8 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
       <p><b>Behandlet aksjonspunkt:</b> {tekst.instruksjon}</p>
       <p className={styleLesemodus.label}>{tekst.begrunnelse}</p>
       <p className={styleLesemodus.fritekst}>{begrunnelse}</p>
-      <p className={styleLesemodus.label}>{tekst.sporsmalHarDokumentasjon}</p>
-      <p>{harDokumentasjon ? 'Ja' : 'Nei'}</p>
-      <p className={styleLesemodus.label}>{tekst.sporsmalHarSammenheng}</p>
-      <p>{harSammenheng ? 'Ja' : 'Nei'}</p>
+      <p className={styleLesemodus.label}>{tekst.sporsmalHarDokumentasjonOgFravaerRisiko}</p>
+      <p>{harDokumentasjonOgFravaerRisiko ? 'Ja' : 'Nei'}</p>
     </>}
 
     {!lesemodus && !vedtakFattetVilkarOppfylt && <>
@@ -78,16 +72,15 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
 
       <RadioGruppe
         className={styleRadioknapper.horisontalPlassering}
-        legend={tekst.sporsmalHarDokumentasjon}>
-        <Radio label="Ja" name="harDokumentasjon" checked={harDokumentasjon} onChange={byttHarDokumentasjon}/>
-        <Radio label="Nei" name="harIkkeDokumentasjon" checked={!harDokumentasjon} onChange={byttHarDokumentasjon}/>
-      </RadioGruppe>
-
-      <RadioGruppe
-        className={styleRadioknapper.horisontalPlassering}
-        legend={tekst.sporsmalHarSammenheng}>
-        <Radio label="Ja" name="harSammenheng" checked={harSammenheng} onChange={byttHarSammenheng}/>
-        <Radio label="Nei" name="harIkkeSammenheng" checked={!harSammenheng} onChange={byttHarSammenheng}/>
+        legend={tekst.sporsmalHarDokumentasjonOgFravaerRisiko}>
+        <Radio label="Ja"
+               name="harDokumentasjonOgFravaerRisiko"
+               checked={harDokumentasjonOgFravaerRisiko}
+               onChange={() => endreHarDokumentasjonOgFravaerRisiko(true)}/>
+        <Radio label="Nei"
+               name="harIkkeDokumentasjonOgFravaerRisiko"
+               checked={!harDokumentasjonOgFravaerRisiko}
+               onChange={() => endreHarDokumentasjonOgFravaerRisiko(false)}/>
       </RadioGruppe>
 
       <Hovedknapp onClick={onGaVidere}>Gå videre</Hovedknapp>
