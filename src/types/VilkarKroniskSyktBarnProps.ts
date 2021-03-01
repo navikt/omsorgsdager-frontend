@@ -5,6 +5,6 @@ export interface VilkarKroniskSyktBarnProps {
   informasjonOmVilkar?: InformasjonOmVurdertVilkar;
   lesemodus?: boolean;
   legeerklaeringsinfo: Legeerklaeringsinfo;
-  losAksjonspunkt: (harDokumentasjon, harSammenheng, begrunnelse) => void;
+  losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse) => void;
   vedtakFattetVilkarOppfylt: boolean;
 }
