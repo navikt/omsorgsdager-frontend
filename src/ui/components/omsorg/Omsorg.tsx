@@ -8,13 +8,30 @@ import styles from './omsorg.less';
 import VilkarStatus from '../vilkar-status/VilkarStatus';
 import styleRadioknapper from '../styles/radioknapper/radioknapper.less';
 
+interface Feilmeldinger {
+  begrunnelse: boolean;
+}
+
 const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
 
   const [harOmsorgen, endreHarOmsorgen] = useState<boolean>(props.harOmsorgen);
   const [begrunnelse, endreBegrunnelse] = useState<string>('');
+  const [visFeilmeldinger, endreVisFeilmeldinger] = useState<boolean>(false);
 
   const barnetEllerBarna = props.barn.length === 1 ? 'barnet' : 'barna';
   const {vedtakFattetVilkarOppfylt, informasjonOmVilkar} = props;
+
+  const onSubmit = props.losAksjonspunkt;
+
+  const feilmeldinger: Feilmeldinger = {
+    begrunnelse: begrunnelse.length === 0
+  };
+
+  const kanManGaVidere = !feilmeldinger.begrunnelse;
+
+  const onGaVidere = () => kanManGaVidere
+    ? onSubmit(harOmsorgen, begrunnelse)
+    : endreVisFeilmeldinger(true);
 
   const tekst = {
     instruksjon: 'Barnet er ikke registrert på samme adresse som søker. Vurder om søkeren har omsorgen for barnet.',
@@ -66,9 +83,12 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
           value={begrunnelse}
           onChange={e => endreBegrunnelse(e.target.value)}
           maxLength={0}
+          feil={visFeilmeldinger && feilmeldinger.begrunnelse && 'Begrunnelse må oppgis.'}
         />
-        <RadioGruppe legend={tekst.sporsmalHarOmsorgen}
-          className={styleRadioknapper.horisontalPlassering}>
+        <RadioGruppe
+          legend={tekst.sporsmalHarOmsorgen}
+          className={styleRadioknapper.horisontalPlassering}
+        >
           <Radio
             label="Ja"
             name="harOmsorgen"
@@ -86,7 +106,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
             onChange={byttHarOmsorgen}
           />
         </RadioGruppe>
-        <Hovedknapp>Bekreft og fortsett</Hovedknapp>
+        <Hovedknapp onClick={onGaVidere}>Bekreft og fortsett</Hovedknapp>
       </>}
     </div>);
 };
