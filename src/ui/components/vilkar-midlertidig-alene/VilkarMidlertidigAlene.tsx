@@ -67,6 +67,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
         aksjonspunktNavn={informasjonOmVilkar.navnPåAksjonspunkt}
         vilkarReferanse={informasjonOmVilkar.vilkar}
         begrunnelse={informasjonOmVilkar.begrunnelse}
+        erVilkaretForOmsorgenFor={false}
       />}
 
       {lesemodus && !vedtakFattetVilkarOppfylt &&

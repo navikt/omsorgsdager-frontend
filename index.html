@@ -21,9 +21,16 @@
               vilkarKroniskSyktBarn: {
                 visKomponent: 'VilkarKroniskSyktBarn',
                 props: {
-                  lesemodus: false,
+                  lesemodus: true,
                   legeerklaeringsinfo: {harDokumentasjon: true, harSammenheng: true, begrunnelse: ""},
-                  losAksjonspunkt: (harDokumentasjon, harSammenheng, begrunnelse) => console.log(harDokumentasjon, harSammenheng, begrunnelse)
+                  losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse) => console.log(endreHarDokumentasjonOgFravaerRisiko, begrunnelse),
+                  vedtakFattetVilkarOppfylt: false,
+                  informasjonOmVilkar:{
+                    begrunnelse: 'begrunnelse',
+                    navnPåAksjonspunkt: 'Utvidet rett',
+                    vilkarOppfylt: true,
+                    vilkar: '§ 9-3 vilkar'
+                  }
                 }
               },
               vilkarMidlertidigAlene: {
@@ -59,13 +66,20 @@
                   lesemodus: false,
                   harOmsorgen: false,
                   barn: ['01010050053'],
-                  losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse)
+                  losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse),
+                  vedtakFattetVilkarOppfylt: true,
+                  informasjonOmVilkar:{
+                    begrunnelse: 'begrunnelse',
+                    navnPåAksjonspunkt: 'Utvidet rett',
+                    vilkarOppfylt: true,
+                    vilkar: '§ 9-3 vilkar'
+                  }
                 }
               }
             };
 
             setTimeout(() => {
-              window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.omsorg);
+              window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.vilkarKroniskSyktBarn);
             }, 300);
         </script>
     </body>
