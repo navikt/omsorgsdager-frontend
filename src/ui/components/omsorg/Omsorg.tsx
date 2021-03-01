@@ -6,6 +6,7 @@ import {OmsorgProps} from '../../../types/OmsorgProps';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
 import styles from './omsorg.less';
 import VilkarStatus from '../vilkar-status/VilkarStatus';
+import styleRadioknapper from '../styles/radioknapper/radioknapper.less';
 
 const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
 
@@ -66,7 +67,8 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
           onChange={e => endreBegrunnelse(e.target.value)}
           maxLength={0}
         />
-        <RadioGruppe legend={tekst.sporsmalHarOmsorgen} className={styles.harOmsorgen}>
+        <RadioGruppe legend={tekst.sporsmalHarOmsorgen}
+          className={styleRadioknapper.horisontalPlassering}>
           <Radio
             label="Ja"
             name="harOmsorgen"
