@@ -12,7 +12,6 @@ interface Feilmeldinger {
   begrunnelse: boolean;
 }
 
-
 const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
 
   const [harOmsorgen, endreHarOmsorgen] = useState<boolean>(props.harOmsorgen);
@@ -21,7 +20,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
 
   const barnetEllerBarna = props.barn.length === 1 ? 'barnet' : 'barna';
   const {vedtakFattetVilkarOppfylt, informasjonOmVilkar} = props;
-  
+
   const onSubmit = props.losAksjonspunkt;
 
   const feilmeldinger: Feilmeldinger = {
@@ -33,7 +32,6 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
   const onGaVidere = () => kanManGaVidere
     ? onSubmit(harOmsorgen, begrunnelse)
     : endreVisFeilmeldinger(true);
-  
 
   const tekst = {
     instruksjon: 'Barnet er ikke registrert på samme adresse som søker. Vurder om søkeren har omsorgen for barnet.',
@@ -63,7 +61,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
   }
 
   const byttHarOmsorgen = () => endreHarOmsorgen(!harOmsorgen);
-  
+
   return (
     <div className={styles.omsorg}>
 
@@ -85,9 +83,12 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
           value={begrunnelse}
           onChange={e => endreBegrunnelse(e.target.value)}
           maxLength={0}
+          feil={visFeilmeldinger && feilmeldinger.begrunnelse && 'Begrunnelse må oppgis.'}
         />
-        <RadioGruppe legend={tekst.sporsmalHarOmsorgen}
-          className={styleRadioknapper.horisontalPlassering}>
+        <RadioGruppe
+          legend={tekst.sporsmalHarOmsorgen}
+          className={styleRadioknapper.horisontalPlassering}
+        >
           <Radio
             label="Ja"
             name="harOmsorgen"
