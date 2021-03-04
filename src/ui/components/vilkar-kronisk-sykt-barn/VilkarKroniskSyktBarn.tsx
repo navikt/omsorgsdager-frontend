@@ -15,10 +15,10 @@ interface Feilmeldinger {
 
 const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps> = props => {
 
-  const {lesemodus, legeerklaeringsinfo, vedtakFattetVilkarOppfylt, informasjonOmVilkar} = props;
+  const {lesemodus, informasjonTilLesemodus, vedtakFattetVilkarOppfylt, informasjonOmVilkar} = props;
 
-  const [harDokumentasjonOgFravaerRisiko, endreHarDokumentasjonOgFravaerRisiko] = useState<boolean>(legeerklaeringsinfo.harDokumentasjon);
-  const [begrunnelse, endreBegrunnelse] = useState<string>(legeerklaeringsinfo.begrunnelse);
+  const [harDokumentasjonOgFravaerRisiko, endreHarDokumentasjonOgFravaerRisiko] = useState<boolean>(false);
+  const [begrunnelse, endreBegrunnelse] = useState<string>('');
   const [visFeilmeldinger, endreVisFeilmeldinger] = useState<boolean>(false);
 
   const onSubmit = props.losAksjonspunkt;
@@ -52,9 +52,9 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
     {lesemodus && !vedtakFattetVilkarOppfylt && <>
       <p><b>Behandlet aksjonspunkt:</b> {tekst.instruksjon}</p>
       <p className={styleLesemodus.label}>{tekst.begrunnelse}</p>
-      <p className={styleLesemodus.fritekst}>{begrunnelse}</p>
+      <p className={styleLesemodus.fritekst}>{informasjonTilLesemodus.begrunnelse}</p>
       <p className={styleLesemodus.label}>{tekst.sporsmalHarDokumentasjonOgFravaerRisiko}</p>
-      <p>{harDokumentasjonOgFravaerRisiko ? 'Ja' : 'Nei'}</p>
+      <p>{informasjonTilLesemodus.vilkarOppfylt ? 'Ja' : 'Nei'}</p>
     </>}
 
     {!lesemodus && !vedtakFattetVilkarOppfylt && <>

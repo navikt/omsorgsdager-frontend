@@ -14,7 +14,7 @@ interface Feilmeldinger {
 
 const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
 
-  const [harOmsorgen, endreHarOmsorgen] = useState<boolean>(props.harOmsorgen);
+  const [harOmsorgen, endreHarOmsorgen] = useState<boolean>(false);
   const [begrunnelse, endreBegrunnelse] = useState<string>('');
   const [visFeilmeldinger, endreVisFeilmeldinger] = useState<boolean>(false);
 
@@ -54,13 +54,11 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
       {opplysningerFraSoknaden}
       <hr/>
       <p className={styleLesemodus.label}>{tekst.begrunnelse}</p>
-      <p className={styleLesemodus.fritekst}>{begrunnelse}</p>
+      <p className={styleLesemodus.fritekst}>{props.informasjonTilLesemodus.begrunnelse}</p>
       <p className={styleLesemodus.label}>{tekst.sporsmalHarOmsorgen}</p>
-      <p>{harOmsorgen ? 'Ja' : 'Nei'}</p>
+      <p>{props.informasjonTilLesemodus.vilkarOppfylt ? 'Ja' : 'Nei'}</p>
     </div>;
   }
-
-  const byttHarOmsorgen = () => endreHarOmsorgen(!harOmsorgen);
 
   return (
     <div className={styles.omsorg}>
@@ -95,7 +93,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
             value="ja"
             className={styles.radioknapp}
             checked={harOmsorgen}
-            onChange={byttHarOmsorgen}
+            onChange={() => endreHarOmsorgen(true)}
           />
           <Radio
             label="Nei"
@@ -103,7 +101,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
             value="nei"
             className={styles.radioknapp}
             checked={!harOmsorgen}
-            onChange={byttHarOmsorgen}
+            onChange={() => endreHarOmsorgen(false)}
           />
         </RadioGruppe>
         <Hovedknapp onClick={onGaVidere}>Bekreft og fortsett</Hovedknapp>
