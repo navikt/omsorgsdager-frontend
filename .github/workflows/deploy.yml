@@ -46,13 +46,15 @@ jobs:
       - name: Sette miljøvariabler
         run: |
           echo "IMAGE=${IMAGE_BASE}:${VERSION}" >> $GITHUB_ENV
+          echo "LATEST=${IMAGE_BASE}:latest" >> $GITHUB_ENV
           echo "CSS_HASH=$(shasum -b -a 384 build/$VERSION/styles.css | awk '{ print $1 }' | xxd -r -p | base64)" >> $GITHUB_ENV
           echo "JS_HASH=$(shasum -b -a 384 build/$VERSION/app.js | awk '{ print $1 }' | xxd -r -p | base64)" >> $GITHUB_ENV
       - name: Bygg og laste opp docker-image
         run: |
-          docker build --tag ${IMAGE} .
+          docker build --tag ${IMAGE} --tag ${LATEST} .
           echo "$GITHUB_TOKEN" | docker login --username "x-access-token" --password-stdin https://docker.pkg.github.com
           docker push ${IMAGE}
+          docker push ${LATEST}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Deploy til dev-gcp
