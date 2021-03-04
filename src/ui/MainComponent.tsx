@@ -7,6 +7,7 @@ import VilkarKroniskSyktBarn from '../ui/components/vilkar-kronisk-sykt-barn/Vil
 import VilkarMidlertidigAlene from './components/vilkar-midlertidig-alene/VilkarMidlertidigAlene';
 import ContainerContext from './context/ContainerContext';
 import styles from './global.less';
+import {AlertStripeFeil} from 'nav-frontend-alertstriper';
 
 interface MainComponentProps {
   containerData: ContainerContract;
@@ -29,7 +30,7 @@ const MainComponent = ({containerData}: MainComponentProps): JSX.Element => {
       innhold = <Omsorg {...containerData.props}/>;
       break;
     default:
-      innhold = <></>;
+      innhold = <AlertStripeFeil>Noe gikk galt, vennligst prøv igjen senere</AlertStripeFeil>;
   }
 
   return (

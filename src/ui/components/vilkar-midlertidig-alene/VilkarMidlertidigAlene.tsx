@@ -26,7 +26,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   informasjonTilLesemodus,
   vedtakFattetVilkarOppfylt,
   informasjonOmVilkar,
-  onSubmit
+  losAksjonspunkt
 }) => {
   const [visFeilmedlinger, endreVisFeilmedlinger] = useState<boolean>(false);
   const [erSokerenMidlertidigAleneOmOmsorgen, endreErSokerenMidlertidigAleneOmOmsorgen] = useState<boolean>(true);
@@ -48,7 +48,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
     || visFeilmedlinger && feilmedlinger.dato.fra && !feilmedlinger.dato.til && tekst.feilmedlingManglerFraDato;
 
   const bekreftAksjonspunkt = () => {
-    onSubmit({
+    losAksjonspunkt({
       begrunnelse,
       erSokerenMidlertidigAleneOmOmsorgen,
       fra: erSokerenMidlertidigAleneOmOmsorgen ? fraDato.replaceAll('.', '-') : '',
