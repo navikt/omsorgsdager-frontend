@@ -7,7 +7,7 @@ import VilkarKroniskSyktBarn from '../ui/components/vilkar-kronisk-sykt-barn/Vil
 import VilkarMidlertidigAlene from './components/vilkar-midlertidig-alene/VilkarMidlertidigAlene';
 import ContainerContext from './context/ContainerContext';
 import styles from './global.less';
-import {AlertStripeFeil} from "nav-frontend-alertstriper";
+import {AlertStripeFeil} from 'nav-frontend-alertstriper';
 
 interface MainComponentProps {
   containerData: ContainerContract;
