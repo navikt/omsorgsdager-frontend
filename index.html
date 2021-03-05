@@ -15,18 +15,25 @@
               korrigerePerioder: {
                 visKomponent: 'KorrigerePerioder',
                 props: {
-                  lesemodus: true,
+                  lesemodus: false,
                   årsakFraSoknad: 'Årsak',
-                  losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse),
+                  informasjonTilLesemodus:{
+                    begrunnelse: 'Begrunnelse til lesemodus',
+                    vilkarOppfylt: false
+                  },
+                  losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse)
                 }
               },
               vilkarKroniskSyktBarn: {
                 visKomponent: 'VilkarKroniskSyktBarn',
                 props: {
-                  lesemodus: true,
-                  legeerklaeringsinfo: {harDokumentasjon: true, harSammenheng: true, begrunnelse: ""},
+                  lesemodus: false,
+                  informasjonTilLesemodus:{
+                    begrunnelse: 'Begrunnelse til lesemodus',
+                    vilkarOppfylt: false
+                  },
                   losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse) => console.log(endreHarDokumentasjonOgFravaerRisiko, begrunnelse),
-                  vedtakFattetVilkarOppfylt: false,
+                  vedtakFattetVilkarOppfylt: true,
                   informasjonOmVilkar:{
                     begrunnelse: 'begrunnelse',
                     navnPåAksjonspunkt: 'Utvidet rett',
@@ -65,17 +72,20 @@
               omsorg: {
                 visKomponent: 'Omsorg',
                 props: {
-                  lesemodus: false,
-                  harOmsorgen: false,
+                  lesemodus: true,
+                  informasjonTilLesemodus:{
+                    begrunnelse: 'Begrunnelse til lesemodus',
+                    vilkarOppfylt: false
+                  },
                   barn: ['01010050053'],
-                  losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse),
-                  vedtakFattetVilkarOppfylt: true,
+                  vedtakFattetVilkarOppfylt: false,
                   informasjonOmVilkar:{
                     begrunnelse: 'begrunnelse',
                     navnPåAksjonspunkt: 'Utvidet rett',
                     vilkarOppfylt: true,
                     vilkar: '§ 9-3 vilkar'
-                  }
+                  },
+                  losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse)
                 }
               }
             };

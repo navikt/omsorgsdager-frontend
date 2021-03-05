@@ -2,7 +2,7 @@ import {InformasjonOmVurdertVilkar} from './InformasjonOmVurdertVilkar';
 import {InformasjonTilLesemodus} from './informasjonTilLesemodus';
 
 export interface OmsorgProps {
-  lesemodus?: boolean;
+  lesemodus: boolean;
   informasjonTilLesemodus?: InformasjonTilLesemodus;
   vedtakFattetVilkarOppfylt: boolean;
   informasjonOmVilkar?: InformasjonOmVurdertVilkar;

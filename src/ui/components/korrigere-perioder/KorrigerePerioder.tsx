@@ -29,18 +29,18 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = props
     : endreVisFeilmeldinger(true);
 
   const tekst = {
-    instruksjon: 'Se på dokumentasjon og vurder om fraværet skyldes særlig smittevernhensyn eller stengte barnehager/skoler/SFO',
+    instruksjon: 'Se på nødvendig dokumentasjon og tidligere utbetalte perioder, og vurder om søker har rett på å få utbetalt flere dager.',
     sporsmalErInnvilget: 'Skyldes fraværet særlig smittevernhensyn eller stengte barnehager/skole/SFO?',
-    begrunnelse: 'Begrunn om fraværet skyldes særlig smittevernhensyn eller stengte barnehager/skole/SFO'
+    begrunnelse: 'Har søker rett på å få utbetalt flere dager?'
   };
 
   if (props.lesemodus) {
     return <div className={styleLesemodus.lesemodusboks}>
       <p><b>Behandlet aksjonspunkt:</b> {tekst.instruksjon}</p>
       <p className={styleLesemodus.label}>{tekst.sporsmalErInnvilget}</p>
-      <p>{fravaerGrunnetSmittevernhensynEllerStengt ? 'Ja' : 'Nei'}</p>
+      <p>{props.informasjonTilLesemodus.vilkarOppfylt ? 'Ja' : 'Nei'}</p>
       <p className={styleLesemodus.label}>{tekst.begrunnelse}</p>
-      <p className={styleLesemodus.fritekst}>{begrunnelse}</p>
+      <p className={styleLesemodus.fritekst}>{props.informasjonTilLesemodus.begrunnelse}</p>
     </div>;
   }
 
