@@ -50,7 +50,7 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = props
     </AlertStripeAdvarsel>
 
     <div className={styles.opplysningerFraSoknad}>
-      <div>Opplysninger fra søknaden:</div>
+      <div>Opplysninger fra sist innsendte søknad:</div>
       <h4>Oppgitt årsak</h4>
       <p>{props.årsakFraSoknad}</p>
     </div>
