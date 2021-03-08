@@ -1,8 +1,8 @@
-import {AlertStripeAdvarsel} from 'nav-frontend-alertstriper';
 import {Hovedknapp} from 'nav-frontend-knapper';
 import {Radio, RadioGruppe, Textarea} from 'nav-frontend-skjema';
 import React, {useState} from 'react';
 import {OmsorgProps} from '../../../types/OmsorgProps';
+import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
 import styles from './omsorg.less';
 import VilkarStatus from '../vilkar-status/VilkarStatus';
@@ -73,7 +73,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
       />}
 
       {!props.lesemodus && !vedtakFattetVilkarOppfylt && <>
-        <AlertStripeAdvarsel className={styles.varselstripe}>{tekst.instruksjon}</AlertStripeAdvarsel>
+        <AlertStripeTrekantVarsel text={tekst.instruksjon} />
         {opplysningerFraSoknaden}
         <hr/>
         <Textarea

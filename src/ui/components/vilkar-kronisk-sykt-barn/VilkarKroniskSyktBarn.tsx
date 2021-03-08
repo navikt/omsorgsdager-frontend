@@ -1,9 +1,9 @@
 import classNames from 'classnames';
-import {AlertStripeAdvarsel} from 'nav-frontend-alertstriper';
 import {Hovedknapp} from 'nav-frontend-knapper';
 import {Radio, RadioGruppe, Textarea} from 'nav-frontend-skjema';
 import React, {useState} from 'react';
 import {VilkarKroniskSyktBarnProps} from '../../../types/VilkarKroniskSyktBarnProps';
+import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
 import styles from './vilkarKronisSyktBarn.less';
 import VilkarStatus from '../vilkar-status/VilkarStatus';
@@ -58,9 +58,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
     </>}
 
     {!lesemodus && !vedtakFattetVilkarOppfylt && <>
-      <AlertStripeAdvarsel className={styles.varselstripe}>
-        {tekst.instruksjon}
-      </AlertStripeAdvarsel>
+      <AlertStripeTrekantVarsel text={tekst.instruksjon} />
 
       <Textarea
         label={tekst.begrunnelse}
