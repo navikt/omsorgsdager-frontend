@@ -33,7 +33,7 @@
                     vilkarOppfylt: false
                   },
                   losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse) => console.log(endreHarDokumentasjonOgFravaerRisiko, begrunnelse),
-                  vedtakFattetVilkarOppfylt: true,
+                  vedtakFattetVilkarOppfylt: false,
                   informasjonOmVilkar:{
                     begrunnelse: 'begrunnelse',
                     navnPåAksjonspunkt: 'Utvidet rett',
@@ -72,7 +72,7 @@
               omsorg: {
                 visKomponent: 'Omsorg',
                 props: {
-                  lesemodus: true,
+                  lesemodus: false,
                   informasjonTilLesemodus:{
                     begrunnelse: 'Begrunnelse til lesemodus',
                     vilkarOppfylt: false
@@ -91,7 +91,7 @@
             };
 
             setTimeout(() => {
-              window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.vilkarKroniskSyktBarn);
+              window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.korrigerePerioder);
             }, 300);
         </script>
     </body>
