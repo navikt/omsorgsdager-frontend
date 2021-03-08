@@ -13,11 +13,10 @@ const AlertStripeTrekantVarsel = ({ text }: IconWithTextProps) => {
         <span className={styles.alertstripe_ikon}>
           <WarningIcon />
         </span>
-          <Normaltekst className={styles.alertstripe__tekst} tag="div">
+          <Normaltekst className={styles.alertstripe_tekst} tag="div">
               {text}
           </Normaltekst>
       </div>
-
     );
 };
 export default AlertStripeTrekantVarsel;
