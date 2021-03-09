@@ -105,7 +105,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
                onChange={() => endreErArsakIkkeRiskioFraFravaer(true)}/>
       </RadioGruppe>}
 
-      <Hovedknapp onClick={onGaVidere}>Gå videre</Hovedknapp>
+      <Hovedknapp onClick={onGaVidere}>Bekreft og fortsett</Hovedknapp>
     </>}
   </div>;
 };
