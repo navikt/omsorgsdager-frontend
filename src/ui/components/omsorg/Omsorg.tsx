@@ -45,7 +45,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
   const opplysningerFraSoknaden = <>
     <p>{tekst.opplysningerFraSoknaden}</p>
     <p className={styleLesemodus.label}>{tekst.sokersBarn}</p>
-    {props.barn.map(fnr => <p key={fnr}>{fnr}</p>)}
+    {props.barn.map(fnr => <p className={styles.barnTekst} key={fnr}>{fnr}</p>)}
   </>;
 
   if (props.lesemodus && !vedtakFattetVilkarOppfylt) {
@@ -56,7 +56,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
       <p className={styleLesemodus.label}>{tekst.begrunnelse}</p>
       <p className={styleLesemodus.fritekst}>{props.informasjonTilLesemodus.begrunnelse}</p>
       <p className={styleLesemodus.label}>{tekst.sporsmalHarOmsorgen}</p>
-      <p>{props.informasjonTilLesemodus.vilkarOppfylt ? 'Ja' : 'Nei'}</p>
+      <p className={styleLesemodus.text}>{props.informasjonTilLesemodus.vilkarOppfylt ? 'Ja' : 'Nei'}</p>
     </div>;
   }
 
