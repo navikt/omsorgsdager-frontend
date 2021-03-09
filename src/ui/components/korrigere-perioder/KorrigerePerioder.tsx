@@ -38,7 +38,7 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = props
     return <div className={styleLesemodus.lesemodusboks}>
       <p><b>Behandlet aksjonspunkt:</b> {tekst.instruksjon}</p>
       <p className={styleLesemodus.label}>{tekst.sporsmalErInnvilget}</p>
-      <p>{props.informasjonTilLesemodus.vilkarOppfylt ? 'Ja' : 'Nei'}</p>
+      <p className={styleLesemodus.text}>{props.informasjonTilLesemodus.vilkarOppfylt ? 'Ja' : 'Nei'}</p>
       <p className={styleLesemodus.label}>{tekst.begrunnelse}</p>
       <p className={styleLesemodus.fritekst}>{props.informasjonTilLesemodus.begrunnelse}</p>
     </div>;
