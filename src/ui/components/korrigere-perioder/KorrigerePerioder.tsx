@@ -78,7 +78,7 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = props
       />
     </RadioGruppe>
 
-    <Hovedknapp onClick={onGaVidere}>Bekreft</Hovedknapp>
+    <Hovedknapp onClick={onGaVidere}>Bekreft og fortsett</Hovedknapp>
   </div>;
 };
 export default KorrigerePerioder;
