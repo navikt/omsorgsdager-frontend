@@ -14,9 +14,10 @@ interface Feilmeldinger {
 
 const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
 
-  const [harOmsorgen, endreHarOmsorgen] = useState<boolean>(false);
-  const [begrunnelse, endreBegrunnelse] = useState<string>('');
+  const [harOmsorgen, endreHarOmsorgen] = useState<boolean>(props.aksjonspunktLost ? props.informasjonTilLesemodus.vilkarOppfylt : false);
+  const [begrunnelse, endreBegrunnelse] = useState<string>(props.aksjonspunktLost ? props.informasjonTilLesemodus.begrunnelse : '');
   const [visFeilmeldinger, endreVisFeilmeldinger] = useState<boolean>(false);
+  const [harAksjonspunktBlivitLostTidligare, endreharAksjonspunktBlivitLostTidligare ] = useState<boolean>(props.aksjonspunktLost);
 
   const barnetEllerBarna = props.barn.length === 1 ? 'barnet' : 'barna';
   const {vedtakFattetVilkarOppfylt, informasjonOmVilkar} = props;
@@ -28,6 +29,10 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
   };
 
   const kanManGaVidere = !feilmeldinger.begrunnelse;
+
+  const åpneForRedigereInformasjon = () => {
+    endreharAksjonspunktBlivitLostTidligare(false);
+  };
 
   const onGaVidere = () => kanManGaVidere
     ? onSubmit(harOmsorgen, begrunnelse)

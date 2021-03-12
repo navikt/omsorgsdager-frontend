@@ -21,6 +21,7 @@ interface Feilmeldinger {
 }
 
 const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProps> = ({
+  aksjonspunktLost,
   lesemodus,
   soknadsopplysninger,
   informasjonTilLesemodus,
@@ -29,10 +30,11 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   losAksjonspunkt
 }) => {
   const [visFeilmedlinger, endreVisFeilmedlinger] = useState<boolean>(false);
-  const [erSokerenMidlertidigAleneOmOmsorgen, endreErSokerenMidlertidigAleneOmOmsorgen] = useState<boolean>(true);
-  const [begrunnelse, endreBegrunnelse] = useState('');
-  const [fraDato, endreFraDato] = useState('dd.mm.åååå');
-  const [tilDato, endreTilDato] = useState('dd.mm.åååå');
+  const [erSokerenMidlertidigAleneOmOmsorgen, endreErSokerenMidlertidigAleneOmOmsorgen] = useState<boolean>(aksjonspunktLost ? informasjonTilLesemodus.vilkarOppfylt : true);
+  const [begrunnelse, endreBegrunnelse] = useState(aksjonspunktLost ? informasjonTilLesemodus.begrunnelse : '');
+  const [fraDato, endreFraDato] = useState(aksjonspunktLost ? informasjonTilLesemodus.dato.fra : 'dd.mm.åååå');
+  const [tilDato, endreTilDato] = useState(aksjonspunktLost ? informasjonTilLesemodus.dato.til : 'dd.mm.åååå');
+  const [harAksjonspunktBlivitLostTidligare, endreharAksjonspunktBlivitLostTidligare ] = useState<boolean>(aksjonspunktLost);
 
   const feilmedlinger: Feilmeldinger = {
     begrunnelse: begrunnelse.length === 0,
@@ -40,6 +42,10 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
       fra: (fraDato.toLowerCase() === 'dd.mm.åååå' || fraDato === '') && erSokerenMidlertidigAleneOmOmsorgen,
       til: (tilDato.toLowerCase() === 'dd.mm.åååå' || tilDato === '') && erSokerenMidlertidigAleneOmOmsorgen
     }
+  };
+
+  const åpneForRedigereInformasjon = () => {
+    endreharAksjonspunktBlivitLostTidligare(false);
   };
 
   const vurderingKomplett = !feilmedlinger.begrunnelse && !feilmedlinger.dato.til && !feilmedlinger.dato.fra;

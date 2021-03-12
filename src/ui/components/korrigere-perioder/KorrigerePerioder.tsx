@@ -13,9 +13,10 @@ interface Feilmeldinger {
 
 const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = props => {
 
-  const [fravaerGrunnetSmittevernhensynEllerStengt, endrefravaerGrunnetSmittevernhensynEllerStengt] = useState<boolean>(false);
-  const [begrunnelse, endreBegrunnelse] = useState<string>('');
+  const [fravaerGrunnetSmittevernhensynEllerStengt, endrefravaerGrunnetSmittevernhensynEllerStengt] = useState<boolean>(props.aksjonspunktLost ? props.informasjonTilLesemodus.vilkarOppfylt : false);
+  const [begrunnelse, endreBegrunnelse] = useState<string>(props.aksjonspunktLost ? props.informasjonTilLesemodus.begrunnelse : '');
   const [visFeilmeldinger, endreVisFeilmeldinger] = useState<boolean>(false);
+  const [harAksjonspunktBlivitLostTidligare, endreharAksjonspunktBlivitLostTidligare ] = useState<boolean>(props.aksjonspunktLost);
 
   const onSubmit = props.losAksjonspunkt;
 
@@ -23,6 +24,10 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = props
     begrunnelse: begrunnelse.length === 0
   };
   const kanManGaVidere = !feilmeldinger.begrunnelse;
+
+  const åpneForRedigereInformasjon = () => {
+    endreharAksjonspunktBlivitLostTidligare(false);
+  };
 
   const onGaVidere = () => kanManGaVidere
     ? onSubmit(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse)
@@ -45,7 +50,7 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = props
   }
 
   return <div className={styles.korrigerePerioder}>
-    <AlertStripeTrekantVarsel text={tekst.instruksjon} />
+    <AlertStripeTrekantVarsel text={tekst.instruksjon}/>
 
     <div className={styles.opplysningerFraSoknad}>
       <div>Opplysninger fra sist innsendte søknad:</div>

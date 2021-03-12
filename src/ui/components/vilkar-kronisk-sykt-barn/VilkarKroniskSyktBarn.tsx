@@ -15,14 +15,19 @@ interface Feilmeldinger {
 
 const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps> = props => {
 
-  const {lesemodus, informasjonTilLesemodus, vedtakFattetVilkarOppfylt, informasjonOmVilkar} = props;
+  const {lesemodus, informasjonTilLesemodus, aksjonspunktLost, vedtakFattetVilkarOppfylt, informasjonOmVilkar} = props;
 
-  const [harDokumentasjonOgFravaerRisiko, endreHarDokumentasjonOgFravaerRisiko] = useState<boolean>(false);
-  const [arsakErIkkeRiskioFraFravaer, endreErArsakIkkeRiskioFraFravaer] = useState<boolean>(false);
-  const [begrunnelse, endreBegrunnelse] = useState<string>('');
+  const [harDokumentasjonOgFravaerRisiko, endreHarDokumentasjonOgFravaerRisiko] = useState<boolean>(aksjonspunktLost ? informasjonTilLesemodus.vilkarOppfylt : false);
+  const [arsakErIkkeRiskioFraFravaer, endreErArsakIkkeRiskioFraFravaer] = useState<boolean>(aksjonspunktLost ? informasjonTilLesemodus.avslagsArsakErIkkeRiskioFraFravaer : false);
+  const [begrunnelse, endreBegrunnelse] = useState<string>(aksjonspunktLost ? informasjonTilLesemodus.begrunnelse : '');
   const [visFeilmeldinger, endreVisFeilmeldinger] = useState<boolean>(false);
+  const [harAksjonspunktBlivitLostTidligare, endreharAksjonspunktBlivitLostTidligare ] = useState<boolean>(props.aksjonspunktLost);
 
   const onSubmit = props.losAksjonspunkt;
+
+  const åpneForRedigereInformasjon = () => {
+    endreharAksjonspunktBlivitLostTidligare(false);
+  };
 
   const feilmeldinger: Feilmeldinger = {
     begrunnelse: begrunnelse.length === 0
@@ -45,7 +50,6 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
 
   return <div
     className={classNames(styles.vilkarKroniskSyktBarn, lesemodus && !vedtakFattetVilkarOppfylt && styleLesemodus.lesemodusboks)}>
-
     {vedtakFattetVilkarOppfylt && <VilkarStatus
       vilkarOppfylt={informasjonOmVilkar.vilkarOppfylt}
       aksjonspunktNavn={informasjonOmVilkar.navnPåAksjonspunkt}
@@ -77,6 +81,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
         value={begrunnelse}
         maxLength={0}
         feil={visFeilmeldinger && feilmeldinger.begrunnelse && 'Begrunnelse må oppgis.'}
+        disabled={harAksjonspunktBlivitLostTidligare}
       />
 
       <RadioGruppe
@@ -85,11 +90,13 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
         <Radio label="Ja"
                name="harDokumentasjonOgFravaerRisiko"
                checked={harDokumentasjonOgFravaerRisiko}
-               onChange={() => endreHarDokumentasjonOgFravaerRisiko(true)}/>
+               onChange={() => endreHarDokumentasjonOgFravaerRisiko(true)}
+               disabled={harAksjonspunktBlivitLostTidligare}/>
         <Radio label="Nei"
                name="harIkkeDokumentasjonOgFravaerRisiko"
                checked={!harDokumentasjonOgFravaerRisiko}
-               onChange={() => endreHarDokumentasjonOgFravaerRisiko(false)}/>
+               onChange={() => endreHarDokumentasjonOgFravaerRisiko(false)}
+               disabled={harAksjonspunktBlivitLostTidligare}/>
       </RadioGruppe>
 
       {!harDokumentasjonOgFravaerRisiko && <RadioGruppe
@@ -98,14 +105,17 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
         <Radio label={tekst.arsakIkkeSyk}
                name="harIkkeDokumentasjonForSykEllerFunksjonshemmet"
                checked={!arsakErIkkeRiskioFraFravaer}
-               onChange={() => endreErArsakIkkeRiskioFraFravaer(false)}/>
+               onChange={() => endreErArsakIkkeRiskioFraFravaer(false)}
+               disabled={harAksjonspunktBlivitLostTidligare}/>
         <Radio label={tekst.arsakIkkeRisikoFraFravaer}
                name="harIkkeFravaerRisiko"
                checked={arsakErIkkeRiskioFraFravaer}
-               onChange={() => endreErArsakIkkeRiskioFraFravaer(true)}/>
+               onChange={() => endreErArsakIkkeRiskioFraFravaer(true)}
+               disabled={harAksjonspunktBlivitLostTidligare}/>
       </RadioGruppe>}
 
       <Hovedknapp onClick={onGaVidere}>Bekreft og fortsett</Hovedknapp>
+      {harAksjonspunktBlivitLostTidligare && <Hovedknapp onClick={åpneForRedigereInformasjon}>Rediger</Hovedknapp>}
     </>}
   </div>;
 };
