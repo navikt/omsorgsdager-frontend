@@ -8,33 +8,34 @@ import VilkarMidlertidigAlene from '../vilkar-midlertidig-alene/VilkarMidlertidi
 describe('<VilkarMidlertidigAlene>', () => {
   test('VilkarMidlertidigAlene viser åpen aksjonspunkt som forventet', () => {
     const props = {
-        lesemodus: false,
-          soknadsopplysninger: {
-          årsak: 'Årsak',
-            beskrivelse: 'Beskrivelse',
-            periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ'
-        },
-        vedtakFattetVilkarOppfylt: false,
-          informasjonOmVilkar:{
-          begrunnelse: 'begrunnelse',
-            navnPåAksjonspunkt: 'Utvidet rett',
-            vilkarOppfylt: true,
-            vilkar: '§ 9-3 vilkar'
-        },
-        informasjonTilLesemodus: {
-          begrunnelse: 'Begrunnelse',
-            vilkarOppfylt: true,
-            dato: {
-            fra: '22.03.1993',
-              til: '22.12.1994'
-          }
-        },
-        losAksjonspunkt: () => {}
+      lesemodus: false,
+      soknadsopplysninger: {
+        årsak: 'Årsak',
+        beskrivelse: 'Beskrivelse',
+        periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ'
+      },
+      vedtakFattetVilkarOppfylt: false,
+      informasjonOmVilkar: {
+        begrunnelse: 'begrunnelse',
+        navnPåAksjonspunkt: 'Utvidet rett',
+        vilkarOppfylt: true,
+        vilkar: '§ 9-3 vilkar'
+      },
+      informasjonTilLesemodus: {
+        begrunnelse: 'Begrunnelse',
+        vilkarOppfylt: true,
+        dato: {
+          fra: '22.03.1993',
+          til: '22.12.1994'
+        }
+      },
+      losAksjonspunkt: () => {
+      }
     } as VilkarMidlertidigAleneProps;
 
     render(
       <VilkarMidlertidigAlene {...props}/>
-  );
+    );
 
     const aksjonspunkt = 'Vurder om vilkår om midlertidig alene om omsorgen er oppfylt.';
     const oppgittÅrsakText = 'Oppgitt årsak';
@@ -79,7 +80,7 @@ describe('<VilkarMidlertidigAlene>', () => {
         periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ'
       },
       vedtakFattetVilkarOppfylt: false,
-      informasjonOmVilkar:{
+      informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: false,
@@ -93,7 +94,8 @@ describe('<VilkarMidlertidigAlene>', () => {
           til: '22.12.1994'
         }
       },
-      losAksjonspunkt: () => {}
+      losAksjonspunkt: () => {
+      }
     } as VilkarMidlertidigAleneProps;
 
     render(<VilkarMidlertidigAlene {...props}/>);
@@ -129,7 +131,7 @@ describe('<VilkarMidlertidigAlene>', () => {
         periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ'
       },
       vedtakFattetVilkarOppfylt: true,
-      informasjonOmVilkar:{
+      informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
@@ -143,7 +145,8 @@ describe('<VilkarMidlertidigAlene>', () => {
           til: '22.12.1994'
         }
       },
-      losAksjonspunkt: () => {}
+      losAksjonspunkt: () => {
+      }
     } as VilkarMidlertidigAleneProps;
 
     render(<VilkarMidlertidigAlene {...props}/>);
@@ -171,7 +174,7 @@ describe('<VilkarMidlertidigAlene>', () => {
         periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ'
       },
       vedtakFattetVilkarOppfylt: true,
-      informasjonOmVilkar:{
+      informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: false,
@@ -185,7 +188,8 @@ describe('<VilkarMidlertidigAlene>', () => {
           til: '22.12.1994'
         }
       },
-      losAksjonspunkt: () => {}
+      losAksjonspunkt: () => {
+      }
     } as VilkarMidlertidigAleneProps;
 
     render(<VilkarMidlertidigAlene {...props}/>);
@@ -203,25 +207,34 @@ describe('<VilkarMidlertidigAlene>', () => {
 
   test('Den har ingen a11y violations', async () => {
     const props = {
-      lesemodus: true,
-      informasjonTilLesemodus:{
-        begrunnelse: 'Begrunnelse til lesemodus',
-        vilkarOppfylt: false
+      lesemodus: false,
+      soknadsopplysninger: {
+        årsak: 'Årsak',
+        beskrivelse: 'Beskrivelse',
+        periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ'
       },
-      barn: ['01010050053'],
-      vedtakFattetVilkarOppfylt: false,
-      informasjonOmVilkar:{
+      vedtakFattetVilkarOppfylt: true,
+      informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
-        vilkarOppfylt: true,
+        vilkarOppfylt: false,
         vilkar: '§ 9-3 vilkar'
       },
-      losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse)
-    };
+      informasjonTilLesemodus: {
+        begrunnelse: 'Begrunnelse',
+        vilkarOppfylt: true,
+        dato: {
+          fra: '22.03.1993',
+          til: '22.12.1994'
+        }
+      },
+      losAksjonspunkt: () => {
+      }
+    } as VilkarMidlertidigAleneProps;
 
     const {container} = render(
-      <Omsorg {...props}/>
-  );
+      <VilkarMidlertidigAlene {...props}/>
+    );
 
     const a11yResults = await axe(container);
 

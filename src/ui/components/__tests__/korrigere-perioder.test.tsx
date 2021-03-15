@@ -19,6 +19,7 @@ describe('<KorrigerePerioder>', () => {
       },
       losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse)
     } as KorrigerePerioderProps;
+    
     render(<KorrigerePerioder {...props}/>);
 
     const aksjonspunkt = 'Se på nødvendig dokumentasjon og tidligere utbetalte perioder, og vurder om søker har rett på å få utbetalt flere dager.';
@@ -81,9 +82,7 @@ describe('<KorrigerePerioder>', () => {
       losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse)
     } as KorrigerePerioderProps;
 
-    const {container} = render(
-      <KorrigerePerioder {...props}/>
-  );
+    const {container} = render(<KorrigerePerioder {...props}/>);
 
     const a11yResults = await axe(container);
 

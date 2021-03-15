@@ -9,19 +9,20 @@ import VilkarMidlertidigAlene from '../vilkar-midlertidig-alene/VilkarMidlertidi
 
 describe('<VilkarKroniskSyktBarn>', () => {
   test('VilkarKroniskSyktBarn viser åpen aksjonspunkt som forventet', () => {
-    const props =  {
+    const props = {
       lesemodus: false,
-        informasjonTilLesemodus:{
+      informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
-          vilkarOppfylt: false
+        vilkarOppfylt: false,
+        avslagsArsakErIkkeRiskioFraFravaer: true
       },
       losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse) => console.log(endreHarDokumentasjonOgFravaerRisiko, begrunnelse),
-        vedtakFattetVilkarOppfylt: false,
-        informasjonOmVilkar:{
+      vedtakFattetVilkarOppfylt: false,
+      informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
-          navnPåAksjonspunkt: 'Utvidet rett',
-          vilkarOppfylt: true,
-          vilkar: '§ 9-3 vilkar'
+        navnPåAksjonspunkt: 'Utvidet rett',
+        vilkarOppfylt: true,
+        vilkar: '§ 9-3 vilkar'
       }
     } as VilkarKroniskSyktBarnProps;
 
@@ -29,7 +30,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
 
     const aksjonspunkt = 'Se på vedlagt legeerklæring og vurder om barnet har en kronisk sykdom eller en funksjonshemmelse, og om det er økt risiko for fravær.';
     const begrunnelseText = 'Begrunnelse';
-    const vilkarOppfyltText = 'Henger søkers risiko for fravær fra arbeid sammen med barnets kroniske sykdom eller funksjonshemmelse?';
+    const vilkarOppfyltText = 'Er det dokumentert at barnet har en kronisk sykdom eller en funksjonshemming?';
 
     const hentetAksjonspunkt = screen.getByText(aksjonspunkt);
     expect(hentetAksjonspunkt).toBeInTheDocument();
@@ -43,15 +44,16 @@ describe('<VilkarKroniskSyktBarn>', () => {
   });
 
   test('VilkarKroniskSyktBarn viser lesemodus', () => {
-    const props =  {
+    const props = {
       lesemodus: true,
-      informasjonTilLesemodus:{
+      informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
-        vilkarOppfylt: false
+        vilkarOppfylt: false,
+        avslagsArsakErIkkeRiskioFraFravaer: true
       },
       losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse) => console.log(endreHarDokumentasjonOgFravaerRisiko, begrunnelse),
       vedtakFattetVilkarOppfylt: false,
-      informasjonOmVilkar:{
+      informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
@@ -77,15 +79,16 @@ describe('<VilkarKroniskSyktBarn>', () => {
   });
 
   test('VilkarKroniskSyktBarn viser informasjon om vilkar etter fattet vedtak', () => {
-    const props =  {
+    const props = {
       lesemodus: false,
-      informasjonTilLesemodus:{
+      informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
-        vilkarOppfylt: false
+        vilkarOppfylt: false,
+        avslagsArsakErIkkeRiskioFraFravaer: true
       },
       losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse) => console.log(endreHarDokumentasjonOgFravaerRisiko, begrunnelse),
       vedtakFattetVilkarOppfylt: true,
-      informasjonOmVilkar:{
+      informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
@@ -110,15 +113,16 @@ describe('<VilkarKroniskSyktBarn>', () => {
   });
 
   test('VilkarKroniskSyktBarn viser informasjon om vilkar ikke oppfylt etter fattet vedtak', () => {
-    const props =  {
+    const props = {
       lesemodus: false,
-      informasjonTilLesemodus:{
+      informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
-        vilkarOppfylt: false
+        vilkarOppfylt: false,
+        avslagsArsakErIkkeRiskioFraFravaer: true
       },
       losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse) => console.log(endreHarDokumentasjonOgFravaerRisiko, begrunnelse),
       vedtakFattetVilkarOppfylt: true,
-      informasjonOmVilkar:{
+      informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: false,
@@ -140,15 +144,16 @@ describe('<VilkarKroniskSyktBarn>', () => {
   });
 
   test('Den har ingen a11y violations', async () => {
-    const props =  {
+    const props = {
       lesemodus: false,
-      informasjonTilLesemodus:{
+      informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
-        vilkarOppfylt: false
+        vilkarOppfylt: false,
+        avslagsArsakErIkkeRiskioFraFravaer: true
       },
       losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse) => console.log(endreHarDokumentasjonOgFravaerRisiko, begrunnelse),
       vedtakFattetVilkarOppfylt: true,
-      informasjonOmVilkar:{
+      informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: false,

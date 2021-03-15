@@ -32,16 +32,16 @@ const VilkarStatus: React.FunctionComponent<OwnProps> = ({
           <h2 className={styles.aksjonspunktNavn}>{aksjonspunktNavn}</h2>
           <p className={styles.vilkar}>{vilkarReferanse}</p>
         </div>
-        <h4 className={styles.vilkarStatus}>
+        <p className={styles.vilkarStatus}>
           {vilkarOppfylt
             ? 'Vilkåret er oppfylt'
             : 'Vilkåret er ikke oppfylt'
           }
-        </h4>
+        </p>
         {erVilkaretForOmsorgenFor && vilkarOppfylt && <div className={styles.beskrivelseForOmsorgenForOppfyltVilkar}>
           <SjekkIkon/> <h4>{beskrivelseForOmsorgenFor}</h4>
         </div>}
-        <h4 className={styles.begrunnelseOverskrift}>Begrunnelse</h4>
+        <p className={styles.begrunnelseOverskrift}>Begrunnelse</p>
         <p className={classNames(styleLesemodus.fritekst, styles.begrunnelse)}>{begrunnelse}</p>
 
       </>
