@@ -1,8 +1,8 @@
-import {AlertStripeAdvarsel} from 'nav-frontend-alertstriper';
 import {Hovedknapp} from 'nav-frontend-knapper';
 import {Radio, RadioGruppe, Textarea} from 'nav-frontend-skjema';
 import React, {useState} from 'react';
 import {KorrigerePerioderProps} from '../../../types/KorrigerePerioderProps';
+import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
 import styleRadioknapper from '../styles/radioknapper/radioknapper.less';
 import styles from './korrigerePerioder.less';
@@ -38,16 +38,14 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = props
     return <div className={styleLesemodus.lesemodusboks}>
       <p><b>Behandlet aksjonspunkt:</b> {tekst.instruksjon}</p>
       <p className={styleLesemodus.label}>{tekst.sporsmalErInnvilget}</p>
-      <p>{props.informasjonTilLesemodus.vilkarOppfylt ? 'Ja' : 'Nei'}</p>
+      <p className={styleLesemodus.text}>{props.informasjonTilLesemodus.vilkarOppfylt ? 'Ja' : 'Nei'}</p>
       <p className={styleLesemodus.label}>{tekst.begrunnelse}</p>
       <p className={styleLesemodus.fritekst}>{props.informasjonTilLesemodus.begrunnelse}</p>
     </div>;
   }
 
   return <div className={styles.korrigerePerioder}>
-    <AlertStripeAdvarsel className={styles.varselstripe}>
-      {tekst.instruksjon}
-    </AlertStripeAdvarsel>
+    <AlertStripeTrekantVarsel text={tekst.instruksjon} />
 
     <div className={styles.opplysningerFraSoknad}>
       <div>Opplysninger fra sist innsendte søknad:</div>
@@ -80,7 +78,7 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = props
       />
     </RadioGruppe>
 
-    <Hovedknapp onClick={onGaVidere}>Bekreft</Hovedknapp>
+    <Hovedknapp onClick={onGaVidere}>Bekreft og fortsett</Hovedknapp>
   </div>;
 };
 export default KorrigerePerioder;

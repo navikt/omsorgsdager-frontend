@@ -1,7 +1,7 @@
-import AlertStripe from 'nav-frontend-alertstriper';
 import classNames from 'classnames';
 import {Datepicker} from 'nav-datovelger';
 import {Hovedknapp} from 'nav-frontend-knapper';
+import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import OpplysningerFraSoknad from '../opplysninger-fra-soknad/OpplysningerFraSoknad';
 import {Radio, RadioGruppe, SkjemaGruppe, Textarea} from 'nav-frontend-skjema';
 import React, {useState} from 'react';
@@ -74,7 +74,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
       <VilkarMidlertidigAleneLesemodus soknadsopplysninger={soknadsopplysninger}
                                        informasjonTilLesemodus={informasjonTilLesemodus}/>}
       {!lesemodus && !vedtakFattetVilkarOppfylt && <>
-        <AlertStripe type="advarsel">{tekst.aksjonspunkt}</AlertStripe>
+      <AlertStripeTrekantVarsel text={tekst.aksjonspunkt} />
 
         <OpplysningerFraSoknad {...soknadsopplysninger}/>
 
