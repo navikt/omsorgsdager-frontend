@@ -9,8 +9,6 @@ on:
       - main
 env:
   IMAGE_BASE: docker.pkg.github.com/${{ github.repository }}/omsorgsdager-frontend
-  CLUSTER: dev-gcp
-  NAMESPACE: default
 jobs:
   deploy-docker-image:
     name: Deploy Docker image
@@ -57,14 +55,14 @@ jobs:
           docker push ${LATEST}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Deploy til dev-gcp
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: dev-gcp
-          RESOURCE: nais/naiserator.yml
-          VARS: nais/dev-gcp.json
+      - name: Deploy til prod-gcp
+          uses: nais/deploy/actions/deploy@v1
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+            CLUSTER: prod-gcp
+            RESOURCE: nais/naiserator.yml
+            VARS: nais/prod-gcp.json
       - name: Set changelog
         run: |
           text="$(git --no-pager log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h %s")"
@@ -83,7 +81,7 @@ jobs:
             ```
             <script
               type="text/javascript"
-              src="https://omsorgsdager-frontend.dev.intern.nav.no/${{ env.VERSION }}/app.js"
+              src="https://omsorgsdager-frontend.intern.nav.no/${{ env.VERSION }}/app.js"
               integrity="sha384-${{ env.JS_HASH }}"
               crossorigin="anonymous"
             ></script>
@@ -92,7 +90,7 @@ jobs:
             ```
             <link
               rel="stylesheet"
-              href="https://omsorgsdager-frontend.dev.intern.nav.no/${{ env.VERSION }}/styles.css"
+              href="https://omsorgsdager-frontend.intern.nav.no/${{ env.VERSION }}/styles.css"
               integrity="sha384-${{ env.CSS_HASH }}"
               crossorigin="anonymous"
             >
