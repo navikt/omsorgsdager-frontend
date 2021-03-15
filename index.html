@@ -15,7 +15,7 @@
               korrigerePerioder: {
                 visKomponent: 'KorrigerePerioder',
                 props: {
-                  lesemodus: false,
+                  lesemodus: true,
                   årsakFraSoknad: 'Årsak',
                   informasjonTilLesemodus:{
                     begrunnelse: 'Begrunnelse til lesemodus',
@@ -27,13 +27,14 @@
               vilkarKroniskSyktBarn: {
                 visKomponent: 'VilkarKroniskSyktBarn',
                 props: {
-                  lesemodus: false,
+                  lesemodus: true,
                   informasjonTilLesemodus:{
                     begrunnelse: 'Begrunnelse til lesemodus',
-                    vilkarOppfylt: false
+                    vilkarOppfylt: false,
+                    avslagsArsakErIkkeRiskioFraFravaer: true
                   },
-                  losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse) => console.log(endreHarDokumentasjonOgFravaerRisiko, begrunnelse),
-                  vedtakFattetVilkarOppfylt: true,
+                  losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse, avslagsKode) => console.log(endreHarDokumentasjonOgFravaerRisiko, begrunnelse, avslagsKode),
+                  vedtakFattetVilkarOppfylt: false,
                   informasjonOmVilkar:{
                     begrunnelse: 'begrunnelse',
                     navnPåAksjonspunkt: 'Utvidet rett',
@@ -72,12 +73,12 @@
               omsorg: {
                 visKomponent: 'Omsorg',
                 props: {
-                  lesemodus: true,
+                  lesemodus: false,
                   informasjonTilLesemodus:{
                     begrunnelse: 'Begrunnelse til lesemodus',
                     vilkarOppfylt: false
                   },
-                  barn: ['01010050053'],
+                  barn: ['01010050053', '34324'],
                   vedtakFattetVilkarOppfylt: false,
                   informasjonOmVilkar:{
                     begrunnelse: 'begrunnelse',
@@ -91,7 +92,7 @@
             };
 
             setTimeout(() => {
-              window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.omsorg);
+              window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.korrigerePerioder);
             }, 300);
         </script>
     </body>
