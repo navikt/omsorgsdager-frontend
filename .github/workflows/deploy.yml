@@ -5,6 +5,8 @@ on:
       - '**.md'
       - '.gitignore'
       - '.prettierrc'
+    paths:
+      - 'build/**'
     branches:
       - main
 env:
