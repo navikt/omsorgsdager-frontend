@@ -1,6 +1,7 @@
 import {render, screen} from '@testing-library/react';
 import {axe} from 'jest-axe';
 import React from 'react';
+import {VilkarKroniskSyktBarnProps} from '../../../types/VilkarKroniskSyktBarnProps';
 import {VilkarMidlertidigAleneProps} from '../../../types/VilkarMidlertidigAleneProps';
 import Omsorg from '../omsorg/Omsorg';
 import VilkarKroniskSyktBarn from '../vilkar-kronisk-sykt-barn/VilkarKroniskSyktBarn';
@@ -22,7 +23,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
           vilkarOppfylt: true,
           vilkar: '§ 9-3 vilkar'
       }
-    };
+    } as VilkarKroniskSyktBarnProps;
 
     render(<VilkarKroniskSyktBarn {...props}/>);
 
@@ -56,7 +57,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
         vilkarOppfylt: true,
         vilkar: '§ 9-3 vilkar'
       }
-    };
+    } as VilkarKroniskSyktBarnProps;
 
     render(<VilkarKroniskSyktBarn {...props}/>);
 
@@ -90,7 +91,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
         vilkarOppfylt: true,
         vilkar: '§ 9-3 vilkar'
       }
-    };
+    } as VilkarKroniskSyktBarnProps;
 
     render(<VilkarKroniskSyktBarn {...props}/>);
 
@@ -123,7 +124,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
         vilkarOppfylt: false,
         vilkar: '§ 9-3 vilkar'
       }
-    };
+    } as VilkarKroniskSyktBarnProps;
 
     render(<VilkarKroniskSyktBarn {...props}/>);
 
@@ -139,26 +140,23 @@ describe('<VilkarKroniskSyktBarn>', () => {
   });
 
   test('Den har ingen a11y violations', async () => {
-    const props = {
-      lesemodus: true,
+    const props =  {
+      lesemodus: false,
       informasjonTilLesemodus:{
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false
       },
-      barn: ['01010050053'],
-      vedtakFattetVilkarOppfylt: false,
+      losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse) => console.log(endreHarDokumentasjonOgFravaerRisiko, begrunnelse),
+      vedtakFattetVilkarOppfylt: true,
       informasjonOmVilkar:{
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
-        vilkarOppfylt: true,
+        vilkarOppfylt: false,
         vilkar: '§ 9-3 vilkar'
-      },
-      losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse)
-    };
+      }
+    } as VilkarKroniskSyktBarnProps;
 
-    const {container} = render(
-      <Omsorg {...props}/>
-  );
+    const {container} = render(<VilkarKroniskSyktBarn {...props}/>);
 
     const a11yResults = await axe(container);
 

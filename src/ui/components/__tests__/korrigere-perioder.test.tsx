@@ -18,7 +18,7 @@ describe('<KorrigerePerioder>', () => {
         vilkarOppfylt: false
       },
       losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse)
-    };
+    } as KorrigerePerioderProps;
     render(<KorrigerePerioder {...props}/>);
 
     const aksjonspunkt = 'Se på nødvendig dokumentasjon og tidligere utbetalte perioder, og vurder om søker har rett på å få utbetalt flere dager.';
@@ -52,7 +52,7 @@ describe('<KorrigerePerioder>', () => {
         vilkarOppfylt: false
       },
       losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse)
-    };
+    } as KorrigerePerioderProps;
     render(<KorrigerePerioder {...props}/>);
 
     const aksjonspunkt = 'Se på nødvendig dokumentasjon og tidligere utbetalte perioder, og vurder om søker har rett på å få utbetalt flere dager.';
@@ -73,23 +73,16 @@ describe('<KorrigerePerioder>', () => {
   test('Den har ingen a11y violations', async () => {
     const props = {
       lesemodus: true,
+      årsakFraSoknad: 'Årsak',
       informasjonTilLesemodus:{
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false
       },
-      barn: ['01010050053'],
-      vedtakFattetVilkarOppfylt: false,
-      informasjonOmVilkar:{
-        begrunnelse: 'begrunnelse',
-        navnPåAksjonspunkt: 'Utvidet rett',
-        vilkarOppfylt: true,
-        vilkar: '§ 9-3 vilkar'
-      },
-      losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse)
-    };
+      losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse)
+    } as KorrigerePerioderProps;
 
     const {container} = render(
-      <Omsorg {...props}/>
+      <KorrigerePerioder {...props}/>
   );
 
     const a11yResults = await axe(container);
