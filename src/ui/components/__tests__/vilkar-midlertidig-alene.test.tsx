@@ -2,7 +2,6 @@ import {render, screen} from '@testing-library/react';
 import {axe} from 'jest-axe';
 import React from 'react';
 import {VilkarMidlertidigAleneProps} from '../../../types/VilkarMidlertidigAleneProps';
-import Omsorg from '../omsorg/Omsorg';
 import VilkarMidlertidigAlene from '../vilkar-midlertidig-alene/VilkarMidlertidigAlene';
 
 describe('<VilkarMidlertidigAlene>', () => {
@@ -29,8 +28,7 @@ describe('<VilkarMidlertidigAlene>', () => {
           til: '22.12.1994'
         }
       },
-      losAksjonspunkt: () => {
-      }
+      losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');}
     } as VilkarMidlertidigAleneProps;
 
     render(
@@ -44,7 +42,6 @@ describe('<VilkarMidlertidigAlene>', () => {
     const begrunnelseText = 'Begrunn om vilkåret for midlertidig aleneomsorg er oppfylt';
     const vilkarOppfyltText = 'Er vilkåret om midlertidig aleneomsorg oppfylt?';
     const periodeText = 'I hvilken periode er vedtaket gyldig?';
-    const periodTextFormat = 'dd.mm.åååå';
 
     const hentetAksjonspunkt = screen.getByText(aksjonspunkt);
     expect(hentetAksjonspunkt).toBeInTheDocument();
@@ -94,8 +91,7 @@ describe('<VilkarMidlertidigAlene>', () => {
           til: '22.12.1994'
         }
       },
-      losAksjonspunkt: () => {
-      }
+      losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');}
     } as VilkarMidlertidigAleneProps;
 
     render(<VilkarMidlertidigAlene {...props}/>);
@@ -145,8 +141,7 @@ describe('<VilkarMidlertidigAlene>', () => {
           til: '22.12.1994'
         }
       },
-      losAksjonspunkt: () => {
-      }
+      losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');}
     } as VilkarMidlertidigAleneProps;
 
     render(<VilkarMidlertidigAlene {...props}/>);
@@ -188,8 +183,7 @@ describe('<VilkarMidlertidigAlene>', () => {
           til: '22.12.1994'
         }
       },
-      losAksjonspunkt: () => {
-      }
+      losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');}
     } as VilkarMidlertidigAleneProps;
 
     render(<VilkarMidlertidigAlene {...props}/>);
@@ -228,8 +222,7 @@ describe('<VilkarMidlertidigAlene>', () => {
           til: '22.12.1994'
         }
       },
-      losAksjonspunkt: () => {
-      }
+      losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');}
     } as VilkarMidlertidigAleneProps;
 
     const {container} = render(

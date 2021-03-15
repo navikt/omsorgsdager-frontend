@@ -2,24 +2,20 @@ import {render, screen} from '@testing-library/react';
 import {axe} from 'jest-axe';
 import React from 'react';
 import {KorrigerePerioderProps} from '../../../types/KorrigerePerioderProps';
-import {VilkarMidlertidigAleneProps} from '../../../types/VilkarMidlertidigAleneProps';
 import KorrigerePerioder from '../korrigere-perioder/KorrigerePerioder';
-import Omsorg from '../omsorg/Omsorg';
-import VilkarKroniskSyktBarn from '../vilkar-kronisk-sykt-barn/VilkarKroniskSyktBarn';
-import VilkarMidlertidigAlene from '../vilkar-midlertidig-alene/VilkarMidlertidigAlene';
 
 describe('<KorrigerePerioder>', () => {
   test('KorrigerePerioder viser åpen aksjonspunkt som forventet', () => {
     const props = {
       lesemodus: false,
       årsakFraSoknad: 'Årsak',
-      informasjonTilLesemodus:{
+      informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false
       },
       losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse)
     } as KorrigerePerioderProps;
-    
+
     render(<KorrigerePerioder {...props}/>);
 
     const aksjonspunkt = 'Se på nødvendig dokumentasjon og tidligere utbetalte perioder, og vurder om søker har rett på å få utbetalt flere dager.';
@@ -48,7 +44,7 @@ describe('<KorrigerePerioder>', () => {
     const props = {
       lesemodus: true,
       årsakFraSoknad: 'Årsak',
-      informasjonTilLesemodus:{
+      informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false
       },
@@ -75,7 +71,7 @@ describe('<KorrigerePerioder>', () => {
     const props = {
       lesemodus: true,
       årsakFraSoknad: 'Årsak',
-      informasjonTilLesemodus:{
+      informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false
       },

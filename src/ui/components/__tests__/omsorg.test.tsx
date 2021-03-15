@@ -1,20 +1,19 @@
-
 import React from 'react';
 import Omsorg from '../omsorg/Omsorg';
-import { render, screen } from '@testing-library/react';
-import { axe, toHaveNoViolations } from 'jest-axe';
+import {render, screen} from '@testing-library/react';
+import {axe} from 'jest-axe';
 
 describe('<Omsorg>', () => {
   test('Omsorg viser åpen aksjonspunkt som forventet', () => {
     const props = {
       lesemodus: true,
-      informasjonTilLesemodus:{
+      informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false
       },
       barn: ['01010050053'],
       vedtakFattetVilkarOppfylt: false,
-      informasjonOmVilkar:{
+      informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
@@ -52,13 +51,13 @@ describe('<Omsorg>', () => {
   test('Omsorg viser lesemodus', () => {
     const props = {
       lesemodus: true,
-      informasjonTilLesemodus:{
+      informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false
       },
       barn: ['01010050053'],
       vedtakFattetVilkarOppfylt: false,
-      informasjonOmVilkar:{
+      informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
@@ -99,13 +98,13 @@ describe('<Omsorg>', () => {
   test('Omsorg viser informasjon om vilkar etter fattet vedtak', () => {
     const props = {
       lesemodus: false,
-      informasjonTilLesemodus:{
+      informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false
       },
       barn: ['01010050053'],
       vedtakFattetVilkarOppfylt: true,
-      informasjonOmVilkar:{
+      informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
@@ -137,13 +136,13 @@ describe('<Omsorg>', () => {
   test('Omsorg viser informasjon om vilkar ikke oppfylt etter fattet vedtak', () => {
     const props = {
       lesemodus: false,
-      informasjonTilLesemodus:{
+      informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false
       },
       barn: ['01010050053'],
       vedtakFattetVilkarOppfylt: true,
-      informasjonOmVilkar:{
+      informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: false,
@@ -170,13 +169,13 @@ describe('<Omsorg>', () => {
   test('Den har ingen a11y violations', async () => {
     const props = {
       lesemodus: true,
-      informasjonTilLesemodus:{
+      informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false
       },
       barn: ['01010050053'],
       vedtakFattetVilkarOppfylt: false,
-      informasjonOmVilkar:{
+      informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,

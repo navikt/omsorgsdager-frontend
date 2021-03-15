@@ -2,10 +2,7 @@ import {render, screen} from '@testing-library/react';
 import {axe} from 'jest-axe';
 import React from 'react';
 import {VilkarKroniskSyktBarnProps} from '../../../types/VilkarKroniskSyktBarnProps';
-import {VilkarMidlertidigAleneProps} from '../../../types/VilkarMidlertidigAleneProps';
-import Omsorg from '../omsorg/Omsorg';
 import VilkarKroniskSyktBarn from '../vilkar-kronisk-sykt-barn/VilkarKroniskSyktBarn';
-import VilkarMidlertidigAlene from '../vilkar-midlertidig-alene/VilkarMidlertidigAlene';
 
 describe('<VilkarKroniskSyktBarn>', () => {
   test('VilkarKroniskSyktBarn viser åpen aksjonspunkt som forventet', () => {
