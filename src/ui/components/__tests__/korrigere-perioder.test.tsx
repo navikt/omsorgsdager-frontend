@@ -7,6 +7,7 @@ import KorrigerePerioder from '../korrigere-perioder/KorrigerePerioder';
 describe('<KorrigerePerioder>', () => {
   test('KorrigerePerioder viser åpen aksjonspunkt som forventet', () => {
     const props = {
+      aksjonspunktLost: false,
       lesemodus: false,
       årsakFraSoknad: 'Årsak',
       informasjonTilLesemodus: {
@@ -42,6 +43,7 @@ describe('<KorrigerePerioder>', () => {
 
   test('KorrigerePerioder viser lesemodus', () => {
     const props = {
+      aksjonspunktLost: false,
       lesemodus: true,
       årsakFraSoknad: 'Årsak',
       informasjonTilLesemodus: {
@@ -69,6 +71,7 @@ describe('<KorrigerePerioder>', () => {
 
   test('Den har ingen a11y violations', async () => {
     const props = {
+      aksjonspunktLost: false,
       lesemodus: true,
       årsakFraSoknad: 'Årsak',
       informasjonTilLesemodus: {

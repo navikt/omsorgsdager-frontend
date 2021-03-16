@@ -8,6 +8,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
   test('VilkarKroniskSyktBarn viser åpen aksjonspunkt som forventet', () => {
     const props = {
       lesemodus: false,
+      aksjonspunktLost: false,
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false,
@@ -43,6 +44,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
   test('VilkarKroniskSyktBarn viser lesemodus', () => {
     const props = {
       lesemodus: true,
+      aksjonspunktLost: false,
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false,
@@ -78,6 +80,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
   test('VilkarKroniskSyktBarn viser informasjon om vilkar etter fattet vedtak', () => {
     const props = {
       lesemodus: false,
+      aksjonspunktLost: false,
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false,
@@ -111,6 +114,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
 
   test('VilkarKroniskSyktBarn viser informasjon om vilkar ikke oppfylt etter fattet vedtak', () => {
     const props = {
+      aksjonspunktLost: false,
       lesemodus: false,
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
@@ -142,6 +146,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
 
   test('Den har ingen a11y violations', async () => {
     const props = {
+      aksjonspunktLost: false,
       lesemodus: false,
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',

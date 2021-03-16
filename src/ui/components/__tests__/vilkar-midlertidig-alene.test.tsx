@@ -7,6 +7,7 @@ import VilkarMidlertidigAlene from '../vilkar-midlertidig-alene/VilkarMidlertidi
 describe('<VilkarMidlertidigAlene>', () => {
   test('VilkarMidlertidigAlene viser åpen aksjonspunkt som forventet', () => {
     const props = {
+      aksjonspunktLost: false,
       lesemodus: false,
       soknadsopplysninger: {
         årsak: 'Årsak',
@@ -70,6 +71,7 @@ describe('<VilkarMidlertidigAlene>', () => {
 
   test('VilkarMidlertidigAlene viser lesemodus', () => {
     const props = {
+      aksjonspunktLost: false,
       lesemodus: true,
       soknadsopplysninger: {
         årsak: 'Årsak',
@@ -120,6 +122,7 @@ describe('<VilkarMidlertidigAlene>', () => {
 
   test('VilkarMidlertidigAlene viser informasjon om vilkar etter fattet vedtak', () => {
     const props = {
+      aksjonspunktLost: false,
       lesemodus: false,
       soknadsopplysninger: {
         årsak: 'Årsak',
@@ -162,6 +165,7 @@ describe('<VilkarMidlertidigAlene>', () => {
 
   test('VilkarMidlertidigAlene viser informasjon om vilkar ikke oppfylt etter fattet vedtak', () => {
     const props = {
+      aksjonspunktLost: false,
       lesemodus: false,
       soknadsopplysninger: {
         årsak: 'Årsak',
@@ -201,6 +205,7 @@ describe('<VilkarMidlertidigAlene>', () => {
 
   test('Den har ingen a11y violations', async () => {
     const props = {
+      aksjonspunktLost: false,
       lesemodus: false,
       soknadsopplysninger: {
         årsak: 'Årsak',
