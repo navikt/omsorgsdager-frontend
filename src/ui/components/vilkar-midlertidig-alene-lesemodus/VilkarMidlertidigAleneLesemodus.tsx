@@ -1,4 +1,5 @@
 import React  from 'react';
+import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
 import OpplysningerFraVedtak from '../opplysninger-fra-vedtak/OpplysningerFraVedtak';
 import OpplysningerFraSoknad from '../opplysninger-fra-soknad/OpplysningerFraSoknad';
 import {VilkarMidlertidigInformasjonTilLesemodus, VilkarMidlertidigSoknadsopplysninger} from '../../../types/VilkarMidlertidigAleneProps';
@@ -6,15 +7,23 @@ import {VilkarMidlertidigInformasjonTilLesemodus, VilkarMidlertidigSoknadsopplys
 interface OwnProps {
   soknadsopplysninger: VilkarMidlertidigSoknadsopplysninger;
   informasjonTilLesemodus: VilkarMidlertidigInformasjonTilLesemodus;
+  harAksjonspunktBlivitLostTidligare: boolean;
+  åpneForRedigereInformasjon: () => void;
 }
 
 const VilkarMidlertidigAleneLesemodus: React.FunctionComponent<OwnProps> = ({
   soknadsopplysninger,
-  informasjonTilLesemodus
+  informasjonTilLesemodus,
+  harAksjonspunktBlivitLostTidligare,
+  åpneForRedigereInformasjon
 }) => {
   return (
     <>
-      <p><b>Behandlet aksjonspunkt:</b>{'Vurder om vilkår om midlertidig alene om omsorgen er oppfylt.'}</p>
+      <AksjonspunktLesemodus
+        aksjonspunktTekst={'Vurder om vilkår om midlertidig alene om omsorgen er oppfylt.'}
+        harAksjonspunktBlivitLostTidligare={harAksjonspunktBlivitLostTidligare}
+        åpneForRedigereInformasjon={åpneForRedigereInformasjon}
+      />
 
       <OpplysningerFraSoknad {...soknadsopplysninger}/>
 

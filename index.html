@@ -15,6 +15,7 @@
               korrigerePerioder: {
                 visKomponent: 'KorrigerePerioder',
                 props: {
+                  aksjonspunktLost: true,
                   lesemodus: true,
                   årsakFraSoknad: 'Årsak',
                   informasjonTilLesemodus:{
@@ -27,7 +28,8 @@
               vilkarKroniskSyktBarn: {
                 visKomponent: 'VilkarKroniskSyktBarn',
                 props: {
-                  lesemodus: true,
+                  aksjonspunktLost: true,
+                  lesemodus: false,
                   informasjonTilLesemodus:{
                     begrunnelse: 'Begrunnelse til lesemodus',
                     vilkarOppfylt: false,
@@ -46,6 +48,7 @@
               vilkarMidlertidigAlene: {
                 visKomponent: 'VilkarMidlertidigAlene',
                 props:  {
+                  aksjonspunktLost: true,
                   lesemodus: false,
                   soknadsopplysninger: {
                     årsak: 'Årsak',
@@ -73,6 +76,7 @@
               omsorg: {
                 visKomponent: 'Omsorg',
                 props: {
+                  aksjonspunktLost: true,
                   lesemodus: false,
                   informasjonTilLesemodus:{
                     begrunnelse: 'Begrunnelse til lesemodus',
@@ -92,7 +96,8 @@
             };
 
             setTimeout(() => {
-              window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.korrigerePerioder)}, 300);
+              window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.vilkarKroniskSyktBarn);
+            }, 300);
         </script>
     </body>
 </html>

@@ -3,6 +3,7 @@ import {Hovedknapp} from 'nav-frontend-knapper';
 import {Radio, RadioGruppe, Textarea} from 'nav-frontend-skjema';
 import React, {useState} from 'react';
 import {VilkarKroniskSyktBarnProps} from '../../../types/VilkarKroniskSyktBarnProps';
+import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
 import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
 import styles from './vilkarKronisSyktBarn.less';
@@ -15,14 +16,16 @@ interface Feilmeldinger {
 
 const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps> = props => {
 
-  const {lesemodus, informasjonTilLesemodus, vedtakFattetVilkarOppfylt, informasjonOmVilkar} = props;
+  const {lesemodus, losAksjonspunkt, informasjonTilLesemodus, aksjonspunktLost, vedtakFattetVilkarOppfylt, informasjonOmVilkar} = props;
 
-  const [harDokumentasjonOgFravaerRisiko, endreHarDokumentasjonOgFravaerRisiko] = useState<boolean>(false);
-  const [arsakErIkkeRiskioFraFravaer, endreErArsakIkkeRiskioFraFravaer] = useState<boolean>(false);
-  const [begrunnelse, endreBegrunnelse] = useState<string>('');
+  const [harDokumentasjonOgFravaerRisiko, endreHarDokumentasjonOgFravaerRisiko] = useState<boolean>(aksjonspunktLost ? informasjonTilLesemodus.vilkarOppfylt : false);
+  const [arsakErIkkeRiskioFraFravaer, endreErArsakIkkeRiskioFraFravaer] = useState<boolean>(aksjonspunktLost ? informasjonTilLesemodus.avslagsArsakErIkkeRiskioFraFravaer : false);
+  const [begrunnelse, endreBegrunnelse] = useState<string>(aksjonspunktLost ? informasjonTilLesemodus.begrunnelse : '');
   const [visFeilmeldinger, endreVisFeilmeldinger] = useState<boolean>(false);
+  const [harAksjonspunktBlivitLostTidligare] = useState<boolean>(aksjonspunktLost);
+  const [åpenForRedigering, endreÅpenForRedigering] = useState<boolean>(false);
 
-  const onSubmit = props.losAksjonspunkt;
+  const onSubmit = losAksjonspunkt;
 
   const feilmeldinger: Feilmeldinger = {
     begrunnelse: begrunnelse.length === 0
@@ -44,8 +47,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   };
 
   return <div
-    className={classNames(styles.vilkarKroniskSyktBarn, lesemodus && !vedtakFattetVilkarOppfylt && styleLesemodus.lesemodusboks)}>
-
+    className={classNames(styles.vilkarKroniskSyktBarn, lesemodus && !åpenForRedigering && !vedtakFattetVilkarOppfylt && styleLesemodus.lesemodusboks)}>
     {vedtakFattetVilkarOppfylt && <VilkarStatus
       vilkarOppfylt={informasjonOmVilkar.vilkarOppfylt}
       aksjonspunktNavn={informasjonOmVilkar.navnPåAksjonspunkt}
@@ -54,8 +56,13 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
       erVilkaretForOmsorgenFor={false}
     />}
 
-    {lesemodus && !vedtakFattetVilkarOppfylt && <>
-      <p><b>Behandlet aksjonspunkt:</b> {tekst.instruksjon}</p>
+    {lesemodus && !åpenForRedigering && !vedtakFattetVilkarOppfylt && <>
+      <AksjonspunktLesemodus
+        aksjonspunktTekst={tekst.instruksjon}
+        harAksjonspunktBlivitLostTidligare={harAksjonspunktBlivitLostTidligare}
+        åpneForRedigereInformasjon={() => endreÅpenForRedigering(true)}
+      />
+
       <p className={styleLesemodus.label}>{tekst.sporsmalHarDokumentasjonOgFravaerRisiko}</p>
       <p className={styleLesemodus.text}>{informasjonTilLesemodus.vilkarOppfylt ? 'Ja' : 'Nei'}</p>
       {!informasjonTilLesemodus.vilkarOppfylt && <>
@@ -68,7 +75,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
       <p className={styleLesemodus.fritekst}>{informasjonTilLesemodus.begrunnelse}</p>
     </>}
 
-    {!lesemodus && !vedtakFattetVilkarOppfylt && <>
+    {(åpenForRedigering || !lesemodus && !vedtakFattetVilkarOppfylt) && <>
       <AlertStripeTrekantVarsel text={tekst.instruksjon}/>
 
       <Textarea

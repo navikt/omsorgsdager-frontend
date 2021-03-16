@@ -21,6 +21,7 @@ interface Feilmeldinger {
 }
 
 const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProps> = ({
+  aksjonspunktLost,
   lesemodus,
   soknadsopplysninger,
   informasjonTilLesemodus,
@@ -29,10 +30,12 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   losAksjonspunkt
 }) => {
   const [visFeilmedlinger, endreVisFeilmedlinger] = useState<boolean>(false);
-  const [erSokerenMidlertidigAleneOmOmsorgen, endreErSokerenMidlertidigAleneOmOmsorgen] = useState<boolean>(true);
-  const [begrunnelse, endreBegrunnelse] = useState('');
-  const [fraDato, endreFraDato] = useState('dd.mm.åååå');
-  const [tilDato, endreTilDato] = useState('dd.mm.åååå');
+  const [erSokerenMidlertidigAleneOmOmsorgen, endreErSokerenMidlertidigAleneOmOmsorgen] = useState<boolean>(aksjonspunktLost ? informasjonTilLesemodus.vilkarOppfylt : true);
+  const [begrunnelse, endreBegrunnelse] = useState(aksjonspunktLost ? informasjonTilLesemodus.begrunnelse : '');
+  const [fraDato, endreFraDato] = useState(aksjonspunktLost ? informasjonTilLesemodus.dato.fra : 'dd.mm.åååå');
+  const [tilDato, endreTilDato] = useState(aksjonspunktLost ? informasjonTilLesemodus.dato.til : 'dd.mm.åååå');
+  const [harAksjonspunktBlivitLostTidligare] = useState<boolean>(aksjonspunktLost);
+  const [åpenForRedigering, endreÅpenForRedigering] = useState<boolean>(false);
 
   const feilmedlinger: Feilmeldinger = {
     begrunnelse: begrunnelse.length === 0,
@@ -61,7 +64,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
     : endreVisFeilmedlinger(true);
 
   return (
-    <div className={classNames(styles.vilkarMidlerTidigAlene, lesemodus && !vedtakFattetVilkarOppfylt && styleLesemodus.lesemodusboks)}>
+    <div className={classNames(styles.vilkarMidlerTidigAlene, lesemodus && !åpenForRedigering && !vedtakFattetVilkarOppfylt && styleLesemodus.lesemodusboks)}>
       {vedtakFattetVilkarOppfylt && <VilkarStatus
         vilkarOppfylt={informasjonOmVilkar.vilkarOppfylt}
         aksjonspunktNavn={informasjonOmVilkar.navnPåAksjonspunkt}
@@ -70,11 +73,16 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
         erVilkaretForOmsorgenFor={false}
       />}
 
-      {lesemodus && !vedtakFattetVilkarOppfylt &&
-      <VilkarMidlertidigAleneLesemodus soknadsopplysninger={soknadsopplysninger}
-                                       informasjonTilLesemodus={informasjonTilLesemodus}/>}
-      {!lesemodus && !vedtakFattetVilkarOppfylt && <>
-      <AlertStripeTrekantVarsel text={tekst.aksjonspunkt} />
+      {lesemodus && !åpenForRedigering && !vedtakFattetVilkarOppfylt &&
+      <VilkarMidlertidigAleneLesemodus
+        soknadsopplysninger={soknadsopplysninger}
+        informasjonTilLesemodus={informasjonTilLesemodus}
+        harAksjonspunktBlivitLostTidligare={harAksjonspunktBlivitLostTidligare}
+        åpneForRedigereInformasjon={() => endreÅpenForRedigering(true)}
+      />}
+
+      {(åpenForRedigering || !lesemodus && !vedtakFattetVilkarOppfylt) && <>
+        <AlertStripeTrekantVarsel text={tekst.aksjonspunkt}/>
 
         <OpplysningerFraSoknad {...soknadsopplysninger}/>
 

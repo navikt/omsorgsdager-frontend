@@ -10,9 +10,9 @@ interface IconWithTextProps {
 const AlertStripeTrekantVarsel = ({ text }: IconWithTextProps) => {
     return (
       <div className={styles.alertstripe} >
-        <span className={styles.alertstripe_ikon}>
+        <div className={styles.alertstripe_ikon}>
           <WarningIcon />
-        </span>
+        </div>
           <Normaltekst className={styles.alertstripe_tekst} tag="div">
               {text}
           </Normaltekst>

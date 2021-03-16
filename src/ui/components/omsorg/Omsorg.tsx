@@ -2,6 +2,7 @@ import {Hovedknapp} from 'nav-frontend-knapper';
 import {Radio, RadioGruppe, Textarea} from 'nav-frontend-skjema';
 import React, {useState} from 'react';
 import {OmsorgProps} from '../../../types/OmsorgProps';
+import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
 import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
 import styles from './omsorg.less';
@@ -14,9 +15,11 @@ interface Feilmeldinger {
 
 const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
 
-  const [harOmsorgen, endreHarOmsorgen] = useState<boolean>(false);
-  const [begrunnelse, endreBegrunnelse] = useState<string>('');
+  const [harOmsorgen, endreHarOmsorgen] = useState<boolean>(props.aksjonspunktLost ? props.informasjonTilLesemodus.vilkarOppfylt : false);
+  const [begrunnelse, endreBegrunnelse] = useState<string>(props.aksjonspunktLost ? props.informasjonTilLesemodus.begrunnelse : '');
   const [visFeilmeldinger, endreVisFeilmeldinger] = useState<boolean>(false);
+  const [harAksjonspunktBlivitLostTidligare] = useState<boolean>(props.aksjonspunktLost);
+  const [åpenForRedigering, endreÅpenForRedigering] = useState<boolean>(false);
 
   const barnetEllerBarna = props.barn.length === 1 ? 'barnet' : 'barna';
   const {vedtakFattetVilkarOppfylt, informasjonOmVilkar} = props;
@@ -48,9 +51,14 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
     {props.barn.map(fnr => <p className={styles.barnTekst} key={fnr}>{fnr}</p>)}
   </>;
 
-  if (props.lesemodus && !vedtakFattetVilkarOppfylt) {
+  if (props.lesemodus && !vedtakFattetVilkarOppfylt && !åpenForRedigering) {
     return <div className={`${styleLesemodus.lesemodusboks} ${styles.omsorg}`}>
-      <p><b>Behandlet aksjonspunkt:</b> {tekst.instruksjon}</p>
+      <AksjonspunktLesemodus
+        aksjonspunktTekst={tekst.instruksjon}
+        harAksjonspunktBlivitLostTidligare={harAksjonspunktBlivitLostTidligare}
+        åpneForRedigereInformasjon={() => endreÅpenForRedigering(true)}
+      />
+
       {opplysningerFraSoknaden}
       <hr/>
       <p className={styleLesemodus.label}>{tekst.begrunnelse}</p>
@@ -72,8 +80,8 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
         beskrivelseForOmsorgenFor={tekst.beskrivelseTilVedtakVilkar}
       />}
 
-      {!props.lesemodus && !vedtakFattetVilkarOppfylt && <>
-        <AlertStripeTrekantVarsel text={tekst.instruksjon} />
+      {(åpenForRedigering || !props.lesemodus && !vedtakFattetVilkarOppfylt) && <>
+        <AlertStripeTrekantVarsel text={tekst.instruksjon}/>
         {opplysningerFraSoknaden}
         <hr/>
         <Textarea
