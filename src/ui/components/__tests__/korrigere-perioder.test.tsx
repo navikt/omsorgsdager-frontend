@@ -69,6 +69,23 @@ describe('<KorrigerePerioder>', () => {
     expect(hentetVilkarOppfylt).toBeInTheDocument();
   });
 
+  test('KorrigerePerioder viser lesemodus med redigering', () => {
+    const props = {
+      aksjonspunktLost: true,
+      lesemodus: true,
+      årsakFraSoknad: 'Årsak',
+      informasjonTilLesemodus: {
+        begrunnelse: 'Begrunnelse til lesemodus',
+        vilkarOppfylt: false
+      },
+      losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse)
+    } as KorrigerePerioderProps;
+    render(<KorrigerePerioder {...props}/>);
+
+    const hentetRedigerVurderingTekst = screen.getByText('Rediger vurdering');
+    expect(hentetRedigerVurderingTekst).toBeInTheDocument();
+  });
+
   test('Den har ingen a11y violations', async () => {
     const props = {
       aksjonspunktLost: false,

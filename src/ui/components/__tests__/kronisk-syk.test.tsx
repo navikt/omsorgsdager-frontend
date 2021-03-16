@@ -77,6 +77,31 @@ describe('<VilkarKroniskSyktBarn>', () => {
     expect(hentetVilkarOppfylt).toBeInTheDocument();
   });
 
+  test('VilkarKroniskSyktBarn viser lesemodus med redigering', () => {
+    const props = {
+      lesemodus: true,
+      aksjonspunktLost: true,
+      informasjonTilLesemodus: {
+        begrunnelse: 'Begrunnelse til lesemodus',
+        vilkarOppfylt: false,
+        avslagsArsakErIkkeRiskioFraFravaer: true
+      },
+      losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse) => console.log(endreHarDokumentasjonOgFravaerRisiko, begrunnelse),
+      vedtakFattetVilkarOppfylt: false,
+      informasjonOmVilkar: {
+        begrunnelse: 'begrunnelse',
+        navnPåAksjonspunkt: 'Utvidet rett',
+        vilkarOppfylt: true,
+        vilkar: '§ 9-3 vilkar'
+      }
+    } as VilkarKroniskSyktBarnProps;
+
+    render(<VilkarKroniskSyktBarn {...props}/>);
+
+    const hentetRedigerVurderingTekst = screen.getByText('Rediger vurdering');
+    expect(hentetRedigerVurderingTekst).toBeInTheDocument();
+  });
+
   test('VilkarKroniskSyktBarn viser informasjon om vilkar etter fattet vedtak', () => {
     const props = {
       lesemodus: false,

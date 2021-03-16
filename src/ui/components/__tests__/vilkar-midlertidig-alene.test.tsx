@@ -117,7 +117,39 @@ describe('<VilkarMidlertidigAlene>', () => {
 
     const hentetDato = screen.getByText(`${props.informasjonTilLesemodus.dato.fra} - ${props.informasjonTilLesemodus.dato.til}`);
     expect(hentetDato).toBeInTheDocument();
+  });
 
+  test('VilkarMidlertidigAlene viser lesemodus', () => {
+    const props = {
+      aksjonspunktLost: true,
+      lesemodus: true,
+      soknadsopplysninger: {
+        årsak: 'Årsak',
+        beskrivelse: 'Beskrivelse',
+        periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ'
+      },
+      vedtakFattetVilkarOppfylt: false,
+      informasjonOmVilkar: {
+        begrunnelse: 'begrunnelse',
+        navnPåAksjonspunkt: 'Utvidet rett',
+        vilkarOppfylt: false,
+        vilkar: '§ 9-3 vilkar'
+      },
+      informasjonTilLesemodus: {
+        begrunnelse: 'Begrunnelse',
+        vilkarOppfylt: true,
+        dato: {
+          fra: '22.03.1993',
+          til: '22.12.1994'
+        }
+      },
+      losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');}
+    } as VilkarMidlertidigAleneProps;
+
+    render(<VilkarMidlertidigAlene {...props}/>);
+
+    const hentetRedigerVurderingTekst = screen.getByText('Rediger vurdering');
+    expect(hentetRedigerVurderingTekst).toBeInTheDocument();
   });
 
   test('VilkarMidlertidigAlene viser informasjon om vilkar etter fattet vedtak', () => {

@@ -23,9 +23,7 @@ describe('<Omsorg>', () => {
       losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse)
     };
 
-    render(
-      <Omsorg {...props}/>
-    );
+    render(<Omsorg {...props}/>);
 
     const aksjonspunkt = 'Barnet er ikke registrert på samme adresse som søker. Vurder om søkeren har omsorgen for barnet.';
     const opplysningerFraSoknad = 'Opplysninger fra søknaden:';
@@ -96,6 +94,31 @@ describe('<Omsorg>', () => {
     expect(hentetVilkarOppfylt).toBeInTheDocument();
   });
 
+  test('Omsorg viser lesemodus med redigera vurdering mulighet', () => {
+    const props = {
+      aksjonspunktLost: true,
+      lesemodus: true,
+      informasjonTilLesemodus: {
+        begrunnelse: 'Begrunnelse til lesemodus',
+        vilkarOppfylt: false
+      },
+      barn: ['01010050053'],
+      vedtakFattetVilkarOppfylt: false,
+      informasjonOmVilkar: {
+        begrunnelse: 'begrunnelse',
+        navnPåAksjonspunkt: 'Utvidet rett',
+        vilkarOppfylt: true,
+        vilkar: '§ 9-3 vilkar'
+      },
+      losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse)
+    };
+
+    render(<Omsorg {...props}/>);
+
+    const hentetRedigerVurderingTekst = screen.getByText('Rediger vurdering');
+    expect(hentetRedigerVurderingTekst).toBeInTheDocument();
+  });
+
   test('Omsorg viser informasjon om vilkar etter fattet vedtak', () => {
     const props = {
       aksjonspunktLost: false,
@@ -115,9 +138,7 @@ describe('<Omsorg>', () => {
       losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse)
     };
 
-    render(
-      <Omsorg {...props}/>
-    );
+    render(<Omsorg {...props}/>);
 
     const hentetNavnPåAksjonspunkt = screen.getByText(props.informasjonOmVilkar.navnPåAksjonspunkt);
     expect(hentetNavnPåAksjonspunkt).toBeInTheDocument();
@@ -154,9 +175,7 @@ describe('<Omsorg>', () => {
       losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse)
     };
 
-    render(
-      <Omsorg {...props}/>
-    );
+    render(<Omsorg {...props}/>);
 
     const hentetVilkar = screen.getByText(props.informasjonOmVilkar.vilkar);
     expect(hentetVilkar).toBeInTheDocument();
@@ -188,9 +207,7 @@ describe('<Omsorg>', () => {
       losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse)
     };
 
-    const {container} = render(
-      <Omsorg {...props}/>
-    );
+    const {container} = render(<Omsorg {...props}/>);
 
     const a11yResults = await axe(container);
 
