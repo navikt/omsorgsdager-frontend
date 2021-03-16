@@ -16,16 +16,16 @@ interface Feilmeldinger {
 
 const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps> = props => {
 
-  const {lesemodus, informasjonTilLesemodus, aksjonspunktLost, vedtakFattetVilkarOppfylt, informasjonOmVilkar} = props;
+  const {lesemodus, losAksjonspunkt, informasjonTilLesemodus, aksjonspunktLost, vedtakFattetVilkarOppfylt, informasjonOmVilkar} = props;
 
   const [harDokumentasjonOgFravaerRisiko, endreHarDokumentasjonOgFravaerRisiko] = useState<boolean>(aksjonspunktLost ? informasjonTilLesemodus.vilkarOppfylt : false);
   const [arsakErIkkeRiskioFraFravaer, endreErArsakIkkeRiskioFraFravaer] = useState<boolean>(aksjonspunktLost ? informasjonTilLesemodus.avslagsArsakErIkkeRiskioFraFravaer : false);
   const [begrunnelse, endreBegrunnelse] = useState<string>(aksjonspunktLost ? informasjonTilLesemodus.begrunnelse : '');
   const [visFeilmeldinger, endreVisFeilmeldinger] = useState<boolean>(false);
-  const [harAksjonspunktBlivitLostTidligare] = useState<boolean>(props.aksjonspunktLost);
+  const [harAksjonspunktBlivitLostTidligare] = useState<boolean>(aksjonspunktLost);
   const [åpenForRedigering, endreÅpenForRedigering] = useState<boolean>(false);
 
-  const onSubmit = props.losAksjonspunkt;
+  const onSubmit = losAksjonspunkt;
 
   const feilmeldinger: Feilmeldinger = {
     begrunnelse: begrunnelse.length === 0
@@ -75,7 +75,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
       <p className={styleLesemodus.fritekst}>{informasjonTilLesemodus.begrunnelse}</p>
     </>}
 
-    {(åpenForRedigering || !props.lesemodus && !vedtakFattetVilkarOppfylt) && <>
+    {(åpenForRedigering || !lesemodus && !vedtakFattetVilkarOppfylt) && <>
       <AlertStripeTrekantVarsel text={tekst.instruksjon}/>
 
       <Textarea

@@ -64,8 +64,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
     : endreVisFeilmedlinger(true);
 
   return (
-    <div
-      className={classNames(styles.vilkarMidlerTidigAlene, lesemodus && !åpenForRedigering && !vedtakFattetVilkarOppfylt && styleLesemodus.lesemodusboks)}>
+    <div className={classNames(styles.vilkarMidlerTidigAlene, lesemodus && !åpenForRedigering && !vedtakFattetVilkarOppfylt && styleLesemodus.lesemodusboks)}>
       {vedtakFattetVilkarOppfylt && <VilkarStatus
         vilkarOppfylt={informasjonOmVilkar.vilkarOppfylt}
         aksjonspunktNavn={informasjonOmVilkar.navnPåAksjonspunkt}
