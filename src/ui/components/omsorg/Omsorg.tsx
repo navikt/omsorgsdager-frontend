@@ -1,8 +1,8 @@
 import {Hovedknapp} from 'nav-frontend-knapper';
-import Lenke from 'nav-frontend-lenker';
 import {Radio, RadioGruppe, Textarea} from 'nav-frontend-skjema';
 import React, {useState} from 'react';
 import {OmsorgProps} from '../../../types/OmsorgProps';
+import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
 import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
 import styles from './omsorg.less';
@@ -18,8 +18,8 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
   const [harOmsorgen, endreHarOmsorgen] = useState<boolean>(props.aksjonspunktLost ? props.informasjonTilLesemodus.vilkarOppfylt : false);
   const [begrunnelse, endreBegrunnelse] = useState<string>(props.aksjonspunktLost ? props.informasjonTilLesemodus.begrunnelse : '');
   const [visFeilmeldinger, endreVisFeilmeldinger] = useState<boolean>(false);
-  const [harAksjonspunktBlivitLostTidligare, endreharAksjonspunktBlivitLostTidligare] = useState<boolean>(props.aksjonspunktLost);
-  const [åpneForRedigering, endreÅpneForRedigering] = useState<boolean>(false);
+  const [harAksjonspunktBlivitLostTidligare] = useState<boolean>(props.aksjonspunktLost);
+  const [åpenForRedigering, endreÅpenForRedigering] = useState<boolean>(false);
 
   const barnetEllerBarna = props.barn.length === 1 ? 'barnet' : 'barna';
   const {vedtakFattetVilkarOppfylt, informasjonOmVilkar} = props;
@@ -31,12 +31,6 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
   };
 
   const kanManGaVidere = !feilmeldinger.begrunnelse;
-
-  const åpneForRedigereInformasjon = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    endreÅpneForRedigering(true);
-  };
 
   const onGaVidere = () => kanManGaVidere
     ? onSubmit(harOmsorgen, begrunnelse)
@@ -57,19 +51,14 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
     {props.barn.map(fnr => <p className={styles.barnTekst} key={fnr}>{fnr}</p>)}
   </>;
 
-  if (props.lesemodus && !vedtakFattetVilkarOppfylt && !åpneForRedigering) {
+  if (props.lesemodus && !vedtakFattetVilkarOppfylt && !åpenForRedigering) {
     return <div className={`${styleLesemodus.lesemodusboks} ${styles.omsorg}`}>
-      <div className={styleLesemodus.aksjonspunktOgRedigerVurderingContainer}>
-        <p><b>Behandlet aksjonspunkt:</b> {tekst.instruksjon}</p>
-        {harAksjonspunktBlivitLostTidligare && <div className={styleLesemodus.redigerVurderingTekst}>
-          <Lenke href="#"
-                 onClick={e => {
-                   åpneForRedigereInformasjon(e);
-                 }}>
-            Rediger vurdering
-          </Lenke>
-        </div>}
-      </div>
+      <AksjonspunktLesemodus
+        aksjonspunktTekst={tekst.instruksjon}
+        harAksjonspunktBlivitLostTidligare={harAksjonspunktBlivitLostTidligare}
+        åpneForRedigereInformasjon={() => endreÅpenForRedigering(true)}
+      />
+
       {opplysningerFraSoknaden}
       <hr/>
       <p className={styleLesemodus.label}>{tekst.begrunnelse}</p>
@@ -91,7 +80,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
         beskrivelseForOmsorgenFor={tekst.beskrivelseTilVedtakVilkar}
       />}
 
-      {(åpneForRedigering || !props.lesemodus && !vedtakFattetVilkarOppfylt) && <>
+      {(åpenForRedigering || !props.lesemodus && !vedtakFattetVilkarOppfylt) && <>
         <AlertStripeTrekantVarsel text={tekst.instruksjon}/>
         {opplysningerFraSoknaden}
         <hr/>

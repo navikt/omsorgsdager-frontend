@@ -2,6 +2,7 @@ import {Hovedknapp} from 'nav-frontend-knapper';
 import {Radio, RadioGruppe, Textarea} from 'nav-frontend-skjema';
 import React, {useState} from 'react';
 import {KorrigerePerioderProps} from '../../../types/KorrigerePerioderProps';
+import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
 import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
 import styleRadioknapper from '../styles/radioknapper/radioknapper.less';
@@ -16,7 +17,8 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = props
   const [fravaerGrunnetSmittevernhensynEllerStengt, endrefravaerGrunnetSmittevernhensynEllerStengt] = useState<boolean>(props.aksjonspunktLost ? props.informasjonTilLesemodus.vilkarOppfylt : false);
   const [begrunnelse, endreBegrunnelse] = useState<string>(props.aksjonspunktLost ? props.informasjonTilLesemodus.begrunnelse : '');
   const [visFeilmeldinger, endreVisFeilmeldinger] = useState<boolean>(false);
-  const [harAksjonspunktBlivitLostTidligare, endreharAksjonspunktBlivitLostTidligare ] = useState<boolean>(props.aksjonspunktLost);
+  const [harAksjonspunktBlivitLostTidligare] = useState<boolean>(props.aksjonspunktLost);
+  const [åpneForRedigering, endreÅpneForRedigering] = useState<boolean>(false);
 
   const onSubmit = props.losAksjonspunkt;
 
@@ -24,10 +26,6 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = props
     begrunnelse: begrunnelse.length === 0
   };
   const kanManGaVidere = !feilmeldinger.begrunnelse;
-
-  const åpneForRedigereInformasjon = () => {
-    endreharAksjonspunktBlivitLostTidligare(false);
-  };
 
   const onGaVidere = () => kanManGaVidere
     ? onSubmit(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse)
@@ -39,9 +37,13 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = props
     begrunnelse: 'Har søker rett på å få utbetalt flere dager?'
   };
 
-  if (props.lesemodus) {
+  if (props.lesemodus && !åpneForRedigering) {
     return <div className={styleLesemodus.lesemodusboks}>
-      <p><b>Behandlet aksjonspunkt:</b> {tekst.instruksjon}</p>
+      <AksjonspunktLesemodus
+        aksjonspunktTekst={tekst.instruksjon}
+        harAksjonspunktBlivitLostTidligare={harAksjonspunktBlivitLostTidligare}
+        åpneForRedigereInformasjon={() => endreÅpneForRedigering(true)}
+      />
       <p className={styleLesemodus.label}>{tekst.sporsmalErInnvilget}</p>
       <p className={styleLesemodus.text}>{props.informasjonTilLesemodus.vilkarOppfylt ? 'Ja' : 'Nei'}</p>
       <p className={styleLesemodus.label}>{tekst.begrunnelse}</p>
