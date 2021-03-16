@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import {Hovedknapp} from 'nav-frontend-knapper';
+import Lenke from 'nav-frontend-lenker';
 import {Radio, RadioGruppe, Textarea} from 'nav-frontend-skjema';
 import React, {useState} from 'react';
 import {VilkarKroniskSyktBarnProps} from '../../../types/VilkarKroniskSyktBarnProps';
@@ -21,18 +22,21 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   const [arsakErIkkeRiskioFraFravaer, endreErArsakIkkeRiskioFraFravaer] = useState<boolean>(aksjonspunktLost ? informasjonTilLesemodus.avslagsArsakErIkkeRiskioFraFravaer : false);
   const [begrunnelse, endreBegrunnelse] = useState<string>(aksjonspunktLost ? informasjonTilLesemodus.begrunnelse : '');
   const [visFeilmeldinger, endreVisFeilmeldinger] = useState<boolean>(false);
-  const [harAksjonspunktBlivitLostTidligare, endreharAksjonspunktBlivitLostTidligare ] = useState<boolean>(props.aksjonspunktLost);
+  const [harAksjonspunktBlivitLostTidligare, endreharAksjonspunktBlivitLostTidligare] = useState<boolean>(props.aksjonspunktLost);
+  const [åpneForRedigering, endreÅpneForRedigering] = useState<boolean>(false);
 
   const onSubmit = props.losAksjonspunkt;
-
-  const åpneForRedigereInformasjon = () => {
-    endreharAksjonspunktBlivitLostTidligare(false);
-  };
 
   const feilmeldinger: Feilmeldinger = {
     begrunnelse: begrunnelse.length === 0
   };
   const kanManGaVidere = !feilmeldinger.begrunnelse;
+
+  const åpneForRedigereInformasjon = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    endreÅpneForRedigering(true);
+  };
 
   const onGaVidere = () => kanManGaVidere
     ? onSubmit(harDokumentasjonOgFravaerRisiko, begrunnelse, arsakErIkkeRiskioFraFravaer)
@@ -49,7 +53,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   };
 
   return <div
-    className={classNames(styles.vilkarKroniskSyktBarn, lesemodus && !vedtakFattetVilkarOppfylt && styleLesemodus.lesemodusboks)}>
+    className={classNames(styles.vilkarKroniskSyktBarn, lesemodus && !åpneForRedigering && !vedtakFattetVilkarOppfylt && styleLesemodus.lesemodusboks)}>
     {vedtakFattetVilkarOppfylt && <VilkarStatus
       vilkarOppfylt={informasjonOmVilkar.vilkarOppfylt}
       aksjonspunktNavn={informasjonOmVilkar.navnPåAksjonspunkt}
@@ -58,8 +62,19 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
       erVilkaretForOmsorgenFor={false}
     />}
 
-    {lesemodus && !vedtakFattetVilkarOppfylt && <>
-      <p><b>Behandlet aksjonspunkt:</b> {tekst.instruksjon}</p>
+    {lesemodus && !åpneForRedigering && !vedtakFattetVilkarOppfylt && <>
+      <div className={styleLesemodus.aksjonspunktOgRedigerVurderingContainer}>
+        <p><b>Behandlet aksjonspunkt:</b> {tekst.instruksjon}</p>
+        {harAksjonspunktBlivitLostTidligare && <div className={styleLesemodus.redigerVurderingTekst}>
+          <Lenke href="#"
+                 onClick={e => {
+                   åpneForRedigereInformasjon(e);
+                 }}>
+            Rediger vurdering
+          </Lenke>
+        </div>}
+      </div>
+
       <p className={styleLesemodus.label}>{tekst.sporsmalHarDokumentasjonOgFravaerRisiko}</p>
       <p className={styleLesemodus.text}>{informasjonTilLesemodus.vilkarOppfylt ? 'Ja' : 'Nei'}</p>
       {!informasjonTilLesemodus.vilkarOppfylt && <>
@@ -72,7 +87,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
       <p className={styleLesemodus.fritekst}>{informasjonTilLesemodus.begrunnelse}</p>
     </>}
 
-    {!lesemodus && !vedtakFattetVilkarOppfylt && <>
+    {(åpneForRedigering || !props.lesemodus && !vedtakFattetVilkarOppfylt) && <>
       <AlertStripeTrekantVarsel text={tekst.instruksjon}/>
 
       <Textarea
@@ -81,7 +96,6 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
         value={begrunnelse}
         maxLength={0}
         feil={visFeilmeldinger && feilmeldinger.begrunnelse && 'Begrunnelse må oppgis.'}
-        disabled={harAksjonspunktBlivitLostTidligare}
       />
 
       <RadioGruppe
@@ -90,13 +104,11 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
         <Radio label="Ja"
                name="harDokumentasjonOgFravaerRisiko"
                checked={harDokumentasjonOgFravaerRisiko}
-               onChange={() => endreHarDokumentasjonOgFravaerRisiko(true)}
-               disabled={harAksjonspunktBlivitLostTidligare}/>
+               onChange={() => endreHarDokumentasjonOgFravaerRisiko(true)}/>
         <Radio label="Nei"
                name="harIkkeDokumentasjonOgFravaerRisiko"
                checked={!harDokumentasjonOgFravaerRisiko}
-               onChange={() => endreHarDokumentasjonOgFravaerRisiko(false)}
-               disabled={harAksjonspunktBlivitLostTidligare}/>
+               onChange={() => endreHarDokumentasjonOgFravaerRisiko(false)}/>
       </RadioGruppe>
 
       {!harDokumentasjonOgFravaerRisiko && <RadioGruppe
@@ -105,17 +117,14 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
         <Radio label={tekst.arsakIkkeSyk}
                name="harIkkeDokumentasjonForSykEllerFunksjonshemmet"
                checked={!arsakErIkkeRiskioFraFravaer}
-               onChange={() => endreErArsakIkkeRiskioFraFravaer(false)}
-               disabled={harAksjonspunktBlivitLostTidligare}/>
+               onChange={() => endreErArsakIkkeRiskioFraFravaer(false)}/>
         <Radio label={tekst.arsakIkkeRisikoFraFravaer}
                name="harIkkeFravaerRisiko"
                checked={arsakErIkkeRiskioFraFravaer}
-               onChange={() => endreErArsakIkkeRiskioFraFravaer(true)}
-               disabled={harAksjonspunktBlivitLostTidligare}/>
+               onChange={() => endreErArsakIkkeRiskioFraFravaer(true)}/>
       </RadioGruppe>}
 
       <Hovedknapp onClick={onGaVidere}>Bekreft og fortsett</Hovedknapp>
-      {harAksjonspunktBlivitLostTidligare && <Hovedknapp onClick={åpneForRedigereInformasjon}>Rediger</Hovedknapp>}
     </>}
   </div>;
 };
