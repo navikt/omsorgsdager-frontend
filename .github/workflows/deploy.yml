@@ -53,6 +53,14 @@ jobs:
           docker push ${LATEST}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Deploy til dev-gcp
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-gcp
+          RESOURCE: nais/naiserator.yml
+          VARS: nais/dev-gcp.json
       - name: Deploy til prod-gcp
         uses: nais/deploy/actions/deploy@v1
         env:
