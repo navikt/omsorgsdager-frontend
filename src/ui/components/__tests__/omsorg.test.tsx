@@ -25,7 +25,7 @@ describe('<Omsorg>', () => {
 
     render(<Omsorg {...props}/>);
 
-    const aksjonspunkt = 'Barnet er ikke registrert på samme adresse som søker. Vurder om søkeren har omsorgen for barnet.';
+    const aksjonspunkt = 'Vurder om søkeren har omsorgen for barnet.';
     const opplysningerFraSoknad = 'Opplysninger fra søknaden:';
     const sokersBarn = props.barn[0];
     const begrunnelse = 'Begrunn om søker har omsorgen for barnet';
@@ -70,7 +70,7 @@ describe('<Omsorg>', () => {
       <Omsorg {...props}/>
     );
 
-    const aksjonspunkt = 'Barnet er ikke registrert på samme adresse som søker. Vurder om søkeren har omsorgen for barnet.';
+    const aksjonspunkt = 'Vurder om søkeren har omsorgen for barnet.';
     const behandletAksjonspunkt = 'Behandlet aksjonspunkt:';
     const sokersBarn = props.barn[0];
     const begrunnelse = 'Begrunn om søker har omsorgen for barnet';
