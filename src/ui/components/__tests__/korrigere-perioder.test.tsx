@@ -20,8 +20,8 @@ describe('<KorrigerePerioder>', () => {
     render(<KorrigerePerioder {...props}/>);
 
     const aksjonspunkt = 'Se på nødvendig dokumentasjon og tidligere utbetalte perioder, og vurder om søker har rett på å få utbetalt flere dager.';
-    const begrunnelseTekst = 'Har søker rett på å få utbetalt flere dager?';
-    const vilkarOppfyltTekst = 'Skyldes fraværet særlig smittevernhensyn eller stengte barnehager/skole/SFO?';
+    const begrunnelseTekst = 'Begrunn om søker har rett på å få utbetalt flere dager';
+    const vilkarOppfyltTekst = 'Har søker rett på å få utbetalt flere dager?';
     const årsakTekst = 'Opplysninger fra sist innsendte søknad:';
 
     const hentetAksjonspunkt = screen.getByText(aksjonspunkt);
