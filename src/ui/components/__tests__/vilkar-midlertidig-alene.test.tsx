@@ -12,7 +12,8 @@ describe('<VilkarMidlertidigAlene>', () => {
       soknadsopplysninger: {
         årsak: 'Årsak',
         beskrivelse: 'Beskrivelse',
-        periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ'
+        periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ',
+        soknadsdato: '26-01-02'
       },
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
@@ -76,7 +77,8 @@ describe('<VilkarMidlertidigAlene>', () => {
       soknadsopplysninger: {
         årsak: 'Årsak',
         beskrivelse: 'Beskrivelse',
-        periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ'
+        periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ',
+        soknadsdato: '26-01-02'
       },
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
@@ -126,7 +128,8 @@ describe('<VilkarMidlertidigAlene>', () => {
       soknadsopplysninger: {
         årsak: 'Årsak',
         beskrivelse: 'Beskrivelse',
-        periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ'
+        periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ',
+        soknadsdato: '26-01-02'
       },
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
@@ -159,7 +162,8 @@ describe('<VilkarMidlertidigAlene>', () => {
       soknadsopplysninger: {
         årsak: 'Årsak',
         beskrivelse: 'Beskrivelse',
-        periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ'
+        periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ',
+        soknadsdato: '26-01-02'
       },
       vedtakFattetVilkarOppfylt: true,
       informasjonOmVilkar: {
@@ -202,7 +206,8 @@ describe('<VilkarMidlertidigAlene>', () => {
       soknadsopplysninger: {
         årsak: 'Årsak',
         beskrivelse: 'Beskrivelse',
-        periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ'
+        periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ',
+        soknadsdato: '26-01-02'
       },
       vedtakFattetVilkarOppfylt: true,
       informasjonOmVilkar: {
@@ -242,7 +247,8 @@ describe('<VilkarMidlertidigAlene>', () => {
       soknadsopplysninger: {
         årsak: 'Årsak',
         beskrivelse: 'Beskrivelse',
-        periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ'
+        periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ',
+        soknadsdato: '26-01-02'
       },
       vedtakFattetVilkarOppfylt: true,
       informasjonOmVilkar: {

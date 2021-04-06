@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 const WarningIcon = () => (
-  <svg width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="none">
+  <svg width="1.25rem" height="1.25rem" viewBox="0 0 20 20" fill="none">
     <path
       fillRule="evenodd"
       clipRule="evenodd"
