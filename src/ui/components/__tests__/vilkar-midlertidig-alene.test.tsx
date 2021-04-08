@@ -13,7 +13,7 @@ describe('<VilkarMidlertidigAlene>', () => {
         årsak: 'Årsak',
         beskrivelse: 'Beskrivelse',
         periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ',
-        soknadsdato: '26-01-02'
+        soknadsdato: '2021-10-20'
       },
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
@@ -79,7 +79,7 @@ describe('<VilkarMidlertidigAlene>', () => {
         årsak: 'Årsak',
         beskrivelse: 'Beskrivelse',
         periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ',
-        soknadsdato: '26-01-02'
+        soknadsdato: '2021-10-20'
       },
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
@@ -131,7 +131,7 @@ describe('<VilkarMidlertidigAlene>', () => {
         årsak: 'Årsak',
         beskrivelse: 'Beskrivelse',
         periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ',
-        soknadsdato: '26-01-02'
+        soknadsdato: '2021-10-20'
       },
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
@@ -166,7 +166,7 @@ describe('<VilkarMidlertidigAlene>', () => {
         årsak: 'Årsak',
         beskrivelse: 'Beskrivelse',
         periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ',
-        soknadsdato: '26-01-02'
+        soknadsdato: '2021-10-20'
       },
       vedtakFattetVilkarOppfylt: true,
       informasjonOmVilkar: {
@@ -211,7 +211,7 @@ describe('<VilkarMidlertidigAlene>', () => {
         årsak: 'Årsak',
         beskrivelse: 'Beskrivelse',
         periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ',
-        soknadsdato: '26-01-02'
+        soknadsdato: '2021-10-20'
       },
       vedtakFattetVilkarOppfylt: true,
       informasjonOmVilkar: {
@@ -253,7 +253,7 @@ describe('<VilkarMidlertidigAlene>', () => {
         årsak: 'Årsak',
         beskrivelse: 'Beskrivelse',
         periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ',
-        soknadsdato: '26-01-02'
+        soknadsdato: '2021-10-20'
       },
       vedtakFattetVilkarOppfylt: true,
       informasjonOmVilkar: {
