@@ -28,7 +28,8 @@ describe('<VilkarMidlertidigAlene>', () => {
         dato: {
           fra: '22.03.1993',
           til: '22.12.1994'
-        }
+        },
+        avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
       losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');}
     } as VilkarMidlertidigAleneProps;
@@ -93,7 +94,8 @@ describe('<VilkarMidlertidigAlene>', () => {
         dato: {
           fra: '22.03.1993',
           til: '22.12.1994'
-        }
+        },
+        avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
       losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');}
     } as VilkarMidlertidigAleneProps;
@@ -144,7 +146,8 @@ describe('<VilkarMidlertidigAlene>', () => {
         dato: {
           fra: '22.03.1993',
           til: '22.12.1994'
-        }
+        },
+        avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
       losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');}
     } as VilkarMidlertidigAleneProps;
@@ -178,7 +181,8 @@ describe('<VilkarMidlertidigAlene>', () => {
         dato: {
           fra: '22.03.1993',
           til: '22.12.1994'
-        }
+        },
+        avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
       losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');}
     } as VilkarMidlertidigAleneProps;
@@ -222,7 +226,8 @@ describe('<VilkarMidlertidigAlene>', () => {
         dato: {
           fra: '22.03.1993',
           til: '22.12.1994'
-        }
+        },
+        avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
       losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');}
     } as VilkarMidlertidigAleneProps;
@@ -263,7 +268,8 @@ describe('<VilkarMidlertidigAlene>', () => {
         dato: {
           fra: '22.03.1993',
           til: '22.12.1994'
-        }
+        },
+        avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
       losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');}
     } as VilkarMidlertidigAleneProps;
