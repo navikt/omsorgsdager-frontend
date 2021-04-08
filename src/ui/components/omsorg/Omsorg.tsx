@@ -37,7 +37,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
     : endreVisFeilmeldinger(true);
 
   const tekst = {
-    instruksjon: 'Vurder om søkeren har omsorgen for barnet.',
+    instruksjon: `Vurder om søkeren har omsorgen for ${barnetEllerBarna}.`,
     opplysningerFraSoknaden: 'Opplysninger fra søknaden:',
     sokersBarn: 'Søkers barn:',
     sporsmalHarOmsorgen: `Har søker omsorgen for ${barnetEllerBarna}?`,

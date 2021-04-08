@@ -1,4 +1,5 @@
 import React from 'react';
+import {tekst} from '../vilkar-midlertidig-alene/vilkar-midlertidig-alene-tekst';
 import styles from './opplysningerFraVedtak.less';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
 import {VilkarMidlertidigAleneDato} from '../../../types/VilkarMidlertidigAleneProps';
@@ -7,24 +8,39 @@ interface Props {
   erSokerenMidlertidigAleneOmOmsorgen: boolean;
   dato: VilkarMidlertidigAleneDato;
   begrunnelse: string;
+  erVilkarOppfylt: boolean;
+  avslagsÅrsakPeriodeErIkkeOverSeksMån: boolean;
 }
 
 const OpplysningerFraVedtak: React.FunctionComponent<Props> = ({
-  erSokerenMidlertidigAleneOmOmsorgen,
-  dato,
-  begrunnelse
-}) => {
+                                                                 erSokerenMidlertidigAleneOmOmsorgen,
+                                                                 dato,
+                                                                 begrunnelse,
+                                                                 erVilkarOppfylt,
+                                                                 avslagsÅrsakPeriodeErIkkeOverSeksMån
+                                                               }) => {
   return (
     <div className={styles.opplysningerFraVedtak}>
-      <h4>Begrunn om vilkåret for midlertidig aleneomsorg er oppfylt</h4>
+      <h4>{tekst.aksjonspunkt}</h4>
       <p className={styleLesemodus.fritekst}>{begrunnelse}</p>
 
-      <h4>Er vilkåret om midlertidig aleneomsorg oppfylt?</h4>
+      <h4>{tekst.sporsmålVilkarOppfylt}</h4>
       <p>{erSokerenMidlertidigAleneOmOmsorgen ? 'Ja' : 'Nei'}</p>
 
-      <h4>I hvilken periode er vedtaket gyldig?</h4>
-      <p>{`${dato.fra} - ${dato.til}`}</p>
+      {erVilkarOppfylt && <>
+        <h4>I hvilken periode er vedtaket gyldig?</h4>
+        <p>{`${dato.fra} - ${dato.til}`}</p>
+        </>}
+
+      {!erVilkarOppfylt && <>
+        <h4 className={styleLesemodus.label}>{tekst.arsak}</h4>
+        <p className={styleLesemodus.text}>{
+          avslagsÅrsakPeriodeErIkkeOverSeksMån ? tekst.arsakPeriodeIkkeOverSeksMån : tekst.arsakIkkeAleneOmsorg
+        }</p>
+      </>
+      }
     </div>
   );
-};
+}
+;
 export default OpplysningerFraVedtak;

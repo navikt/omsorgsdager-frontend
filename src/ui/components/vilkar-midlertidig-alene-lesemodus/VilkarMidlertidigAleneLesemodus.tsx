@@ -31,6 +31,8 @@ const VilkarMidlertidigAleneLesemodus: React.FunctionComponent<OwnProps> = ({
         erSokerenMidlertidigAleneOmOmsorgen={informasjonTilLesemodus.vilkarOppfylt}
         dato={{fra: informasjonTilLesemodus.dato.fra, til: informasjonTilLesemodus.dato.til}}
         begrunnelse={informasjonTilLesemodus.begrunnelse}
+        erVilkarOppfylt={informasjonTilLesemodus.vilkarOppfylt}
+        avslagsÅrsakPeriodeErIkkeOverSeksMån={informasjonTilLesemodus.avslagsArsakErPeriodeErIkkeOverSeksMån}
       />
     </>
   );

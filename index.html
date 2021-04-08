@@ -48,8 +48,8 @@
               vilkarMidlertidigAlene: {
                 visKomponent: 'VilkarMidlertidigAlene',
                 props:  {
-                  aksjonspunktLost: true,
-                  lesemodus: false,
+                  aksjonspunktLost: false,
+                  lesemodus: true,
                   soknadsopplysninger: {
                     årsak: 'Årsak',
                     beskrivelse: 'Beskrivelse',
@@ -65,13 +65,14 @@
                   },
                   informasjonTilLesemodus: {
                     begrunnelse: 'Begrunnelse',
-                    vilkarOppfylt: true,
+                    vilkarOppfylt: false,
                     dato: {
-                      fra: '22.03.1993',
-                      til: '22.12.1994'
-                    }
+                      fra: '23213',
+                      til: '2321323'
+                    },
+                    avslagsArsakErPeriodeErIkkeOverSeksMån: true
                   },
-                  onSubmit: () => {}
+                  losAksjonspunkt: ({begrunnelse, erSokerenMidlertidigAleneOmOmsorgen, fra, til, avslagsArsakErPeriodeErIkkeOverSeksMån}) => console.log(begrunnelse, erSokerenMidlertidigAleneOmOmsorgen, fra, til, avslagsArsakErPeriodeErIkkeOverSeksMån)
                 }
               },
               omsorg: {
