@@ -18,6 +18,7 @@ interface Feilmeldinger {
   dato: {
     til: boolean;
     fra: boolean;
+    gyldigTilDato: boolean;
   };
 }
 
@@ -37,17 +38,18 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
     const [tilDato, endreTilDato] = useState(aksjonspunktLost ? informasjonTilLesemodus.dato.til : 'dd.mm.åååå');
     const [harAksjonspunktBlivitLostTidligare] = useState<boolean>(aksjonspunktLost);
     const [åpenForRedigering, endreÅpenForRedigering] = useState<boolean>(false);
-    const [avslagsArsakErPeriodeErIkkeOverSeksMån, endreAvslagsArsakErPeriodeErIkkeOverSeksMån] = useState<boolean>(aksjonspunktLost ? true : false);
+    const [avslagsArsakErPeriodeErIkkeOverSeksMån, endreAvslagsArsakErPeriodeErIkkeOverSeksMån] = useState<boolean>(aksjonspunktLost ? informasjonTilLesemodus.avslagsArsakErPeriodeErIkkeOverSeksMån : false);
 
     const feilmedlinger: Feilmeldinger = {
       begrunnelse: begrunnelse.length === 0,
       dato: {
         fra: (fraDato.toLowerCase() === 'dd.mm.åååå' || fraDato === '') && erSokerenMidlertidigAleneOmOmsorgen,
         til: (tilDato.toLowerCase() === 'dd.mm.åååå' || tilDato === '') && erSokerenMidlertidigAleneOmOmsorgen,
+        gyldigTilDato: tilDato.substr(5, 5) !== '12-31'
       },
     };
 
-    const vurderingKomplett = !feilmedlinger.begrunnelse && !feilmedlinger.dato.til && !feilmedlinger.dato.fra;
+    const vurderingKomplett = !feilmedlinger.begrunnelse && !feilmedlinger.dato.til && !feilmedlinger.dato.fra && !feilmedlinger.dato.gyldigTilDato;
     const visFeilmedlingForDato = visFeilmedlinger && feilmedlinger.dato.fra && feilmedlinger.dato.til && tekst.feilmedlingManglerDato
       || visFeilmedlinger && feilmedlinger.dato.til && !feilmedlinger.dato.fra && tekst.feilmeldingManglerTilDato
       || visFeilmedlinger && feilmedlinger.dato.fra && !feilmedlinger.dato.til && tekst.feilmedlingManglerFraDato
@@ -102,7 +104,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
           begrunnelse={informasjonOmVilkar.begrunnelse}
           erVilkaretForOmsorgenFor={false}
         />}
-
+        
         {lesemodus && !åpenForRedigering && !vedtakFattetVilkarOppfylt &&
         <VilkarMidlertidigAleneLesemodus
           soknadsopplysninger={soknadsopplysninger}
@@ -120,6 +122,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
                     value={begrunnelse}
                     onChange={e => endreBegrunnelse(e.target.value)}
                     feil={visFeilmedlinger && feilmedlinger.begrunnelse && tekst.feilmedlingBegrunnelse}
+                    maxLength={0}
           />
 
           <RadioGruppe className={styles.radioButtons} legend={tekst.sporsmålVilkarOppfylt}>
@@ -138,12 +141,12 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
             legend={tekst.velgArsak}>
             <Radio label={tekst.arsakIkkeAleneOmsorg}
                    name="harIkkeAleneOmsorg"
-                   checked={avslagsArsakErPeriodeErIkkeOverSeksMån}
-                   onChange={() => endreAvslagsArsakErPeriodeErIkkeOverSeksMån(true)}/>
-            <Radio label={tekst.arsakPeriodeIkkeOverSeksMån}
-                   name="harIkkePeriodeOverSeksMån"
                    checked={!avslagsArsakErPeriodeErIkkeOverSeksMån}
                    onChange={() => endreAvslagsArsakErPeriodeErIkkeOverSeksMån(false)}/>
+            <Radio label={tekst.arsakPeriodeIkkeOverSeksMån}
+                   name="harIkkePeriodeOverSeksMån"
+                   checked={avslagsArsakErPeriodeErIkkeOverSeksMån}
+                   onChange={() => endreAvslagsArsakErPeriodeErIkkeOverSeksMån(true)}/>
           </RadioGruppe>}
 
           {erSokerenMidlertidigAleneOmOmsorgen &&
@@ -164,7 +167,6 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
               <Datepicker onChange={endreTilDato}
                           value={tilDato}
                           limitations={hanteringAvDatoForDatoVelger()}
-                          showYearSelector={true}
               />
             </div>
           </SkjemaGruppe>
