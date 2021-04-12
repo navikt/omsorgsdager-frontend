@@ -42,7 +42,7 @@ describe('<VilkarMidlertidigAlene>', () => {
     const oppgittÅrsakText = 'Oppgitt årsak';
     const oppgittPeriodeText = 'Oppgitt periode';
 
-    const begrunnelseText = 'Begrunn om vilkåret for midlertidig aleneomsorg er oppfylt';
+    const begrunnelseText = 'Vurder om vilkåret for midlertidig aleneomsorg er oppfylt';
     const vilkarOppfyltText = 'Er vilkåret om midlertidig aleneomsorg oppfylt?';
     const periodeText = 'I hvilken periode er vedtaket gyldig?';
 

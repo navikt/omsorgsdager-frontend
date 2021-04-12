@@ -41,7 +41,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
     opplysningerFraSoknaden: 'Opplysninger fra søknaden:',
     sokersBarn: 'Søkers barn:',
     sporsmalHarOmsorgen: `Har søker omsorgen for ${barnetEllerBarna}?`,
-    begrunnelse: `Begrunn om søker har omsorgen for ${barnetEllerBarna}`,
+    begrunnelse: `Vurder om søker har omsorgen for ${barnetEllerBarna}`,
     beskrivelseTilVedtakVilkar: `Søker har omsorgen for ${barnetEllerBarna}`
   };
 
@@ -89,7 +89,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
           value={begrunnelse}
           onChange={e => endreBegrunnelse(e.target.value)}
           maxLength={0}
-          feil={visFeilmeldinger && feilmeldinger.begrunnelse && 'Begrunnelse må oppgis.'}
+          feil={visFeilmeldinger && feilmeldinger.begrunnelse && 'Vurdering må oppgis.'}
         />
         <RadioGruppe
           legend={tekst.sporsmalHarOmsorgen}

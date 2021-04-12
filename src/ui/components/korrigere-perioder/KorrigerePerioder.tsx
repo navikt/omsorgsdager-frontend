@@ -34,7 +34,7 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = props
   const tekst = {
     instruksjon: 'Se på nødvendig dokumentasjon og tidligere utbetalte perioder, og vurder om søker har rett på å få utbetalt flere dager.',
     sporsmalErInnvilget: 'Har søker rett på å få utbetalt flere dager?',
-    begrunnelse: 'Begrunn om søker har rett på å få utbetalt flere dager'
+    begrunnelse: 'Vurder om søker har rett på å få utbetalt flere dager'
   };
 
   if (props.lesemodus && !åpneForRedigering) {

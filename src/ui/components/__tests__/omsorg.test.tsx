@@ -28,7 +28,7 @@ describe('<Omsorg>', () => {
     const aksjonspunkt = 'Vurder om søkeren har omsorgen for barnet.';
     const opplysningerFraSoknad = 'Opplysninger fra søknaden:';
     const sokersBarn = props.barn[0];
-    const begrunnelse = 'Begrunn om søker har omsorgen for barnet';
+    const begrunnelse = 'Vurder om søker har omsorgen for barnet';
     const harOmsorg = 'Har søker omsorgen for barnet?';
 
     const hentetAksjonspunkt = screen.getByText(aksjonspunkt);
@@ -73,7 +73,7 @@ describe('<Omsorg>', () => {
     const aksjonspunkt = 'Vurder om søkeren har omsorgen for barnet.';
     const behandletAksjonspunkt = 'Behandlet aksjonspunkt:';
     const sokersBarn = props.barn[0];
-    const begrunnelse = 'Begrunn om søker har omsorgen for barnet';
+    const begrunnelse = 'Vurder om søker har omsorgen for barnet';
 
     const hentetAksjonspunkt = screen.getByText(aksjonspunkt);
     expect(hentetAksjonspunkt).toBeInTheDocument();
