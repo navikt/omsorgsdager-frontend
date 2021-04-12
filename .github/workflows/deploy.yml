@@ -5,7 +5,7 @@ on:
       - 'build/**'
     branches:
       - main
-    workflow_dispatch:
+  workflow_dispatch:
 env:
   IMAGE_BASE: docker.pkg.github.com/${{ github.repository }}/omsorgsdager-frontend
   BASE_IMAGE_GH: ghcr.io/${{ github.repository }}
