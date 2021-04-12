@@ -5,8 +5,10 @@ on:
       - 'build/**'
     branches:
       - main
+  workflow_dispatch:
 env:
   IMAGE_BASE: docker.pkg.github.com/${{ github.repository }}/omsorgsdager-frontend
+  BASE_IMAGE_GH: ghcr.io/${{ github.repository }}
 jobs:
   deploy-docker-image:
     name: Deploy Docker image
@@ -49,8 +51,12 @@ jobs:
         run: |
           docker build --tag ${IMAGE} --tag ${LATEST} .
           echo "$GITHUB_TOKEN" | docker login --username "x-access-token" --password-stdin https://docker.pkg.github.com
+          docker build --pull --tag ${BASE_IMAGE_GH}:${VERSION} --tag ${BASE_IMAGE_GH}:latest .
+          echo ${GITHUB_TOKEN} | docker login --username ${GITHUB_REPOSITORY} --password-stdin ghcr.io
           docker push ${IMAGE}
           docker push ${LATEST}
+          docker push ${BASE_IMAGE_GH}:${VERSION}
+          docker push ${BASE_IMAGE_GH}:latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Deploy til dev-gcp
