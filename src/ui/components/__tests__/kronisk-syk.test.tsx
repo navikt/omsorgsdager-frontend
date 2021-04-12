@@ -27,7 +27,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
     render(<VilkarKroniskSyktBarn {...props}/>);
 
     const aksjonspunkt = 'Se på vedlagt legeerklæring og vurder om barnet har en kronisk sykdom eller en funksjonshemming, og om det er økt risiko for fravær.';
-    const begrunnelseText = 'Begrunnelse';
+    const begrunnelseText = 'Vurdering';
     const vilkarOppfyltText = 'Er det dokumentert at barnet har en kronisk sykdom eller funksjonshemming som gir rett?';
 
     const hentetAksjonspunkt = screen.getByText(aksjonspunkt);
