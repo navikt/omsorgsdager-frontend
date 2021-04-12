@@ -65,13 +65,14 @@
                   },
                   informasjonTilLesemodus: {
                     begrunnelse: 'Begrunnelse',
-                    vilkarOppfylt: true,
+                    vilkarOppfylt: false,
                     dato: {
-                      fra: '22.03.1993',
-                      til: '22.12.1994'
-                    }
+                      fra: '2021-06-06',
+                      til: '2021-10-03'
+                    },
+                    avslagsArsakErPeriodeErIkkeOverSeksMån: true
                   },
-                  onSubmit: () => {}
+                  losAksjonspunkt: ({begrunnelse, erSokerenMidlertidigAleneOmOmsorgen, fra, til, avslagsArsakErPeriodeErIkkeOverSeksMån}) => console.log(begrunnelse, erSokerenMidlertidigAleneOmOmsorgen, fra, til, avslagsArsakErPeriodeErIkkeOverSeksMån)
                 }
               },
               omsorg: {

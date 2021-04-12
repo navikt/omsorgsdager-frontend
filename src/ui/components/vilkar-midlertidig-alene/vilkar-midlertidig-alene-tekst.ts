@@ -8,5 +8,10 @@ export default tekst = {
   feilmedlingBegrunnelse: 'Begrunnelse må oppgis.',
   feilmedlingManglerDato: 'Mangler dato.',
   feilmeldingManglerTilDato: 'Manger til-dato.',
-  feilmedlingManglerFraDato: 'Mangler fra-dato.'
+  feilmedlingManglerFraDato: 'Mangler fra-dato.',
+  feilmedlingFeilDato: 'Til-dato må være den siste dagen i året.',
+  velgArsak: 'Velg årsak',
+  arsak: 'Årsak',
+  arsakIkkeAleneOmsorg: 'Søker regnes ikke som å ha aleneomsorg',
+  arsakPeriodeIkkeOverSeksMån: 'Varigheten er mindre enn seks måneder '
 };

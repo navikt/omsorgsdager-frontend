@@ -13,7 +13,7 @@ describe('<VilkarMidlertidigAlene>', () => {
         årsak: 'Årsak',
         beskrivelse: 'Beskrivelse',
         periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ',
-        soknadsdato: '26-01-02'
+        soknadsdato: '2021-10-20'
       },
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
@@ -28,7 +28,8 @@ describe('<VilkarMidlertidigAlene>', () => {
         dato: {
           fra: '22.03.1993',
           til: '22.12.1994'
-        }
+        },
+        avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
       losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');}
     } as VilkarMidlertidigAleneProps;
@@ -78,7 +79,7 @@ describe('<VilkarMidlertidigAlene>', () => {
         årsak: 'Årsak',
         beskrivelse: 'Beskrivelse',
         periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ',
-        soknadsdato: '26-01-02'
+        soknadsdato: '2021-10-20'
       },
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
@@ -93,7 +94,8 @@ describe('<VilkarMidlertidigAlene>', () => {
         dato: {
           fra: '22.03.1993',
           til: '22.12.1994'
-        }
+        },
+        avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
       losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');}
     } as VilkarMidlertidigAleneProps;
@@ -129,7 +131,7 @@ describe('<VilkarMidlertidigAlene>', () => {
         årsak: 'Årsak',
         beskrivelse: 'Beskrivelse',
         periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ',
-        soknadsdato: '26-01-02'
+        soknadsdato: '2021-10-20'
       },
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
@@ -144,7 +146,8 @@ describe('<VilkarMidlertidigAlene>', () => {
         dato: {
           fra: '22.03.1993',
           til: '22.12.1994'
-        }
+        },
+        avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
       losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');}
     } as VilkarMidlertidigAleneProps;
@@ -163,7 +166,7 @@ describe('<VilkarMidlertidigAlene>', () => {
         årsak: 'Årsak',
         beskrivelse: 'Beskrivelse',
         periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ',
-        soknadsdato: '26-01-02'
+        soknadsdato: '2021-10-20'
       },
       vedtakFattetVilkarOppfylt: true,
       informasjonOmVilkar: {
@@ -178,7 +181,8 @@ describe('<VilkarMidlertidigAlene>', () => {
         dato: {
           fra: '22.03.1993',
           til: '22.12.1994'
-        }
+        },
+        avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
       losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');}
     } as VilkarMidlertidigAleneProps;
@@ -207,7 +211,7 @@ describe('<VilkarMidlertidigAlene>', () => {
         årsak: 'Årsak',
         beskrivelse: 'Beskrivelse',
         periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ',
-        soknadsdato: '26-01-02'
+        soknadsdato: '2021-10-20'
       },
       vedtakFattetVilkarOppfylt: true,
       informasjonOmVilkar: {
@@ -222,7 +226,8 @@ describe('<VilkarMidlertidigAlene>', () => {
         dato: {
           fra: '22.03.1993',
           til: '22.12.1994'
-        }
+        },
+        avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
       losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');}
     } as VilkarMidlertidigAleneProps;
@@ -248,7 +253,7 @@ describe('<VilkarMidlertidigAlene>', () => {
         årsak: 'Årsak',
         beskrivelse: 'Beskrivelse',
         periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ',
-        soknadsdato: '26-01-02'
+        soknadsdato: '2021-10-20'
       },
       vedtakFattetVilkarOppfylt: true,
       informasjonOmVilkar: {
@@ -263,7 +268,8 @@ describe('<VilkarMidlertidigAlene>', () => {
         dato: {
           fra: '22.03.1993',
           til: '22.12.1994'
-        }
+        },
+        avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
       losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');}
     } as VilkarMidlertidigAleneProps;
