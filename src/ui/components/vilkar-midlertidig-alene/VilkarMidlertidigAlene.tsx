@@ -45,7 +45,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
       dato: {
         fra: (fraDato.toLowerCase() === 'dd.mm.åååå' || fraDato === '') && erSokerenMidlertidigAleneOmOmsorgen,
         til: (tilDato.toLowerCase() === 'dd.mm.åååå' || tilDato === '') && erSokerenMidlertidigAleneOmOmsorgen,
-        gyldigTilDato: tilDato.substr(5, 5) !== '12-31'
+        gyldigTilDato: tilDato.substr(5, 5) !== '12-31' && erSokerenMidlertidigAleneOmOmsorgen,
       },
     };
 
