@@ -9,32 +9,78 @@ import styleLesemodus from '../lesemodus/lesemodusboks.less';
 import styles from './vilkarKronisSyktBarn.less';
 import VilkarStatus from '../vilkar-status/VilkarStatus';
 import styleRadioknapper from '../styles/radioknapper/radioknapper.less';
+import {Controller, useForm} from 'react-hook-form';
+
 
 interface Feilmeldinger {
   begrunnelse: boolean;
 }
 
+type FormData = {
+  harDokumentasjonOgFravaerRisiko: boolean;
+  arsakErIkkeRiskioFraFravaer: boolean;
+  begrunnelse: string;
+};
+
+
 const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps> = props => {
 
-  const {lesemodus, losAksjonspunkt, informasjonTilLesemodus, aksjonspunktLost, vedtakFattetVilkarOppfylt, informasjonOmVilkar} = props;
+  const {
+    lesemodus,
+    losAksjonspunkt,
+    informasjonTilLesemodus,
+    aksjonspunktLost,
+    vedtakFattetVilkarOppfylt,
+    informasjonOmVilkar
+  } = props;
 
-  const [harDokumentasjonOgFravaerRisiko, endreHarDokumentasjonOgFravaerRisiko] = useState<boolean>(aksjonspunktLost ? informasjonTilLesemodus.vilkarOppfylt : false);
-  const [arsakErIkkeRiskioFraFravaer, endreErArsakIkkeRiskioFraFravaer] = useState<boolean>(aksjonspunktLost ? informasjonTilLesemodus.avslagsArsakErIkkeRiskioFraFravaer : false);
-  const [begrunnelse, endreBegrunnelse] = useState<string>(aksjonspunktLost ? informasjonTilLesemodus.begrunnelse : '');
-  const [visFeilmeldinger, endreVisFeilmeldinger] = useState<boolean>(false);
+  const {
+    register,
+    watch,
+    formState: {errors},
+    setError,
+    handleSubmit,
+    setValue,
+    control,
+    clearErrors
+  } = useForm<FormData>({
+    defaultValues: {
+      begrunnelse: aksjonspunktLost ? informasjonTilLesemodus.begrunnelse : '',
+      harDokumentasjonOgFravaerRisiko: aksjonspunktLost ? informasjonTilLesemodus.vilkarOppfylt : false,
+      arsakErIkkeRiskioFraFravaer: aksjonspunktLost ? informasjonTilLesemodus.avslagsArsakErIkkeRiskioFraFravaer : false
+    }
+  });
+
+  const begrunnelse = watch('begrunnelse', aksjonspunktLost ? informasjonTilLesemodus.begrunnelse : '');
+  const harDokumentasjonOgFravaerRisiko = watch('harDokumentasjonOgFravaerRisiko');
+  const arsakErIkkeRiskioFraFravaer = watch('arsakErIkkeRiskioFraFravaer');
+
   const [harAksjonspunktBlivitLostTidligare] = useState<boolean>(aksjonspunktLost);
   const [åpenForRedigering, endreÅpenForRedigering] = useState<boolean>(false);
-
   const onSubmit = losAksjonspunkt;
 
-  const feilmeldinger: Feilmeldinger = {
-    begrunnelse: begrunnelse.length === 0
-  };
-  const kanManGaVidere = !feilmeldinger.begrunnelse;
+  const kanManGaVidere = !errors.begrunnelse;
 
-  const onGaVidere = () => kanManGaVidere
-    ? onSubmit(harDokumentasjonOgFravaerRisiko, begrunnelse, arsakErIkkeRiskioFraFravaer)
-    : endreVisFeilmeldinger(true);
+  const feilmedlingerBegrunnelse = tekst => {
+    if (tekst.length <= 0) {
+      setError('begrunnelse', {
+        type: 'manual',
+        message: 'Begrunnelse må oppgis.'
+      });
+    }else{
+      clearErrors('begrunnelse');
+    }
+  };
+
+  const endreVisFeilmeldinger = () => {
+    feilmedlingerBegrunnelse(begrunnelse);
+  };
+
+  const onGaVidere = () => {
+    kanManGaVidere
+      ? onSubmit(harDokumentasjonOgFravaerRisiko, begrunnelse, arsakErIkkeRiskioFraFravaer)
+      : endreVisFeilmeldinger();
+  };
 
   const tekst = {
     instruksjon: 'Se på vedlagt legeerklæring og vurder om barnet har en kronisk sykdom eller en funksjonshemming, og om det er økt risiko for fravær.',
@@ -77,42 +123,64 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
 
     {(åpenForRedigering || !lesemodus && !vedtakFattetVilkarOppfylt) && <>
       <AlertStripeTrekantVarsel text={tekst.instruksjon}/>
+      <form className={styles.form} onSubmit={handleSubmit(onGaVidere)}>
+        <Textarea
+          {...register('begrunnelse',
+            {required: true})}
+          label={tekst.begrunnelse}
+          value={begrunnelse}
+          onChange={e => {
+            feilmedlingerBegrunnelse(e.target.value);
+            setValue('begrunnelse', (e.target.value));
+          }}
+          maxLength={0}
+          feil={errors.begrunnelse && 'Begrunnelse må oppgis.'}
+        />
 
-      <Textarea
-        label={tekst.begrunnelse}
-        onChange={e => endreBegrunnelse(e.target.value)}
-        value={begrunnelse}
-        maxLength={0}
-        feil={visFeilmeldinger && feilmeldinger.begrunnelse && 'Begrunnelse må oppgis.'}
-      />
+        <Controller
+          control={control}
+          name="harDokumentasjonOgFravaerRisiko"
+          render={({field: {onChange, value}}) => (
+            <RadioGruppe
+              className={styleRadioknapper.horisontalPlassering}
+              legend={tekst.sporsmalHarDokumentasjonOgFravaerRisiko}
+            >
+              <Radio label="Ja"
+                     name="harDokumentasjonOgFravaerRisiko"
+                     checked={value}
+                     onChange={() => onChange(true)}/>
+              <Radio label="Nei"
+                     name="harIkkeDokumentasjonOgFravaerRisiko"
+                     checked={!value}
+                     onChange={() => onChange(false)}/>
+            </RadioGruppe>
+          )}
+        />
 
-      <RadioGruppe
-        className={styleRadioknapper.horisontalPlassering}
-        legend={tekst.sporsmalHarDokumentasjonOgFravaerRisiko}>
-        <Radio label="Ja"
-               name="harDokumentasjonOgFravaerRisiko"
-               checked={harDokumentasjonOgFravaerRisiko}
-               onChange={() => endreHarDokumentasjonOgFravaerRisiko(true)}/>
-        <Radio label="Nei"
-               name="harIkkeDokumentasjonOgFravaerRisiko"
-               checked={!harDokumentasjonOgFravaerRisiko}
-               onChange={() => endreHarDokumentasjonOgFravaerRisiko(false)}/>
-      </RadioGruppe>
+        {!harDokumentasjonOgFravaerRisiko && <Controller
+          control={control}
+          name="arsakErIkkeRiskioFraFravaer"
+          render={({field: {onChange, value}}) => (
+            <RadioGruppe
+              className={styleRadioknapper.horisontalPlassering}
+              legend={tekst.velgArsak}
+            >
+              <Radio label={tekst.arsakIkkeSyk}
+                     name="harIkkeDokumentasjonForSykEllerFunksjonshemmet"
+                     checked={!value}
+                     onChange={() => onChange(false)}
+              />
+              <Radio label={tekst.arsakIkkeRisikoFraFravaer}
+                     name="harIkkeFravaerRisiko"
+                     checked={value}
+                     onChange={() => onChange(true)}/>
+            </RadioGruppe>
+          )}
+        />}
 
-      {!harDokumentasjonOgFravaerRisiko && <RadioGruppe
-        className={styleRadioknapper.horisontalPlassering}
-        legend={tekst.velgArsak}>
-        <Radio label={tekst.arsakIkkeSyk}
-               name="harIkkeDokumentasjonForSykEllerFunksjonshemmet"
-               checked={!arsakErIkkeRiskioFraFravaer}
-               onChange={() => endreErArsakIkkeRiskioFraFravaer(false)}/>
-        <Radio label={tekst.arsakIkkeRisikoFraFravaer}
-               name="harIkkeFravaerRisiko"
-               checked={arsakErIkkeRiskioFraFravaer}
-               onChange={() => endreErArsakIkkeRiskioFraFravaer(true)}/>
-      </RadioGruppe>}
+        <Hovedknapp htmlType="submit">Bekreft og fortsett</Hovedknapp>
 
-      <Hovedknapp onClick={onGaVidere}>Bekreft og fortsett</Hovedknapp>
+      </form>
     </>}
   </div>;
 };
