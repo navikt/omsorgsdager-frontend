@@ -2,68 +2,66 @@ import {Hovedknapp} from 'nav-frontend-knapper';
 import {Radio, RadioGruppe, Textarea} from 'nav-frontend-skjema';
 import React, {useState} from 'react';
 import {OmsorgProps} from '../../../types/OmsorgProps';
+import {booleanTilTekst} from '../../../util/stringUtils';
 import useFormPersist from '../../../util/useFormPersistUtils';
 import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
 import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
+import RadioButtonWithBooleanValue from '../react-hook-form-wrappers/RadioButton';
+import TextArea from '../react-hook-form-wrappers/TextArea';
 import styles from './omsorg.less';
 import VilkarStatus from '../vilkar-status/VilkarStatus';
 import styleRadioknapper from '../styles/radioknapper/radioknapper.less';
-import {Controller, useForm} from 'react-hook-form';
+import {Controller, FormProvider, useForm} from 'react-hook-form';
 
 type FormData = {
-  harOmsorgen: boolean;
+  harOmsorgen: string;
   begrunnelse: string;
 };
 
-
-const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
-
-  const [harAksjonspunktBlivitLostTidligare] = useState<boolean>(props.aksjonspunktLost);
+const Omsorg: React.FunctionComponent<OmsorgProps> = ({
+  behandlingsID,
+  aksjonspunktLost,
+  barn,
+  vedtakFattetVilkarOppfylt,
+  informasjonOmVilkar,
+  losAksjonspunkt,
+  informasjonTilLesemodus,
+  lesemodus
+}) => {
+  const [harAksjonspunktBlivitLostTidligare] = useState<boolean>(aksjonspunktLost);
   const [åpenForRedigering, endreÅpenForRedigering] = useState<boolean>(false);
-
-  const {
-    register,
-    watch,
-    formState: {errors},
-    handleSubmit,
-    setValue,
-    control,
-    getValues
-  } = useForm<FormData>({
-    defaultValues: {
-      begrunnelse: props.aksjonspunktLost ? props.informasjonTilLesemodus.begrunnelse : '',
-      harOmsorgen: props.aksjonspunktLost ? props.informasjonTilLesemodus.vilkarOppfylt : false,
-    }
-  });
-
-  const barnetEllerBarna = props.barn.length === 1 ? 'barnet' : 'barna';
-
+  const barnetEllerBarna = barn.length === 1 ? 'barnet' : 'barna';
   const tekst = {
     instruksjon: `Vurder om søkeren har omsorgen for ${barnetEllerBarna}.`,
     opplysningerFraSoknaden: 'Opplysninger fra søknaden:',
     sokersBarn: 'Søkers barn:',
     sporsmalHarOmsorgen: `Har søker omsorgen for ${barnetEllerBarna}?`,
     begrunnelse: `Vurder om søker har omsorgen for ${barnetEllerBarna}`,
-    beskrivelseTilVedtakVilkar: `Søker har omsorgen for ${barnetEllerBarna}`
+    beskrivelseTilVedtakVilkar: `Søker har omsorgen for ${barnetEllerBarna}`,
+    feilIngenVurdering: 'Vurdering må oppgis.',
   };
 
-  const {vedtakFattetVilkarOppfylt, informasjonOmVilkar} = props;
+  const methods = useForm<FormData>({
+    defaultValues: {
+      begrunnelse: aksjonspunktLost ? informasjonTilLesemodus.begrunnelse : '',
+      harOmsorgen: aksjonspunktLost ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt) : '',
+    }
+  });
 
-  const behandlingId = '123';
-
+  const {formState, handleSubmit, watch, formState: {errors}, unregister, register} = methods;
   const persistedFormData = useFormPersist(
-    `step-1-${behandlingId}`,
-    watch,
-    setValue,
+    `${behandlingsID}-steg-omsorgenfor`,
+    methods.watch,
+    methods.setValue,
     {
       storage: window.sessionStorage
     }
   );
 
-  const onGaVidere = data => {
-    if (!errors.begrunnelse) {
-      props.losAksjonspunkt(data.harOmsorgen, data.begrunnelse,);
+  const bekreftAksjonspunkt = data => {
+    if (formState.isValid) {
+      losAksjonspunkt(data.harOmsorgen, data.begrunnelse);
       persistedFormData.clear();
     }
   };
@@ -71,30 +69,28 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
   const opplysningerFraSoknaden = <>
     <p>{tekst.opplysningerFraSoknaden}</p>
     <p className={styleLesemodus.label}>{tekst.sokersBarn}</p>
-    {props.barn.map(fnr => <p className={styles.barnTekst} key={fnr}>{fnr}</p>)}
+    {barn.map(fnr => <p className={styles.barnTekst} key={fnr}>{fnr}</p>)}
   </>;
 
-  if (props.lesemodus && !vedtakFattetVilkarOppfylt && !åpenForRedigering) {
+  if (lesemodus && !vedtakFattetVilkarOppfylt && !åpenForRedigering) {
     return <div className={`${styleLesemodus.lesemodusboks} ${styles.omsorg}`}>
       <AksjonspunktLesemodus
         aksjonspunktTekst={tekst.instruksjon}
         harAksjonspunktBlivitLostTidligare={harAksjonspunktBlivitLostTidligare}
         åpneForRedigereInformasjon={() => endreÅpenForRedigering(true)}
-      />
+        />
 
       {opplysningerFraSoknaden}
-      <hr/>
-      <p className={styleLesemodus.label}>{tekst.begrunnelse}</p>
-      <p className={styleLesemodus.fritekst}>{props.informasjonTilLesemodus.begrunnelse}</p>
+        <hr/>
+        <p className={styleLesemodus.label}>{tekst.begrunnelse}</p>
+        <p className={styleLesemodus.fritekst}>{informasjonTilLesemodus.begrunnelse}</p>
       <p className={styleLesemodus.label}>{tekst.sporsmalHarOmsorgen}</p>
-      <p className={styleLesemodus.text}>{props.informasjonTilLesemodus.vilkarOppfylt ? 'Ja' : 'Nei'}</p>
+      <p className={styleLesemodus.text}>{informasjonTilLesemodus.vilkarOppfylt ? 'Ja' : 'Nei'}</p>
     </div>;
   }
 
   return (
     <div className={styles.omsorg}>
-      {console.log("render")}
-
       {vedtakFattetVilkarOppfylt && <VilkarStatus
         vilkarOppfylt={informasjonOmVilkar.vilkarOppfylt}
         aksjonspunktNavn={informasjonOmVilkar.navnPåAksjonspunkt}
@@ -104,51 +100,32 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
         beskrivelseForOmsorgenFor={tekst.beskrivelseTilVedtakVilkar}
       />}
 
-      {(åpenForRedigering || !props.lesemodus && !vedtakFattetVilkarOppfylt) &&
+      {(åpenForRedigering || !lesemodus && !vedtakFattetVilkarOppfylt) &&
       <>
         <AlertStripeTrekantVarsel text={tekst.instruksjon}/>
         {opplysningerFraSoknaden}
-        <hr/>
-        <form className={styles.form} onSubmit={handleSubmit(onGaVidere)}>
-          <Controller
-            control={control}
-            name="begrunnelse"
-            rules={{required: {value: true, message: 'Begrunnelse må oppgis.'}}}
-            render={({
-                       field: {onChange, value},
-                       fieldState: {error}
-                     }) => (
-              <Textarea
-                label={tekst.begrunnelse}
-                value={value}
-                onChange={(e) => onChange(e.target.value)}
-                maxLength={0}
-                feil={error && error.message}
-              />
-            )}
-          />
 
-          <RadioGruppe
-            legend={tekst.sporsmalHarOmsorgen}
-            className={styleRadioknapper.horisontalPlassering}
-          >
-            <Radio
-              label="Ja"
-              {...register('harOmsorgen')}
-              checked={getValues().harOmsorgen}
-              onChange={() => setValue('harOmsorgen', true)}
-              className={styles.radioknapp}
-            />
-            <Radio
-              label="Nei"
-              className={styles.radioknapp}
-              checked={!getValues().harOmsorgen}
-              {...register('harOmsorgen')}
-              onChange={() => setValue('harOmsorgen', false)}
-            />
-          </RadioGruppe>
+        <hr/>
+
+        <FormProvider {...methods} >
+        <form className={styles.form} onSubmit={handleSubmit(bekreftAksjonspunkt)}>
+          <TextArea label={tekst.begrunnelse} name={'begrunnelse'} />
+
+          <div>
+            <RadioGruppe
+              legend={tekst.sporsmalHarOmsorgen}
+              className={styleRadioknapper.horisontalPlassering}
+            >
+              <RadioButtonWithBooleanValue label={'Ja'} value={'true'} name={'harOmsorgen'}/>
+              <RadioButtonWithBooleanValue label={'Nei'} value={'false'} name={'harOmsorgen'}/>
+            </RadioGruppe>
+            {errors.harOmsorgen &&
+            <p className="typo-feilmelding">{tekst.feilIngenVurdering}</p>}
+          </div>
+
           <Hovedknapp htmlType="submit">Bekreft og fortsett</Hovedknapp>
         </form>
+        </FormProvider>
       </>}
     </div>);
 };

@@ -1,6 +1,7 @@
 import {Radio} from 'nav-frontend-skjema';
 import React from 'react';
 import {useFormContext} from 'react-hook-form';
+import {tekst} from '../vilkar-midlertidig-alene/vilkar-midlertidig-alene-tekst';
 
 interface OwnProps{
   label: string;
@@ -10,7 +11,7 @@ interface OwnProps{
 
 const RadioButtonWithBooleanValue: React.FunctionComponent<OwnProps> = ({label, value, name}) => {
   const { register} = useFormContext();
-  const radio = register(name);
+  const radio = register(name, {required: true});
 
   return(
     <Radio label={label}

@@ -16,6 +16,7 @@ import {VilkarMidlertidigAleneProps} from '../../../types/VilkarMidlertidigAlene
 import VilkarMidlertidigAleneLesemodus from '../vilkar-midlertidig-alene-lesemodus/VilkarMidlertidigAleneLesemodus';
 import VilkarStatus from '../vilkar-status/VilkarStatus';
 import {FormProvider, useForm} from 'react-hook-form';
+import styleRadioknapper from '../styles/radioknapper/radioknapper.less';
 
 type FormData = {
   begrunnelse: string;
@@ -67,8 +68,8 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
       begrunnelse: aksjonspunktLost ? informasjonTilLesemodus.begrunnelse : '',
       fraDato: aksjonspunktLost ? informasjonTilLesemodus.dato.fra : 'dd.mm.åååå',
       tilDato: aksjonspunktLost ? informasjonTilLesemodus.dato.til : 'dd.mm.åååå',
-      erSokerenMidlertidigAleneOmOmsorgen: aksjonspunktLost ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt) : 'true',
-      avslagsArsakErPeriodeErIkkeOverSeksMån: aksjonspunktLost ? booleanTilTekst(informasjonTilLesemodus.avslagsArsakErPeriodeErIkkeOverSeksMån) : 'false'
+      erSokerenMidlertidigAleneOmOmsorgen: aksjonspunktLost ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt) : '',
+      avslagsArsakErPeriodeErIkkeOverSeksMån: aksjonspunktLost ? booleanTilTekst(informasjonTilLesemodus.avslagsArsakErPeriodeErIkkeOverSeksMån) : ''
     }
   });
 
@@ -99,10 +100,12 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   );
 
   useEffect(() => {
-    if (!tekstTilBoolean(sokerenMidlertidigAleneOmOmsorgen)) {
+    if (sokerenMidlertidigAleneOmOmsorgen !== null && sokerenMidlertidigAleneOmOmsorgen.length > 0 && !tekstTilBoolean(sokerenMidlertidigAleneOmOmsorgen)) {
       unregister('fraDato', {keepValue: true});
       unregister('tilDato', {keepValue: true});
+      register('avslagsArsakErPeriodeErIkkeOverSeksMån');
     } else {
+      unregister('avslagsArsakErPeriodeErIkkeOverSeksMån', {keepValue: true});
       register('fraDato');
       register('tilDato');
     }
@@ -116,7 +119,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
     fraDato,
     tilDato
   }) => {
-    if (formState.isValid) {
+    if (!errors.begrunnelse && !errors.fraDato && !errors.tilDato && !errors.erSokerenMidlertidigAleneOmOmsorgen && !errors.avslagsArsakErPeriodeErIkkeOverSeksMån) {
       losAksjonspunkt({
         begrunnelse,
         erSokerenMidlertidigAleneOmOmsorgen: tekstTilBoolean(erSokerenMidlertidigAleneOmOmsorgen),
@@ -140,6 +143,8 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
         erVilkaretForOmsorgenFor={false}
       />}
 
+      {console.log(errors)}
+      {console.log(getValues())}
       {lesemodus && !åpenForRedigering && !vedtakFattetVilkarOppfylt &&
       <VilkarMidlertidigAleneLesemodus
         soknadsopplysninger={soknadsopplysninger}
@@ -158,23 +163,30 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
 
             <TextArea label={tekst.begrunnelse} name={'begrunnelse'}/>
 
-            <RadioGruppe className={styles.radioButtons} legend={tekst.sporsmålVilkarOppfylt}>
-              <RadioButtonWithBooleanValue label={'Ja'} value={'true'} name={'erSokerenMidlertidigAleneOmOmsorgen'}/>
-              <RadioButtonWithBooleanValue label={'Nei'} value={'false'} name={'erSokerenMidlertidigAleneOmOmsorgen'}/>
-            </RadioGruppe>
+            <div>
+              <RadioGruppe className={styleRadioknapper.horisontalPlassering} legend={tekst.sporsmålVilkarOppfylt}>
+                <RadioButtonWithBooleanValue label={'Ja'} value={'true'} name={'erSokerenMidlertidigAleneOmOmsorgen'}/>
+                <RadioButtonWithBooleanValue label={'Nei'}
+                                             value={'false'}
+                                             name={'erSokerenMidlertidigAleneOmOmsorgen'}/>
+              </RadioGruppe>
+              {errors.erSokerenMidlertidigAleneOmOmsorgen && <p className="typo-feilmelding">{tekst.feilIngenVurdering}</p>}
+            </div>
 
-            {!tekstTilBoolean(sokerenMidlertidigAleneOmOmsorgen) &&
-            <RadioGruppe className={styles.radioButtons} legend={tekst.velgArsak}>
-              <RadioButtonWithBooleanValue label={tekst.arsakIkkeAleneOmsorg}
-                                           value={'false'}
-                                           name={'avslagsArsakErPeriodeErIkkeOverSeksMån'}/>
-              <RadioButtonWithBooleanValue label={tekst.arsakPeriodeIkkeOverSeksMån}
-                                           value={'true'}
-                                           name={'avslagsArsakErPeriodeErIkkeOverSeksMån'}/>
-            </RadioGruppe>
+            {sokerenMidlertidigAleneOmOmsorgen !== null && sokerenMidlertidigAleneOmOmsorgen.length > 0 && !tekstTilBoolean(sokerenMidlertidigAleneOmOmsorgen) && <div>
+              <RadioGruppe className={styleRadioknapper.horisontalPlassering} legend={tekst.velgArsak}>
+                <RadioButtonWithBooleanValue label={tekst.arsakIkkeAleneOmsorg}
+                                             value={'false'}
+                                             name={'avslagsArsakErPeriodeErIkkeOverSeksMån'}/>
+                <RadioButtonWithBooleanValue label={tekst.arsakPeriodeIkkeOverSeksMån}
+                                             value={'true'}
+                                             name={'avslagsArsakErPeriodeErIkkeOverSeksMån'}/>
+              </RadioGruppe>
+              {errors.avslagsArsakErPeriodeErIkkeOverSeksMån && <p className="typo-feilmelding">{tekst.feilIngenÅrsak}</p>}
+            </div>
             }
 
-            {tekstTilBoolean(getValues().erSokerenMidlertidigAleneOmOmsorgen) &&
+            {sokerenMidlertidigAleneOmOmsorgen !== null && sokerenMidlertidigAleneOmOmsorgen.length > 0 && tekstTilBoolean(sokerenMidlertidigAleneOmOmsorgen) &&
             <SkjemaGruppe className={styles.gyldigVedtaksPeriode}
                           legend={tekst.sporsmalPeriodeVedtakGyldig}
                           feil={errors.fraDato && errors.fraDato.type === 'erDatoFyltUt' && tekst.feilmedlingManglerFraDato
