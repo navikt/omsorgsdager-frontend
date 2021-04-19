@@ -1,184 +1,211 @@
 import classNames from 'classnames';
-import {Datepicker} from 'nav-datovelger';
 import {Hovedknapp} from 'nav-frontend-knapper';
+import {booleanTilTekst, tekstTilBoolean} from '../../../util/stringUtils';
+import useFormPersist from '../../../util/useFormPersistUtils';
 import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import OpplysningerFraSoknad from '../opplysninger-fra-soknad/OpplysningerFraSoknad';
-import {Radio, RadioGruppe, SkjemaGruppe, Textarea} from 'nav-frontend-skjema';
-import React, {useState} from 'react';
-import styleRadioknapper from '../styles/radioknapper/radioknapper.less';
+import {RadioGruppe, SkjemaGruppe} from 'nav-frontend-skjema';
+import React, {useEffect, useState} from 'react';
+import DatePicker from '../react-hook-form-wrappers/DatePicker';
+import RadioButtonWithBooleanValue from '../react-hook-form-wrappers/RadioButton';
+import TextArea from '../react-hook-form-wrappers/TextArea';
 import styles from './vilkarMidlertidigAlene.less';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
 import {tekst} from './vilkar-midlertidig-alene-tekst';
 import {VilkarMidlertidigAleneProps} from '../../../types/VilkarMidlertidigAleneProps';
 import VilkarMidlertidigAleneLesemodus from '../vilkar-midlertidig-alene-lesemodus/VilkarMidlertidigAleneLesemodus';
 import VilkarStatus from '../vilkar-status/VilkarStatus';
+import {FormProvider, useForm} from 'react-hook-form';
 
-interface Feilmeldinger {
-  begrunnelse: boolean;
-  dato: {
-    til: boolean;
-    fra: boolean;
-    gyldigTilDato: boolean;
+type FormData = {
+  begrunnelse: string;
+  fraDato: string;
+  tilDato: string;
+  erSokerenMidlertidigAleneOmOmsorgen: string;
+  avslagsArsakErPeriodeErIkkeOverSeksMån: string;
+};
+
+const hanteringAvDatoForDatoVelger = (soknadsdato) => {
+  const antallÅrFramITid = 10;
+  const maxDato = new Date(soknadsdato);
+  maxDato.setFullYear(maxDato.getFullYear() + antallÅrFramITid);
+
+  const startDato = new Date(maxDato.getFullYear() - antallÅrFramITid, 12, 1);
+  const invalidDateRanges = [];
+
+  for (let i = 0; i < antallÅrFramITid; i++) {
+    invalidDateRanges.push(
+      {
+        from: `${(startDato.getFullYear() + i).toString()}-01-01`,
+        to: `${(startDato.getFullYear() + i).toString()}-12-30`,
+      }
+    );
+  }
+
+  return {
+    invalidDateRanges: invalidDateRanges,
+    minDate: startDato.toISOString().substring(0, 10),
+    maxDate: maxDato.toISOString().substring(0, 10),
   };
-}
+};
 
 const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProps> = ({
-                                                                                        aksjonspunktLost,
-                                                                                        lesemodus,
-                                                                                        soknadsopplysninger,
-                                                                                        informasjonTilLesemodus,
-                                                                                        vedtakFattetVilkarOppfylt,
-                                                                                        informasjonOmVilkar,
-                                                                                        losAksjonspunkt
-                                                                                      }) => {
-    const [visFeilmedlinger, endreVisFeilmedlinger] = useState<boolean>(false);
-    const [erSokerenMidlertidigAleneOmOmsorgen, endreErSokerenMidlertidigAleneOmOmsorgen] = useState<boolean>(aksjonspunktLost ? informasjonTilLesemodus.vilkarOppfylt : true);
-    const [begrunnelse, endreBegrunnelse] = useState(aksjonspunktLost ? informasjonTilLesemodus.begrunnelse : '');
-    const [fraDato, endreFraDato] = useState(aksjonspunktLost ? informasjonTilLesemodus.dato.fra : 'dd.mm.åååå');
-    const [tilDato, endreTilDato] = useState(aksjonspunktLost ? informasjonTilLesemodus.dato.til : 'dd.mm.åååå');
-    const [harAksjonspunktBlivitLostTidligare] = useState<boolean>(aksjonspunktLost);
-    const [åpenForRedigering, endreÅpenForRedigering] = useState<boolean>(false);
-    const [avslagsArsakErPeriodeErIkkeOverSeksMån, endreAvslagsArsakErPeriodeErIkkeOverSeksMån] = useState<boolean>(aksjonspunktLost ? informasjonTilLesemodus.avslagsArsakErPeriodeErIkkeOverSeksMån : false);
+  behandlingsID,
+  aksjonspunktLost,
+  lesemodus,
+  soknadsopplysninger,
+  informasjonTilLesemodus,
+  vedtakFattetVilkarOppfylt,
+  informasjonOmVilkar,
+  losAksjonspunkt
+}) => {
+  const [harAksjonspunktBlivitLostTidligare] = useState<boolean>(aksjonspunktLost);
+  const [åpenForRedigering, endreÅpenForRedigering] = useState<boolean>(false);
 
-    const feilmedlinger: Feilmeldinger = {
-      begrunnelse: begrunnelse.length === 0,
-      dato: {
-        fra: (fraDato.toLowerCase() === 'dd.mm.åååå' || fraDato === '') && erSokerenMidlertidigAleneOmOmsorgen,
-        til: (tilDato.toLowerCase() === 'dd.mm.åååå' || tilDato === '') && erSokerenMidlertidigAleneOmOmsorgen,
-        gyldigTilDato: tilDato.substr(5, 5) !== '12-31' && erSokerenMidlertidigAleneOmOmsorgen
-      },
-    };
+  const methods = useForm<FormData>({
+    defaultValues: {
+      begrunnelse: aksjonspunktLost ? informasjonTilLesemodus.begrunnelse : '',
+      fraDato: aksjonspunktLost ? informasjonTilLesemodus.dato.fra : 'dd.mm.åååå',
+      tilDato: aksjonspunktLost ? informasjonTilLesemodus.dato.til : 'dd.mm.åååå',
+      erSokerenMidlertidigAleneOmOmsorgen: aksjonspunktLost ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt) : 'true',
+      avslagsArsakErPeriodeErIkkeOverSeksMån: aksjonspunktLost ? booleanTilTekst(informasjonTilLesemodus.avslagsArsakErPeriodeErIkkeOverSeksMån) : 'false'
+    }
+  });
 
-    const vurderingKomplett = !feilmedlinger.begrunnelse && !feilmedlinger.dato.til && !feilmedlinger.dato.fra && !feilmedlinger.dato.gyldigTilDato;
-    const visFeilmedlingForDato = visFeilmedlinger && feilmedlinger.dato.fra && feilmedlinger.dato.til && tekst.feilmedlingManglerDato
-      || visFeilmedlinger && feilmedlinger.dato.til && !feilmedlinger.dato.fra && tekst.feilmeldingManglerTilDato
-      || visFeilmedlinger && feilmedlinger.dato.fra && !feilmedlinger.dato.til && tekst.feilmedlingManglerFraDato
-      || visFeilmedlinger && !feilmedlinger.dato.til && tilDato.substr(5, 5) !== '12-31' && tekst.feilmedlingFeilDato;
+  const {formState: {errors}, formState, handleSubmit, getValues, watch, unregister, register} = methods;
+  const sokerenMidlertidigAleneOmOmsorgen = watch('erSokerenMidlertidigAleneOmOmsorgen');
+  const erDatoFyltUt = dato => dato.toLowerCase() !== 'dd.mm.åååå' && dato !== '' && tekstTilBoolean(sokerenMidlertidigAleneOmOmsorgen);
+  const erDatoSisteDagenIÅret = dato => dato.substr(5, 5) === '12-31' && tekstTilBoolean(sokerenMidlertidigAleneOmOmsorgen);
+  const erDatoGyldig = dato => {
 
-    const bekreftAksjonspunkt = () => {
+    const år = parseInt(dato.substr(0, 4));
+    const måned = parseInt(dato.substr(5, 2)) - 1;
+    const dag = parseInt(dato.substr(8, 2));
+    const parsedDato = new Date(år, måned, dag);
+
+    if (parsedDato.getDate() === dag) {
+      return true;
+    }
+    return false;
+  };
+
+  const persistedFormData = useFormPersist(
+    `${behandlingsID}-steg-midlertidig-alene`,
+    methods.watch,
+    methods.setValue,
+    {
+      storage: window.sessionStorage
+    }
+  );
+
+  useEffect(() => {
+    if (!tekstTilBoolean(sokerenMidlertidigAleneOmOmsorgen)) {
+      unregister('fraDato', {keepValue: true});
+      unregister('tilDato', {keepValue: true});
+    } else {
+      register('fraDato');
+      register('tilDato');
+    }
+  }, [sokerenMidlertidigAleneOmOmsorgen]);
+
+
+  const bekreftAksjonspunkt = ({
+    begrunnelse,
+    erSokerenMidlertidigAleneOmOmsorgen,
+    avslagsArsakErPeriodeErIkkeOverSeksMån,
+    fraDato,
+    tilDato
+  }) => {
+    if (formState.isValid) {
       losAksjonspunkt({
         begrunnelse,
-        erSokerenMidlertidigAleneOmOmsorgen,
-        fra: erSokerenMidlertidigAleneOmOmsorgen ? fraDato.replaceAll('.', '-') : '',
-        til: erSokerenMidlertidigAleneOmOmsorgen ? tilDato.replaceAll('.', '-') : '',
-        avslagsArsakErPeriodeErIkkeOverSeksMån
+        erSokerenMidlertidigAleneOmOmsorgen: tekstTilBoolean(erSokerenMidlertidigAleneOmOmsorgen),
+        fra: tekstTilBoolean(erSokerenMidlertidigAleneOmOmsorgen) ? fraDato.replaceAll('.', '-') : '',
+        til: tekstTilBoolean(erSokerenMidlertidigAleneOmOmsorgen) ? tilDato.replaceAll('.', '-') : '',
+        avslagsArsakErPeriodeErIkkeOverSeksMån: tekstTilBoolean(avslagsArsakErPeriodeErIkkeOverSeksMån)
       });
-    };
+      persistedFormData.clear();
+    }
+  };
 
-    const sjekkHvisVurderingErKomplett = () => vurderingKomplett
-      ? bekreftAksjonspunkt()
-      : endreVisFeilmedlinger(true);
 
-    const hanteringAvDatoForDatoVelger = () => {
-      const antallÅrFramITid = 10;
-      const maxDato = new Date(soknadsopplysninger.soknadsdato);
-      maxDato.setFullYear(maxDato.getFullYear() + antallÅrFramITid);
+  return (
+    <div
+      className={classNames(styles.vilkarMidlerTidigAlene, lesemodus && !åpenForRedigering && !vedtakFattetVilkarOppfylt && styleLesemodus.lesemodusboks)}>
+      {vedtakFattetVilkarOppfylt && <VilkarStatus
+        vilkarOppfylt={informasjonOmVilkar.vilkarOppfylt}
+        aksjonspunktNavn={informasjonOmVilkar.navnPåAksjonspunkt}
+        vilkarReferanse={informasjonOmVilkar.vilkar}
+        begrunnelse={informasjonOmVilkar.begrunnelse}
+        erVilkaretForOmsorgenFor={false}
+      />}
 
-      const startDato = new Date(maxDato.getFullYear() - antallÅrFramITid, 12, 1);
-      const invalidDateRanges = [];
+      {lesemodus && !åpenForRedigering && !vedtakFattetVilkarOppfylt &&
+      <VilkarMidlertidigAleneLesemodus
+        soknadsopplysninger={soknadsopplysninger}
+        informasjonTilLesemodus={informasjonTilLesemodus}
+        harAksjonspunktBlivitLostTidligare={harAksjonspunktBlivitLostTidligare}
+        åpneForRedigereInformasjon={() => endreÅpenForRedigering(true)}
+      />}
 
-      for (let i = 0; i < antallÅrFramITid; i++) {
-        invalidDateRanges.push(
-          {
-            from: `${(startDato.getFullYear() + i).toString()}-01-01`,
-            to: `${(startDato.getFullYear() + i).toString()}-12-30`,
-          }
-        );
-      }
+      {(åpenForRedigering || !lesemodus && !vedtakFattetVilkarOppfylt) && <>
+        <AlertStripeTrekantVarsel text={tekst.aksjonspunkt}/>
 
-      return {
-        invalidDateRanges: invalidDateRanges,
-        minDate: startDato.toISOString().substring(0, 10),
-        maxDate: maxDato.toISOString().substring(0, 10),
-      };
+        <OpplysningerFraSoknad {...soknadsopplysninger}/>
 
-    };
+        <FormProvider {...methods} >
+          <form className={styles.form} onSubmit={handleSubmit(bekreftAksjonspunkt)}>
 
-    return (
-      <div
-        className={classNames(styles.vilkarMidlerTidigAlene, lesemodus && !åpenForRedigering && !vedtakFattetVilkarOppfylt && styleLesemodus.lesemodusboks)}>
-        {vedtakFattetVilkarOppfylt && <VilkarStatus
-          vilkarOppfylt={informasjonOmVilkar.vilkarOppfylt}
-          aksjonspunktNavn={informasjonOmVilkar.navnPåAksjonspunkt}
-          vilkarReferanse={informasjonOmVilkar.vilkar}
-          begrunnelse={informasjonOmVilkar.begrunnelse}
-          erVilkaretForOmsorgenFor={false}
-        />}
-        
-        {lesemodus && !åpenForRedigering && !vedtakFattetVilkarOppfylt &&
-        <VilkarMidlertidigAleneLesemodus
-          soknadsopplysninger={soknadsopplysninger}
-          informasjonTilLesemodus={informasjonTilLesemodus}
-          harAksjonspunktBlivitLostTidligare={harAksjonspunktBlivitLostTidligare}
-          åpneForRedigereInformasjon={() => endreÅpenForRedigering(true)}
-        />}
+            <TextArea label={tekst.begrunnelse} name={'begrunnelse'}/>
 
-        {(åpenForRedigering || !lesemodus && !vedtakFattetVilkarOppfylt) && <>
-          <AlertStripeTrekantVarsel text={tekst.aksjonspunkt}/>
+            <RadioGruppe className={styles.radioButtons} legend={tekst.sporsmålVilkarOppfylt}>
+              <RadioButtonWithBooleanValue label={'Ja'} value={'true'} name={'erSokerenMidlertidigAleneOmOmsorgen'}/>
+              <RadioButtonWithBooleanValue label={'Nei'} value={'false'} name={'erSokerenMidlertidigAleneOmOmsorgen'}/>
+            </RadioGruppe>
 
-          <OpplysningerFraSoknad {...soknadsopplysninger}/>
+            {!tekstTilBoolean(sokerenMidlertidigAleneOmOmsorgen) &&
+            <RadioGruppe className={styles.radioButtons} legend={tekst.velgArsak}>
+              <RadioButtonWithBooleanValue label={tekst.arsakIkkeAleneOmsorg}
+                                           value={'false'}
+                                           name={'avslagsArsakErPeriodeErIkkeOverSeksMån'}/>
+              <RadioButtonWithBooleanValue label={tekst.arsakPeriodeIkkeOverSeksMån}
+                                           value={'true'}
+                                           name={'avslagsArsakErPeriodeErIkkeOverSeksMån'}/>
+            </RadioGruppe>
+            }
 
-          <Textarea label={tekst.begrunnelse}
-                    value={begrunnelse}
-                    onChange={e => endreBegrunnelse(e.target.value)}
-                    feil={visFeilmedlinger && feilmedlinger.begrunnelse && tekst.feilmedlingBegrunnelse}
-                    maxLength={0}
-          />
+            {tekstTilBoolean(getValues().erSokerenMidlertidigAleneOmOmsorgen) &&
+            <SkjemaGruppe className={styles.gyldigVedtaksPeriode}
+                          legend={tekst.sporsmalPeriodeVedtakGyldig}
+                          feil={errors.fraDato && errors.fraDato.type === 'erDatoFyltUt' && tekst.feilmedlingManglerFraDato
+                          || errors.fraDato && errors.fraDato.type === 'erDatoGyldig' && tekst.feilmedlingUgyldigDato
+                          || errors.tilDato && errors.tilDato.type === 'erDatoFyltUt' && tekst.feilmeldingManglerTilDato
+                          || errors.tilDato && errors.tilDato.type === 'erDatoSisteDagenIÅret' && tekst.feilmedlingFeilDato
+                          || errors.tilDato && errors.tilDato.type === 'erDatoGyldig' && tekst.feilmedlingUgyldigDato}
+            >
 
-          <RadioGruppe className={styles.radioButtons} legend={tekst.sporsmålVilkarOppfylt}>
-            <Radio label={'Ja'}
-                   checked={erSokerenMidlertidigAleneOmOmsorgen}
-                   onChange={() => endreErSokerenMidlertidigAleneOmOmsorgen(true)}
-                   name="vilkarAleneomsorg"/>
-            <Radio label={'Nei'}
-                   checked={!erSokerenMidlertidigAleneOmOmsorgen}
-                   onChange={() => endreErSokerenMidlertidigAleneOmOmsorgen(false)}
-                   name="vilkarAleneomsorg"/>
-          </RadioGruppe>
-
-          {!erSokerenMidlertidigAleneOmOmsorgen && <RadioGruppe
-            className={styleRadioknapper.horisontalPlassering}
-            legend={tekst.velgArsak}>
-            <Radio label={tekst.arsakIkkeAleneOmsorg}
-                   name="harIkkeAleneOmsorg"
-                   checked={!avslagsArsakErPeriodeErIkkeOverSeksMån}
-                   onChange={() => endreAvslagsArsakErPeriodeErIkkeOverSeksMån(false)}/>
-            <Radio label={tekst.arsakPeriodeIkkeOverSeksMån}
-                   name="harIkkePeriodeOverSeksMån"
-                   checked={avslagsArsakErPeriodeErIkkeOverSeksMån}
-                   onChange={() => endreAvslagsArsakErPeriodeErIkkeOverSeksMån(true)}/>
-          </RadioGruppe>}
-
-          {erSokerenMidlertidigAleneOmOmsorgen &&
-          <SkjemaGruppe className={styles.gyldigVedtaksPeriode}
-                        legend={tekst.sporsmalPeriodeVedtakGyldig}
-                        feil={visFeilmedlingForDato}>
-            <div>
-              <span className={styles.gyldigVedtaksPeriodeTilFra}>Fra</span>
-              <Datepicker onChange={endreFraDato}
-                          value={fraDato}
-                          limitations={{
+              <DatePicker titel={'Fra'}
+                          navn={'fraDato'}
+                          valideringsFunksjoner={{erDatoFyltUt, erDatoGyldig}}
+                          begrensningerIKalender={{
                             minDate: soknadsopplysninger.soknadsdato,
                           }}
               />
-            </div>
-            <div>
-              <span className={styles.gyldigVedtaksPeriodeTilFra}>Til</span>
-              <Datepicker onChange={endreTilDato}
-                          value={tilDato}
-                          limitations={hanteringAvDatoForDatoVelger()}
+
+              <DatePicker titel={'Til'}
+                          navn={'tilDato'}
+                          valideringsFunksjoner={{erDatoFyltUt, erDatoGyldig, erDatoSisteDagenIÅret}}
+                          begrensningerIKalender={hanteringAvDatoForDatoVelger(soknadsopplysninger.soknadsdato)}
               />
-            </div>
-          </SkjemaGruppe>
-          }
 
-          <Hovedknapp className={styles.bekreftKnapp} onClick={sjekkHvisVurderingErKomplett}>
-            {tekst.bekreftFortsettKnapp}
-          </Hovedknapp>
+            </SkjemaGruppe>
+            }
 
-        </>}
-      </div>
-    );
-  }
-;
+            <Hovedknapp className={styles.bekreftKnapp} htmlType="submit"> {tekst.bekreftFortsettKnapp}</Hovedknapp>
+          </form>
+        </FormProvider>
+      </>}
+    </div>
+  );
+};
 export default VilkarMidlertidigAlene;

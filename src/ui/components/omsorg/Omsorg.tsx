@@ -2,39 +2,42 @@ import {Hovedknapp} from 'nav-frontend-knapper';
 import {Radio, RadioGruppe, Textarea} from 'nav-frontend-skjema';
 import React, {useState} from 'react';
 import {OmsorgProps} from '../../../types/OmsorgProps';
+import useFormPersist from '../../../util/useFormPersistUtils';
 import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
 import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
 import styles from './omsorg.less';
 import VilkarStatus from '../vilkar-status/VilkarStatus';
 import styleRadioknapper from '../styles/radioknapper/radioknapper.less';
+import {Controller, useForm} from 'react-hook-form';
 
-interface Feilmeldinger {
-  begrunnelse: boolean;
-}
+type FormData = {
+  harOmsorgen: boolean;
+  begrunnelse: string;
+};
+
 
 const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
 
-  const [harOmsorgen, endreHarOmsorgen] = useState<boolean>(props.aksjonspunktLost ? props.informasjonTilLesemodus.vilkarOppfylt : false);
-  const [begrunnelse, endreBegrunnelse] = useState<string>(props.aksjonspunktLost ? props.informasjonTilLesemodus.begrunnelse : '');
-  const [visFeilmeldinger, endreVisFeilmeldinger] = useState<boolean>(false);
   const [harAksjonspunktBlivitLostTidligare] = useState<boolean>(props.aksjonspunktLost);
   const [åpenForRedigering, endreÅpenForRedigering] = useState<boolean>(false);
 
+  const {
+    register,
+    watch,
+    formState: {errors},
+    handleSubmit,
+    setValue,
+    control,
+    getValues
+  } = useForm<FormData>({
+    defaultValues: {
+      begrunnelse: props.aksjonspunktLost ? props.informasjonTilLesemodus.begrunnelse : '',
+      harOmsorgen: props.aksjonspunktLost ? props.informasjonTilLesemodus.vilkarOppfylt : false,
+    }
+  });
+
   const barnetEllerBarna = props.barn.length === 1 ? 'barnet' : 'barna';
-  const {vedtakFattetVilkarOppfylt, informasjonOmVilkar} = props;
-
-  const onSubmit = props.losAksjonspunkt;
-
-  const feilmeldinger: Feilmeldinger = {
-    begrunnelse: begrunnelse.length === 0
-  };
-
-  const kanManGaVidere = !feilmeldinger.begrunnelse;
-
-  const onGaVidere = () => kanManGaVidere
-    ? onSubmit(harOmsorgen, begrunnelse)
-    : endreVisFeilmeldinger(true);
 
   const tekst = {
     instruksjon: `Vurder om søkeren har omsorgen for ${barnetEllerBarna}.`,
@@ -43,6 +46,26 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
     sporsmalHarOmsorgen: `Har søker omsorgen for ${barnetEllerBarna}?`,
     begrunnelse: `Vurder om søker har omsorgen for ${barnetEllerBarna}`,
     beskrivelseTilVedtakVilkar: `Søker har omsorgen for ${barnetEllerBarna}`
+  };
+
+  const {vedtakFattetVilkarOppfylt, informasjonOmVilkar} = props;
+
+  const behandlingId = '123';
+
+  const persistedFormData = useFormPersist(
+    `step-1-${behandlingId}`,
+    watch,
+    setValue,
+    {
+      storage: window.sessionStorage
+    }
+  );
+
+  const onGaVidere = data => {
+    if (!errors.begrunnelse) {
+      props.losAksjonspunkt(data.harOmsorgen, data.begrunnelse,);
+      persistedFormData.clear();
+    }
   };
 
   const opplysningerFraSoknaden = <>
@@ -70,6 +93,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
 
   return (
     <div className={styles.omsorg}>
+      {console.log("render")}
 
       {vedtakFattetVilkarOppfylt && <VilkarStatus
         vilkarOppfylt={informasjonOmVilkar.vilkarOppfylt}
@@ -80,39 +104,51 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
         beskrivelseForOmsorgenFor={tekst.beskrivelseTilVedtakVilkar}
       />}
 
-      {(åpenForRedigering || !props.lesemodus && !vedtakFattetVilkarOppfylt) && <>
+      {(åpenForRedigering || !props.lesemodus && !vedtakFattetVilkarOppfylt) &&
+      <>
         <AlertStripeTrekantVarsel text={tekst.instruksjon}/>
         {opplysningerFraSoknaden}
         <hr/>
-        <Textarea
-          label={tekst.begrunnelse}
-          value={begrunnelse}
-          onChange={e => endreBegrunnelse(e.target.value)}
-          maxLength={0}
-          feil={visFeilmeldinger && feilmeldinger.begrunnelse && 'Vurdering må oppgis.'}
-        />
-        <RadioGruppe
-          legend={tekst.sporsmalHarOmsorgen}
-          className={styleRadioknapper.horisontalPlassering}
-        >
-          <Radio
-            label="Ja"
-            name="harOmsorgen"
-            value="ja"
-            className={styles.radioknapp}
-            checked={harOmsorgen}
-            onChange={() => endreHarOmsorgen(true)}
+        <form className={styles.form} onSubmit={handleSubmit(onGaVidere)}>
+          <Controller
+            control={control}
+            name="begrunnelse"
+            rules={{required: {value: true, message: 'Begrunnelse må oppgis.'}}}
+            render={({
+                       field: {onChange, value},
+                       fieldState: {error}
+                     }) => (
+              <Textarea
+                label={tekst.begrunnelse}
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+                maxLength={0}
+                feil={error && error.message}
+              />
+            )}
           />
-          <Radio
-            label="Nei"
-            name="harOmsorgen"
-            value="nei"
-            className={styles.radioknapp}
-            checked={!harOmsorgen}
-            onChange={() => endreHarOmsorgen(false)}
-          />
-        </RadioGruppe>
-        <Hovedknapp onClick={onGaVidere}>Bekreft og fortsett</Hovedknapp>
+
+          <RadioGruppe
+            legend={tekst.sporsmalHarOmsorgen}
+            className={styleRadioknapper.horisontalPlassering}
+          >
+            <Radio
+              label="Ja"
+              {...register('harOmsorgen')}
+              checked={getValues().harOmsorgen}
+              onChange={() => setValue('harOmsorgen', true)}
+              className={styles.radioknapp}
+            />
+            <Radio
+              label="Nei"
+              className={styles.radioknapp}
+              checked={!getValues().harOmsorgen}
+              {...register('harOmsorgen')}
+              onChange={() => setValue('harOmsorgen', false)}
+            />
+          </RadioGruppe>
+          <Hovedknapp htmlType="submit">Bekreft og fortsett</Hovedknapp>
+        </form>
       </>}
     </div>);
 };
