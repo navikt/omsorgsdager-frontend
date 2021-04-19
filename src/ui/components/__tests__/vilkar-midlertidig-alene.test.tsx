@@ -7,6 +7,7 @@ import VilkarMidlertidigAlene from '../vilkar-midlertidig-alene/VilkarMidlertidi
 describe('<VilkarMidlertidigAlene>', () => {
   test('VilkarMidlertidigAlene viser åpen aksjonspunkt som forventet', () => {
     const props = {
+      behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: false,
       soknadsopplysninger: {
@@ -73,6 +74,7 @@ describe('<VilkarMidlertidigAlene>', () => {
 
   test('VilkarMidlertidigAlene viser lesemodus', () => {
     const props = {
+      behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: true,
       soknadsopplysninger: {
@@ -125,6 +127,7 @@ describe('<VilkarMidlertidigAlene>', () => {
 
   test('VilkarMidlertidigAlene viser lesemodus', () => {
     const props = {
+      behandlingsID: '123',
       aksjonspunktLost: true,
       lesemodus: true,
       soknadsopplysninger: {
@@ -160,6 +163,7 @@ describe('<VilkarMidlertidigAlene>', () => {
 
   test('VilkarMidlertidigAlene viser informasjon om vilkar etter fattet vedtak', () => {
     const props = {
+      behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: false,
       soknadsopplysninger: {
@@ -205,6 +209,7 @@ describe('<VilkarMidlertidigAlene>', () => {
 
   test('VilkarMidlertidigAlene viser informasjon om vilkar ikke oppfylt etter fattet vedtak', () => {
     const props = {
+      behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: false,
       soknadsopplysninger: {
@@ -247,6 +252,7 @@ describe('<VilkarMidlertidigAlene>', () => {
 
   test('Den har ingen a11y violations', async () => {
     const props = {
+      behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: false,
       soknadsopplysninger: {
