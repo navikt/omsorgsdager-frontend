@@ -45,7 +45,6 @@ describe('<VilkarMidlertidigAlene>', () => {
 
     const begrunnelseText = 'Vurder om vilkåret for midlertidig aleneomsorg er oppfylt';
     const vilkarOppfyltText = 'Er vilkåret om midlertidig aleneomsorg oppfylt?';
-    const periodeText = 'I hvilken periode er vedtaket gyldig?';
 
     const hentetAksjonspunkt = screen.getByText(aksjonspunkt);
     expect(hentetAksjonspunkt).toBeInTheDocument();
@@ -62,14 +61,6 @@ describe('<VilkarMidlertidigAlene>', () => {
     const hentetVilkarOppfyltText = screen.getByText(vilkarOppfyltText);
     expect(hentetVilkarOppfyltText).toBeInTheDocument();
 
-    const hentetPeriodeText = screen.getByText(periodeText);
-    expect(hentetPeriodeText).toBeInTheDocument();
-
-    const hentetFraText = screen.getByText('Fra');
-    expect(hentetFraText).toBeInTheDocument();
-
-    const hentetTilText = screen.getByText('Til');
-    expect(hentetTilText).toBeInTheDocument();
   });
 
   test('VilkarMidlertidigAlene viser lesemodus', () => {
