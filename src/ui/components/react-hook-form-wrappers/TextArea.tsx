@@ -1,4 +1,4 @@
-import {Radio, RadioGruppe, Textarea} from 'nav-frontend-skjema';
+import { Textarea} from 'nav-frontend-skjema';
 import React from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
 import {tekst} from '../vilkar-midlertidig-alene/vilkar-midlertidig-alene-tekst';

@@ -1,7 +1,6 @@
 import {Radio} from 'nav-frontend-skjema';
 import React from 'react';
 import {useFormContext} from 'react-hook-form';
-import {tekst} from '../vilkar-midlertidig-alene/vilkar-midlertidig-alene-tekst';
 
 interface OwnProps{
   label: string;

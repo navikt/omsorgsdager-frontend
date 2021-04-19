@@ -1,5 +1,5 @@
 import {Hovedknapp} from 'nav-frontend-knapper';
-import {Radio, RadioGruppe, Textarea} from 'nav-frontend-skjema';
+import {RadioGruppe} from 'nav-frontend-skjema';
 import React, {useState} from 'react';
 import {OmsorgProps} from '../../../types/OmsorgProps';
 import {booleanTilTekst} from '../../../util/stringUtils';
@@ -12,7 +12,7 @@ import TextArea from '../react-hook-form-wrappers/TextArea';
 import styles from './omsorg.less';
 import VilkarStatus from '../vilkar-status/VilkarStatus';
 import styleRadioknapper from '../styles/radioknapper/radioknapper.less';
-import {Controller, FormProvider, useForm} from 'react-hook-form';
+import { FormProvider, useForm} from 'react-hook-form';
 
 type FormData = {
   harOmsorgen: string;
@@ -49,7 +49,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
     }
   });
 
-  const {formState, handleSubmit, watch, formState: {errors}, unregister, register} = methods;
+  const {formState, handleSubmit, formState: {errors}} = methods;
   const persistedFormData = useFormPersist(
     `${behandlingsID}-steg-omsorgenfor`,
     methods.watch,
