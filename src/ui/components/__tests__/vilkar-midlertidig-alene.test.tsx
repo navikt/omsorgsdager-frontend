@@ -7,6 +7,7 @@ import VilkarMidlertidigAlene from '../vilkar-midlertidig-alene/VilkarMidlertidi
 describe('<VilkarMidlertidigAlene>', () => {
   test('VilkarMidlertidigAlene viser åpen aksjonspunkt som forventet', () => {
     const props = {
+      behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: false,
       soknadsopplysninger: {
@@ -44,7 +45,6 @@ describe('<VilkarMidlertidigAlene>', () => {
 
     const begrunnelseText = 'Vurder om vilkåret for midlertidig aleneomsorg er oppfylt';
     const vilkarOppfyltText = 'Er vilkåret om midlertidig aleneomsorg oppfylt?';
-    const periodeText = 'I hvilken periode er vedtaket gyldig?';
 
     const hentetAksjonspunkt = screen.getByText(aksjonspunkt);
     expect(hentetAksjonspunkt).toBeInTheDocument();
@@ -61,18 +61,11 @@ describe('<VilkarMidlertidigAlene>', () => {
     const hentetVilkarOppfyltText = screen.getByText(vilkarOppfyltText);
     expect(hentetVilkarOppfyltText).toBeInTheDocument();
 
-    const hentetPeriodeText = screen.getByText(periodeText);
-    expect(hentetPeriodeText).toBeInTheDocument();
-
-    const hentetFraText = screen.getByText('Fra');
-    expect(hentetFraText).toBeInTheDocument();
-
-    const hentetTilText = screen.getByText('Til');
-    expect(hentetTilText).toBeInTheDocument();
   });
 
   test('VilkarMidlertidigAlene viser lesemodus', () => {
     const props = {
+      behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: true,
       soknadsopplysninger: {
@@ -125,6 +118,7 @@ describe('<VilkarMidlertidigAlene>', () => {
 
   test('VilkarMidlertidigAlene viser lesemodus', () => {
     const props = {
+      behandlingsID: '123',
       aksjonspunktLost: true,
       lesemodus: true,
       soknadsopplysninger: {
@@ -160,6 +154,7 @@ describe('<VilkarMidlertidigAlene>', () => {
 
   test('VilkarMidlertidigAlene viser informasjon om vilkar etter fattet vedtak', () => {
     const props = {
+      behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: false,
       soknadsopplysninger: {
@@ -205,6 +200,7 @@ describe('<VilkarMidlertidigAlene>', () => {
 
   test('VilkarMidlertidigAlene viser informasjon om vilkar ikke oppfylt etter fattet vedtak', () => {
     const props = {
+      behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: false,
       soknadsopplysninger: {
@@ -247,6 +243,7 @@ describe('<VilkarMidlertidigAlene>', () => {
 
   test('Den har ingen a11y violations', async () => {
     const props = {
+      behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: false,
       soknadsopplysninger: {

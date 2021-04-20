@@ -1,76 +1,101 @@
 import {Hovedknapp} from 'nav-frontend-knapper';
-import {Radio, RadioGruppe, Textarea} from 'nav-frontend-skjema';
+import {RadioGruppe} from 'nav-frontend-skjema';
 import React, {useState} from 'react';
 import {OmsorgProps} from '../../../types/OmsorgProps';
+import {booleanTilTekst} from '../../../util/stringUtils';
+import useFormPersist from '../../../util/useFormPersistUtils';
 import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
 import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
+import RadioButtonWithBooleanValue from '../react-hook-form-wrappers/RadioButton';
+import TextArea from '../react-hook-form-wrappers/TextArea';
 import styles from './omsorg.less';
 import VilkarStatus from '../vilkar-status/VilkarStatus';
 import styleRadioknapper from '../styles/radioknapper/radioknapper.less';
+import { FormProvider, useForm} from 'react-hook-form';
 
-interface Feilmeldinger {
-  begrunnelse: boolean;
-}
+type FormData = {
+  harOmsorgen: string;
+  begrunnelse: string;
+  åpenForRedigering: boolean;
+};
 
-const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
-
-  const [harOmsorgen, endreHarOmsorgen] = useState<boolean>(props.aksjonspunktLost ? props.informasjonTilLesemodus.vilkarOppfylt : false);
-  const [begrunnelse, endreBegrunnelse] = useState<string>(props.aksjonspunktLost ? props.informasjonTilLesemodus.begrunnelse : '');
-  const [visFeilmeldinger, endreVisFeilmeldinger] = useState<boolean>(false);
-  const [harAksjonspunktBlivitLostTidligare] = useState<boolean>(props.aksjonspunktLost);
-  const [åpenForRedigering, endreÅpenForRedigering] = useState<boolean>(false);
-
-  const barnetEllerBarna = props.barn.length === 1 ? 'barnet' : 'barna';
-  const {vedtakFattetVilkarOppfylt, informasjonOmVilkar} = props;
-
-  const onSubmit = props.losAksjonspunkt;
-
-  const feilmeldinger: Feilmeldinger = {
-    begrunnelse: begrunnelse.length === 0
-  };
-
-  const kanManGaVidere = !feilmeldinger.begrunnelse;
-
-  const onGaVidere = () => kanManGaVidere
-    ? onSubmit(harOmsorgen, begrunnelse)
-    : endreVisFeilmeldinger(true);
-
+const Omsorg: React.FunctionComponent<OmsorgProps> = ({
+  behandlingsID,
+  aksjonspunktLost,
+  barn,
+  vedtakFattetVilkarOppfylt,
+  informasjonOmVilkar,
+  losAksjonspunkt,
+  informasjonTilLesemodus,
+  lesemodus
+}) => {
+  const [harAksjonspunktBlivitLostTidligare] = useState<boolean>(aksjonspunktLost);
+  const barnetEllerBarna = barn.length === 1 ? 'barnet' : 'barna';
   const tekst = {
     instruksjon: `Vurder om søkeren har omsorgen for ${barnetEllerBarna}.`,
     opplysningerFraSoknaden: 'Opplysninger fra søknaden:',
     sokersBarn: 'Søkers barn:',
     sporsmalHarOmsorgen: `Har søker omsorgen for ${barnetEllerBarna}?`,
     begrunnelse: `Vurder om søker har omsorgen for ${barnetEllerBarna}`,
-    beskrivelseTilVedtakVilkar: `Søker har omsorgen for ${barnetEllerBarna}`
+    beskrivelseTilVedtakVilkar: `Søker har omsorgen for ${barnetEllerBarna}`,
+    feilIngenVurdering: 'Vurdering må oppgis.',
+  };
+
+  const methods = useForm<FormData>({
+    defaultValues: {
+      begrunnelse: aksjonspunktLost ? informasjonTilLesemodus.begrunnelse : '',
+      harOmsorgen: aksjonspunktLost ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt) : '',
+      åpenForRedigering: false
+    }
+  });
+
+  const { handleSubmit, formState: {errors}, watch, setValue} = methods;
+  const åpenForRedigering = watch('åpenForRedigering');
+
+  const persistedFormData = useFormPersist(
+    `${behandlingsID}-steg-omsorgenfor`,
+    methods.watch,
+    methods.setValue,
+    {
+      storage: window.sessionStorage
+    },
+    lesemodus,
+    åpenForRedigering
+  );
+
+  const bekreftAksjonspunkt = data => {
+    if (!errors.begrunnelse && !errors.harOmsorgen) {
+      losAksjonspunkt(data.harOmsorgen, data.begrunnelse);
+      persistedFormData.clear();
+    }
   };
 
   const opplysningerFraSoknaden = <>
     <p>{tekst.opplysningerFraSoknaden}</p>
     <p className={styleLesemodus.label}>{tekst.sokersBarn}</p>
-    {props.barn.map(fnr => <p className={styles.barnTekst} key={fnr}>{fnr}</p>)}
+    {barn.map(fnr => <p className={styles.barnTekst} key={fnr}>{fnr}</p>)}
   </>;
 
-  if (props.lesemodus && !vedtakFattetVilkarOppfylt && !åpenForRedigering) {
+  if (lesemodus && !vedtakFattetVilkarOppfylt && !åpenForRedigering) {
     return <div className={`${styleLesemodus.lesemodusboks} ${styles.omsorg}`}>
       <AksjonspunktLesemodus
         aksjonspunktTekst={tekst.instruksjon}
         harAksjonspunktBlivitLostTidligare={harAksjonspunktBlivitLostTidligare}
-        åpneForRedigereInformasjon={() => endreÅpenForRedigering(true)}
-      />
+        åpneForRedigereInformasjon={() => setValue('åpenForRedigering',true)}
+        />
 
       {opplysningerFraSoknaden}
-      <hr/>
-      <p className={styleLesemodus.label}>{tekst.begrunnelse}</p>
-      <p className={styleLesemodus.fritekst}>{props.informasjonTilLesemodus.begrunnelse}</p>
+        <hr/>
+        <p className={styleLesemodus.label}>{tekst.begrunnelse}</p>
+        <p className={styleLesemodus.fritekst}>{informasjonTilLesemodus.begrunnelse}</p>
       <p className={styleLesemodus.label}>{tekst.sporsmalHarOmsorgen}</p>
-      <p className={styleLesemodus.text}>{props.informasjonTilLesemodus.vilkarOppfylt ? 'Ja' : 'Nei'}</p>
+      <p className={styleLesemodus.text}>{informasjonTilLesemodus.vilkarOppfylt ? 'Ja' : 'Nei'}</p>
     </div>;
   }
 
   return (
     <div className={styles.omsorg}>
-
       {vedtakFattetVilkarOppfylt && <VilkarStatus
         vilkarOppfylt={informasjonOmVilkar.vilkarOppfylt}
         aksjonspunktNavn={informasjonOmVilkar.navnPåAksjonspunkt}
@@ -80,39 +105,32 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = props => {
         beskrivelseForOmsorgenFor={tekst.beskrivelseTilVedtakVilkar}
       />}
 
-      {(åpenForRedigering || !props.lesemodus && !vedtakFattetVilkarOppfylt) && <>
+      {(åpenForRedigering || !lesemodus && !vedtakFattetVilkarOppfylt) &&
+      <>
         <AlertStripeTrekantVarsel text={tekst.instruksjon}/>
         {opplysningerFraSoknaden}
+
         <hr/>
-        <Textarea
-          label={tekst.begrunnelse}
-          value={begrunnelse}
-          onChange={e => endreBegrunnelse(e.target.value)}
-          maxLength={0}
-          feil={visFeilmeldinger && feilmeldinger.begrunnelse && 'Vurdering må oppgis.'}
-        />
-        <RadioGruppe
-          legend={tekst.sporsmalHarOmsorgen}
-          className={styleRadioknapper.horisontalPlassering}
-        >
-          <Radio
-            label="Ja"
-            name="harOmsorgen"
-            value="ja"
-            className={styles.radioknapp}
-            checked={harOmsorgen}
-            onChange={() => endreHarOmsorgen(true)}
-          />
-          <Radio
-            label="Nei"
-            name="harOmsorgen"
-            value="nei"
-            className={styles.radioknapp}
-            checked={!harOmsorgen}
-            onChange={() => endreHarOmsorgen(false)}
-          />
-        </RadioGruppe>
-        <Hovedknapp onClick={onGaVidere}>Bekreft og fortsett</Hovedknapp>
+
+        <FormProvider {...methods} >
+        <form className={styles.form} onSubmit={handleSubmit(bekreftAksjonspunkt)}>
+          <TextArea label={tekst.begrunnelse} name={'begrunnelse'} />
+
+          <div>
+            <RadioGruppe
+              legend={tekst.sporsmalHarOmsorgen}
+              className={styleRadioknapper.horisontalPlassering}
+            >
+              <RadioButtonWithBooleanValue label={'Ja'} value={'true'} name={'harOmsorgen'}/>
+              <RadioButtonWithBooleanValue label={'Nei'} value={'false'} name={'harOmsorgen'}/>
+            </RadioGruppe>
+            {errors.harOmsorgen &&
+            <p className="typo-feilmelding">{tekst.feilIngenVurdering}</p>}
+          </div>
+
+          <Hovedknapp htmlType="submit">Bekreft og fortsett</Hovedknapp>
+        </form>
+        </FormProvider>
       </>}
     </div>);
 };

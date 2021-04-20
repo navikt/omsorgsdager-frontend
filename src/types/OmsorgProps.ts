@@ -2,6 +2,7 @@ import {InformasjonOmVurdertVilkar} from './InformasjonOmVurdertVilkar';
 import {InformasjonTilLesemodus} from './informasjonTilLesemodus';
 
 export interface OmsorgProps {
+  behandlingsID: string;
   lesemodus: boolean;
   aksjonspunktLost: boolean;
   informasjonTilLesemodus?: InformasjonTilLesemodus;

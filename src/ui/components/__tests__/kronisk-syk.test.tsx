@@ -7,6 +7,7 @@ import VilkarKroniskSyktBarn from '../vilkar-kronisk-sykt-barn/VilkarKroniskSykt
 describe('<VilkarKroniskSyktBarn>', () => {
   test('VilkarKroniskSyktBarn viser åpen aksjonspunkt som forventet', () => {
     const props = {
+      behandlingsID: '123',
       lesemodus: false,
       aksjonspunktLost: false,
       informasjonTilLesemodus: {
@@ -43,6 +44,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
 
   test('VilkarKroniskSyktBarn viser lesemodus', () => {
     const props = {
+      behandlingsID: '123',
       lesemodus: true,
       aksjonspunktLost: false,
       informasjonTilLesemodus: {
@@ -79,6 +81,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
 
   test('VilkarKroniskSyktBarn viser lesemodus med redigering', () => {
     const props = {
+      behandlingsID: '123',
       lesemodus: true,
       aksjonspunktLost: true,
       informasjonTilLesemodus: {
@@ -104,6 +107,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
 
   test('VilkarKroniskSyktBarn viser informasjon om vilkar etter fattet vedtak', () => {
     const props = {
+      behandlingsID: '123',
       lesemodus: false,
       aksjonspunktLost: false,
       informasjonTilLesemodus: {
@@ -139,6 +143,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
 
   test('VilkarKroniskSyktBarn viser informasjon om vilkar ikke oppfylt etter fattet vedtak', () => {
     const props = {
+      behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: false,
       informasjonTilLesemodus: {
@@ -171,6 +176,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
 
   test('Den har ingen a11y violations', async () => {
     const props = {
+      behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: false,
       informasjonTilLesemodus: {

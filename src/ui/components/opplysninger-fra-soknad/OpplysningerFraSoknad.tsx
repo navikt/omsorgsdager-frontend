@@ -16,14 +16,13 @@ const OpplysningerFraSoknad: React.FunctionComponent<Props> = ({årsak, beskrive
 
       {beskrivelse !== undefined && beskrivelse.length > 0 && <>
         <h4>Beskrivelse</h4>
-        <p>{beskrivelse}</p>
+        <p className={styles.begrunnelseContainer}>{beskrivelse}</p>
       </>}
 
       {periode !== undefined && periode.length > 0 && <>
         <h4>Oppgitt periode</h4>
         <p>{periode}</p>
       </>}
-
     </div>
   );
 };

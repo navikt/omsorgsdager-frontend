@@ -6,6 +6,7 @@ import {axe} from 'jest-axe';
 describe('<Omsorg>', () => {
   test('Omsorg viser åpen aksjonspunkt som forventet', () => {
     const props = {
+      behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: true,
       informasjonTilLesemodus: {
@@ -49,6 +50,7 @@ describe('<Omsorg>', () => {
 
   test('Omsorg viser lesemodus', () => {
     const props = {
+      behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: true,
       informasjonTilLesemodus: {
@@ -96,6 +98,7 @@ describe('<Omsorg>', () => {
 
   test('Omsorg viser lesemodus med redigera vurdering mulighet', () => {
     const props = {
+      behandlingsID: '123',
       aksjonspunktLost: true,
       lesemodus: true,
       informasjonTilLesemodus: {
@@ -121,6 +124,7 @@ describe('<Omsorg>', () => {
 
   test('Omsorg viser informasjon om vilkar etter fattet vedtak', () => {
     const props = {
+      behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: false,
       informasjonTilLesemodus: {
@@ -158,6 +162,7 @@ describe('<Omsorg>', () => {
 
   test('Omsorg viser informasjon om vilkar ikke oppfylt etter fattet vedtak', () => {
     const props = {
+      behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: false,
       informasjonTilLesemodus: {
@@ -190,6 +195,7 @@ describe('<Omsorg>', () => {
 
   test('Den har ingen a11y violations', async () => {
     const props = {
+      behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: true,
       informasjonTilLesemodus: {
