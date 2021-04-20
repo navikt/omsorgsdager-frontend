@@ -19,6 +19,7 @@ type FormData = {
   harDokumentasjonOgFravaerRisiko: string;
   arsakErIkkeRiskioFraFravaer: string;
   begrunnelse: string;
+  åpenForRedigering: boolean;
 };
 
 const tekst = {
@@ -43,7 +44,6 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   informasjonOmVilkar
 }) => {
   const [harAksjonspunktBlivitLostTidligare] = useState<boolean>(aksjonspunktLost);
-  const [åpenForRedigering, endreÅpenForRedigering] = useState<boolean>(false);
 
   const methods = useForm<FormData>({
     defaultValues: {
@@ -53,15 +53,18 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
     }
   });
 
-  const {formState, handleSubmit, watch, formState: {errors}, unregister, register} = methods;
+  const {handleSubmit, watch, formState: {errors}, unregister, register, setValue} = methods;
   const harDokumentasjonOgFravaerRisiko = watch('harDokumentasjonOgFravaerRisiko');
+  const åpenForRedigering = watch('åpenForRedigering');
   const persistedFormData = useFormPersist(
     `${behandlingsID}-steg-kronisk-syk`,
     methods.watch,
     methods.setValue,
     {
       storage: window.sessionStorage
-    }
+    },
+    lesemodus,
+    åpenForRedigering
   );
 
   useEffect(() => {
@@ -73,7 +76,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   }, [harDokumentasjonOgFravaerRisiko]);
 
   const bekreftAksjonspunkt = data => {
-    if (formState.isValid) {
+    if (!errors.begrunnelse && !errors.arsakErIkkeRiskioFraFravaer && !errors.harDokumentasjonOgFravaerRisiko) {
       losAksjonspunkt(data.harDokumentasjonOgFravaerRisiko, data.begrunnelse, data.arsakErIkkeRiskioFraFravaer);
       persistedFormData.clear();
     }
@@ -93,7 +96,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
       <AksjonspunktLesemodus
         aksjonspunktTekst={tekst.instruksjon}
         harAksjonspunktBlivitLostTidligare={harAksjonspunktBlivitLostTidligare}
-        åpneForRedigereInformasjon={() => endreÅpenForRedigering(true)}
+        åpneForRedigereInformasjon={() => setValue('åpenForRedigering',true)}
       />
 
       <p className={styleLesemodus.label}>{tekst.sporsmalHarDokumentasjonOgFravaerRisiko}</p>

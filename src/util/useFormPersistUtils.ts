@@ -8,11 +8,15 @@ const safeJSONParse = str => {
   }
 };
 
+let removedFromStore = false;
+
 export const useFormPersist = (
   name: string,
   watch,
   setValue,
-  { storage = window.sessionStorage } = {}
+  { storage = window.sessionStorage } = {},
+  lesemodus : boolean,
+  åpenForRedigering: boolean
 ) => {
   const values = watch();
 
@@ -29,11 +33,11 @@ export const useFormPersist = (
   }, [name]);
 
   useEffect(() => {
-    storage.setItem(name, JSON.stringify(values));
+    if (!removedFromStore && (lesemodus && åpenForRedigering || !lesemodus)) storage.setItem(name, JSON.stringify(values));
   });
 
   return {
-    clear: () => storage.removeItem(name)
+    clear: () => { storage.removeItem(name); removedFromStore = true; }
   };
 };
 

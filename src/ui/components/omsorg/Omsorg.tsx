@@ -17,6 +17,7 @@ import { FormProvider, useForm} from 'react-hook-form';
 type FormData = {
   harOmsorgen: string;
   begrunnelse: string;
+  åpenForRedigering: boolean;
 };
 
 const Omsorg: React.FunctionComponent<OmsorgProps> = ({
@@ -30,7 +31,6 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
   lesemodus
 }) => {
   const [harAksjonspunktBlivitLostTidligare] = useState<boolean>(aksjonspunktLost);
-  const [åpenForRedigering, endreÅpenForRedigering] = useState<boolean>(false);
   const barnetEllerBarna = barn.length === 1 ? 'barnet' : 'barna';
   const tekst = {
     instruksjon: `Vurder om søkeren har omsorgen for ${barnetEllerBarna}.`,
@@ -46,21 +46,26 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
     defaultValues: {
       begrunnelse: aksjonspunktLost ? informasjonTilLesemodus.begrunnelse : '',
       harOmsorgen: aksjonspunktLost ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt) : '',
+      åpenForRedigering: false
     }
   });
 
-  const {formState, handleSubmit, formState: {errors}} = methods;
+  const { handleSubmit, formState: {errors}, watch, setValue} = methods;
+  const åpenForRedigering = watch('åpenForRedigering');
+
   const persistedFormData = useFormPersist(
     `${behandlingsID}-steg-omsorgenfor`,
     methods.watch,
     methods.setValue,
     {
       storage: window.sessionStorage
-    }
+    },
+    lesemodus,
+    åpenForRedigering
   );
 
   const bekreftAksjonspunkt = data => {
-    if (formState.isValid) {
+    if (!errors.begrunnelse && !errors.harOmsorgen) {
       losAksjonspunkt(data.harOmsorgen, data.begrunnelse);
       persistedFormData.clear();
     }
@@ -77,7 +82,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
       <AksjonspunktLesemodus
         aksjonspunktTekst={tekst.instruksjon}
         harAksjonspunktBlivitLostTidligare={harAksjonspunktBlivitLostTidligare}
-        åpneForRedigereInformasjon={() => endreÅpenForRedigering(true)}
+        åpneForRedigereInformasjon={() => setValue('åpenForRedigering',true)}
         />
 
       {opplysningerFraSoknaden}

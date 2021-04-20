@@ -24,6 +24,7 @@ type FormData = {
   tilDato: string;
   erSokerenMidlertidigAleneOmOmsorgen: string;
   avslagsArsakErPeriodeErIkkeOverSeksMån: string;
+  åpenForRedigering: boolean;
 };
 
 const hanteringAvDatoForDatoVelger = (soknadsdato) => {
@@ -61,7 +62,6 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   losAksjonspunkt
 }) => {
   const [harAksjonspunktBlivitLostTidligare] = useState<boolean>(aksjonspunktLost);
-  const [åpenForRedigering, endreÅpenForRedigering] = useState<boolean>(false);
 
   const methods = useForm<FormData>({
     defaultValues: {
@@ -69,12 +69,14 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
       fraDato: aksjonspunktLost ? informasjonTilLesemodus.dato.fra : 'dd.mm.åååå',
       tilDato: aksjonspunktLost ? informasjonTilLesemodus.dato.til : 'dd.mm.åååå',
       erSokerenMidlertidigAleneOmOmsorgen: aksjonspunktLost ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt) : '',
-      avslagsArsakErPeriodeErIkkeOverSeksMån: aksjonspunktLost ? booleanTilTekst(informasjonTilLesemodus.avslagsArsakErPeriodeErIkkeOverSeksMån) : ''
+      avslagsArsakErPeriodeErIkkeOverSeksMån: aksjonspunktLost ? booleanTilTekst(informasjonTilLesemodus.avslagsArsakErPeriodeErIkkeOverSeksMån) : '',
+      åpenForRedigering: false
     }
   });
 
-  const {formState: {errors}, handleSubmit, getValues, watch, unregister, register} = methods;
+  const {formState: {errors}, handleSubmit, watch, unregister, register, setValue} = methods;
   const sokerenMidlertidigAleneOmOmsorgen = watch('erSokerenMidlertidigAleneOmOmsorgen');
+  const åpenForRedigering = watch('åpenForRedigering');
   const erDatoFyltUt = dato => dato.toLowerCase() !== 'dd.mm.åååå' && dato !== '' && tekstTilBoolean(sokerenMidlertidigAleneOmOmsorgen);
   const erDatoSisteDagenIÅret = dato => dato.substr(5, 5) === '12-31' && tekstTilBoolean(sokerenMidlertidigAleneOmOmsorgen);
   const erDatoGyldig = dato => {
@@ -96,7 +98,9 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
     methods.setValue,
     {
       storage: window.sessionStorage
-    }
+    },
+    lesemodus,
+    åpenForRedigering
   );
 
   useEffect(() => {
@@ -143,14 +147,12 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
         erVilkaretForOmsorgenFor={false}
       />}
 
-      {console.log(errors)}
-      {console.log(getValues())}
       {lesemodus && !åpenForRedigering && !vedtakFattetVilkarOppfylt &&
       <VilkarMidlertidigAleneLesemodus
         soknadsopplysninger={soknadsopplysninger}
         informasjonTilLesemodus={informasjonTilLesemodus}
         harAksjonspunktBlivitLostTidligare={harAksjonspunktBlivitLostTidligare}
-        åpneForRedigereInformasjon={() => endreÅpenForRedigering(true)}
+        åpneForRedigereInformasjon={() => setValue('åpenForRedigering',true)}
       />}
 
       {(åpenForRedigering || !lesemodus && !vedtakFattetVilkarOppfylt) && <>
