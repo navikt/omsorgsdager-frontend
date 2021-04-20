@@ -5,7 +5,6 @@ import styleLesemodus from '../lesemodus/lesemodusboks.less';
 import {VilkarMidlertidigAleneDato} from '../../../types/VilkarMidlertidigAleneProps';
 
 interface Props {
-  erSokerenMidlertidigAleneOmOmsorgen: boolean;
   dato: VilkarMidlertidigAleneDato;
   begrunnelse: string;
   erVilkarOppfylt: boolean;
@@ -13,7 +12,6 @@ interface Props {
 }
 
 const OpplysningerFraVedtak: React.FunctionComponent<Props> = ({
-                                                                 erSokerenMidlertidigAleneOmOmsorgen,
                                                                  dato,
                                                                  begrunnelse,
                                                                  erVilkarOppfylt,
@@ -25,7 +23,7 @@ const OpplysningerFraVedtak: React.FunctionComponent<Props> = ({
       <p className={styleLesemodus.fritekst}>{begrunnelse}</p>
 
       <h4>{tekst.sporsmålVilkarOppfylt}</h4>
-      <p>{erSokerenMidlertidigAleneOmOmsorgen ? 'Ja' : 'Nei'}</p>
+      <p>{erVilkarOppfylt ? 'Ja' : 'Nei'}</p>
 
       {erVilkarOppfylt && <>
         <h4>I hvilken periode er vedtaket gyldig?</h4>

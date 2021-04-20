@@ -3,6 +3,7 @@ import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemod
 import OpplysningerFraVedtak from '../opplysninger-fra-vedtak/OpplysningerFraVedtak';
 import OpplysningerFraSoknad from '../opplysninger-fra-soknad/OpplysningerFraSoknad';
 import {VilkarMidlertidigInformasjonTilLesemodus, VilkarMidlertidigSoknadsopplysninger} from '../../../types/VilkarMidlertidigAleneProps';
+import tekst from '../vilkar-midlertidig-alene/vilkar-midlertidig-alene-tekst';
 
 interface OwnProps {
   soknadsopplysninger: VilkarMidlertidigSoknadsopplysninger;
@@ -20,7 +21,7 @@ const VilkarMidlertidigAleneLesemodus: React.FunctionComponent<OwnProps> = ({
   return (
     <>
       <AksjonspunktLesemodus
-        aksjonspunktTekst={'Vurder om vilkår om midlertidig alene om omsorgen er oppfylt.'}
+        aksjonspunktTekst={tekst.aksjonspunkt}
         harAksjonspunktBlivitLostTidligare={harAksjonspunktBlivitLostTidligare}
         åpneForRedigereInformasjon={åpneForRedigereInformasjon}
       />
@@ -28,7 +29,6 @@ const VilkarMidlertidigAleneLesemodus: React.FunctionComponent<OwnProps> = ({
       <OpplysningerFraSoknad {...soknadsopplysninger}/>
 
       <OpplysningerFraVedtak
-        erSokerenMidlertidigAleneOmOmsorgen={informasjonTilLesemodus.vilkarOppfylt}
         dato={{fra: informasjonTilLesemodus.dato.fra, til: informasjonTilLesemodus.dato.til}}
         begrunnelse={informasjonTilLesemodus.begrunnelse}
         erVilkarOppfylt={informasjonTilLesemodus.vilkarOppfylt}

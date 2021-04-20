@@ -39,12 +39,12 @@ describe('<VilkarMidlertidigAlene>', () => {
       <VilkarMidlertidigAlene {...props}/>
     );
 
-    const aksjonspunkt = 'Vurder om vilkår om midlertidig alene om omsorgen er oppfylt.';
+    const aksjonspunkt = 'Vurder om vilkår for midlertidig alene er oppfylt.';
     const oppgittÅrsakText = 'Oppgitt årsak';
     const oppgittPeriodeText = 'Oppgitt periode';
 
-    const begrunnelseText = 'Vurder om vilkåret for midlertidig aleneomsorg er oppfylt';
-    const vilkarOppfyltText = 'Er vilkåret om midlertidig aleneomsorg oppfylt?';
+    const begrunnelseText = 'Vurder om vilkåret for midlertidig alene er oppfylt';
+    const vilkarOppfyltText = 'Er vilkåret om midlertidig alene oppfylt?';
 
     const hentetAksjonspunkt = screen.getByText(aksjonspunkt);
     expect(hentetAksjonspunkt).toBeInTheDocument();
@@ -95,7 +95,7 @@ describe('<VilkarMidlertidigAlene>', () => {
 
     render(<VilkarMidlertidigAlene {...props}/>);
 
-    const aksjonspunkt = 'Vurder om vilkår om midlertidig alene om omsorgen er oppfylt.';
+    const aksjonspunkt = 'Vurder om vilkår for midlertidig alene er oppfylt.';
 
     const hentetAksjonspunkt = screen.getByText(aksjonspunkt);
     expect(hentetAksjonspunkt).toBeInTheDocument();
