@@ -33,11 +33,11 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
   const [harAksjonspunktBlivitLostTidligare] = useState<boolean>(aksjonspunktLost);
   const barnetEllerBarna = barn.length === 1 ? 'barnet' : 'barna';
   const tekst = {
-    instruksjon: `Vurder om søkeren har omsorgen for ${barnetEllerBarna}.`,
+    instruksjon: 'Vurder om søkeren og den andre forelderen har minst ett felles barn.',
     opplysningerFraSoknaden: 'Opplysninger fra søknaden:',
     sokersBarn: 'Søkers barn:',
-    sporsmalHarOmsorgen: `Har søker omsorgen for ${barnetEllerBarna}?`,
-    begrunnelse: `Vurder om søker har omsorgen for ${barnetEllerBarna}`,
+    sporsmalHarOmsorgen: 'Har søkeren og den andre forelderen minst ett felles barn?',
+    begrunnelse: 'Vurder om søkeren og den andre forelderen har minst ett felles barn',
     beskrivelseTilVedtakVilkar: `Søker har omsorgen for ${barnetEllerBarna}`,
     feilIngenVurdering: 'Vurdering må oppgis.',
   };

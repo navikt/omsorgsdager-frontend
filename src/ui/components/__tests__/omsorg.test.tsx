@@ -26,11 +26,11 @@ describe('<Omsorg>', () => {
 
     render(<Omsorg {...props}/>);
 
-    const aksjonspunkt = 'Vurder om søkeren har omsorgen for barnet.';
+    const aksjonspunkt = 'Vurder om søkeren og den andre forelderen har minst ett felles barn.';
     const opplysningerFraSoknad = 'Opplysninger fra søknaden:';
     const sokersBarn = props.barn[0];
-    const begrunnelse = 'Vurder om søker har omsorgen for barnet';
-    const harOmsorg = 'Har søker omsorgen for barnet?';
+    const begrunnelse = 'Vurder om søkeren og den andre forelderen har minst ett felles barn';
+    const harOmsorg = 'Har søkeren og den andre forelderen minst ett felles barn?';
 
     const hentetAksjonspunkt = screen.getByText(aksjonspunkt);
     expect(hentetAksjonspunkt).toBeInTheDocument();
@@ -72,10 +72,10 @@ describe('<Omsorg>', () => {
       <Omsorg {...props}/>
     );
 
-    const aksjonspunkt = 'Vurder om søkeren har omsorgen for barnet.';
+    const aksjonspunkt = 'Vurder om søkeren og den andre forelderen har minst ett felles barn.';
     const behandletAksjonspunkt = 'Behandlet aksjonspunkt:';
     const sokersBarn = props.barn[0];
-    const begrunnelse = 'Vurder om søker har omsorgen for barnet';
+    const begrunnelse = 'Vurder om søkeren og den andre forelderen har minst ett felles barn';
 
     const hentetAksjonspunkt = screen.getByText(aksjonspunkt);
     expect(hentetAksjonspunkt).toBeInTheDocument();

@@ -1,7 +1,6 @@
 import { Textarea} from 'nav-frontend-skjema';
 import React from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
-import {tekst} from '../vilkar-midlertidig-alene/vilkar-midlertidig-alene-tekst';
 
 interface OwnProps {
   label: string;
@@ -15,7 +14,7 @@ const TextArea: React.FunctionComponent<OwnProps> = ({label, name}) => {
     <Controller
       control={control}
       name={name}
-      rules={{required: {value: true, message: tekst.feilmedlingBegrunnelse}}}
+      rules={{required: {value: true, message: 'Vurdering må oppgis.'}}}
       render={({
                  field: {onChange, value},
                  fieldState: {error}

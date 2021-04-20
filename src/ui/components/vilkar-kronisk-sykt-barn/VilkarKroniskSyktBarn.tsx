@@ -68,7 +68,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   );
 
   useEffect(() => {
-    if (!tekstTilBoolean(harDokumentasjonOgFravaerRisiko)) {
+    if (harDokumentasjonOgFravaerRisiko !== null && harDokumentasjonOgFravaerRisiko.length > 0 && !tekstTilBoolean(harDokumentasjonOgFravaerRisiko)) {
       unregister('arsakErIkkeRiskioFraFravaer', {keepValue: true});
     } else {
       register('arsakErIkkeRiskioFraFravaer');
@@ -128,7 +128,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
             <p className="typo-feilmelding">{tekst.feilOppgiHvisDokumentasjonGirRett}</p>}
           </div>
 
-          {harDokumentasjonOgFravaerRisiko.length > 0 && !tekstTilBoolean(harDokumentasjonOgFravaerRisiko) && <div>
+          {harDokumentasjonOgFravaerRisiko !== null && harDokumentasjonOgFravaerRisiko.length > 0 && !tekstTilBoolean(harDokumentasjonOgFravaerRisiko) && <div>
             <RadioGruppe className={styleRadioknapper.horisontalPlassering} legend={tekst.velgArsak}>
               <RadioButtonWithBooleanValue label={tekst.arsakIkkeSyk}
                                            value={'false'}
