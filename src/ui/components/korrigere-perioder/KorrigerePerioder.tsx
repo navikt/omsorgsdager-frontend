@@ -1,53 +1,80 @@
 import {Hovedknapp} from 'nav-frontend-knapper';
-import {Radio, RadioGruppe, Textarea} from 'nav-frontend-skjema';
-import React, {useState} from 'react';
+import {RadioGruppe} from 'nav-frontend-skjema';
+import React from 'react';
 import {KorrigerePerioderProps} from '../../../types/KorrigerePerioderProps';
+import {booleanTilTekst} from '../../../util/stringUtils';
+import useFormPersist from '../../../util/useFormPersistUtils';
 import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
 import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
+import RadioButtonWithBooleanValue from '../react-hook-form-wrappers/RadioButton';
+import TextArea from '../react-hook-form-wrappers/TextArea';
 import styleRadioknapper from '../styles/radioknapper/radioknapper.less';
 import styles from './korrigerePerioder.less';
+import {FormProvider, useForm} from 'react-hook-form';
 
-interface Feilmeldinger {
-  begrunnelse: boolean;
-}
 
-const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = props => {
+type FormData = {
+  fravaerGrunnetSmittevernhensynEllerStengt: string;
+  begrunnelse: string;
+  åpenForRedigering: boolean;
+};
 
-  const [fravaerGrunnetSmittevernhensynEllerStengt, endrefravaerGrunnetSmittevernhensynEllerStengt] = useState<boolean>(props.aksjonspunktLost ? props.informasjonTilLesemodus.vilkarOppfylt : false);
-  const [begrunnelse, endreBegrunnelse] = useState<string>(props.aksjonspunktLost ? props.informasjonTilLesemodus.begrunnelse : '');
-  const [visFeilmeldinger, endreVisFeilmeldinger] = useState<boolean>(false);
-  const [harAksjonspunktBlivitLostTidligare] = useState<boolean>(props.aksjonspunktLost);
-  const [åpneForRedigering, endreÅpneForRedigering] = useState<boolean>(false);
+const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
+  behandlingsID,
+  aksjonspunktLost,
+  informasjonTilLesemodus,
+  losAksjonspunkt,
+  lesemodus,
+  årsakFraSoknad
+}) => {
+  const methods = useForm<FormData>({
+    defaultValues: {
+      begrunnelse: aksjonspunktLost ? informasjonTilLesemodus.begrunnelse : '',
+      fravaerGrunnetSmittevernhensynEllerStengt: aksjonspunktLost ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt) : '',
+      åpenForRedigering: false
+    }
+  });
 
-  const onSubmit = props.losAksjonspunkt;
+  const {handleSubmit, formState: {errors}, watch, setValue} = methods;
+  const åpenForRedigering = watch('åpenForRedigering');
 
-  const feilmeldinger: Feilmeldinger = {
-    begrunnelse: begrunnelse.length === 0
+  const persistedFormData = useFormPersist(
+    `${behandlingsID}-steg-saerlig-smittevern`,
+    methods.watch,
+    methods.setValue,
+    {
+      storage: window.sessionStorage
+    },
+    lesemodus,
+    åpenForRedigering
+  );
+
+  const bekreftAksjonspunkt = data => {
+    if (!errors.begrunnelse && !errors.fravaerGrunnetSmittevernhensynEllerStengt) {
+      losAksjonspunkt(data.fravaerGrunnetSmittevernhensynEllerStengt, data.begrunnelse);
+      persistedFormData.clear();
+    }
   };
-  const kanManGaVidere = !feilmeldinger.begrunnelse;
-
-  const onGaVidere = () => kanManGaVidere
-    ? onSubmit(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse)
-    : endreVisFeilmeldinger(true);
 
   const tekst = {
     instruksjon: 'Se på nødvendig dokumentasjon og tidligere utbetalte perioder, og vurder om søker har rett på å få utbetalt flere dager.',
     sporsmalErInnvilget: 'Har søker rett på å få utbetalt flere dager?',
-    begrunnelse: 'Vurder om søker har rett på å få utbetalt flere dager'
+    begrunnelse: 'Vurder om søker har rett på å få utbetalt flere dager',
+    feilIngenVurdering: 'Resultat må oppgis.'
   };
 
-  if (props.lesemodus && !åpneForRedigering) {
+  if (lesemodus && !åpenForRedigering) {
     return <div className={styleLesemodus.lesemodusboks}>
       <AksjonspunktLesemodus
         aksjonspunktTekst={tekst.instruksjon}
-        harAksjonspunktBlivitLostTidligare={harAksjonspunktBlivitLostTidligare}
-        åpneForRedigereInformasjon={() => endreÅpneForRedigering(true)}
+        harAksjonspunktBlivitLostTidligare={aksjonspunktLost}
+        åpneForRedigereInformasjon={() => setValue('åpenForRedigering', true)}
       />
       <p className={styleLesemodus.label}>{tekst.sporsmalErInnvilget}</p>
-      <p className={styleLesemodus.text}>{props.informasjonTilLesemodus.vilkarOppfylt ? 'Ja' : 'Nei'}</p>
+      <p className={styleLesemodus.text}>{informasjonTilLesemodus.vilkarOppfylt ? 'Ja' : 'Nei'}</p>
       <p className={styleLesemodus.label}>{tekst.begrunnelse}</p>
-      <p className={styleLesemodus.fritekst}>{props.informasjonTilLesemodus.begrunnelse}</p>
+      <p className={styleLesemodus.fritekst}>{informasjonTilLesemodus.begrunnelse}</p>
     </div>;
   }
 
@@ -57,35 +84,30 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = props
     <div className={styles.opplysningerFraSoknad}>
       <div>Opplysninger fra sist innsendte søknad:</div>
       <h4>Oppgitt årsak</h4>
-      <p>{props.årsakFraSoknad}</p>
+      <p>{årsakFraSoknad}</p>
     </div>
 
-    <Textarea
-      label={tekst.begrunnelse}
-      onChange={e => endreBegrunnelse(e.target.value)}
-      value={begrunnelse}
-      maxLength={0}
-      feil={visFeilmeldinger && feilmeldinger.begrunnelse && 'Begrunnelse må oppgis.'}
-    />
+    <FormProvider {...methods} >
+      <form onSubmit={handleSubmit(bekreftAksjonspunkt)}>
+        <TextArea label={tekst.begrunnelse} name={'begrunnelse'}/>
 
-    <RadioGruppe
-      className={styleRadioknapper.horisontalPlassering}
-      legend={tekst.sporsmalErInnvilget}>
-      <Radio
-        label="Ja"
-        name="fravaerGrunnetSmittevernhensynEllerStengt"
-        checked={fravaerGrunnetSmittevernhensynEllerStengt}
-        onChange={() => endrefravaerGrunnetSmittevernhensynEllerStengt(true)}
-      />
-      <Radio
-        label="Nei"
-        name="ikkeFravaerGrunnetSmittevernhensynEllerStengt"
-        checked={!fravaerGrunnetSmittevernhensynEllerStengt}
-        onChange={() => endrefravaerGrunnetSmittevernhensynEllerStengt(false)}
-      />
-    </RadioGruppe>
+          <RadioGruppe
+            legend={tekst.sporsmalErInnvilget}
+            className={styleRadioknapper.horisontalPlassering}
+          >
+            <RadioButtonWithBooleanValue label={'Ja'}
+                                         value={'true'}
+                                         name={'fravaerGrunnetSmittevernhensynEllerStengt'}/>
+            <RadioButtonWithBooleanValue label={'Nei'}
+                                         value={'false'}
+                                         name={'fravaerGrunnetSmittevernhensynEllerStengt'}/>
+          </RadioGruppe>
+          {errors.fravaerGrunnetSmittevernhensynEllerStengt &&
+          <p className="typo-feilmelding">{tekst.feilIngenVurdering}</p>}
 
-    <Hovedknapp onClick={onGaVidere}>Bekreft og fortsett</Hovedknapp>
+        <Hovedknapp className={styles.knapp} htmlType="submit">Bekreft og fortsett</Hovedknapp>
+      </form>
+    </FormProvider>
   </div>;
 };
 export default KorrigerePerioder;
