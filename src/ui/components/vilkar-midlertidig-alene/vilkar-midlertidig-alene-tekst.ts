@@ -14,6 +14,6 @@ export default tekst = {
   arsak: 'Årsak',
   arsakIkkeAleneOmsorg: 'Søker regnes ikke som å ha aleneomsorg',
   arsakPeriodeIkkeOverSeksMån: 'Varigheten er mindre enn seks måneder ',
-  feilIngenVurdering: 'Vurdering av vilkar må oppgis.',
+  feilIngenVurdering: 'Resultat må oppgis.',
   feilIngenÅrsak: 'Årsak må oppgis.'
 };

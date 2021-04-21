@@ -39,7 +39,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
     sporsmalHarOmsorgen: 'Har søkeren og den andre forelderen minst ett felles barn?',
     begrunnelse: 'Vurder om søkeren og den andre forelderen har minst ett felles barn',
     beskrivelseTilVedtakVilkar: `Søker har omsorgen for ${barnetEllerBarna}`,
-    feilIngenVurdering: 'Vurdering må oppgis.',
+    feilIngenVurdering: 'Resultat må oppgis.',
   };
 
   const methods = useForm<FormData>({

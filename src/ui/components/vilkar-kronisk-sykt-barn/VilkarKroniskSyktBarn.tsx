@@ -31,7 +31,7 @@ const tekst = {
   arsakIkkeSyk: 'Barnet har ikke en kronisk sykdom eller funksjonshemming',
   arsakIkkeRisikoFraFravaer: 'Det er ikke økt risiko for fravær fra arbeid',
   feilOppgiÅrsak: 'Årsak må oppgis.',
-  feilOppgiHvisDokumentasjonGirRett: 'Hvis dokumentasjon gir rett må oppgis.'
+  feilOppgiHvisDokumentasjonGirRett: 'Resultat må oppgis.'
 };
 
 const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps> = ({
