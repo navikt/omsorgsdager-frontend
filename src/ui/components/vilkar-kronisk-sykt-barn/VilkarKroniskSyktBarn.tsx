@@ -4,7 +4,6 @@ import {RadioGruppe} from 'nav-frontend-skjema';
 import React, {useEffect, useState} from 'react';
 import {VilkarKroniskSyktBarnProps} from '../../../types/VilkarKroniskSyktBarnProps';
 import {booleanTilTekst, tekstTilBoolean} from '../../../util/stringUtils';
-import useFormPersist from '../../../util/useFormPersistUtils';
 import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
 import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
@@ -56,16 +55,6 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   const {handleSubmit, watch, formState: {errors}, unregister, register, setValue} = methods;
   const harDokumentasjonOgFravaerRisiko = watch('harDokumentasjonOgFravaerRisiko');
   const åpenForRedigering = watch('åpenForRedigering');
-  const persistedFormData = useFormPersist(
-    `${behandlingsID}-steg-kronisk-syk`,
-    methods.watch,
-    methods.setValue,
-    {
-      storage: window.sessionStorage
-    },
-    lesemodus,
-    åpenForRedigering
-  );
 
   useEffect(() => {
     if (harDokumentasjonOgFravaerRisiko !== null && harDokumentasjonOgFravaerRisiko.length > 0 && !tekstTilBoolean(harDokumentasjonOgFravaerRisiko)) {
@@ -78,7 +67,6 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   const bekreftAksjonspunkt = data => {
     if (!errors.begrunnelse && !errors.arsakErIkkeRiskioFraFravaer && !errors.harDokumentasjonOgFravaerRisiko) {
       losAksjonspunkt(data.harDokumentasjonOgFravaerRisiko, data.begrunnelse, data.arsakErIkkeRiskioFraFravaer);
-      persistedFormData.clear();
     }
   };
 
