@@ -3,7 +3,6 @@ import {RadioGruppe} from 'nav-frontend-skjema';
 import React, {useState} from 'react';
 import {OmsorgProps} from '../../../types/OmsorgProps';
 import {booleanTilTekst} from '../../../util/stringUtils';
-import useFormPersist from '../../../util/useFormPersistUtils';
 import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
 import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
@@ -73,21 +72,9 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
   const { handleSubmit, formState: {errors}, watch, setValue} = methods;
   const åpenForRedigering = watch('åpenForRedigering');
 
-  const persistedFormData = useFormPersist(
-    `${behandlingsID}-steg-omsorgenfor`,
-    methods.watch,
-    methods.setValue,
-    {
-      storage: window.sessionStorage
-    },
-    lesemodus,
-    åpenForRedigering
-  );
-
   const bekreftAksjonspunkt = data => {
     if (!errors.begrunnelse && !errors.harOmsorgen) {
       losAksjonspunkt(data.harOmsorgen, data.begrunnelse);
-      persistedFormData.clear();
     }
   };
 

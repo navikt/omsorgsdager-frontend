@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import {Hovedknapp} from 'nav-frontend-knapper';
 import {booleanTilTekst, tekstTilBoolean} from '../../../util/stringUtils';
-import useFormPersist from '../../../util/useFormPersistUtils';
 import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import OpplysningerFraSoknad from '../opplysninger-fra-soknad/OpplysningerFraSoknad';
 import {RadioGruppe, SkjemaGruppe} from 'nav-frontend-skjema';
@@ -92,17 +91,6 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
     return false;
   };
 
-  const persistedFormData = useFormPersist(
-    `${behandlingsID}-steg-midlertidig-alene`,
-    methods.watch,
-    methods.setValue,
-    {
-      storage: window.sessionStorage
-    },
-    lesemodus,
-    åpenForRedigering
-  );
-
   useEffect(() => {
     if (sokerenMidlertidigAleneOmOmsorgen !== null && sokerenMidlertidigAleneOmOmsorgen.length > 0 && !tekstTilBoolean(sokerenMidlertidigAleneOmOmsorgen)) {
       unregister('fraDato', {keepValue: true});
@@ -131,7 +119,6 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
         til: tekstTilBoolean(erSokerenMidlertidigAleneOmOmsorgen) ? tilDato.replaceAll('.', '-') : '',
         avslagsArsakErPeriodeErIkkeOverSeksMån: tekstTilBoolean(avslagsArsakErPeriodeErIkkeOverSeksMån)
       });
-      persistedFormData.clear();
     }
   };
 
