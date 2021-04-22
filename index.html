@@ -30,7 +30,7 @@
                 props: {
                   behandlingsID: '123',
                   aksjonspunktLost: false,
-                  lesemodus: false,
+                  lesemodus: true,
                   informasjonTilLesemodus:{
                     begrunnelse: 'Begrunnelse til lesemodus',
                     vilkarOppfylt: false,
@@ -81,14 +81,15 @@
                 visKomponent: 'Omsorg',
                 props: {
                   behandlingsID: '123',
+                  fagytelseType: "OMP_KS",
                   aksjonspunktLost: false,
-                  lesemodus: false,
+                  lesemodus: true,
                   informasjonTilLesemodus:{
                     begrunnelse: 'Begrunnelse til lesemodus',
                     vilkarOppfylt: false
                   },
                   barn: ['01010050053', '34324'],
-                  vedtakFattetVilkarOppfylt: false,
+                  vedtakFattetVilkarOppfylt: true,
                   informasjonOmVilkar:{
                     begrunnelse: 'begrunnelse',
                     navnPåAksjonspunkt: 'Utvidet rett',
@@ -101,7 +102,7 @@
             };
 
             setTimeout(() => {
-              window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.vilkarMidlertidigAlene);
+              window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.omsorg);
             }, 300);
         </script>
     </body>

@@ -3,6 +3,7 @@ import {InformasjonTilLesemodus} from './informasjonTilLesemodus';
 
 export interface OmsorgProps {
   behandlingsID: string;
+  fagytelseType: string;
   lesemodus: boolean;
   aksjonspunktLost: boolean;
   informasjonTilLesemodus?: InformasjonTilLesemodus;

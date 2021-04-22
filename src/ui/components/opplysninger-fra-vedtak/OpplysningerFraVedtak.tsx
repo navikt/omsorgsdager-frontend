@@ -19,7 +19,7 @@ const OpplysningerFraVedtak: React.FunctionComponent<Props> = ({
                                                                }) => {
   return (
     <div className={styles.opplysningerFraVedtak}>
-      <h4>{tekst.begrunnelse}</h4>
+      <h4>{tekst.begrunnelseLesemodus}</h4>
       <p className={styleLesemodus.fritekst}>{begrunnelse}</p>
 
       <h4>{tekst.sporsmålVilkarOppfylt}</h4>

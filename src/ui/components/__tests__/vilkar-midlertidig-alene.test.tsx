@@ -106,6 +106,9 @@ describe('<VilkarMidlertidigAlene>', () => {
     const hentetPeriode = screen.getByText(props.soknadsopplysninger.periode);
     expect(hentetPeriode).toBeInTheDocument();
 
+    const hentetBegrunnelseTekst = screen.getByText('Vurdering');
+    expect(hentetBegrunnelseTekst).toBeInTheDocument();
+
     const hentetBegrunnelse = screen.getByText(props.informasjonTilLesemodus.begrunnelse);
     expect(hentetBegrunnelse).toBeInTheDocument();
 
