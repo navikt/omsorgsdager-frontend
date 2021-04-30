@@ -1,8 +1,10 @@
+import {FormState} from './FormState';
 import {InformasjonOmVurdertVilkar} from './InformasjonOmVurdertVilkar';
 import {InformasjonTilLesemodus} from './informasjonTilLesemodus';
 
 export interface OmsorgProps {
   behandlingsID: string;
+  fagytelseType: string;
   lesemodus: boolean;
   aksjonspunktLost: boolean;
   informasjonTilLesemodus?: InformasjonTilLesemodus;
@@ -10,4 +12,5 @@ export interface OmsorgProps {
   informasjonOmVilkar?: InformasjonOmVurdertVilkar;
   barn: string[];
   losAksjonspunkt: (harOmsorgen, begrunnelse) => void;
+  formState: FormState;
 }

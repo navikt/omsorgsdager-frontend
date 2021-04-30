@@ -4,6 +4,7 @@ export default tekst = {
   sporsmålVilkarOppfylt: 'Er vilkåret om midlertidig alene oppfylt?',
   sporsmalPeriodeVedtakGyldig: 'I hvilken periode er vedtaket gyldig?',
   begrunnelse: 'Vurder om vilkåret for midlertidig alene er oppfylt',
+  begrunnelseLesemodus: 'Vurdering',
   bekreftFortsettKnapp: 'Bekreft og fortsett',
   feilmedlingManglerDato: 'Mangler dato.',
   feilmeldingManglerTilDato: 'Mangler til-dato.',

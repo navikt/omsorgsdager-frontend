@@ -1,8 +1,9 @@
 import {render, screen} from '@testing-library/react';
 import {axe} from 'jest-axe';
 import React from 'react';
-import {VilkarMidlertidigAleneProps} from '../../../types/VilkarMidlertidigAleneProps';
-import VilkarMidlertidigAlene from '../vilkar-midlertidig-alene/VilkarMidlertidigAlene';
+import {VilkarMidlertidigAleneProps} from '../../../../types/VilkarMidlertidigAleneProps';
+import VilkarMidlertidigAlene from '../../vilkar-midlertidig-alene/VilkarMidlertidigAlene';
+import FormStateTilTest from '../dataTilTest/FormStateTilTest';
 
 describe('<VilkarMidlertidigAlene>', () => {
   test('VilkarMidlertidigAlene viser åpen aksjonspunkt som forventet', () => {
@@ -32,7 +33,8 @@ describe('<VilkarMidlertidigAlene>', () => {
         },
         avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
-      losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');}
+      losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');},
+      formState: FormStateTilTest
     } as VilkarMidlertidigAleneProps;
 
     render(
@@ -90,7 +92,8 @@ describe('<VilkarMidlertidigAlene>', () => {
         },
         avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
-      losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');}
+      losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');},
+      formState: FormStateTilTest
     } as VilkarMidlertidigAleneProps;
 
     render(<VilkarMidlertidigAlene {...props}/>);
@@ -105,6 +108,9 @@ describe('<VilkarMidlertidigAlene>', () => {
 
     const hentetPeriode = screen.getByText(props.soknadsopplysninger.periode);
     expect(hentetPeriode).toBeInTheDocument();
+
+    const hentetBegrunnelseTekst = screen.getByText('Vurdering');
+    expect(hentetBegrunnelseTekst).toBeInTheDocument();
 
     const hentetBegrunnelse = screen.getByText(props.informasjonTilLesemodus.begrunnelse);
     expect(hentetBegrunnelse).toBeInTheDocument();
@@ -143,7 +149,8 @@ describe('<VilkarMidlertidigAlene>', () => {
         },
         avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
-      losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');}
+      losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');},
+      formState: FormStateTilTest
     } as VilkarMidlertidigAleneProps;
 
     render(<VilkarMidlertidigAlene {...props}/>);
@@ -179,7 +186,8 @@ describe('<VilkarMidlertidigAlene>', () => {
         },
         avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
-      losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');}
+      losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');},
+      formState: FormStateTilTest
     } as VilkarMidlertidigAleneProps;
 
     render(<VilkarMidlertidigAlene {...props}/>);
@@ -225,7 +233,8 @@ describe('<VilkarMidlertidigAlene>', () => {
         },
         avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
-      losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');}
+      losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');},
+      formState: FormStateTilTest
     } as VilkarMidlertidigAleneProps;
 
     render(<VilkarMidlertidigAlene {...props}/>);
@@ -268,7 +277,8 @@ describe('<VilkarMidlertidigAlene>', () => {
         },
         avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
-      losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');}
+      losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');},
+      formState: FormStateTilTest
     } as VilkarMidlertidigAleneProps;
 
     const {container} = render(

@@ -4,7 +4,7 @@ import {RadioGruppe} from 'nav-frontend-skjema';
 import React, {useEffect, useState} from 'react';
 import {VilkarKroniskSyktBarnProps} from '../../../types/VilkarKroniskSyktBarnProps';
 import {booleanTilTekst, tekstTilBoolean} from '../../../util/stringUtils';
-import useFormPersist from '../../../util/useFormPersistUtils';
+import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
 import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
 import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
@@ -41,9 +41,11 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   informasjonTilLesemodus,
   aksjonspunktLost,
   vedtakFattetVilkarOppfylt,
-  informasjonOmVilkar
+  informasjonOmVilkar,
+  formState
 }) => {
   const [harAksjonspunktBlivitLostTidligare] = useState<boolean>(aksjonspunktLost);
+  const formStateKey = `${behandlingsID}-utvidetrett-ks`;
 
   const methods = useForm<FormData>({
     defaultValues: {
@@ -53,18 +55,18 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
     }
   });
 
-  const {handleSubmit, watch, formState: {errors}, unregister, register, setValue} = methods;
+  const {handleSubmit, watch, formState: {errors}, unregister, register, setValue, getValues} = methods;
   const harDokumentasjonOgFravaerRisiko = watch('harDokumentasjonOgFravaerRisiko');
   const åpenForRedigering = watch('åpenForRedigering');
-  const persistedFormData = useFormPersist(
-    `${behandlingsID}-steg-kronisk-syk`,
+
+  const mellomlagringFormState = useFormSessionStorage(
+    formStateKey,
+    formState,
     methods.watch,
     methods.setValue,
-    {
-      storage: window.sessionStorage
-    },
     lesemodus,
-    åpenForRedigering
+    åpenForRedigering,
+    getValues
   );
 
   useEffect(() => {
@@ -78,7 +80,8 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   const bekreftAksjonspunkt = data => {
     if (!errors.begrunnelse && !errors.arsakErIkkeRiskioFraFravaer && !errors.harDokumentasjonOgFravaerRisiko) {
       losAksjonspunkt(data.harDokumentasjonOgFravaerRisiko, data.begrunnelse, data.arsakErIkkeRiskioFraFravaer);
-      persistedFormData.clear();
+      setValue('åpenForRedigering', false);
+      mellomlagringFormState.clear();
     }
   };
 

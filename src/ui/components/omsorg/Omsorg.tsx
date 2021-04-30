@@ -2,8 +2,8 @@ import {Hovedknapp} from 'nav-frontend-knapper';
 import {RadioGruppe} from 'nav-frontend-skjema';
 import React, {useState} from 'react';
 import {OmsorgProps} from '../../../types/OmsorgProps';
-import {booleanTilTekst} from '../../../util/stringUtils';
-import useFormPersist from '../../../util/useFormPersistUtils';
+import {booleanTilTekst } from '../../../util/stringUtils';
+import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
 import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
 import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
@@ -20,26 +20,47 @@ type FormData = {
   åpenForRedigering: boolean;
 };
 
+enum FagYtelseType {
+  KRONISK_SYK = 'OMP_KS',
+  MIDLERTIDIG_ALENE = 'OMP_MA'
+}
 const Omsorg: React.FunctionComponent<OmsorgProps> = ({
   behandlingsID,
+  fagytelseType,
   aksjonspunktLost,
   barn,
   vedtakFattetVilkarOppfylt,
   informasjonOmVilkar,
   losAksjonspunkt,
   informasjonTilLesemodus,
-  lesemodus
+  lesemodus,
+  formState
 }) => {
   const [harAksjonspunktBlivitLostTidligare] = useState<boolean>(aksjonspunktLost);
   const barnetEllerBarna = barn.length === 1 ? 'barnet' : 'barna';
-  const tekst = {
+  const formStateKey = `${behandlingsID}-omsorgenfor`;
+
+  const tekstMidlertidigAlene = {
     instruksjon: 'Vurder om søkeren og den andre forelderen har minst ett felles barn.',
-    opplysningerFraSoknaden: 'Opplysninger fra søknaden:',
-    sokersBarn: 'Søkers barn:',
     sporsmalHarOmsorgen: 'Har søkeren og den andre forelderen minst ett felles barn?',
     begrunnelse: 'Vurder om søkeren og den andre forelderen har minst ett felles barn',
+
+  };
+  const tekstKroniskSyk = {
+    instruksjon: `Vurder om søkeren har omsorgen for ${barnetEllerBarna}.`,
+    sporsmalHarOmsorgen: `Har søker omsorgen for ${barnetEllerBarna}?`,
+    begrunnelse: `Vurder om søker har omsorgen for ${barnetEllerBarna}`,
+  };
+
+  const tekst = {
+    opplysningerFraSoknaden: 'Opplysninger fra søknaden:',
+    sokersBarn: 'Søkers barn:',
     beskrivelseTilVedtakVilkar: `Søker har omsorgen for ${barnetEllerBarna}`,
     feilIngenVurdering: 'Resultat må oppgis.',
+    instruksjon: fagytelseType === FagYtelseType.KRONISK_SYK ? tekstKroniskSyk.instruksjon : tekstMidlertidigAlene.instruksjon,
+    sporsmalHarOmsorgen: fagytelseType === FagYtelseType.KRONISK_SYK ? tekstKroniskSyk.sporsmalHarOmsorgen : tekstMidlertidigAlene.sporsmalHarOmsorgen,
+    begrunnelse: fagytelseType === FagYtelseType.KRONISK_SYK ? tekstKroniskSyk.begrunnelse : tekstMidlertidigAlene.begrunnelse,
+    begrunnelseLesemodus: 'Vurdering'
   };
 
   const methods = useForm<FormData>({
@@ -50,24 +71,24 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
     }
   });
 
-  const { handleSubmit, formState: {errors}, watch, setValue} = methods;
+  const { handleSubmit, formState: {errors}, watch, setValue, getValues} = methods;
   const åpenForRedigering = watch('åpenForRedigering');
 
-  const persistedFormData = useFormPersist(
-    `${behandlingsID}-steg-omsorgenfor`,
+  const mellomlagringFormState = useFormSessionStorage(
+    formStateKey,
+    formState,
     methods.watch,
     methods.setValue,
-    {
-      storage: window.sessionStorage
-    },
     lesemodus,
-    åpenForRedigering
+    åpenForRedigering,
+    getValues
   );
 
   const bekreftAksjonspunkt = data => {
     if (!errors.begrunnelse && !errors.harOmsorgen) {
       losAksjonspunkt(data.harOmsorgen, data.begrunnelse);
-      persistedFormData.clear();
+      setValue('åpenForRedigering', false);
+      mellomlagringFormState.clear();
     }
   };
 
@@ -87,7 +108,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
 
       {opplysningerFraSoknaden}
         <hr/>
-        <p className={styleLesemodus.label}>{tekst.begrunnelse}</p>
+        <p className={styleLesemodus.label}>{tekst.begrunnelseLesemodus}</p>
         <p className={styleLesemodus.fritekst}>{informasjonTilLesemodus.begrunnelse}</p>
       <p className={styleLesemodus.label}>{tekst.sporsmalHarOmsorgen}</p>
       <p className={styleLesemodus.text}>{informasjonTilLesemodus.vilkarOppfylt ? 'Ja' : 'Nei'}</p>
