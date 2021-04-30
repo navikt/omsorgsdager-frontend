@@ -1,8 +1,8 @@
 import {render, screen} from '@testing-library/react';
 import {axe} from 'jest-axe';
 import React from 'react';
-import {KorrigerePerioderProps} from '../../../types/KorrigerePerioderProps';
-import KorrigerePerioder from '../korrigere-perioder/KorrigerePerioder';
+import {KorrigerePerioderProps} from '../../../../types/KorrigerePerioderProps';
+import KorrigerePerioder from '../../korrigere-perioder/KorrigerePerioder';
 
 describe('<KorrigerePerioder>', () => {
   test('KorrigerePerioder viser åpen aksjonspunkt som forventet', () => {

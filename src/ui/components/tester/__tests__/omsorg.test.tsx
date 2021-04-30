@@ -1,7 +1,8 @@
 import React from 'react';
-import Omsorg from '../omsorg/Omsorg';
+import Omsorg from '../../omsorg/Omsorg';
 import {render, screen} from '@testing-library/react';
 import {axe} from 'jest-axe';
+import FormStateTilTest from '../dataTilTest/FormStateTilTest';
 
 describe('<Omsorg>', () => {
   test('Omsorg viser åpen aksjonspunkt for midlertidig alene som forventet', () => {
@@ -22,7 +23,8 @@ describe('<Omsorg>', () => {
         vilkarOppfylt: true,
         vilkar: '§ 9-3 vilkar'
       },
-      losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse)
+      losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse),
+      formState: FormStateTilTest
     };
 
     render(<Omsorg {...props}/>);
@@ -67,7 +69,8 @@ describe('<Omsorg>', () => {
         vilkarOppfylt: true,
         vilkar: '§ 9-3 vilkar'
       },
-      losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse)
+      losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse),
+      formState: FormStateTilTest
     };
 
     render(<Omsorg {...props}/>);
@@ -112,7 +115,8 @@ describe('<Omsorg>', () => {
         vilkarOppfylt: true,
         vilkar: '§ 9-3 vilkar'
       },
-      losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse)
+      losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse),
+      formState: FormStateTilTest
     };
 
     render(
@@ -162,7 +166,8 @@ describe('<Omsorg>', () => {
         vilkarOppfylt: true,
         vilkar: '§ 9-3 vilkar'
       },
-      losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse)
+      losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse),
+      formState: FormStateTilTest
     };
 
     render(
@@ -211,7 +216,8 @@ describe('<Omsorg>', () => {
         vilkarOppfylt: true,
         vilkar: '§ 9-3 vilkar'
       },
-      losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse)
+      losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse),
+      formState: FormStateTilTest
     };
 
     render(<Omsorg {...props}/>);
@@ -238,7 +244,8 @@ describe('<Omsorg>', () => {
         vilkarOppfylt: true,
         vilkar: '§ 9-3 vilkar'
       },
-      losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse)
+      losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse),
+      formState: FormStateTilTest
     };
 
     render(<Omsorg {...props}/>);
@@ -277,7 +284,8 @@ describe('<Omsorg>', () => {
         vilkarOppfylt: false,
         vilkar: '§ 9-3 vilkar'
       },
-      losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse)
+      losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse),
+      formState: FormStateTilTest
     };
 
     render(<Omsorg {...props}/>);
@@ -311,7 +319,8 @@ describe('<Omsorg>', () => {
         vilkarOppfylt: true,
         vilkar: '§ 9-3 vilkar'
       },
-      losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse)
+      losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse),
+      formState: FormStateTilTest
     };
 
     const {container} = render(<Omsorg {...props}/>);

@@ -2,7 +2,8 @@ import {Hovedknapp} from 'nav-frontend-knapper';
 import {RadioGruppe} from 'nav-frontend-skjema';
 import React, {useState} from 'react';
 import {OmsorgProps} from '../../../types/OmsorgProps';
-import {booleanTilTekst} from '../../../util/stringUtils';
+import {booleanTilTekst } from '../../../util/stringUtils';
+import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
 import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
 import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
@@ -32,10 +33,12 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
   informasjonOmVilkar,
   losAksjonspunkt,
   informasjonTilLesemodus,
-  lesemodus
+  lesemodus,
+  formState
 }) => {
   const [harAksjonspunktBlivitLostTidligare] = useState<boolean>(aksjonspunktLost);
   const barnetEllerBarna = barn.length === 1 ? 'barnet' : 'barna';
+  const formStateKey = `${behandlingsID}-omsorgenfor`;
 
   const tekstMidlertidigAlene = {
     instruksjon: 'Vurder om søkeren og den andre forelderen har minst ett felles barn.',
@@ -60,7 +63,6 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
     begrunnelseLesemodus: 'Vurdering'
   };
 
-
   const methods = useForm<FormData>({
     defaultValues: {
       begrunnelse: aksjonspunktLost ? informasjonTilLesemodus.begrunnelse : '',
@@ -69,12 +71,24 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
     }
   });
 
-  const { handleSubmit, formState: {errors}, watch, setValue} = methods;
+  const { handleSubmit, formState: {errors}, watch, setValue, getValues} = methods;
   const åpenForRedigering = watch('åpenForRedigering');
+
+  const mellomlagringFormState = useFormSessionStorage(
+    formStateKey,
+    formState,
+    methods.watch,
+    methods.setValue,
+    lesemodus,
+    åpenForRedigering,
+    getValues
+  );
 
   const bekreftAksjonspunkt = data => {
     if (!errors.begrunnelse && !errors.harOmsorgen) {
       losAksjonspunkt(data.harOmsorgen, data.begrunnelse);
+      setValue('åpenForRedigering', false);
+      mellomlagringFormState.clear();
     }
   };
 
