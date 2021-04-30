@@ -1,3 +1,4 @@
+import {FormState} from './FormState';
 import {InformasjonOmVurdertVilkar} from './InformasjonOmVurdertVilkar';
 
 export interface VilkarKroniskSyktBarnProps {
@@ -8,6 +9,7 @@ export interface VilkarKroniskSyktBarnProps {
   lesemodus: boolean;
   informasjonTilLesemodus?: InformasjonTilLesemodusKroniskSyk;
   losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse, avslagsKode) => void;
+  formState: FormState;
 }
 
 export interface InformasjonTilLesemodusKroniskSyk{

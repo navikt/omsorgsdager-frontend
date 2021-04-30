@@ -1,8 +1,9 @@
 import {render, screen} from '@testing-library/react';
 import {axe} from 'jest-axe';
 import React from 'react';
-import {VilkarKroniskSyktBarnProps} from '../../../types/VilkarKroniskSyktBarnProps';
-import VilkarKroniskSyktBarn from '../vilkar-kronisk-sykt-barn/VilkarKroniskSyktBarn';
+import {VilkarKroniskSyktBarnProps} from '../../../../types/VilkarKroniskSyktBarnProps';
+import VilkarKroniskSyktBarn from '../../vilkar-kronisk-sykt-barn/VilkarKroniskSyktBarn';
+import FormStateTilTest from '../dataTilTest/FormStateTilTest';
 
 describe('<VilkarKroniskSyktBarn>', () => {
   test('VilkarKroniskSyktBarn viser åpen aksjonspunkt som forventet', () => {
@@ -22,7 +23,8 @@ describe('<VilkarKroniskSyktBarn>', () => {
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
         vilkar: '§ 9-3 vilkar'
-      }
+      },
+      formState: FormStateTilTest
     } as VilkarKroniskSyktBarnProps;
 
     render(<VilkarKroniskSyktBarn {...props}/>);
@@ -59,7 +61,8 @@ describe('<VilkarKroniskSyktBarn>', () => {
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
         vilkar: '§ 9-3 vilkar'
-      }
+      },
+      formState: FormStateTilTest
     } as VilkarKroniskSyktBarnProps;
 
     render(<VilkarKroniskSyktBarn {...props}/>);
@@ -96,7 +99,8 @@ describe('<VilkarKroniskSyktBarn>', () => {
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
         vilkar: '§ 9-3 vilkar'
-      }
+      },
+      formState: FormStateTilTest
     } as VilkarKroniskSyktBarnProps;
 
     render(<VilkarKroniskSyktBarn {...props}/>);
@@ -122,7 +126,8 @@ describe('<VilkarKroniskSyktBarn>', () => {
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: true,
         vilkar: '§ 9-3 vilkar'
-      }
+      },
+      formState: FormStateTilTest
     } as VilkarKroniskSyktBarnProps;
 
     render(<VilkarKroniskSyktBarn {...props}/>);
@@ -158,7 +163,8 @@ describe('<VilkarKroniskSyktBarn>', () => {
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: false,
         vilkar: '§ 9-3 vilkar'
-      }
+      },
+      formState: FormStateTilTest
     } as VilkarKroniskSyktBarnProps;
 
     render(<VilkarKroniskSyktBarn {...props}/>);
@@ -191,7 +197,8 @@ describe('<VilkarKroniskSyktBarn>', () => {
         navnPåAksjonspunkt: 'Utvidet rett',
         vilkarOppfylt: false,
         vilkar: '§ 9-3 vilkar'
-      }
+      },
+      formState: FormStateTilTest
     } as VilkarKroniskSyktBarnProps;
 
     const {container} = render(<VilkarKroniskSyktBarn {...props}/>);

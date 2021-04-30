@@ -1,3 +1,4 @@
+import {FormState} from './FormState';
 import {InformasjonOmVurdertVilkar} from './InformasjonOmVurdertVilkar';
 import {InformasjonTilLesemodus} from './informasjonTilLesemodus';
 
@@ -11,4 +12,5 @@ export interface OmsorgProps {
   informasjonOmVilkar?: InformasjonOmVurdertVilkar;
   barn: string[];
   losAksjonspunkt: (harOmsorgen, begrunnelse) => void;
+  formState: FormState;
 }

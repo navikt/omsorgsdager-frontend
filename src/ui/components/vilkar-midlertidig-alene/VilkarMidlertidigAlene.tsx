@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import {Hovedknapp} from 'nav-frontend-knapper';
 import {booleanTilTekst, tekstTilBoolean} from '../../../util/stringUtils';
+import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
 import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import OpplysningerFraSoknad from '../opplysninger-fra-soknad/OpplysningerFraSoknad';
 import {RadioGruppe, SkjemaGruppe} from 'nav-frontend-skjema';
@@ -58,9 +59,11 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   informasjonTilLesemodus,
   vedtakFattetVilkarOppfylt,
   informasjonOmVilkar,
-  losAksjonspunkt
+  losAksjonspunkt,
+  formState
 }) => {
   const [harAksjonspunktBlivitLostTidligare] = useState<boolean>(aksjonspunktLost);
+  const formStateKey = `${behandlingsID}-utvidetrett-ma`;
 
   const methods = useForm<FormData>({
     defaultValues: {
@@ -73,7 +76,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
     }
   });
 
-  const {formState: {errors}, handleSubmit, watch, unregister, register, setValue} = methods;
+  const {formState: {errors}, getValues, handleSubmit, watch, unregister, register, setValue} = methods;
   const sokerenMidlertidigAleneOmOmsorgen = watch('erSokerenMidlertidigAleneOmOmsorgen');
   const åpenForRedigering = watch('åpenForRedigering');
   const erDatoFyltUt = dato => dato.toLowerCase() !== 'dd.mm.åååå' && dato !== '' && tekstTilBoolean(sokerenMidlertidigAleneOmOmsorgen);
@@ -91,6 +94,16 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
     return false;
   };
 
+  const mellomlagringFormState = useFormSessionStorage(
+    formStateKey,
+    formState,
+    methods.watch,
+    methods.setValue,
+    lesemodus,
+    åpenForRedigering,
+    getValues
+  );
+
   useEffect(() => {
     if (sokerenMidlertidigAleneOmOmsorgen !== null && sokerenMidlertidigAleneOmOmsorgen.length > 0 && !tekstTilBoolean(sokerenMidlertidigAleneOmOmsorgen)) {
       unregister('fraDato', {keepValue: true});
@@ -102,7 +115,6 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
       register('tilDato');
     }
   }, [sokerenMidlertidigAleneOmOmsorgen]);
-
 
   const bekreftAksjonspunkt = ({
     begrunnelse,
@@ -119,9 +131,10 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
         til: tekstTilBoolean(erSokerenMidlertidigAleneOmOmsorgen) ? tilDato.replaceAll('.', '-') : '',
         avslagsArsakErPeriodeErIkkeOverSeksMån: tekstTilBoolean(avslagsArsakErPeriodeErIkkeOverSeksMån)
       });
+      setValue('åpenForRedigering', false);
+      mellomlagringFormState.clear();
     }
   };
-
 
   return (
     <div
