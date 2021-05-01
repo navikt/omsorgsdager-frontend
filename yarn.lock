@@ -8017,10 +8017,10 @@ react-dom@^16.14.0:
     prop-types "^15.6.2"
     scheduler "^0.19.1"
 
-react-hook-form@^7.0.7:
-  version "7.0.7"
-  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.0.7.tgz#16e39c0afc41c8263938c3602537db1d1f3b1131"
-  integrity sha512-PUiiEzAsLoO0hlO9Q3z/smDQ0mgPffL52QhLYvtjK11vDkXUgDc1l3ZXXvdeR4+VGwJNIuhl0bboFkhJN3E+Qg==
+react-hook-form@^7.3.6:
+  version "7.3.6"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.3.6.tgz#21da0f1aff834a9ae9f80a604ebbc28c5b229f79"
+  integrity sha512-3LRjxMDn+CUKZ2G9TA9BgNQXX7M9I8WcE5GkcMNg6eOHa9mFc+uF6rKY9QAKlNNjKhdL1atOmOTVBEj2gJVuEQ==
 
 react-is@^16.8.1, react-is@^16.8.4:
   version "16.13.1"

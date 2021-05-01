@@ -1,3 +1,4 @@
+import {FormState} from './FormState';
 import {InformasjonTilLesemodus} from './informasjonTilLesemodus';
 
 export interface KorrigerePerioderProps {
@@ -7,4 +8,5 @@ export interface KorrigerePerioderProps {
   årsakFraSoknad: string;
   informasjonTilLesemodus?: InformasjonTilLesemodus;
   losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => void;
+  formState: FormState;
 }

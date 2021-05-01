@@ -3,7 +3,7 @@ import {RadioGruppe} from 'nav-frontend-skjema';
 import React from 'react';
 import {KorrigerePerioderProps} from '../../../types/KorrigerePerioderProps';
 import {booleanTilTekst} from '../../../util/stringUtils';
-import useFormPersist from '../../../util/useFormPersistUtils';
+import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
 import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
 import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
@@ -13,11 +13,17 @@ import styleRadioknapper from '../styles/radioknapper/radioknapper.less';
 import styles from './korrigerePerioder.less';
 import {FormProvider, useForm} from 'react-hook-form';
 
-
 type FormData = {
   fravaerGrunnetSmittevernhensynEllerStengt: string;
   begrunnelse: string;
   åpenForRedigering: boolean;
+};
+
+const tekst = {
+  instruksjon: 'Se på nødvendig dokumentasjon og tidligere utbetalte perioder, og vurder om søker har rett på å få utbetalt flere dager.',
+  sporsmalErInnvilget: 'Har søker rett på å få utbetalt flere dager?',
+  begrunnelse: 'Vurder om søker har rett på å få utbetalt flere dager',
+  feilIngenVurdering: 'Resultat må oppgis.'
 };
 
 const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
@@ -26,7 +32,8 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
   informasjonTilLesemodus,
   losAksjonspunkt,
   lesemodus,
-  årsakFraSoknad
+  årsakFraSoknad,
+  formState
 }) => {
   const methods = useForm<FormData>({
     defaultValues: {
@@ -36,32 +43,26 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
     }
   });
 
-  const {handleSubmit, formState: {errors}, watch, setValue} = methods;
+  const {handleSubmit, formState: {errors}, watch, setValue, getValues} = methods;
   const åpenForRedigering = watch('åpenForRedigering');
+  const formStateKey = `${behandlingsID}-saerlig-smittevern`;
 
-  const persistedFormData = useFormPersist(
-    `${behandlingsID}-steg-saerlig-smittevern`,
+  const mellomlagringFormState = useFormSessionStorage(
+    formStateKey,
+    formState,
     methods.watch,
     methods.setValue,
-    {
-      storage: window.sessionStorage
-    },
     lesemodus,
-    åpenForRedigering
+    åpenForRedigering,
+    getValues
   );
 
   const bekreftAksjonspunkt = data => {
     if (!errors.begrunnelse && !errors.fravaerGrunnetSmittevernhensynEllerStengt) {
       losAksjonspunkt(data.fravaerGrunnetSmittevernhensynEllerStengt, data.begrunnelse);
-      persistedFormData.clear();
+      setValue('åpenForRedigering', false);
+      mellomlagringFormState.fjerneState();
     }
-  };
-
-  const tekst = {
-    instruksjon: 'Se på nødvendig dokumentasjon og tidligere utbetalte perioder, og vurder om søker har rett på å få utbetalt flere dager.',
-    sporsmalErInnvilget: 'Har søker rett på å få utbetalt flere dager?',
-    begrunnelse: 'Vurder om søker har rett på å få utbetalt flere dager',
-    feilIngenVurdering: 'Resultat må oppgis.'
   };
 
   if (lesemodus && !åpenForRedigering) {
@@ -90,7 +91,6 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
     <FormProvider {...methods} >
       <form onSubmit={handleSubmit(bekreftAksjonspunkt)}>
         <TextArea label={tekst.begrunnelse} name={'begrunnelse'}/>
-
           <RadioGruppe
             legend={tekst.sporsmalErInnvilget}
             className={styleRadioknapper.horisontalPlassering}
@@ -104,7 +104,6 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
           </RadioGruppe>
           {errors.fravaerGrunnetSmittevernhensynEllerStengt &&
           <p className="typo-feilmelding">{tekst.feilIngenVurdering}</p>}
-
         <Hovedknapp className={styles.knapp} htmlType="submit">Bekreft og fortsett</Hovedknapp>
       </form>
     </FormProvider>

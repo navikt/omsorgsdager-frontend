@@ -90,7 +90,7 @@
         "react": "^16.14.0",
         "react-day-picker": "^7.4.8",
         "react-dom": "^16.14.0",
-        "react-hook-form": "^7.0.7"
+        "react-hook-form": "^7.3.6"
     },
     "jest": {
         "roots": [
