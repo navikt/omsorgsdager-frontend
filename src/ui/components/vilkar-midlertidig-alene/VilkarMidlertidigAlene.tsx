@@ -5,7 +5,7 @@ import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
 import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import OpplysningerFraSoknad from '../opplysninger-fra-soknad/OpplysningerFraSoknad';
 import {RadioGruppe, SkjemaGruppe} from 'nav-frontend-skjema';
-import React, {useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import DatePicker from '../react-hook-form-wrappers/DatePicker';
 import RadioButtonWithBooleanValue from '../react-hook-form-wrappers/RadioButton';
 import TextArea from '../react-hook-form-wrappers/TextArea';
@@ -66,6 +66,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   const formStateKey = `${behandlingsID}-utvidetrett-ma`;
 
   const methods = useForm<FormData>({
+    reValidateMode: 'onSubmit',
     defaultValues: {
       begrunnelse: aksjonspunktLost ? informasjonTilLesemodus.begrunnelse : '',
       fraDato: aksjonspunktLost ? informasjonTilLesemodus.dato.fra : soknadsopplysninger.soknadsdato,
@@ -76,22 +77,31 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
     }
   });
 
-  const {formState: {errors}, getValues, handleSubmit, watch, unregister, register, setValue} = methods;
+  const {formState: {errors}, getValues, handleSubmit, watch, setValue} = methods;
   const sokerenMidlertidigAleneOmOmsorgen = watch('erSokerenMidlertidigAleneOmOmsorgen');
   const åpenForRedigering = watch('åpenForRedigering');
-  const erDatoFyltUt = dato => dato.toLowerCase() !== 'dd.mm.åååå' && dato !== '' && tekstTilBoolean(sokerenMidlertidigAleneOmOmsorgen);
-  const erDatoSisteDagenIÅret = dato => dato.substr(5, 5) === '12-31' && tekstTilBoolean(sokerenMidlertidigAleneOmOmsorgen);
-  const erDatoGyldig = dato => {
 
+  const erDatoFyltUt = dato => {
+    if(!tekstTilBoolean(getValues().erSokerenMidlertidigAleneOmOmsorgen)) return true;
+    return dato.toLowerCase() !== 'dd.mm.åååå' && dato !== '';
+  };
+  const erDatoSisteDagenIÅret = dato => {
+    if(!tekstTilBoolean(getValues().erSokerenMidlertidigAleneOmOmsorgen)) return true;
+    return dato.substr(5, 5) === '12-31';
+  };
+  const erDatoGyldig = dato => {
+    if(!tekstTilBoolean(getValues().erSokerenMidlertidigAleneOmOmsorgen)) return true;
     const år = parseInt(dato.substr(0, 4));
     const måned = parseInt(dato.substr(5, 2)) - 1;
     const dag = parseInt(dato.substr(8, 2));
     const parsedDato = new Date(år, måned, dag);
 
-    if (parsedDato.getDate() === dag) {
-      return true;
-    }
+    if (parsedDato.getDate() === dag) return true;
     return false;
+  };
+  const erAvslagsArsakErPeriodeErIkkeOverSeksMånGyldig = val => {
+    if(tekstTilBoolean(getValues().erSokerenMidlertidigAleneOmOmsorgen)) return true;
+    return val !== null && val.length > 0;
   };
 
   const mellomlagringFormState = useFormSessionStorage(
@@ -103,18 +113,6 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
     åpenForRedigering,
     getValues
   );
-
-  useEffect(() => {
-    if (sokerenMidlertidigAleneOmOmsorgen !== null && sokerenMidlertidigAleneOmOmsorgen.length > 0 && !tekstTilBoolean(sokerenMidlertidigAleneOmOmsorgen)) {
-      unregister('fraDato', {keepValue: true});
-      unregister('tilDato', {keepValue: true});
-      register('avslagsArsakErPeriodeErIkkeOverSeksMån');
-    } else {
-      unregister('avslagsArsakErPeriodeErIkkeOverSeksMån', {keepValue: true});
-      register('fraDato');
-      register('tilDato');
-    }
-  }, [sokerenMidlertidigAleneOmOmsorgen]);
 
   const bekreftAksjonspunkt = ({
     begrunnelse,
@@ -132,7 +130,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
         avslagsArsakErPeriodeErIkkeOverSeksMån: tekstTilBoolean(avslagsArsakErPeriodeErIkkeOverSeksMån)
       });
       setValue('åpenForRedigering', false);
-      mellomlagringFormState.clear();
+      mellomlagringFormState.fjerneState();
     }
   };
 
@@ -175,20 +173,22 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
               {errors.erSokerenMidlertidigAleneOmOmsorgen && <p className="typo-feilmelding">{tekst.feilIngenVurdering}</p>}
             </div>
 
-            {sokerenMidlertidigAleneOmOmsorgen !== null && sokerenMidlertidigAleneOmOmsorgen.length > 0 && !tekstTilBoolean(sokerenMidlertidigAleneOmOmsorgen) && <div>
-              <RadioGruppe className={styleRadioknapper.horisontalPlassering} legend={tekst.velgArsak}>
+            {sokerenMidlertidigAleneOmOmsorgen.length > 0 && !tekstTilBoolean(sokerenMidlertidigAleneOmOmsorgen) && <div>
+              <RadioGruppe className={classNames(styleRadioknapper.horisontalPlassering, styles.avslagsArsakErPeriodeErIkkeOverSeksMån)} legend={tekst.velgArsak}>
                 <RadioButtonWithBooleanValue label={tekst.arsakIkkeAleneOmsorg}
                                              value={'false'}
-                                             name={'avslagsArsakErPeriodeErIkkeOverSeksMån'}/>
+                                             name={'avslagsArsakErPeriodeErIkkeOverSeksMån'}
+                                             valideringsFunksjoner={erAvslagsArsakErPeriodeErIkkeOverSeksMånGyldig}/>
                 <RadioButtonWithBooleanValue label={tekst.arsakPeriodeIkkeOverSeksMån}
                                              value={'true'}
-                                             name={'avslagsArsakErPeriodeErIkkeOverSeksMån'}/>
+                                             name={'avslagsArsakErPeriodeErIkkeOverSeksMån'}
+                                             valideringsFunksjoner={erAvslagsArsakErPeriodeErIkkeOverSeksMånGyldig}/>
               </RadioGruppe>
               {errors.avslagsArsakErPeriodeErIkkeOverSeksMån && <p className="typo-feilmelding">{tekst.feilIngenÅrsak}</p>}
             </div>
             }
 
-            {sokerenMidlertidigAleneOmOmsorgen !== null && sokerenMidlertidigAleneOmOmsorgen.length > 0 && tekstTilBoolean(sokerenMidlertidigAleneOmOmsorgen) &&
+            {tekstTilBoolean(sokerenMidlertidigAleneOmOmsorgen) &&
             <SkjemaGruppe className={styles.gyldigVedtaksPeriode}
                           legend={tekst.sporsmalPeriodeVedtakGyldig}
                           feil={errors.fraDato && errors.fraDato.type === 'erDatoFyltUt' && tekst.feilmedlingManglerFraDato

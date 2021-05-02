@@ -3,10 +3,12 @@ import {axe} from 'jest-axe';
 import React from 'react';
 import {KorrigerePerioderProps} from '../../../../types/KorrigerePerioderProps';
 import KorrigerePerioder from '../../korrigere-perioder/KorrigerePerioder';
+import FormStateTilTest from '../dataTilTest/FormStateTilTest';
 
 describe('<KorrigerePerioder>', () => {
   test('KorrigerePerioder viser åpen aksjonspunkt som forventet', () => {
     const props = {
+      behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: false,
       årsakFraSoknad: 'Årsak',
@@ -14,7 +16,8 @@ describe('<KorrigerePerioder>', () => {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false
       },
-      losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse)
+      losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse),
+      formState: FormStateTilTest
     } as KorrigerePerioderProps;
 
     render(<KorrigerePerioder {...props}/>);
@@ -43,6 +46,7 @@ describe('<KorrigerePerioder>', () => {
 
   test('KorrigerePerioder viser lesemodus', () => {
     const props = {
+      behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: true,
       årsakFraSoknad: 'Årsak',
@@ -50,7 +54,8 @@ describe('<KorrigerePerioder>', () => {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false
       },
-      losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse)
+      losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse),
+      formState: FormStateTilTest
     } as KorrigerePerioderProps;
     render(<KorrigerePerioder {...props}/>);
 
@@ -71,6 +76,7 @@ describe('<KorrigerePerioder>', () => {
 
   test('KorrigerePerioder viser lesemodus med redigering', () => {
     const props = {
+      behandlingsID: '123',
       aksjonspunktLost: true,
       lesemodus: true,
       årsakFraSoknad: 'Årsak',
@@ -78,7 +84,8 @@ describe('<KorrigerePerioder>', () => {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false
       },
-      losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse)
+      losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse),
+      formState: FormStateTilTest
     } as KorrigerePerioderProps;
     render(<KorrigerePerioder {...props}/>);
 
@@ -88,6 +95,7 @@ describe('<KorrigerePerioder>', () => {
 
   test('Den har ingen a11y violations', async () => {
     const props = {
+      behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: true,
       årsakFraSoknad: 'Årsak',
@@ -95,7 +103,8 @@ describe('<KorrigerePerioder>', () => {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false
       },
-      losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse)
+      losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse),
+      formState: FormStateTilTest
     } as KorrigerePerioderProps;
 
     const {container} = render(<KorrigerePerioder {...props}/>);

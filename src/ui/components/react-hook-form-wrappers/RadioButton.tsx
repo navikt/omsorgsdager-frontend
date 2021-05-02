@@ -6,11 +6,13 @@ interface OwnProps{
   label: string;
   value: string;
   name: `${string}`;
+  valideringsFunksjoner?: any;
 }
 
-const RadioButtonWithBooleanValue: React.FunctionComponent<OwnProps> = ({label, value, name}) => {
+const RadioButtonWithBooleanValue: React.FunctionComponent<OwnProps> = ({label, value, name, valideringsFunksjoner}) => {
   const { register} = useFormContext();
-  const radio = register(name, {required: true});
+  const valideringsValg = valideringsFunksjoner !== undefined ? {validate: valideringsFunksjoner} : {required: true};
+  const radio = register(name, valideringsValg);
 
   return(
     <Radio label={label}

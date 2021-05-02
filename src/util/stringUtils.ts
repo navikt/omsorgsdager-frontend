@@ -1,5 +1,9 @@
 export const tekstTilBoolean = (string: string) => {
-  return string.toLowerCase() === 'true' ? true : false;
+  if(string !== undefined && string !== null && string.length > 0){
+    return string.toLowerCase() === 'true' ? true : false;
+  }else{
+    return false;
+  }
 };
 
 export const booleanTilTekst = (bool: boolean) => {

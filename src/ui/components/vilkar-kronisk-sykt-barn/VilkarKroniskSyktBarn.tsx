@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import {Hovedknapp} from 'nav-frontend-knapper';
 import {RadioGruppe} from 'nav-frontend-skjema';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {VilkarKroniskSyktBarnProps} from '../../../types/VilkarKroniskSyktBarnProps';
 import {booleanTilTekst, tekstTilBoolean} from '../../../util/stringUtils';
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
@@ -44,9 +44,6 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   informasjonOmVilkar,
   formState
 }) => {
-  const [harAksjonspunktBlivitLostTidligare] = useState<boolean>(aksjonspunktLost);
-  const formStateKey = `${behandlingsID}-utvidetrett-ks`;
-
   const methods = useForm<FormData>({
     defaultValues: {
       begrunnelse: aksjonspunktLost ? informasjonTilLesemodus.begrunnelse : '',
@@ -55,9 +52,14 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
     }
   });
 
-  const {handleSubmit, watch, formState: {errors}, unregister, register, setValue, getValues} = methods;
+  const {handleSubmit, watch, formState: {errors}, setValue, getValues} = methods;
   const harDokumentasjonOgFravaerRisiko = watch('harDokumentasjonOgFravaerRisiko');
   const åpenForRedigering = watch('åpenForRedigering');
+  const formStateKey = `${behandlingsID}-utvidetrett-ks`;
+  const erArsakErIkkeRiskioFraFravaer = val => {
+    if(tekstTilBoolean(getValues().harDokumentasjonOgFravaerRisiko)) return true;
+    return val !== null && val.length > 0;
+  };
 
   const mellomlagringFormState = useFormSessionStorage(
     formStateKey,
@@ -69,19 +71,11 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
     getValues
   );
 
-  useEffect(() => {
-    if (harDokumentasjonOgFravaerRisiko !== null && harDokumentasjonOgFravaerRisiko.length > 0 && !tekstTilBoolean(harDokumentasjonOgFravaerRisiko)) {
-      unregister('arsakErIkkeRiskioFraFravaer', {keepValue: true});
-    } else {
-      register('arsakErIkkeRiskioFraFravaer');
-    }
-  }, [harDokumentasjonOgFravaerRisiko]);
-
   const bekreftAksjonspunkt = data => {
     if (!errors.begrunnelse && !errors.arsakErIkkeRiskioFraFravaer && !errors.harDokumentasjonOgFravaerRisiko) {
       losAksjonspunkt(data.harDokumentasjonOgFravaerRisiko, data.begrunnelse, data.arsakErIkkeRiskioFraFravaer);
       setValue('åpenForRedigering', false);
-      mellomlagringFormState.clear();
+      mellomlagringFormState.fjerneState();
     }
   };
 
@@ -98,7 +92,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
     {lesemodus && !åpenForRedigering && !vedtakFattetVilkarOppfylt && <>
       <AksjonspunktLesemodus
         aksjonspunktTekst={tekst.instruksjon}
-        harAksjonspunktBlivitLostTidligare={harAksjonspunktBlivitLostTidligare}
+        harAksjonspunktBlivitLostTidligare={aksjonspunktLost}
         åpneForRedigereInformasjon={() => setValue('åpenForRedigering',true)}
       />
 
@@ -131,14 +125,16 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
             <p className="typo-feilmelding">{tekst.feilOppgiHvisDokumentasjonGirRett}</p>}
           </div>
 
-          {harDokumentasjonOgFravaerRisiko !== null && harDokumentasjonOgFravaerRisiko.length > 0 && !tekstTilBoolean(harDokumentasjonOgFravaerRisiko) && <div>
+          {harDokumentasjonOgFravaerRisiko.length > 0 && !tekstTilBoolean(harDokumentasjonOgFravaerRisiko) && <div>
             <RadioGruppe className={styleRadioknapper.horisontalPlassering} legend={tekst.velgArsak}>
               <RadioButtonWithBooleanValue label={tekst.arsakIkkeSyk}
                                            value={'false'}
-                                           name={'arsakErIkkeRiskioFraFravaer'}/>
+                                           name={'arsakErIkkeRiskioFraFravaer'}
+                                           valideringsFunksjoner={erArsakErIkkeRiskioFraFravaer}/>
               <RadioButtonWithBooleanValue label={tekst.arsakIkkeRisikoFraFravaer}
                                            value={'true'}
-                                           name={'arsakErIkkeRiskioFraFravaer'}/>
+                                           name={'arsakErIkkeRiskioFraFravaer'}
+                                           valideringsFunksjoner={erArsakErIkkeRiskioFraFravaer}/>
             </RadioGruppe>
             {errors.arsakErIkkeRiskioFraFravaer && <p className="typo-feilmelding">{tekst.feilOppgiÅrsak}</p>}
           </div>}

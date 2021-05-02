@@ -1,8 +1,8 @@
 import {Hovedknapp} from 'nav-frontend-knapper';
 import {RadioGruppe} from 'nav-frontend-skjema';
-import React, {useState} from 'react';
+import React from 'react';
 import {OmsorgProps} from '../../../types/OmsorgProps';
-import {booleanTilTekst } from '../../../util/stringUtils';
+import {booleanTilTekst, tekstTilBoolean} from '../../../util/stringUtils';
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
 import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
 import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
@@ -24,6 +24,7 @@ enum FagYtelseType {
   KRONISK_SYK = 'OMP_KS',
   MIDLERTIDIG_ALENE = 'OMP_MA'
 }
+
 const Omsorg: React.FunctionComponent<OmsorgProps> = ({
   behandlingsID,
   fagytelseType,
@@ -36,10 +37,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
   lesemodus,
   formState
 }) => {
-  const [harAksjonspunktBlivitLostTidligare] = useState<boolean>(aksjonspunktLost);
   const barnetEllerBarna = barn.length === 1 ? 'barnet' : 'barna';
-  const formStateKey = `${behandlingsID}-omsorgenfor`;
-
   const tekstMidlertidigAlene = {
     instruksjon: 'Vurder om søkeren og den andre forelderen har minst ett felles barn.',
     sporsmalHarOmsorgen: 'Har søkeren og den andre forelderen minst ett felles barn?',
@@ -51,7 +49,6 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
     sporsmalHarOmsorgen: `Har søker omsorgen for ${barnetEllerBarna}?`,
     begrunnelse: `Vurder om søker har omsorgen for ${barnetEllerBarna}`,
   };
-
   const tekst = {
     opplysningerFraSoknaden: 'Opplysninger fra søknaden:',
     sokersBarn: 'Søkers barn:',
@@ -73,6 +70,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
 
   const { handleSubmit, formState: {errors}, watch, setValue, getValues} = methods;
   const åpenForRedigering = watch('åpenForRedigering');
+  const formStateKey = `${behandlingsID}-omsorgenfor`;
 
   const mellomlagringFormState = useFormSessionStorage(
     formStateKey,
@@ -88,7 +86,9 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
     if (!errors.begrunnelse && !errors.harOmsorgen) {
       losAksjonspunkt(data.harOmsorgen, data.begrunnelse);
       setValue('åpenForRedigering', false);
-      mellomlagringFormState.clear();
+
+      if(!tekstTilBoolean(data.harOmsorgen)) mellomlagringFormState.fjerneDataTilknyttetBehandling(behandlingsID);
+      else mellomlagringFormState.fjerneState();
     }
   };
 
@@ -102,7 +102,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
     return <div className={`${styleLesemodus.lesemodusboks} ${styles.omsorg}`}>
       <AksjonspunktLesemodus
         aksjonspunktTekst={tekst.instruksjon}
-        harAksjonspunktBlivitLostTidligare={harAksjonspunktBlivitLostTidligare}
+        harAksjonspunktBlivitLostTidligare={aksjonspunktLost}
         åpneForRedigereInformasjon={() => setValue('åpenForRedigering',true)}
         />
 
