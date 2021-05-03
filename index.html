@@ -16,7 +16,11 @@
 
           const getState = (key) => {
             console.log(`getState med ${key} gir ${state[key]}`);
-            return state[key];
+            try {
+              return JSON.parse(state[key]);
+            } catch {
+              return null;
+            }
           }
           const deleteState = (key) => {
             console.log(`deleteState med ${key}`);
