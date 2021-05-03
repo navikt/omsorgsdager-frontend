@@ -1,33 +1,84 @@
 # omsorgsdager-frontend
 
-Mikrofrontend for omsorgspenger.
+Dette er en mikrofrontend for omsorgspenger som blir tatt i bruk av [k9-sak-web](https://github.com/navikt/k9-sak-web).
+Mikrofrontenden består av fire ulike komponenter. 
 
-## To run app in development
+Komponenter som tas i bruk av behandlinger for [utvidet rett](https://github.com/navikt/k9-sak-web/tree/master/packages/behandling-utvidet-rett).
 
-`npm run dev`
+[Midlertidig alene](https://github.com/navikt/k9-sak-web/tree/master/packages/behandling-utvidet-rett/src/panelDefinisjoner/prosessStegPaneler/utvidetRettPanel/utvidetRettMikrofrontend) 
 
-## To make a production build of the app
+[Kronisk syk](https://github.com/navikt/k9-sak-web/tree/master/packages/behandling-utvidet-rett/src/panelDefinisjoner/prosessStegPaneler/utvidetRettPanel/utvidetRettMikrofrontend)
 
-`npm run build`
+[Omsorgen for](https://github.com/navikt/k9-sak-web/tree/master/packages/behandling-utvidet-rett/src/panelDefinisjoner/prosessStegPaneler/inngangsvilkarPaneler/omsorgenForMikrofrontend)
 
-## To run a production build locally
+Komponenter som tas i bruk av behandlinger for [omsorgspenger](https://github.com/navikt/k9-sak-web/tree/master/packages/behandling-omsorgspenger).
 
-`npm run start`
+[Saerlig smittevernshensyn](https://github.com/navikt/k9-sak-web/tree/master/packages/prosess-aarskvantum-oms/src/components/saerlige-smittevernhensyn)
 
-## To deploy production build of the app with a new version
+## Kommando
+### Kjør utviklingsmiljø
 
-`npm run buildNewVersion`
+`yarn dev`
 
-Will increase patch version in package.json and generate a new build. 
+### Generer bygg
 
-## Generate a new build when developing locally
+`yarn build`
 
-`npm run buildDev`
+### Kjør produksjonsbygg lokalt
 
-Will generate a new build in the current version declared in package.json, calculate and print out the hashes of the build to be used in k9-sak-web and starts the dev server again.
+`yarn start`
 
-## Calculate the SHA256 and SHA384 hashes of the latest build
+### Generer bygg med ny minor versjonsnummer
+
+`yarn buildNewVersion`
+
+### Generer nye byggfiler i siste buildmappa for lokal utvikling med k9-sak-web
+
+`yarn buildDev`
+
+### Beregn SHA384 og SHA256 for den siste builden
 
 `yarn calculateHashOnLatestBuild`
 
+# Deploy ny versjon
+Når man skall deploye en ny versjon av omsorgsdager-frontend må scriptet `yarn buildNewVersion` kjøres. 
+Genererte endringer med ny versjon og byggfiler må merges in i master for en ny versjon skal deployes.
 
+Når en ny versjon er deployet må man oppdatere versjonen registrert for hver implementasjon av mikrofrontend i k9-sak-web med jsIntegrity, stylesheetIntegrity og versjon.
+De ulike mikrofrontends kan ha forskjellige versjoner.
+
+Exempel på oppdatering av versjon i Q (preprod).
+```
+const preprodVersjon = {
+    versjon: '1.5.37',
+    jsIntegrity: 'sha384-T9E+13YgCnqQhCnzpOXWPIZLkeY3ZyG4IPFEWnZOXNBJKvMY4hreCxt4H6ALbtCx',
+    stylesheetIntegrity: 'sha384-qqVqf1BVSlTidE86KqYBuuUlaYXyhbpN1ir3hOsN2dT/Yj5jygdCrlipblJIFzKd',
+  };
+```
+
+# Utvikle lokalt med mikrofrontend i k9-sak-web
+Utfør endringene i omsorgsdager-frontend. Kjør kommando `yarn buildDev` som produserer nye byggfiler og kjører dem på server.
+Disse byggfilerne som skriver over eksisterende versjon skal ikke pushes til gitrepo. Ta sha256 output og oppdater preprod objektet for ønsket mikrofrontend.
+
+Exempel:
+```
+const preprodVersjon = {
+    versjon: '1.5.37',
+    jsIntegrity: 'sha256-xxx',
+    stylesheetIntegrity: 'sha256-xxx',
+  };
+```
+
+Legg til build mappa innen versjonsnummer.
+```javascript
+  return (
+    <MicroFrontend
+      id={omsorgenForVilkårAppID}
+      jsSrc={`/k9/microfrontend/omsorgsdager/build/${versjon}/app.js`}
+      jsIntegrity={jsIntegrity}
+      stylesheetSrc={`/k9/microfrontend/omsorgsdager/build/${versjon}/styles.css`}
+      stylesheetIntegrity={stylesheetIntegrity}
+      onReady={() => initializeOmsorgenForVilkar(omsorgenForVilkårAppID, props)}
+    />
+  );
+```
