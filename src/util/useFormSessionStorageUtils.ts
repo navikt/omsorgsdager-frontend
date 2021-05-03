@@ -22,7 +22,6 @@ export const BrukFormSesjonslagring = (
   useEffect(() => {
     const data = formState.getState(formStateKey);
     if (data) {
-      const parsedValues = safeJSONParse(data);
       if (!data) return;
       setValue('åpenForRedigering', data.åpenForRedigering);
       if (lesemodus && getValues().åpenForRedigering || !lesemodus) {
