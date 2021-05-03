@@ -51,8 +51,8 @@ Exempel på oppdatering av versjon i Q (preprod).
 ```
 const preprodVersjon = {
     versjon: '1.5.37',
-    jsIntegrity: 'sha384-T9E+13YgCnqQhCnzpOXWPIZLkeY3ZyG4IPFEWnZOXNBJKvMY4hreCxt4H6ALbtCx',
-    stylesheetIntegrity: 'sha384-qqVqf1BVSlTidE86KqYBuuUlaYXyhbpN1ir3hOsN2dT/Yj5jygdCrlipblJIFzKd',
+    jsIntegrity: 'sha384-xxx',
+    stylesheetIntegrity: 'sha384-xxx',
   };
 ```
 
