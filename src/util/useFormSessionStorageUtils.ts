@@ -1,6 +1,5 @@
 import {useCallback, useEffect, useRef} from 'react';
 import throttle from 'lodash.throttle';
-import {safeJSONParse} from './stringUtils';
 
 // Brukes for midlertidig mellomlagring av input fra saksbehandlare som ett global objekt i k9-sak-web.
 export const BrukFormSesjonslagring = (
