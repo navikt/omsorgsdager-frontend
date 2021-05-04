@@ -1,4 +1,4 @@
-import {render, screen} from '@testing-library/react';
+import {act, fireEvent, render, screen} from '@testing-library/react';
 import {axe} from 'jest-axe';
 import React from 'react';
 import {VilkarMidlertidigAleneProps} from '../../../../types/VilkarMidlertidigAleneProps';
@@ -6,7 +6,7 @@ import VilkarMidlertidigAlene from '../../vilkar-midlertidig-alene/VilkarMidlert
 import FormStateTilTest from '../dataTilTest/FormStateTilTest';
 
 describe('<VilkarMidlertidigAlene>', () => {
-  test('VilkarMidlertidigAlene viser åpen aksjonspunkt som forventet', () => {
+  beforeEach(() => {
     const props = {
       behandlingsID: '123',
       aksjonspunktLost: false,
@@ -37,10 +37,10 @@ describe('<VilkarMidlertidigAlene>', () => {
       formState: FormStateTilTest
     } as VilkarMidlertidigAleneProps;
 
-    render(
-      <VilkarMidlertidigAlene {...props}/>
-    );
+    render(<VilkarMidlertidigAlene {...props}/>);
+  });
 
+  test('VilkarMidlertidigAlene viser åpen aksjonspunkt som forventet', () => {
     const aksjonspunkt = 'Vurder om vilkår for midlertidig alene er oppfylt.';
     const oppgittÅrsakText = 'Oppgitt årsak';
     const oppgittPeriodeText = 'Oppgitt periode';
@@ -62,7 +62,6 @@ describe('<VilkarMidlertidigAlene>', () => {
 
     const hentetVilkarOppfyltText = screen.getByText(vilkarOppfyltText);
     expect(hentetVilkarOppfyltText).toBeInTheDocument();
-
   });
 
   test('VilkarMidlertidigAlene viser lesemodus', () => {
@@ -206,6 +205,7 @@ describe('<VilkarMidlertidigAlene>', () => {
 
   });
 
+
   test('VilkarMidlertidigAlene viser informasjon om vilkar ikke oppfylt etter fattet vedtak', () => {
     const props = {
       behandlingsID: '123',
@@ -239,16 +239,30 @@ describe('<VilkarMidlertidigAlene>', () => {
 
     render(<VilkarMidlertidigAlene {...props}/>);
 
-    const hentetVilkar = screen.getByText(props.informasjonOmVilkar.vilkar);
-    expect(hentetVilkar).toBeInTheDocument();
+  });
 
-    const hentetBegrunnelse = screen.getByText(props.informasjonOmVilkar.begrunnelse);
-    expect(hentetBegrunnelse).toBeInTheDocument();
+  it('Skal vise input fra bruker riktigt', async () => {
+    const inputValue = 'testing testing';
+    fireEvent.input(screen.getByRole('textbox'), {
+      target: {
+        value: inputValue
+      }
+    });
+    expect(screen.getAllByText(inputValue)).toHaveLength(2);
 
-    const hentetVilkarOppfylt = screen.getByText('Vilkåret er ikke oppfylt');
-    expect(hentetVilkarOppfylt).toBeInTheDocument();
+    console.log(screen.getByText('Ja'));
+
+
+    expect(screen.getByText('Ja')).not.toBeChecked();
+    fireEvent.click(screen.getByText('Ja'));
+    expect(screen.getByText('Ja')).toBeChecked();
+
+
+    console.log(screen.debug());
 
   });
+
+
 
   test('Den har ingen a11y violations', async () => {
     const props = {
