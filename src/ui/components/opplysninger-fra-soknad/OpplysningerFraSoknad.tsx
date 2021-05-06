@@ -4,10 +4,11 @@ import styles from './opplysningerFraSoknad.less';
 interface Props {
   årsak: string;
   beskrivelse?: string;
+  periodeTekst: string;
   periode: string;
 }
 
-const OpplysningerFraSoknad: React.FunctionComponent<Props> = ({årsak, beskrivelse, periode}) => {
+const OpplysningerFraSoknad: React.FunctionComponent<Props> = ({årsak, beskrivelse, periode, periodeTekst}) => {
   return (
     <div className={styles.opplysningerFraSoknad}>
       <div>Opplysninger fra søknaden:</div>
@@ -20,7 +21,7 @@ const OpplysningerFraSoknad: React.FunctionComponent<Props> = ({årsak, beskrive
       </>}
 
       {periode !== undefined && periode.length > 0 && <>
-        <h4>Oppgitt periode</h4>
+        <h4>{periodeTekst}</h4>
         <p>{periode}</p>
       </>}
     </div>
