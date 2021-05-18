@@ -12,6 +12,7 @@ import TextArea from '../react-hook-form-wrappers/TextArea';
 import styleRadioknapper from '../styles/radioknapper/radioknapper.less';
 import styles from './korrigerePerioder.less';
 import {FormProvider, useForm} from 'react-hook-form';
+import { v4 as uuidv4 } from 'uuid';
 
 type FormData = {
   fravaerGrunnetSmittevernhensynEllerStengt: string;
@@ -32,7 +33,7 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
   informasjonTilLesemodus,
   losAksjonspunkt,
   lesemodus,
-  årsakFraSoknad,
+  årsakerFraSoknad,
   formState
 }) => {
   const methods = useForm<FormData>({
@@ -82,11 +83,11 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
   return <div className={styles.korrigerePerioder}>
     <AlertStripeTrekantVarsel text={tekst.instruksjon}/>
 
-    <div className={styles.opplysningerFraSoknad}>
-      <div>Opplysninger fra sist innsendte søknad:</div>
-      <h4>Oppgitt årsak</h4>
-      <p>{årsakFraSoknad}</p>
-    </div>
+    {årsakerFraSoknad.length > 0 && <div className={styles.opplysningerFraSoknad}>
+      <div>Opplysninger fra innsendte søknader:</div>
+      <h4>Oppgitte årsaker</h4>
+      {årsakerFraSoknad.map(årsak => <p key={uuidv4()}>{årsak}</p>)}
+    </div>}
 
     <FormProvider {...methods} >
       <form onSubmit={handleSubmit(bekreftAksjonspunkt)}>
