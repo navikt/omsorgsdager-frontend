@@ -6836,10 +6836,10 @@ nav-frontend-ikoner-assets@^2.0.8:
   resolved "https://registry.npmjs.org/nav-frontend-ikoner-assets/-/nav-frontend-ikoner-assets-2.0.8.tgz"
   integrity sha512-By6NVnUoKwIBxOeJlhpM1NEMtShlVCG6jLNwi6HgB9uZzF3Ac0NRz1amDdNfASg+MBfmoZNJE8WP06SiKvEV+A==
 
-nav-frontend-js-utils@^1.0.18:
-  version "1.0.18"
-  resolved "https://registry.yarnpkg.com/nav-frontend-js-utils/-/nav-frontend-js-utils-1.0.18.tgz#0ae24357f4696fabd64dd06292946caed750f38c"
-  integrity sha512-iM14r1v/IiqOUL1X5Bkp3nR0E3I7xsJR4zekdF/xTINQRXeU8kJmwQHn98y7Js7VrQburqVVSd02DnG+H12Ivw==
+nav-frontend-js-utils@^1.0.19:
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/nav-frontend-js-utils/-/nav-frontend-js-utils-1.0.19.tgz#56a14aa58cc249e34f98caaaeb101f638648e2ac"
+  integrity sha512-Z+ZGNcghkbx0VT0AN3H5ftCWWRMpXGcMI2JnMQJGzS8CkbjIEU8nkxsU63tyzq/n1BK69z1xT/1Vju6DRROidQ==
   dependencies:
     lodash.throttle "^4.1.1"
 
