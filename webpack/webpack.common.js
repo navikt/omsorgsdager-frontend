@@ -1,12 +1,8 @@
-const process = require('process');
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const cssExtractLoaderConfig = {
-    loader: MiniCssExtractPlugin.loader,
-    options: {
-        hmr: process.env.NODE_ENV === 'development',
-    },
+    loader: MiniCssExtractPlugin.loader
 };
 
 const nodeModules = path.resolve(__dirname, '../node_modules');
