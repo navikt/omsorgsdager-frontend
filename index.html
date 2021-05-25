@@ -42,14 +42,14 @@
             korrigerePerioder: {
               visKomponent: 'KorrigerePerioder',
               props: {
-                aksjonspunktLost: true,
-                lesemodus: true,
-                årsakFraSoknad: 'Årsak',
+                aksjonspunktLost: false,
+                lesemodus: false,
                 informasjonTilLesemodus: {
                   begrunnelse: 'Begrunnelse til lesemodus',
                   vilkarOppfylt: false
                 },
-                losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse)
+                losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse),
+                formState
               }
             },
             vilkarKroniskSyktBarn: {

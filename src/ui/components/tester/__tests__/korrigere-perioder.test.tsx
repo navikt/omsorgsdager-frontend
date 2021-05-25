@@ -11,13 +11,12 @@ describe('<KorrigerePerioder>', () => {
       behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: false,
-      årsakFraSoknad: 'Årsak',
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false
       },
       losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse),
-      formState: FormStateTilTest
+      formState: FormStateTilTest,
     } as KorrigerePerioderProps;
 
     render(<KorrigerePerioder {...props}/>);
@@ -25,7 +24,6 @@ describe('<KorrigerePerioder>', () => {
     const aksjonspunkt = 'Se på nødvendig dokumentasjon og tidligere utbetalte perioder, og vurder om søker har rett på å få utbetalt flere dager.';
     const begrunnelseTekst = 'Vurder om søker har rett på å få utbetalt flere dager';
     const vilkarOppfyltTekst = 'Har søker rett på å få utbetalt flere dager?';
-    const årsakTekst = 'Opplysninger fra sist innsendte søknad:';
 
     const hentetAksjonspunkt = screen.getByText(aksjonspunkt);
     expect(hentetAksjonspunkt).toBeInTheDocument();
@@ -36,12 +34,6 @@ describe('<KorrigerePerioder>', () => {
     const hentetVilkarOppfyltText = screen.getByText(vilkarOppfyltTekst);
     expect(hentetVilkarOppfyltText).toBeInTheDocument();
 
-    const hentetÅrsakTekst = screen.getByText(årsakTekst);
-    expect(hentetÅrsakTekst).toBeInTheDocument();
-
-    const hentetÅrsak = screen.getByText(props.årsakFraSoknad);
-    expect(hentetÅrsak).toBeInTheDocument();
-
   });
 
   test('KorrigerePerioder viser lesemodus', () => {
@@ -49,7 +41,6 @@ describe('<KorrigerePerioder>', () => {
       behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: true,
-      årsakFraSoknad: 'Årsak',
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false
@@ -79,7 +70,6 @@ describe('<KorrigerePerioder>', () => {
       behandlingsID: '123',
       aksjonspunktLost: true,
       lesemodus: true,
-      årsakFraSoknad: 'Årsak',
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false
@@ -98,7 +88,6 @@ describe('<KorrigerePerioder>', () => {
       behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: true,
-      årsakFraSoknad: 'Årsak',
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false

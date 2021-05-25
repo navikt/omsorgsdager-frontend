@@ -32,7 +32,6 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
   informasjonTilLesemodus,
   losAksjonspunkt,
   lesemodus,
-  årsakFraSoknad,
   formState
 }) => {
   const methods = useForm<FormData>({
@@ -81,12 +80,6 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
 
   return <div className={styles.korrigerePerioder}>
     <AlertStripeTrekantVarsel text={tekst.instruksjon}/>
-
-    <div className={styles.opplysningerFraSoknad}>
-      <div>Opplysninger fra sist innsendte søknad:</div>
-      <h4>Oppgitt årsak</h4>
-      <p>{årsakFraSoknad}</p>
-    </div>
 
     <FormProvider {...methods} >
       <form onSubmit={handleSubmit(bekreftAksjonspunkt)}>
