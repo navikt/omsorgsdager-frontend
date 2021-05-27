@@ -55,9 +55,9 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
     sokersBarn: 'Søkers barn:',
     beskrivelseTilVedtakVilkar: `Søker har omsorgen for ${barnetEllerBarna}`,
     feilIngenVurdering: 'Resultat må oppgis.',
-    instruksjon: fagytelseType === FagYtelseType.KRONISK_SYK || FagYtelseType.ALENE_OM_OMSORGEN? tekstKroniskSyk.instruksjon : tekstMidlertidigAlene.instruksjon,
-    sporsmalHarOmsorgen: fagytelseType === FagYtelseType.KRONISK_SYK || FagYtelseType.ALENE_OM_OMSORGEN ? tekstKroniskSyk.sporsmalHarOmsorgen : tekstMidlertidigAlene.sporsmalHarOmsorgen,
-    begrunnelse: fagytelseType === FagYtelseType.KRONISK_SYK || FagYtelseType.ALENE_OM_OMSORGEN ? tekstKroniskSyk.begrunnelse : tekstMidlertidigAlene.begrunnelse,
+    instruksjon: fagytelseType === FagYtelseType.KRONISK_SYK || fagytelseType === FagYtelseType.ALENE_OM_OMSORGEN? tekstKroniskSyk.instruksjon : tekstMidlertidigAlene.instruksjon,
+    sporsmalHarOmsorgen: fagytelseType === FagYtelseType.KRONISK_SYK || fagytelseType === FagYtelseType.ALENE_OM_OMSORGEN ? tekstKroniskSyk.sporsmalHarOmsorgen : tekstMidlertidigAlene.sporsmalHarOmsorgen,
+    begrunnelse: fagytelseType === FagYtelseType.KRONISK_SYK || fagytelseType === FagYtelseType.ALENE_OM_OMSORGEN ? tekstKroniskSyk.begrunnelse : tekstMidlertidigAlene.begrunnelse,
     begrunnelseLesemodus: 'Vurdering'
   };
 
