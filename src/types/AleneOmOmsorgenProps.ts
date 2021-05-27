@@ -9,7 +9,7 @@ export interface AleneOmOmsorgenProps {
   informasjonTilLesemodus?: AleneOmOmsorgenAksjonspunktObjekt;
   vedtakFattetVilkarOppfylt: boolean;
   informasjonOmVilkar?: InformasjonOmVurdertVilkar;
-  losAksjonspunkt: (AleneOmOmsorgenSoknadsopplysninger) => void;
+  losAksjonspunkt: (AleneOmOmsorgenAksjonspunktObjekt) => void;
   formState: FormState;
 }
 

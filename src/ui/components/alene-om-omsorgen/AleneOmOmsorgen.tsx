@@ -44,7 +44,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
     reValidateMode: 'onSubmit',
     defaultValues: {
       begrunnelse: aksjonspunktLost ? informasjonTilLesemodus.begrunnelse : '',
-      fraDato: aksjonspunktLost ? informasjonTilLesemodus.fraDato : 'dd.mm.åååå',
+      fraDato: aksjonspunktLost ? informasjonTilLesemodus.fraDato : soknadsopplysninger.fraDato,
       erSokerenAleneOmOmsorgen: aksjonspunktLost ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt) : '',
       avslagsArsakErPeriodeErIkkeOverSeksMån: aksjonspunktLost ? booleanTilTekst(informasjonTilLesemodus.avslagsArsakErPeriodeErIkkeOverSeksMån) : '',
       åpenForRedigering: false
@@ -80,7 +80,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
     if (!errors.begrunnelse && !errors.fraDato && !errors.erSokerenAleneOmOmsorgen && !errors.avslagsArsakErPeriodeErIkkeOverSeksMån) {
       losAksjonspunkt({
         begrunnelse,
-        erSokerenAleneOmOmsorgen: tekstTilBoolean(erSokerenAleneOmOmsorgen),
+        vilkarOppfylt: tekstTilBoolean(erSokerenAleneOmOmsorgen),
         fraDato: tekstTilBoolean(erSokerenAleneOmOmsorgen) ? fraDato.replaceAll('.', '-') : '',
         avslagsArsakErPeriodeErIkkeOverSeksMån: tekstTilBoolean(avslagsArsakErPeriodeErIkkeOverSeksMån)
       });
