@@ -1,44 +1,48 @@
 import React from 'react';
-import {tekst} from '../vilkar-midlertidig-alene/vilkar-midlertidig-alene-tekst';
 import styles from './opplysningerFraVedtak.less';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
-import {VilkarMidlertidigAleneDato} from '../../../types/VilkarMidlertidigAleneProps';
 
 interface Props {
-  dato: VilkarMidlertidigAleneDato;
+  tekstBegrunnelseLesemodus: string;
   begrunnelse: string;
+  tekstVilkarOppfylt: string;
   erVilkarOppfylt: boolean;
-  avslagsÅrsakPeriodeErIkkeOverSeksMån: boolean;
+  textVilkarOppfylt?: string;
+  informasjonVilkarOppfylt?: string;
+  textVilkarIkkeOppfylt: string;
+  årsakVilkarIkkeOppfylt: string;
 }
 
 const OpplysningerFraVedtak: React.FunctionComponent<Props> = ({
-                                                                 dato,
-                                                                 begrunnelse,
-                                                                 erVilkarOppfylt,
-                                                                 avslagsÅrsakPeriodeErIkkeOverSeksMån
-                                                               }) => {
+  tekstBegrunnelseLesemodus,
+  begrunnelse,
+  tekstVilkarOppfylt,
+  erVilkarOppfylt,
+  textVilkarOppfylt,
+  informasjonVilkarOppfylt,
+  textVilkarIkkeOppfylt,
+  årsakVilkarIkkeOppfylt
+}) => {
   return (
     <div className={styles.opplysningerFraVedtak}>
-      <h4>{tekst.begrunnelseLesemodus}</h4>
+      <h4>{tekstBegrunnelseLesemodus}</h4>
       <p className={styleLesemodus.fritekst}>{begrunnelse}</p>
 
-      <h4>{tekst.sporsmålVilkarOppfylt}</h4>
+      <h4>{tekstVilkarOppfylt}</h4>
       <p>{erVilkarOppfylt ? 'Ja' : 'Nei'}</p>
 
-      {erVilkarOppfylt && <>
-        <h4>I hvilken periode er vedtaket gyldig?</h4>
-        <p>{`${dato.fra} - ${dato.til}`}</p>
+      {erVilkarOppfylt && textVilkarOppfylt !== undefined && <>
+        <h4>{textVilkarOppfylt}</h4>
+        <p>{informasjonVilkarOppfylt}</p>
         </>}
 
       {!erVilkarOppfylt && <>
-        <h4 className={styleLesemodus.label}>{tekst.arsak}</h4>
-        <p className={styleLesemodus.text}>{
-          avslagsÅrsakPeriodeErIkkeOverSeksMån ? tekst.arsakPeriodeIkkeOverSeksMån : tekst.arsakIkkeAleneOmsorg
-        }</p>
+        <h4 className={styleLesemodus.label}>{textVilkarIkkeOppfylt}</h4>
+        <p className={styleLesemodus.text}>{årsakVilkarIkkeOppfylt}</p>
       </>
       }
     </div>
   );
-}
-;
+};
+
 export default OpplysningerFraVedtak;

@@ -4,6 +4,7 @@ import Komponenter from '../types/Komponenter';
 import KorrigerePerioder from '../ui/components/korrigere-perioder/KorrigerePerioder';
 import Omsorg from '../ui/components/omsorg/Omsorg';
 import VilkarKroniskSyktBarn from '../ui/components/vilkar-kronisk-sykt-barn/VilkarKroniskSyktBarn';
+import AleneOmOmsorgen from './components/alene-om-omsorgen/AleneOmOmsorgen';
 import VilkarMidlertidigAlene from './components/vilkar-midlertidig-alene/VilkarMidlertidigAlene';
 import ContainerContext from './context/ContainerContext';
 import styles from './global.less';
@@ -28,6 +29,9 @@ const MainComponent = ({containerData}: MainComponentProps): JSX.Element => {
       break;
     case Komponenter.OMSORG:
       innhold = <Omsorg {...containerData.props}/>;
+      break;
+    case Komponenter.ALENE_OM_OMSORGEN:
+      innhold = <AleneOmOmsorgen {...containerData.props}/>;
       break;
     default:
       innhold = <AlertStripeFeil>Noe gikk galt, vennligst prøv igjen senere</AlertStripeFeil>;

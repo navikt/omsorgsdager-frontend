@@ -22,7 +22,8 @@ type FormData = {
 
 enum FagYtelseType {
   KRONISK_SYK = 'OMP_KS',
-  MIDLERTIDIG_ALENE = 'OMP_MA'
+  MIDLERTIDIG_ALENE = 'OMP_MA',
+  ALENE_OM_OMSORGEN = 'OMP_AO'
 }
 
 const Omsorg: React.FunctionComponent<OmsorgProps> = ({
@@ -54,9 +55,9 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
     sokersBarn: 'Søkers barn:',
     beskrivelseTilVedtakVilkar: `Søker har omsorgen for ${barnetEllerBarna}`,
     feilIngenVurdering: 'Resultat må oppgis.',
-    instruksjon: fagytelseType === FagYtelseType.KRONISK_SYK ? tekstKroniskSyk.instruksjon : tekstMidlertidigAlene.instruksjon,
-    sporsmalHarOmsorgen: fagytelseType === FagYtelseType.KRONISK_SYK ? tekstKroniskSyk.sporsmalHarOmsorgen : tekstMidlertidigAlene.sporsmalHarOmsorgen,
-    begrunnelse: fagytelseType === FagYtelseType.KRONISK_SYK ? tekstKroniskSyk.begrunnelse : tekstMidlertidigAlene.begrunnelse,
+    instruksjon: fagytelseType === FagYtelseType.KRONISK_SYK || fagytelseType === FagYtelseType.ALENE_OM_OMSORGEN? tekstKroniskSyk.instruksjon : tekstMidlertidigAlene.instruksjon,
+    sporsmalHarOmsorgen: fagytelseType === FagYtelseType.KRONISK_SYK || fagytelseType === FagYtelseType.ALENE_OM_OMSORGEN ? tekstKroniskSyk.sporsmalHarOmsorgen : tekstMidlertidigAlene.sporsmalHarOmsorgen,
+    begrunnelse: fagytelseType === FagYtelseType.KRONISK_SYK || fagytelseType === FagYtelseType.ALENE_OM_OMSORGEN ? tekstKroniskSyk.begrunnelse : tekstMidlertidigAlene.begrunnelse,
     begrunnelseLesemodus: 'Vurdering'
   };
 

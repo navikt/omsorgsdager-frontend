@@ -1,3 +1,4 @@
+import {AleneOmOmsorgenProps} from './AleneOmOmsorgenProps';
 import Komponenter from './Komponenter';
 import {KorrigerePerioderProps} from './KorrigerePerioderProps';
 import {OmsorgProps} from './OmsorgProps';
@@ -24,11 +25,17 @@ interface OmsorgContract {
   props: OmsorgProps;
 }
 
+interface AleneOmOmsorgenContract {
+  visKomponent: Komponenter.ALENE_OM_OMSORGEN;
+  props: AleneOmOmsorgenProps;
+}
+
 
 type ContainerContract =
   KorrigerePerioderContract |
   VilkarMidlertidigAleneContract |
   VilkarKroniskSyktBarnContract |
+  AleneOmOmsorgenContract |
   OmsorgContract;
 
 export default ContainerContract;

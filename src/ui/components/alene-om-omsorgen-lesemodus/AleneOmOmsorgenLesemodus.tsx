@@ -1,18 +1,18 @@
 import React  from 'react';
+import {AleneOmOmsorgenAksjonspunktObjekt, AleneOmOmsorgenSoknadsopplysninger} from '../../../types/AleneOmOmsorgenProps';
 import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
 import OpplysningerFraVedtak from '../opplysninger-fra-vedtak/OpplysningerFraVedtak';
 import OpplysningerFraSoknad from '../opplysninger-fra-soknad/OpplysningerFraSoknad';
-import {VilkarMidlertidigInformasjonTilLesemodus, VilkarMidlertidigSoknadsopplysninger} from '../../../types/VilkarMidlertidigAleneProps';
-import tekst from '../vilkar-midlertidig-alene/vilkar-midlertidig-alene-tekst';
+import tekst from '../alene-om-omsorgen/alene-om-omsorgen-tekst';
 
 interface OwnProps {
-  soknadsopplysninger: VilkarMidlertidigSoknadsopplysninger;
-  informasjonTilLesemodus: VilkarMidlertidigInformasjonTilLesemodus;
+  soknadsopplysninger: AleneOmOmsorgenSoknadsopplysninger;
+  informasjonTilLesemodus: AleneOmOmsorgenAksjonspunktObjekt;
   harAksjonspunktBlivitLostTidligare: boolean;
   åpneForRedigereInformasjon: () => void;
 }
 
-const VilkarMidlertidigAleneLesemodus: React.FunctionComponent<OwnProps> = ({
+const AleneOmOmsorgenLesemodus: React.FunctionComponent<OwnProps> = ({
   soknadsopplysninger,
   informasjonTilLesemodus,
   harAksjonspunktBlivitLostTidligare,
@@ -26,19 +26,22 @@ const VilkarMidlertidigAleneLesemodus: React.FunctionComponent<OwnProps> = ({
         åpneForRedigereInformasjon={åpneForRedigereInformasjon}
       />
 
-      <OpplysningerFraSoknad periodeTekst={'Oppgitt periode'} {...soknadsopplysninger}/>
-
+      <OpplysningerFraSoknad
+        periodeTekst={'Fra dato oppgitt'}
+        periode={soknadsopplysninger.fraDato}
+        {...soknadsopplysninger}
+      />
       <OpplysningerFraVedtak
         tekstBegrunnelseLesemodus={tekst.begrunnelseLesemodus}
         begrunnelse={informasjonTilLesemodus.begrunnelse}
         tekstVilkarOppfylt={tekst.sporsmålVilkarOppfylt}
         erVilkarOppfylt={informasjonTilLesemodus.vilkarOppfylt}
-        textVilkarOppfylt={'I hvilken periode er vedtaket gyldig?'}
-        informasjonVilkarOppfylt={`${informasjonTilLesemodus.dato.fra} - ${informasjonTilLesemodus.dato.til}`}
+        textVilkarOppfylt={'Fra vilket dato er vedtaket gyldig?'}
+        informasjonVilkarOppfylt={informasjonTilLesemodus.fraDato}
         textVilkarIkkeOppfylt={tekst.arsak}
         årsakVilkarIkkeOppfylt={informasjonTilLesemodus.avslagsArsakErPeriodeErIkkeOverSeksMån ? tekst.arsakPeriodeIkkeOverSeksMån : tekst.arsakIkkeAleneOmsorg}
       />
     </>
   );
 };
-export default VilkarMidlertidigAleneLesemodus;
+export default AleneOmOmsorgenLesemodus;

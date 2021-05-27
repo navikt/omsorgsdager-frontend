@@ -86,11 +86,11 @@
                   periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ',
                   soknadsdato: '2021-04-06'
                 },
-                vedtakFattetVilkarOppfylt: false,
+                vedtakFattetVilkarOppfylt: true,
                 informasjonOmVilkar: {
                   begrunnelse: 'begrunnelse',
                   navnPåAksjonspunkt: 'Utvidet rett',
-                  vilkarOppfylt: true,
+                  vilkarOppfylt: false,
                   vilkar: '§ 9-3 vilkar'
                 },
                 informasjonTilLesemodus: {
@@ -134,8 +134,46 @@
                 losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse),
                 formState,
               }
+            },
+            aleneOmOmsorgen: {
+              visKomponent: 'AleneOmOmsorgen',
+              props: {
+                behandlingsID: '123',
+                aksjonspunktLost: false,
+                lesemodus: false,
+                soknadsopplysninger: {
+                  årsak: 'Årsak',
+                  beskrivelse: 'Beskrivelse',
+                  periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ',
+                  soknadsdato: '2021-04-06'
+                },
+                vedtakFattetVilkarOppfylt: true,
+                informasjonOmVilkar: {
+                  begrunnelse: 'begrunnelse',
+                  navnPåAksjonspunkt: 'Utvidet rett',
+                  vilkarOppfylt: true,
+                  vilkar: '§ 9-3 vilkar'
+                },
+                informasjonTilLesemodus: {
+                  begrunnelse: 'Begrunnelse',
+                  vilkarOppfylt: false,
+                  dato: {
+                    fra: '2021-06-06',
+                    til: '2021-10-03'
+                  },
+                  avslagsArsakErPeriodeErIkkeOverSeksMån: true
+                },
+                losAksjonspunkt: ({
+                                    begrunnelse,
+                                    erSokerenAleneOmOmsorgen,
+                                    fraDato,
+                                    avslagsArsakErPeriodeErIkkeOverSeksMån
+                                  }) => console.log(begrunnelse, erSokerenAleneOmOmsorgen, fraDato, avslagsArsakErPeriodeErIkkeOverSeksMån),
+                formState,
+              }
             }
-          };
+        };
+
 
           setTimeout(() => {
             window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.vilkarMidlertidigAlene);
