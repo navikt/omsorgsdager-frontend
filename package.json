@@ -1,6 +1,6 @@
 {
     "name": "omsorgsdager-frontend",
-    "version": "1.5.42",
+    "version": "1.5.43",
     "main": "index.js",
     "scripts": {
         "test": "jest",
