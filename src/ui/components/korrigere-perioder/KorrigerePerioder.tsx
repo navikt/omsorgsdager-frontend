@@ -1,12 +1,14 @@
 import {Hovedknapp} from 'nav-frontend-knapper';
 import {RadioGruppe} from 'nav-frontend-skjema';
+import {number} from 'prop-types';
 import React from 'react';
 import {KorrigerePerioderProps} from '../../../types/KorrigerePerioderProps';
-import {booleanTilTekst} from '../../../util/stringUtils';
+import {booleanTilTekst, tekstTilBoolean} from '../../../util/stringUtils';
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
 import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
 import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
+import InputField from '../react-hook-form-wrappers/InputField';
 import RadioButtonWithBooleanValue from '../react-hook-form-wrappers/RadioButton';
 import TextArea from '../react-hook-form-wrappers/TextArea';
 import styleRadioknapper from '../styles/radioknapper/radioknapper.less';
@@ -17,13 +19,16 @@ type FormData = {
   fravaerGrunnetSmittevernhensynEllerStengt: string;
   begrunnelse: string;
   åpenForRedigering: boolean;
+  antallDagerDelvisInnvilget: number;
 };
 
 const tekst = {
   instruksjon: 'Se på nødvendig dokumentasjon og tidligere utbetalte perioder, og vurder om søker har rett på å få utbetalt flere dager.',
   sporsmalErInnvilget: 'Har søker rett på å få utbetalt flere dager?',
+  antallDagerInnvilget: 'Antall dager innvilget',
   begrunnelse: 'Vurder om søker har rett på å få utbetalt flere dager',
-  feilIngenVurdering: 'Resultat må oppgis.'
+  feilIngenVurdering: 'Resultat må oppgis.',
+  feilManglerDager: 'Antall dager må oppgis.'
 };
 
 const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
@@ -38,7 +43,8 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
     defaultValues: {
       begrunnelse: aksjonspunktLost ? informasjonTilLesemodus.begrunnelse : '',
       fravaerGrunnetSmittevernhensynEllerStengt: aksjonspunktLost ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt) : '',
-      åpenForRedigering: false
+      åpenForRedigering: false,
+      antallDagerDelvisInnvilget: null,
     }
   });
 
@@ -58,10 +64,25 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
 
   const bekreftAksjonspunkt = data => {
     if (!errors.begrunnelse && !errors.fravaerGrunnetSmittevernhensynEllerStengt) {
-      losAksjonspunkt(data.fravaerGrunnetSmittevernhensynEllerStengt, data.begrunnelse);
+      if(data.fravaerGrunnetSmittevernhensynEllerStengt === 'delvis'){
+        losAksjonspunkt(true, data.begrunnelse, Number(data.antallDagerDelvisInnvilget));
+      }else{
+        losAksjonspunkt(data.fravaerGrunnetSmittevernhensynEllerStengt, data.begrunnelse, null);
+      }
       setValue('åpenForRedigering', false);
       mellomlagringFormState.fjerneState();
     }
+  };
+
+  const erAntallDagerDelvisInnvilgetFyltUt = () => {
+    if(getValues().fravaerGrunnetSmittevernhensynEllerStengt !== 'delvis') return true;
+    const antallDager = Number(getValues().antallDagerDelvisInnvilget);
+    return  antallDager!== NaN && antallDager > 0;
+  };
+
+  const vilkarOppfyltTekstTilLesemodus = (vilkarOppfylt, antallDager) => {
+    if(vilkarOppfylt && antallDager !== null) return 'Delvis';
+    return vilkarOppfylt ? 'Ja' : 'Nei'
   };
 
   if (lesemodus && !åpenForRedigering) {
@@ -72,7 +93,13 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
         åpneForRedigereInformasjon={() => setValue('åpenForRedigering', true)}
       />
       <p className={styleLesemodus.label}>{tekst.sporsmalErInnvilget}</p>
-      <p className={styleLesemodus.text}>{informasjonTilLesemodus.vilkarOppfylt ? 'Ja' : 'Nei'}</p>
+      <p className={styleLesemodus.text}>{vilkarOppfyltTekstTilLesemodus(informasjonTilLesemodus.vilkarOppfylt, informasjonTilLesemodus.antallDagerDelvisInnvilget)} </p>
+
+      {informasjonTilLesemodus.vilkarOppfylt && informasjonTilLesemodus.antallDagerDelvisInnvilget !== null &&<>
+        <p className={styleLesemodus.label}>{tekst.antallDagerInnvilget}</p>
+        <p className={styleLesemodus.text}>{informasjonTilLesemodus.antallDagerDelvisInnvilget} </p>
+      </>
+      }
       <p className={styleLesemodus.label}>{tekst.begrunnelse}</p>
       <p className={styleLesemodus.fritekst}>{informasjonTilLesemodus.begrunnelse}</p>
     </div>;
@@ -93,10 +120,28 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
                                          name={'fravaerGrunnetSmittevernhensynEllerStengt'}/>
             <RadioButtonWithBooleanValue label={'Nei'}
                                          value={'false'}
-                                         name={'fravaerGrunnetSmittevernhensynEllerStengt'}/>
+                                         name={'fravaerGrunnetSmittevernhensynEllerStengt'}
+            />
+            <RadioButtonWithBooleanValue label={'Delvis'}
+              value={'delvis'}
+              name={'fravaerGrunnetSmittevernhensynEllerStengt'}
+            />
           </RadioGruppe>
-          {errors.fravaerGrunnetSmittevernhensynEllerStengt &&
-          <p className="typo-feilmelding">{tekst.feilIngenVurdering}</p>}
+
+        {errors.fravaerGrunnetSmittevernhensynEllerStengt &&
+        <p className="typo-feilmelding">{tekst.feilIngenVurdering}</p>}
+
+        {getValues().fravaerGrunnetSmittevernhensynEllerStengt === 'delvis' && <div className={styles.antallDagerDelvisInnvilgetContainer}>
+        <InputField
+          label={'Hvor mange dager har søker rett på?'}
+          isMini={false}
+          bredde="S"
+          name={'antallDagerDelvisInnvilget'}
+          valideringsFunksjoner={erAntallDagerDelvisInnvilgetFyltUt}
+          feil={errors.antallDagerDelvisInnvilget !== undefined ? tekst.feilManglerDager : ''}
+        />
+
+        </div>}
         <Hovedknapp className={styles.knapp} htmlType="submit">Bekreft og fortsett</Hovedknapp>
       </form>
     </FormProvider>
