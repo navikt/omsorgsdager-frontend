@@ -1,9 +1,8 @@
 import {Hovedknapp} from 'nav-frontend-knapper';
 import {RadioGruppe} from 'nav-frontend-skjema';
-import {number} from 'prop-types';
 import React from 'react';
 import {KorrigerePerioderProps} from '../../../types/KorrigerePerioderProps';
-import {booleanTilTekst, tekstTilBoolean} from '../../../util/stringUtils';
+import {booleanTilTekst} from '../../../util/stringUtils';
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
 import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
 import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
@@ -82,7 +81,7 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
 
   const vilkarOppfyltTekstTilLesemodus = (vilkarOppfylt, antallDager) => {
     if(vilkarOppfylt && antallDager !== null) return 'Delvis';
-    return vilkarOppfylt ? 'Ja' : 'Nei'
+    return vilkarOppfylt ? 'Ja' : 'Nei';
   };
 
   if (lesemodus && !åpenForRedigering) {

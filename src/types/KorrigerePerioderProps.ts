@@ -1,5 +1,4 @@
 import {FormState} from './FormState';
-import {InformasjonTilLesemodus} from './informasjonTilLesemodus';
 
 export interface KorrigerePerioderProps {
   behandlingsID: string;
