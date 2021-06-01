@@ -31,7 +31,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
   behandlingsID,
   aksjonspunktLost,
   lesemodus,
-  soknadsopplysninger,
+  fraDatoFraSoknad,
   informasjonTilLesemodus,
   vedtakFattetVilkarOppfylt,
   informasjonOmVilkar,
@@ -44,9 +44,9 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
     reValidateMode: 'onSubmit',
     defaultValues: {
       begrunnelse: aksjonspunktLost ? informasjonTilLesemodus.begrunnelse : '',
-      fraDato: aksjonspunktLost ? informasjonTilLesemodus.fraDato : soknadsopplysninger.fraDato,
+      fraDato: aksjonspunktLost ? informasjonTilLesemodus.fraDato : fraDatoFraSoknad,
       erSokerenAleneOmOmsorgen: aksjonspunktLost ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt) : '',
-      avslagsArsakErPeriodeErIkkeOverSeksMån: aksjonspunktLost ? booleanTilTekst(informasjonTilLesemodus.avslagsArsakErPeriodeErIkkeOverSeksMån) : '',
+      // avslagsArsakErPeriodeErIkkeOverSeksMån: aksjonspunktLost ? booleanTilTekst(informasjonTilLesemodus.avslagsArsakErPeriodeErIkkeOverSeksMån) : '',
       åpenForRedigering: false
     }
   });
@@ -58,7 +58,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
   const {
     erDatoFyltUt,
     erDatoGyldig,
-    erAvslagsArsakErPeriodeErIkkeOverSeksMånGyldig
+  // erAvslagsArsakErPeriodeErIkkeOverSeksMånGyldig
   } = valideringsFunksjonerMidlertidigAlene(getValues, 'erSokerenAleneOmOmsorgen');
 
   const mellomlagringFormState = useFormSessionStorage(
@@ -77,12 +77,12 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
   fraDato,
   avslagsArsakErPeriodeErIkkeOverSeksMån,
 }) => {
-    if (!errors.begrunnelse && !errors.fraDato && !errors.erSokerenAleneOmOmsorgen && !errors.avslagsArsakErPeriodeErIkkeOverSeksMån) {
+    if (!errors.begrunnelse && !errors.fraDato && !errors.erSokerenAleneOmOmsorgen) {
       losAksjonspunkt({
         begrunnelse,
         vilkarOppfylt: tekstTilBoolean(erSokerenAleneOmOmsorgen),
         fraDato: tekstTilBoolean(erSokerenAleneOmOmsorgen) ? fraDato.replaceAll('.', '-') : '',
-        avslagsArsakErPeriodeErIkkeOverSeksMån: tekstTilBoolean(avslagsArsakErPeriodeErIkkeOverSeksMån)
+        // avslagsArsakErPeriodeErIkkeOverSeksMån: tekstTilBoolean(avslagsArsakErPeriodeErIkkeOverSeksMån)
       });
       setValue('åpenForRedigering', false);
       mellomlagringFormState.fjerneState();
@@ -102,7 +102,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
 
       {lesemodus && !åpenForRedigering && !vedtakFattetVilkarOppfylt &&
       <AleneOmOmsorgenLesemodus
-        soknadsopplysninger={soknadsopplysninger}
+        fraDatoFraSoknad={fraDatoFraSoknad}
         informasjonTilLesemodus={informasjonTilLesemodus}
         harAksjonspunktBlivitLostTidligare={aksjonspunktLost}
         åpneForRedigereInformasjon={() => setValue('åpenForRedigering', true)}
@@ -113,8 +113,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
 
         <OpplysningerFraSoknad
           periodeTekst={'Fra dato oppgitt'}
-          periode={soknadsopplysninger.fraDato}
-          {...soknadsopplysninger}
+          periode={fraDatoFraSoknad}
         />
 
         <FormProvider {...methods} >
@@ -132,7 +131,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
               {errors.erSokerenAleneOmOmsorgen && <p className="typo-feilmelding">{tekst.feilIngenVurdering}</p>}
             </div>
 
-            {erSokerAleneOmOmsorgen !== null && erSokerAleneOmOmsorgen.length > 0 && !tekstTilBoolean(erSokerAleneOmOmsorgen) &&
+            {/* Utkommentert i väntan på funksjonellt beslutt om avslagsårsaker erSokerAleneOmOmsorgen !== null && erSokerAleneOmOmsorgen.length > 0 && !tekstTilBoolean(erSokerAleneOmOmsorgen) &&
             <div>
               <RadioGruppe
                 className={classNames(styleRadioknapper.horisontalPlassering, styles.avslagsArsakErPeriodeErIkkeOverSeksMån)}
@@ -148,7 +147,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
               </RadioGruppe>
               {errors.avslagsArsakErPeriodeErIkkeOverSeksMån &&
               <p className="typo-feilmelding">{tekst.feilIngenÅrsak}</p>}
-            </div>
+            </div>*/
             }
 
             {tekstTilBoolean(erSokerAleneOmOmsorgen) &&

@@ -1,19 +1,19 @@
 import React  from 'react';
-import {AleneOmOmsorgenAksjonspunktObjekt, AleneOmOmsorgenSoknadsopplysninger} from '../../../types/AleneOmOmsorgenProps';
+import {AleneOmOmsorgenAksjonspunktObjekt} from '../../../types/AleneOmOmsorgenProps';
 import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
 import OpplysningerFraVedtak from '../opplysninger-fra-vedtak/OpplysningerFraVedtak';
 import OpplysningerFraSoknad from '../opplysninger-fra-soknad/OpplysningerFraSoknad';
 import tekst from '../alene-om-omsorgen/alene-om-omsorgen-tekst';
 
 interface OwnProps {
-  soknadsopplysninger: AleneOmOmsorgenSoknadsopplysninger;
+  fraDatoFraSoknad: string;
   informasjonTilLesemodus: AleneOmOmsorgenAksjonspunktObjekt;
   harAksjonspunktBlivitLostTidligare: boolean;
   åpneForRedigereInformasjon: () => void;
 }
 
 const AleneOmOmsorgenLesemodus: React.FunctionComponent<OwnProps> = ({
-  soknadsopplysninger,
+  fraDatoFraSoknad,
   informasjonTilLesemodus,
   harAksjonspunktBlivitLostTidligare,
   åpneForRedigereInformasjon
@@ -28,9 +28,9 @@ const AleneOmOmsorgenLesemodus: React.FunctionComponent<OwnProps> = ({
 
       <OpplysningerFraSoknad
         periodeTekst={'Fra dato oppgitt'}
-        periode={soknadsopplysninger.fraDato}
-        {...soknadsopplysninger}
+        periode={fraDatoFraSoknad}
       />
+
       <OpplysningerFraVedtak
         tekstBegrunnelseLesemodus={tekst.begrunnelseLesemodus}
         begrunnelse={informasjonTilLesemodus.begrunnelse}
@@ -38,8 +38,6 @@ const AleneOmOmsorgenLesemodus: React.FunctionComponent<OwnProps> = ({
         erVilkarOppfylt={informasjonTilLesemodus.vilkarOppfylt}
         textVilkarOppfylt={'Fra vilket dato er vedtaket gyldig?'}
         informasjonVilkarOppfylt={informasjonTilLesemodus.fraDato}
-        textVilkarIkkeOppfylt={tekst.arsak}
-        årsakVilkarIkkeOppfylt={informasjonTilLesemodus.avslagsArsakErPeriodeErIkkeOverSeksMån ? tekst.arsakPeriodeIkkeOverSeksMån : tekst.arsakIkkeAleneOmsorg}
       />
     </>
   );
