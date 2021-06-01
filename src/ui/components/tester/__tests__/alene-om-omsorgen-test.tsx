@@ -11,12 +11,7 @@ describe('<AleneOmOmsorgen>', () => {
       behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: false,
-      soknadsopplysninger: {
-        årsak: 'Årsak',
-        beskrivelse: 'Beskrivelse',
-        fraDato: '22.12.1994',
-        soknadsdato: '2021-10-20'
-      },
+      fraDatoFraSoknad: '22.22.02',
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -39,7 +34,6 @@ describe('<AleneOmOmsorgen>', () => {
     render(<AleneOmOmsorgen {...props}/>);
 
     const aksjonspunkt = 'Vurder om vilkår for alene om omsorgen er oppfylt.';
-    const oppgittÅrsakText = 'Oppgitt årsak';
     const oppgittPeriodeText = 'Fra dato oppgitt';
 
     const begrunnelseText = 'Vurder om vilkåret for alene om omsorgen er oppfylt';
@@ -47,9 +41,6 @@ describe('<AleneOmOmsorgen>', () => {
 
     const hentetAksjonspunkt = screen.getByText(aksjonspunkt);
     expect(hentetAksjonspunkt).toBeInTheDocument();
-
-    const hentetOppgittÅrsakText = screen.getByText(oppgittÅrsakText);
-    expect(hentetOppgittÅrsakText).toBeInTheDocument();
 
     const hentetOppgittPeriodeText = screen.getByText(oppgittPeriodeText);
     expect(hentetOppgittPeriodeText).toBeInTheDocument();
@@ -67,12 +58,7 @@ describe('<AleneOmOmsorgen>', () => {
       behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: true,
-      soknadsopplysninger: {
-        årsak: 'Årsak',
-        beskrivelse: 'Beskrivelse',
-        fraDato: '22.12.1994',
-        soknadsdato: '2021-10-20'
-      },
+      fraDatoFraSoknad: '22.22.02',
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -101,11 +87,8 @@ describe('<AleneOmOmsorgen>', () => {
     const hentetAksjonspunkt = screen.getByText(aksjonspunkt);
     expect(hentetAksjonspunkt).toBeInTheDocument();
 
-    const hentetÅrsak = screen.getByText(props.soknadsopplysninger.årsak);
-    expect(hentetÅrsak).toBeInTheDocument();
-
-    const hentetPeriode = screen.getAllByText(props.soknadsopplysninger.fraDato);
-    expect(hentetPeriode).toHaveLength(2);
+    const hentetPeriode = screen.getAllByText(props.fraDatoFraSoknad);
+    expect(hentetPeriode).toHaveLength(1);
 
     const hentetBegrunnelseTekst = screen.getByText('Vurdering');
     expect(hentetBegrunnelseTekst).toBeInTheDocument();
@@ -122,12 +105,7 @@ describe('<AleneOmOmsorgen>', () => {
       behandlingsID: '123',
       aksjonspunktLost: true,
       lesemodus: true,
-      soknadsopplysninger: {
-        årsak: 'Årsak',
-        beskrivelse: 'Beskrivelse',
-        fraDato: '22.12.1994',
-        soknadsdato: '2021-10-20'
-      },
+      fraDatoFraSoknad: '22.22.02',
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -161,12 +139,7 @@ describe('<AleneOmOmsorgen>', () => {
       behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: false,
-      soknadsopplysninger: {
-        årsak: 'Årsak',
-        beskrivelse: 'Beskrivelse',
-        fraDato: '22.12.1994',
-        soknadsdato: '2021-10-20'
-      },
+      fraDatoFraSoknad: '22.22.02',
       vedtakFattetVilkarOppfylt: true,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -209,12 +182,7 @@ describe('<AleneOmOmsorgen>', () => {
       behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: false,
-      soknadsopplysninger: {
-        årsak: 'Årsak',
-        beskrivelse: 'Beskrivelse',
-        fraDato: '22.12.1994',
-        soknadsdato: '2021-10-20'
-      },
+      fraDatoFraSoknad: '22.22.02',
       vedtakFattetVilkarOppfylt: true,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -252,12 +220,7 @@ describe('<AleneOmOmsorgen>', () => {
       behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: false,
-      soknadsopplysninger: {
-        årsak: 'Årsak',
-        beskrivelse: 'Beskrivelse',
-        fraDato: '22.12.1994',
-        soknadsdato: '2021-10-20'
-      },
+      fraDatoFraSoknad: '22.22.02',
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',

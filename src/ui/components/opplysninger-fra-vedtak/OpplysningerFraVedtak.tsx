@@ -9,8 +9,8 @@ interface Props {
   erVilkarOppfylt: boolean;
   textVilkarOppfylt?: string;
   informasjonVilkarOppfylt?: string;
-  textVilkarIkkeOppfylt: string;
-  årsakVilkarIkkeOppfylt: string;
+  textVilkarIkkeOppfylt?: string;
+  årsakVilkarIkkeOppfylt?: string;
 }
 
 const OpplysningerFraVedtak: React.FunctionComponent<Props> = ({
@@ -36,7 +36,7 @@ const OpplysningerFraVedtak: React.FunctionComponent<Props> = ({
         <p>{informasjonVilkarOppfylt}</p>
         </>}
 
-      {!erVilkarOppfylt && <>
+      {typeof årsakVilkarIkkeOppfylt !== 'undefined' && !erVilkarOppfylt && <>
         <h4 className={styleLesemodus.label}>{textVilkarIkkeOppfylt}</h4>
         <p className={styleLesemodus.text}>{årsakVilkarIkkeOppfylt}</p>
       </>
