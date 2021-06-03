@@ -1,4 +1,4 @@
-import {render, screen} from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 import {axe} from 'jest-axe';
 import React from 'react';
 import {KorrigerePerioderProps} from '../../../../types/KorrigerePerioderProps';
@@ -13,7 +13,8 @@ describe('<KorrigerePerioder>', () => {
       lesemodus: false,
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
-        vilkarOppfylt: false
+        vilkarOppfylt: false,
+        antallDagerDelvisInnvilget: null
       },
       losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse),
       formState: FormStateTilTest,
@@ -34,7 +35,49 @@ describe('<KorrigerePerioder>', () => {
     const hentetVilkarOppfyltText = screen.getByText(vilkarOppfyltTekst);
     expect(hentetVilkarOppfyltText).toBeInTheDocument();
 
+    const delvisInnvilget = screen.getByDisplayValue('delvis');
+    fireEvent.click(delvisInnvilget);
+
+    const hentetHvorMangeDagerTekst = screen.getByText('Hvor mange dager har søker rett på?');
+    expect(hentetHvorMangeDagerTekst).toBeInTheDocument();
   });
+
+  test('KorrigerePerioder viser lesemodus med delvis innvilget', () => {
+    const props = {
+      behandlingsID: '123',
+      aksjonspunktLost: false,
+      lesemodus: true,
+      informasjonTilLesemodus: {
+        begrunnelse: 'Begrunnelse til lesemodus',
+        vilkarOppfylt: true,
+        antallDagerDelvisInnvilget: 10
+      },
+      losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse),
+      formState: FormStateTilTest
+    } as KorrigerePerioderProps;
+    render(<KorrigerePerioder {...props}/>);
+
+    const aksjonspunkt = 'Se på nødvendig dokumentasjon og tidligere utbetalte perioder, og vurder om søker har rett på å få utbetalt flere dager.';
+
+    const hentetAksjonspunkt = screen.getByText(aksjonspunkt);
+    expect(hentetAksjonspunkt).toBeInTheDocument();
+
+    const hentetBehandletAksjonspunktTekst = screen.getByText('Behandlet aksjonspunkt:');
+    expect(hentetBehandletAksjonspunktTekst).toBeInTheDocument();
+
+    const hentetBegrunnelse = screen.getByText(props.informasjonTilLesemodus.begrunnelse);
+    expect(hentetBegrunnelse).toBeInTheDocument();
+
+    const hentetVilkarOppfylt = screen.getByText('Delvis');
+    expect(hentetVilkarOppfylt).toBeInTheDocument();
+
+    const hentetAntallDager = screen.getByText(props.informasjonTilLesemodus.antallDagerDelvisInnvilget.toString());
+    expect(hentetAntallDager).toBeInTheDocument();
+
+    const hentetAntallDagerTekst = screen.getByText('Antall dager innvilget');
+    expect(hentetAntallDagerTekst).toBeInTheDocument();
+  });
+
 
   test('KorrigerePerioder viser lesemodus', () => {
     const props = {
@@ -43,7 +86,8 @@ describe('<KorrigerePerioder>', () => {
       lesemodus: true,
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
-        vilkarOppfylt: false
+        vilkarOppfylt: false,
+        antallDagerDelvisInnvilget: null
       },
       losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse),
       formState: FormStateTilTest
@@ -72,7 +116,8 @@ describe('<KorrigerePerioder>', () => {
       lesemodus: true,
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
-        vilkarOppfylt: false
+        vilkarOppfylt: false,
+        antallDagerDelvisInnvilget: null
       },
       losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse),
       formState: FormStateTilTest
@@ -90,7 +135,8 @@ describe('<KorrigerePerioder>', () => {
       lesemodus: true,
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
-        vilkarOppfylt: false
+        vilkarOppfylt: false,
+        antallDagerDelvisInnvilget: null
       },
       losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse),
       formState: FormStateTilTest

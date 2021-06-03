@@ -46,9 +46,10 @@
                 lesemodus: false,
                 informasjonTilLesemodus: {
                   begrunnelse: 'Begrunnelse til lesemodus',
-                  vilkarOppfylt: false
+                  vilkarOppfylt: true,
+                  antallDagerDelvisInnvilget: 10
                 },
-                losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse),
+                losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse, antallDagerDelvisInnvilget) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse,antallDagerDelvisInnvilget),
                 formState
               }
             },
