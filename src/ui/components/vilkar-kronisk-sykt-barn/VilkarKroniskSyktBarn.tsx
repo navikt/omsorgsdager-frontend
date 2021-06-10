@@ -44,11 +44,12 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   informasjonOmVilkar,
   formState
 }) => {
+  const harAksjonspunktOgVilkarLostTidligere = informasjonTilLesemodus.begrunnelse.length > 0;
   const methods = useForm<FormData>({
     defaultValues: {
-      begrunnelse: aksjonspunktLost ? informasjonTilLesemodus.begrunnelse : '',
-      harDokumentasjonOgFravaerRisiko: aksjonspunktLost ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt) : '',
-      arsakErIkkeRiskioFraFravaer: aksjonspunktLost ? booleanTilTekst(informasjonTilLesemodus.avslagsArsakErIkkeRiskioFraFravaer) : ''
+      begrunnelse: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.begrunnelse : '',
+      harDokumentasjonOgFravaerRisiko: harAksjonspunktOgVilkarLostTidligere ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt) : '',
+      arsakErIkkeRiskioFraFravaer: harAksjonspunktOgVilkarLostTidligere ? booleanTilTekst(informasjonTilLesemodus.avslagsArsakErIkkeRiskioFraFravaer) : ''
     }
   });
 

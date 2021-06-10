@@ -12,7 +12,7 @@ describe('<Omsorg>', () => {
       aksjonspunktLost: false,
       lesemodus: false,
       informasjonTilLesemodus: {
-        begrunnelse: 'Begrunnelse til lesemodus',
+        begrunnelse: '',
         vilkarOppfylt: false
       },
       barn: ['01010050053'],
@@ -49,6 +49,34 @@ describe('<Omsorg>', () => {
 
     const hentetHarOmsorg = screen.getByText(harOmsorg);
     expect(hentetHarOmsorg).toBeInTheDocument();
+  });
+
+  test('Omsorg viser åpen aksjonspunkt med informasjon fra tidigare lost vilkar (kommer tillbake etter totrinnskontroll)', () => {
+    const props = {
+      behandlingsID: '123',
+      fagytelseType: 'OMS_MA',
+      aksjonspunktLost: false,
+      lesemodus: false,
+      informasjonTilLesemodus: {
+        begrunnelse: 'Begrunnelse til lesemodus',
+        vilkarOppfylt: false
+      },
+      barn: ['01010050053'],
+      vedtakFattetVilkarOppfylt: false,
+      informasjonOmVilkar: {
+        begrunnelse: 'begrunnelse',
+        navnPåAksjonspunkt: 'Utvidet rett',
+        vilkarOppfylt: true,
+        vilkar: '§ 9-3 vilkar'
+      },
+      losAksjonspunkt: (harOmsorgen, begrunnelse) => console.log(harOmsorgen, begrunnelse),
+      formState: FormStateTilTest
+    };
+
+    render(<Omsorg {...props}/>);
+
+    const hentetBegrunnelseInputText = screen.getByText(props.informasjonTilLesemodus.begrunnelse);
+    expect(hentetBegrunnelseInputText).toBeInTheDocument();
   });
 
   test('Omsorg viser åpen aksjonspunkt for kronisk syk som forventet', () => {

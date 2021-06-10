@@ -42,15 +42,16 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
 }) => {
   const [harAksjonspunktBlivitLostTidligare] = useState<boolean>(aksjonspunktLost);
   const formStateKey = `${behandlingsID}-utvidetrett-ma`;
+  const harAksjonspunktOgVilkarLostTidligere = informasjonTilLesemodus.begrunnelse.length > 0 && informasjonTilLesemodus.dato.til.length > 0 && informasjonTilLesemodus.dato.fra.length > 0;
 
   const methods = useForm<FormData>({
     reValidateMode: 'onSubmit',
     defaultValues: {
-      begrunnelse: aksjonspunktLost ? informasjonTilLesemodus.begrunnelse : '',
-      fraDato: aksjonspunktLost ? informasjonTilLesemodus.dato.fra : soknadsopplysninger.soknadsdato,
-      tilDato: aksjonspunktLost ? informasjonTilLesemodus.dato.til : 'dd.mm.åååå',
-      erSokerenMidlertidigAleneOmOmsorgen: aksjonspunktLost ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt) : '',
-      avslagsArsakErPeriodeErIkkeOverSeksMån: aksjonspunktLost ? booleanTilTekst(informasjonTilLesemodus.avslagsArsakErPeriodeErIkkeOverSeksMån) : '',
+      begrunnelse: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.begrunnelse : '',
+      fraDato: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.dato.fra : soknadsopplysninger.soknadsdato,
+      tilDato: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.dato.til : 'dd.mm.åååå',
+      erSokerenMidlertidigAleneOmOmsorgen: harAksjonspunktOgVilkarLostTidligere ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt) : '',
+      avslagsArsakErPeriodeErIkkeOverSeksMån: harAksjonspunktOgVilkarLostTidligere ? booleanTilTekst(informasjonTilLesemodus.avslagsArsakErPeriodeErIkkeOverSeksMån) : '',
       åpenForRedigering: false
     }
   });

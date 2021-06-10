@@ -6,7 +6,7 @@ export interface AleneOmOmsorgenProps {
   lesemodus: boolean;
   aksjonspunktLost: boolean;
   fraDatoFraSoknad: string;
-  informasjonTilLesemodus?: AleneOmOmsorgenAksjonspunktObjekt;
+  informasjonTilLesemodus: AleneOmOmsorgenAksjonspunktObjekt;
   vedtakFattetVilkarOppfylt: boolean;
   informasjonOmVilkar?: InformasjonOmVurdertVilkar;
   losAksjonspunkt: (AleneOmOmsorgenAksjonspunktObjekt) => void;

@@ -12,7 +12,7 @@ describe('<KorrigerePerioder>', () => {
       aksjonspunktLost: false,
       lesemodus: false,
       informasjonTilLesemodus: {
-        begrunnelse: 'Begrunnelse til lesemodus',
+        begrunnelse: '',
         vilkarOppfylt: false,
         antallDagerDelvisInnvilget: null
       },
@@ -40,6 +40,27 @@ describe('<KorrigerePerioder>', () => {
 
     const hentetHvorMangeDagerTekst = screen.getByText('Hvor mange dager har søker rett på?');
     expect(hentetHvorMangeDagerTekst).toBeInTheDocument();
+  });
+
+  test('KorrigerePerioder viser åpen aksjonspunkt med informasjon fra tidigare lost vilkar (kommer tillbake etter totrinnskontroll)', () => {
+    const props = {
+      behandlingsID: '123',
+      aksjonspunktLost: false,
+      lesemodus: false,
+      informasjonTilLesemodus: {
+        begrunnelse: 'Begrunnelse til lesemodus',
+        vilkarOppfylt: false,
+        antallDagerDelvisInnvilget: null
+      },
+      losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse),
+      formState: FormStateTilTest,
+    } as KorrigerePerioderProps;
+
+    render(<KorrigerePerioder {...props}/>);
+
+    const hentetBegrunnelseInputText = screen.getByText(props.informasjonTilLesemodus.begrunnelse);
+    expect(hentetBegrunnelseInputText).toBeInTheDocument();
+
   });
 
   test('KorrigerePerioder viser lesemodus med delvis innvilget', () => {

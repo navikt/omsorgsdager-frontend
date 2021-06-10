@@ -12,7 +12,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
       lesemodus: false,
       aksjonspunktLost: false,
       informasjonTilLesemodus: {
-        begrunnelse: 'Begrunnelse til lesemodus',
+        begrunnelse: '',
         vilkarOppfylt: false,
         avslagsArsakErIkkeRiskioFraFravaer: true
       },
@@ -42,6 +42,33 @@ describe('<VilkarKroniskSyktBarn>', () => {
     const hentetVilkarOppfyltText = screen.getByText(vilkarOppfyltText);
     expect(hentetVilkarOppfyltText).toBeInTheDocument();
 
+  });
+
+  test('VilkarKroniskSyktBarn viser åpen aksjonspunkt med informasjon fra tidigare lost vilkar (kommer tillbake etter totrinnskontroll)', () => {
+    const props = {
+      behandlingsID: '123',
+      lesemodus: false,
+      aksjonspunktLost: false,
+      informasjonTilLesemodus: {
+        begrunnelse: 'Begrunnelse til lesemodus',
+        vilkarOppfylt: false,
+        avslagsArsakErIkkeRiskioFraFravaer: true
+      },
+      losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse) => console.log(endreHarDokumentasjonOgFravaerRisiko, begrunnelse),
+      vedtakFattetVilkarOppfylt: false,
+      informasjonOmVilkar: {
+        begrunnelse: 'begrunnelse',
+        navnPåAksjonspunkt: 'Utvidet rett',
+        vilkarOppfylt: true,
+        vilkar: '§ 9-3 vilkar'
+      },
+      formState: FormStateTilTest
+    } as VilkarKroniskSyktBarnProps;
+
+    render(<VilkarKroniskSyktBarn {...props}/>);
+
+    const hentetBegrunnelseInputText = screen.getByText(props.informasjonTilLesemodus.begrunnelse);
+    expect(hentetBegrunnelseInputText).toBeInTheDocument();
   });
 
   test('VilkarKroniskSyktBarn viser lesemodus', () => {

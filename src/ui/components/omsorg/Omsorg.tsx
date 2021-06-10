@@ -61,10 +61,12 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
     begrunnelseLesemodus: 'Vurdering'
   };
 
+  const harAksjonspunktOgVilkarLostTidligere = informasjonTilLesemodus.begrunnelse.length > 0;
+
   const methods = useForm<FormData>({
     defaultValues: {
-      begrunnelse: aksjonspunktLost ? informasjonTilLesemodus.begrunnelse : '',
-      harOmsorgen: aksjonspunktLost ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt) : '',
+      begrunnelse: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.begrunnelse : '',
+      harOmsorgen: harAksjonspunktOgVilkarLostTidligere ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt) : '',
       åpenForRedigering: false
     }
   });
