@@ -38,12 +38,13 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
   lesemodus,
   formState
 }) => {
+  const harAksjonspunktOgVilkarLostTidligere = informasjonTilLesemodus.begrunnelse.length > 0;
   const methods = useForm<FormData>({
     defaultValues: {
-      begrunnelse: aksjonspunktLost ? informasjonTilLesemodus.begrunnelse : '',
-      fravaerGrunnetSmittevernhensynEllerStengt: aksjonspunktLost ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt) : '',
+      begrunnelse: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.begrunnelse : '',
+      fravaerGrunnetSmittevernhensynEllerStengt: harAksjonspunktOgVilkarLostTidligere ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt) : '',
       åpenForRedigering: false,
-      antallDagerDelvisInnvilget: null,
+      antallDagerDelvisInnvilget: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.antallDagerDelvisInnvilget : null,
     }
   });
 

@@ -39,13 +39,14 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
   formState
 }) => {
   const formStateKey = `${behandlingsID}-utvidetrett-alene-om-omsorgen`;
+  const harAksjonspunktOgVilkarLostTidligere = informasjonTilLesemodus.fraDato.length > 0 && informasjonTilLesemodus.begrunnelse.length > 0;
 
   const methods = useForm<FormData>({
     reValidateMode: 'onSubmit',
     defaultValues: {
-      begrunnelse: aksjonspunktLost ? informasjonTilLesemodus.begrunnelse : '',
-      fraDato: aksjonspunktLost ? informasjonTilLesemodus.fraDato : informasjonTilLesemodus.fraDato.length > 0 ? informasjonTilLesemodus.fraDato : fraDatoFraSoknad,
-      erSokerenAleneOmOmsorgen: aksjonspunktLost ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt) : '',
+      begrunnelse: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.begrunnelse : '',
+      fraDato: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.fraDato : fraDatoFraSoknad,
+      erSokerenAleneOmOmsorgen: harAksjonspunktOgVilkarLostTidligere ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt) : '',
       // avslagsArsakErPeriodeErIkkeOverSeksMån: aksjonspunktLost ? booleanTilTekst(informasjonTilLesemodus.avslagsArsakErPeriodeErIkkeOverSeksMån) : '',
       åpenForRedigering: false
     }
@@ -151,7 +152,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
             }
 
             {tekstTilBoolean(erSokerAleneOmOmsorgen) &&
-            <SkjemaGruppe className={styles.gyldigVedtaksPeriode}
+            <SkjemaGruppe className={styles.gyldigVedtaksPeriodeAleneOmOmsorgen}
                           legend={tekst.sporsmalPeriodeVedtakGyldig}
                           feil={errors.fraDato && errors.fraDato.type === 'erDatoFyltUt' && tekst.feilmedlingManglerFraDato
                           || errors.fraDato && errors.fraDato.type === 'erDatoGyldig' && tekst.feilmedlingUgyldigDato}

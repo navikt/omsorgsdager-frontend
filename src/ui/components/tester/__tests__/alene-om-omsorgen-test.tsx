@@ -20,9 +20,9 @@ describe('<AleneOmOmsorgen>', () => {
         vilkar: '§ 9-3 vilkar'
       },
       informasjonTilLesemodus: {
-        begrunnelse: 'Begrunnelse',
+        begrunnelse: '',
         vilkarOppfylt: true,
-        fraDato: '22.12.1994',
+        fraDato: '',
         avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
       losAksjonspunkt: () => {
@@ -50,6 +50,42 @@ describe('<AleneOmOmsorgen>', () => {
 
     const hentetVilkarOppfyltText = screen.getByText(vilkarOppfyltText);
     expect(hentetVilkarOppfyltText).toBeInTheDocument();
+
+  });
+
+  test('AleneOmOmsorgen viser åpen aksjonspunkt med informasjon fra tidigare lost vilkar (kommer tillbake etter totrinnskontroll)', () => {
+    const props = {
+      behandlingsID: '123',
+      aksjonspunktLost: false,
+      lesemodus: false,
+      fraDatoFraSoknad: '22.22.02',
+      vedtakFattetVilkarOppfylt: false,
+      informasjonOmVilkar: {
+        begrunnelse: 'begrunnelse',
+        navnPåAksjonspunkt: 'Utvidet rett',
+        vilkarOppfylt: true,
+        vilkar: '§ 9-3 vilkar'
+      },
+      informasjonTilLesemodus: {
+        begrunnelse: 'Begrunnelse',
+        vilkarOppfylt: true,
+        fraDato: '22.12.1994',
+        avslagsArsakErPeriodeErIkkeOverSeksMån: false
+      },
+      losAksjonspunkt: () => {
+        console.log('losAksjonspunkt alene om omsorgen');
+      },
+      formState: FormStateTilTest
+    } as AleneOmOmsorgenProps;
+
+    render(<AleneOmOmsorgen {...props}/>);
+
+    const hentetBegrunnelseInputText = screen.getByText(props.informasjonTilLesemodus.begrunnelse);
+    expect(hentetBegrunnelseInputText).toBeInTheDocument();
+
+    const hentetFraDato = screen.getByDisplayValue(props.informasjonTilLesemodus.fraDato);
+    expect(hentetFraDato).toBeDefined();
+
 
   });
 

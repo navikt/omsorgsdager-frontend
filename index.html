@@ -153,10 +153,7 @@
                 informasjonTilLesemodus: {
                   begrunnelse: 'Begrunnelse',
                   vilkarOppfylt: false,
-                  dato: {
-                    fra: '2021-06-06',
-                    til: '2021-10-03'
-                  },
+                  fraDato: '2021-06-06',
                   avslagsArsakErPeriodeErIkkeOverSeksMån: true
                 },
                 losAksjonspunkt: ({
@@ -172,7 +169,7 @@
 
 
           setTimeout(() => {
-            window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.aleneOmOmsorgen);
+            window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.korrigerePerioder);
           }, 300);
         </script>
     </body>

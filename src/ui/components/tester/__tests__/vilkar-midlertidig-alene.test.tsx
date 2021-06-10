@@ -25,11 +25,11 @@ describe('<VilkarMidlertidigAlene>', () => {
         vilkar: '§ 9-3 vilkar'
       },
       informasjonTilLesemodus: {
-        begrunnelse: 'Begrunnelse',
+        begrunnelse: '',
         vilkarOppfylt: true,
         dato: {
-          fra: '22.03.1993',
-          til: '22.12.1994'
+          fra: '',
+          til: ''
         },
         avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
@@ -64,6 +64,52 @@ describe('<VilkarMidlertidigAlene>', () => {
     expect(hentetVilkarOppfyltText).toBeInTheDocument();
 
   });
+
+  test('VilkarMidlertidigAlene viser åpen aksjonspunkt med informasjon fra tidigare lost vilkar (kommer tillbake etter totrinnskontroll)', () => {
+    const props = {
+      behandlingsID: '123',
+      aksjonspunktLost: false,
+      lesemodus: false,
+      soknadsopplysninger: {
+        årsak: 'Årsak',
+        beskrivelse: 'Beskrivelse',
+        periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ',
+        soknadsdato: '2021-10-20'
+      },
+      vedtakFattetVilkarOppfylt: false,
+      informasjonOmVilkar: {
+        begrunnelse: 'begrunnelse',
+        navnPåAksjonspunkt: 'Utvidet rett',
+        vilkarOppfylt: true,
+        vilkar: '§ 9-3 vilkar'
+      },
+      informasjonTilLesemodus: {
+        begrunnelse: 'Begrunnelse',
+        vilkarOppfylt: true,
+        dato: {
+          fra: '22.03.1993',
+          til: '22.12.1994'
+        },
+        avslagsArsakErPeriodeErIkkeOverSeksMån: false
+      },
+      losAksjonspunkt: () => {console.log('losAksjonspunkt midlertidig alene');},
+      formState: FormStateTilTest
+    } as VilkarMidlertidigAleneProps;
+
+    render(
+      <VilkarMidlertidigAlene {...props}/>
+    );
+
+    const hentetBegrunnelseInputText = screen.getByText(props.informasjonTilLesemodus.begrunnelse);
+    expect(hentetBegrunnelseInputText).toBeInTheDocument();
+
+    const hentetFraDato = screen.getByDisplayValue(props.informasjonTilLesemodus.dato.fra);
+    expect(hentetFraDato).toBeDefined();
+
+    const hentetTilDato = screen.getByDisplayValue(props.informasjonTilLesemodus.dato.til);
+    expect(hentetTilDato).toBeDefined();
+  });
+
 
   test('VilkarMidlertidigAlene viser lesemodus', () => {
     const props = {
