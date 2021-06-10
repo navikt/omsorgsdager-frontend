@@ -44,7 +44,7 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
       begrunnelse: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.begrunnelse : '',
       fravaerGrunnetSmittevernhensynEllerStengt: harAksjonspunktOgVilkarLostTidligere ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt) : '',
       åpenForRedigering: false,
-      antallDagerDelvisInnvilget: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.antallDagerDelvisInnvilget : null,
+      antallDagerDelvisInnvilget: harAksjonspunktOgVilkarLostTidligere && typeof informasjonTilLesemodus.antallDagerDelvisInnvilget !== 'undefined'  ? informasjonTilLesemodus.antallDagerDelvisInnvilget : null,
     }
   });
 
