@@ -47,7 +47,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
   const methods = useForm<FormData>({
     reValidateMode: 'onSubmit',
     defaultValues: {
-      begrunnelse: informasjonTilLesemodus.begrunnelse,
+      begrunnelse: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.begrunnelse : '',
       fraDato: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.dato.fra : soknadsopplysninger.soknadsdato,
       tilDato: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.dato.til : 'dd.mm.åååå',
       erSokerenMidlertidigAleneOmOmsorgen: harAksjonspunktOgVilkarLostTidligere ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt) : '',
