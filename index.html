@@ -58,11 +58,11 @@
               props: {
                 behandlingsID: '123',
                 aksjonspunktLost: false,
-                lesemodus: false,
-                fraDatoFraSoknad: '2021-04-06',
+                lesemodus: true,
+                soknadsdato: '2021-04-06',
                 informasjonTilLesemodus: {
                   begrunnelse: 'Begrunnelse til lesemodus',
-                  vilkarOppfylt: false,
+                  vilkarOppfylt: true,
                   avslagsArsakErIkkeRiskioFraFravaer: true,
                   fraDato: '25-6-2019'
                 },
@@ -174,7 +174,7 @@
 
 
           setTimeout(() => {
-            window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.aleneOmOmsorgen);
+            window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.vilkarKroniskSyktBarn);
           }, 300);
         </script>
     </body>

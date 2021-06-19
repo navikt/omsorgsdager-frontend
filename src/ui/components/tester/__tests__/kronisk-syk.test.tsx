@@ -11,7 +11,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
       behandlingsID: '123',
       lesemodus: false,
       aksjonspunktLost: false,
-      fraDatoFraSoknad:  '2021-04-06',
+      soknadsdato:  '2021-04-06',
       informasjonTilLesemodus: {
         begrunnelse: '',
         vilkarOppfylt: false,
@@ -51,7 +51,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
       behandlingsID: '123',
       lesemodus: false,
       aksjonspunktLost: false,
-      fraDatoFraSoknad:  '2021-04-06',
+      soknadsdato:  '2021-04-06',
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false,
@@ -80,7 +80,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
       behandlingsID: '123',
       lesemodus: true,
       aksjonspunktLost: false,
-      fraDatoFraSoknad:  '2021-04-06',
+      soknadsdato:  '2021-04-06',
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: true,
@@ -129,7 +129,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
       behandlingsID: '123',
       lesemodus: true,
       aksjonspunktLost: false,
-      fraDatoFraSoknad:  '2021-04-06',
+      soknadsdato:  '2021-04-06',
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false,
@@ -161,7 +161,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
       behandlingsID: '123',
       lesemodus: true,
       aksjonspunktLost: true,
-      fraDatoFraSoknad:  '2021-04-06',
+      soknadsdato:  '2021-04-06',
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false,
@@ -190,7 +190,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
       behandlingsID: '123',
       lesemodus: false,
       aksjonspunktLost: false,
-      fraDatoFraSoknad:  '2021-04-06',
+      soknadsdato:  '2021-04-06',
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false,
@@ -229,7 +229,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
       behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: false,
-      fraDatoFraSoknad:  '2021-04-06',
+      soknadsdato:  '2021-04-06',
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false,
@@ -265,7 +265,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
       behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: false,
-      fraDatoFraSoknad:  '2021-04-06',
+      soknadsdato:  '2021-04-06',
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false,

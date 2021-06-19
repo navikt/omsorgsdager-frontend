@@ -51,7 +51,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   vedtakFattetVilkarOppfylt,
   informasjonOmVilkar,
   formState,
-  fraDatoFraSoknad
+  soknadsdato
 }) => {
   const harAksjonspunktOgVilkarLostTidligere = informasjonTilLesemodus.begrunnelse.length > 0;
   const methods = useForm<FormData>({
@@ -59,7 +59,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
       begrunnelse: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.begrunnelse : '',
       harDokumentasjonOgFravaerRisiko: harAksjonspunktOgVilkarLostTidligere ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt) : '',
       arsakErIkkeRiskioFraFravaer: harAksjonspunktOgVilkarLostTidligere ? booleanTilTekst(informasjonTilLesemodus.avslagsArsakErIkkeRiskioFraFravaer) : '',
-      fraDato: harAksjonspunktOgVilkarLostTidligere ? formatereDato(informasjonTilLesemodus.fraDato) : formatereDato(fraDatoFraSoknad),
+      fraDato: harAksjonspunktOgVilkarLostTidligere ? formatereDato(informasjonTilLesemodus.fraDato) : formatereDato(soknadsdato),
     }
   });
 
@@ -112,8 +112,11 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
         åpneForRedigereInformasjon={() => setValue('åpenForRedigering',true)}
       />
 
-      <p className={styleLesemodus.label}>{tekst.soknadsdato}</p>
-      <p className={styleLesemodus.text}>{formatereDato(fraDatoFraSoknad)}</p>
+      {informasjonTilLesemodus.vilkarOppfylt && <>
+        <p className={styleLesemodus.label}>{tekst.soknadsdato}</p>
+        <p className={styleLesemodus.text}>{formatereDato(soknadsdato)}</p>
+      </>
+      }
 
       <p className={styleLesemodus.label}>{tekst.sporsmalHarDokumentasjonOgFravaerRisiko}</p>
       <p className={styleLesemodus.text}>{informasjonTilLesemodus.vilkarOppfylt ? 'Ja' : 'Nei'}</p>
