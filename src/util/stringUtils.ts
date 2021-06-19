@@ -17,3 +17,7 @@ export const safeJSONParse = (str) => {
     return null;
   }
 };
+
+export const formatereDato = (dato: string): string => {
+  return dato.replaceAll('-', '.');
+};

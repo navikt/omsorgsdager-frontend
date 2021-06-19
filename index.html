@@ -59,12 +59,14 @@
                 behandlingsID: '123',
                 aksjonspunktLost: false,
                 lesemodus: false,
+                fraDatoFraSoknad: '2021-04-06',
                 informasjonTilLesemodus: {
                   begrunnelse: 'Begrunnelse til lesemodus',
                   vilkarOppfylt: false,
-                  avslagsArsakErIkkeRiskioFraFravaer: true
+                  avslagsArsakErIkkeRiskioFraFravaer: true,
+                  fraDato: '25-6-2019'
                 },
-                losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse, avslagsKode) => console.log(endreHarDokumentasjonOgFravaerRisiko, begrunnelse, avslagsKode),
+                losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse, avslagsKode, fraDato) => console.log(endreHarDokumentasjonOgFravaerRisiko, begrunnelse, avslagsKode, fraDato),
                 vedtakFattetVilkarOppfylt: false,
                 informasjonOmVilkar: {
                   begrunnelse: 'begrunnelse',
@@ -141,7 +143,7 @@
               props: {
                 behandlingsID: '123',
                 aksjonspunktLost: false,
-                lesemodus: false,
+                lesemodus: true,
                 fraDatoFraSoknad: '2021-04-06',
                 vedtakFattetVilkarOppfylt: false,
                 informasjonOmVilkar: {
@@ -152,7 +154,7 @@
                 },
                 informasjonTilLesemodus: {
                   begrunnelse: 'Begrunnelse',
-                  vilkarOppfylt: false,
+                  vilkarOppfylt: true,
                   fraDato: '2021-06-06',
                   avslagsArsakErPeriodeErIkkeOverSeksMån: true
                 },
@@ -169,7 +171,7 @@
 
 
           setTimeout(() => {
-            window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.korrigerePerioder);
+            window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.vilkarKroniskSyktBarn);
           }, 300);
         </script>
     </body>
