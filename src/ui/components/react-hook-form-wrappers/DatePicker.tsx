@@ -2,6 +2,7 @@ import {Datepicker} from 'nav-datovelger';
 import {DatepickerLimitations} from 'nav-datovelger/lib/types';
 import React from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
+import styles from './datePicker.less';
 
 interface OwnProps {
   titel: string;
@@ -27,7 +28,7 @@ const DatePicker: React.FunctionComponent<OwnProps> = ({
           validate: valideringsFunksjoner
         }}
         render={({field: {onChange, value}}) => (
-          <label> {titel.length > 0 && <span>{titel}</span>}
+          <label> {titel.length > 0 && <span className={styles.gyldigVedtaksPeriodeTilFra}>{titel}</span>}
             <Datepicker onChange={onChange}
                         value={value}
                         limitations={begrensningerIKalender}

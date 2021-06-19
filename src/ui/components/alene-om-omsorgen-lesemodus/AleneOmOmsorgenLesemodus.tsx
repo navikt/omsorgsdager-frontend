@@ -1,5 +1,6 @@
 import React  from 'react';
 import {AleneOmOmsorgenAksjonspunktObjekt} from '../../../types/AleneOmOmsorgenProps';
+import {formatereDato} from '../../../util/stringUtils';
 import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
 import OpplysningerFraVedtak from '../opplysninger-fra-vedtak/OpplysningerFraVedtak';
 import OpplysningerFraSoknad from '../opplysninger-fra-soknad/OpplysningerFraSoknad';
@@ -28,7 +29,7 @@ const AleneOmOmsorgenLesemodus: React.FunctionComponent<OwnProps> = ({
 
       <OpplysningerFraSoknad
         periodeTekst={'Fra dato oppgitt'}
-        periode={fraDatoFraSoknad}
+        periode={formatereDato(fraDatoFraSoknad)}
       />
 
       <OpplysningerFraVedtak
@@ -36,8 +37,8 @@ const AleneOmOmsorgenLesemodus: React.FunctionComponent<OwnProps> = ({
         begrunnelse={informasjonTilLesemodus.begrunnelse}
         tekstVilkarOppfylt={tekst.sporsmålVilkarOppfylt}
         erVilkarOppfylt={informasjonTilLesemodus.vilkarOppfylt}
-        textVilkarOppfylt={'Fra vilket dato er vedtaket gyldig?'}
-        informasjonVilkarOppfylt={informasjonTilLesemodus.fraDato}
+        textVilkarOppfylt={'I hvilken periode er vedtaket gyldig?'}
+        informasjonVilkarOppfylt={`${formatereDato(informasjonTilLesemodus.fraDato)} - ${formatereDato(informasjonTilLesemodus.tilDato)}`}
       />
     </>
   );

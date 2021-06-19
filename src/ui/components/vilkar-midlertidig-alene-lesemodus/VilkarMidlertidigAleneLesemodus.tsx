@@ -1,4 +1,5 @@
 import React  from 'react';
+import {formatereDato} from '../../../util/stringUtils';
 import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
 import OpplysningerFraVedtak from '../opplysninger-fra-vedtak/OpplysningerFraVedtak';
 import OpplysningerFraSoknad from '../opplysninger-fra-soknad/OpplysningerFraSoknad';
@@ -34,7 +35,7 @@ const VilkarMidlertidigAleneLesemodus: React.FunctionComponent<OwnProps> = ({
         tekstVilkarOppfylt={tekst.sporsmålVilkarOppfylt}
         erVilkarOppfylt={informasjonTilLesemodus.vilkarOppfylt}
         textVilkarOppfylt={'I hvilken periode er vedtaket gyldig?'}
-        informasjonVilkarOppfylt={`${informasjonTilLesemodus.dato.fra} - ${informasjonTilLesemodus.dato.til}`}
+        informasjonVilkarOppfylt={`${formatereDato(informasjonTilLesemodus.dato.fra)} - ${formatereDato(informasjonTilLesemodus.dato.til)}`}
         textVilkarIkkeOppfylt={tekst.arsak}
         årsakVilkarIkkeOppfylt={informasjonTilLesemodus.avslagsArsakErPeriodeErIkkeOverSeksMån ? tekst.arsakPeriodeIkkeOverSeksMån : tekst.arsakIkkeAleneOmsorg}
       />

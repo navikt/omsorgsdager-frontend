@@ -82,7 +82,7 @@
               props: {
                 behandlingsID: '123',
                 aksjonspunktLost: false,
-                lesemodus: false,
+                lesemodus: true,
                 soknadsopplysninger: {
                   årsak: 'Årsak',
                   beskrivelse: 'Beskrivelse',
@@ -98,7 +98,7 @@
                 },
                 informasjonTilLesemodus: {
                   begrunnelse: 'Begrunnelse',
-                  vilkarOppfylt: false,
+                  vilkarOppfylt: true,
                   dato: {
                     fra: '2021-06-06',
                     til: '2021-10-03'
@@ -145,6 +145,7 @@
                 aksjonspunktLost: false,
                 lesemodus: true,
                 fraDatoFraSoknad: '2021-04-06',
+                tomDato: '2023-12-31',
                 vedtakFattetVilkarOppfylt: false,
                 informasjonOmVilkar: {
                   begrunnelse: 'begrunnelse',
@@ -156,14 +157,16 @@
                   begrunnelse: 'Begrunnelse',
                   vilkarOppfylt: true,
                   fraDato: '2021-06-06',
+                  tilDato: '2022-06-06',
                   avslagsArsakErPeriodeErIkkeOverSeksMån: true
                 },
                 losAksjonspunkt: ({
                                     begrunnelse,
                                     vilkarOppfylt,
                                     fraDato,
+                                    tilDato,
                                     avslagsArsakErPeriodeErIkkeOverSeksMån
-                                  }) => console.log(begrunnelse, vilkarOppfylt, fraDato),
+                                  }) => console.log(begrunnelse, vilkarOppfylt, fraDato, tilDato),
                 formState,
               }
             }
@@ -171,7 +174,7 @@
 
 
           setTimeout(() => {
-            window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.vilkarKroniskSyktBarn);
+            window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.aleneOmOmsorgen);
           }, 300);
         </script>
     </body>

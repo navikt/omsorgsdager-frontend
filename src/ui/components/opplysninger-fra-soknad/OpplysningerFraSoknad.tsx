@@ -1,4 +1,5 @@
 import React from 'react';
+import {formatereDato} from '../../../util/stringUtils';
 import styles from './opplysningerFraSoknad.less';
 
 interface Props {
@@ -25,7 +26,7 @@ const OpplysningerFraSoknad: React.FunctionComponent<Props> = ({årsak, beskrive
 
       {typeof periode !== 'undefined' && periode.length > 0 && <>
         <h4>{periodeTekst}</h4>
-        <p>{periode}</p>
+        <p>{formatereDato(periode)}</p>
       </>}
     </div>
   );
