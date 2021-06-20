@@ -119,7 +119,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
 
         <OpplysningerFraSoknad
           periodeTekst={'Fra dato oppgitt'}
-          periode={fraDatoFraSoknad}
+          periode={formatereDato(fraDatoFraSoknad)}
         />
 
         <FormProvider {...methods} >
