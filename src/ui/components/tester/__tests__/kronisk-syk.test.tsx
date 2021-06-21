@@ -11,10 +11,13 @@ describe('<VilkarKroniskSyktBarn>', () => {
       behandlingsID: '123',
       lesemodus: false,
       aksjonspunktLost: false,
+      soknadsdato:  '2021-04-06',
+      tomDato: '',
       informasjonTilLesemodus: {
         begrunnelse: '',
         vilkarOppfylt: false,
-        avslagsArsakErIkkeRiskioFraFravaer: true
+        avslagsArsakErIkkeRiskioFraFravaer: true,
+        fraDato: '2021-04-06',
       },
       losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse) => console.log(endreHarDokumentasjonOgFravaerRisiko, begrunnelse),
       vedtakFattetVilkarOppfylt: false,
@@ -49,10 +52,13 @@ describe('<VilkarKroniskSyktBarn>', () => {
       behandlingsID: '123',
       lesemodus: false,
       aksjonspunktLost: false,
+      soknadsdato:  '2021-04-06',
+      tomDato: '',
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false,
-        avslagsArsakErIkkeRiskioFraFravaer: true
+        avslagsArsakErIkkeRiskioFraFravaer: true,
+        fraDato:  '2021-04-06'
       },
       losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse) => console.log(endreHarDokumentasjonOgFravaerRisiko, begrunnelse),
       vedtakFattetVilkarOppfylt: false,
@@ -71,15 +77,18 @@ describe('<VilkarKroniskSyktBarn>', () => {
     expect(hentetBegrunnelseInputText).toBeInTheDocument();
   });
 
-  test('VilkarKroniskSyktBarn viser lesemodus', () => {
+  test('VilkarKroniskSyktBarn viser lesemodus med vilkar oppfylt', () => {
     const props = {
       behandlingsID: '123',
       lesemodus: true,
       aksjonspunktLost: false,
+      soknadsdato:  '2021-04-06',
+      tomDato: '',
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
-        vilkarOppfylt: false,
-        avslagsArsakErIkkeRiskioFraFravaer: true
+        vilkarOppfylt: true,
+        avslagsArsakErIkkeRiskioFraFravaer: true,
+        fraDato:  '2021-04-06'
       },
       losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse) => console.log(endreHarDokumentasjonOgFravaerRisiko, begrunnelse),
       vedtakFattetVilkarOppfylt: false,
@@ -99,6 +108,12 @@ describe('<VilkarKroniskSyktBarn>', () => {
     const hentetAksjonspunkt = screen.getByText(aksjonspunkt);
     expect(hentetAksjonspunkt).toBeInTheDocument();
 
+    const hentetSoknadsdatoTekst = screen.getByText('Søknadsdato');
+    expect(hentetSoknadsdatoTekst).toBeInTheDocument();
+
+    const hentetSoknadsdato = screen.getAllByText('2021.04.06');
+    expect(hentetSoknadsdato).toHaveLength(2);
+
     const hentetBehandletAksjonspunktTekst = screen.getByText('Behandlet aksjonspunkt:');
     expect(hentetBehandletAksjonspunktTekst).toBeInTheDocument();
 
@@ -107,6 +122,42 @@ describe('<VilkarKroniskSyktBarn>', () => {
 
     const hentetVilkarOppfylt = screen.getByText(props.informasjonTilLesemodus.vilkarOppfylt ? 'Ja' : 'Nei');
     expect(hentetVilkarOppfylt).toBeInTheDocument();
+
+    const hentetInformasjonOmVilkarTekst = screen.getByText('Fra hvilken dato er vedtaket gyldig?');
+    expect(hentetInformasjonOmVilkarTekst).toBeInTheDocument();
+  });
+
+  test('VilkarKroniskSyktBarn viser lesemodus med avslagsårsak', () => {
+    const props = {
+      behandlingsID: '123',
+      lesemodus: true,
+      aksjonspunktLost: false,
+      soknadsdato:  '2021-04-06',
+      tomDato: '',
+      informasjonTilLesemodus: {
+        begrunnelse: 'Begrunnelse til lesemodus',
+        vilkarOppfylt: false,
+        avslagsArsakErIkkeRiskioFraFravaer: true,
+        fraDato:  '2021-04-06'
+      },
+      losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse) => console.log(endreHarDokumentasjonOgFravaerRisiko, begrunnelse),
+      vedtakFattetVilkarOppfylt: false,
+      informasjonOmVilkar: {
+        begrunnelse: 'begrunnelse',
+        navnPåAksjonspunkt: 'Utvidet rett',
+        vilkarOppfylt: true,
+        vilkar: '§ 9-3 vilkar'
+      },
+      formState: FormStateTilTest
+    } as VilkarKroniskSyktBarnProps;
+
+    render(<VilkarKroniskSyktBarn {...props}/>);
+
+    const hentetInformasjonOmVilkarTekst = screen.getByText('Årsak');
+    expect(hentetInformasjonOmVilkarTekst).toBeInTheDocument();
+
+    const hentetInformasjonOmVilkår = screen.getByText('Det er ikke økt risiko for fravær fra arbeid');
+    expect(hentetInformasjonOmVilkår).toBeInTheDocument();
   });
 
   test('VilkarKroniskSyktBarn viser lesemodus med redigering', () => {
@@ -114,10 +165,13 @@ describe('<VilkarKroniskSyktBarn>', () => {
       behandlingsID: '123',
       lesemodus: true,
       aksjonspunktLost: true,
+      soknadsdato:  '2021-04-06',
+      tomDato: '',
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false,
-        avslagsArsakErIkkeRiskioFraFravaer: true
+        avslagsArsakErIkkeRiskioFraFravaer: true,
+        fraDato:  '2021-04-06'
       },
       losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse) => console.log(endreHarDokumentasjonOgFravaerRisiko, begrunnelse),
       vedtakFattetVilkarOppfylt: false,
@@ -141,10 +195,13 @@ describe('<VilkarKroniskSyktBarn>', () => {
       behandlingsID: '123',
       lesemodus: false,
       aksjonspunktLost: false,
+      soknadsdato:  '2021-04-06',
+      tomDato: '',
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false,
-        avslagsArsakErIkkeRiskioFraFravaer: true
+        avslagsArsakErIkkeRiskioFraFravaer: true,
+        fraDato:  '2021-04-06',
       },
       losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse) => console.log(endreHarDokumentasjonOgFravaerRisiko, begrunnelse),
       vedtakFattetVilkarOppfylt: true,
@@ -178,10 +235,13 @@ describe('<VilkarKroniskSyktBarn>', () => {
       behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: false,
+      soknadsdato:  '2021-04-06',
+      tomDato: '',
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false,
-        avslagsArsakErIkkeRiskioFraFravaer: true
+        avslagsArsakErIkkeRiskioFraFravaer: true,
+        fraDato:  '2021-04-06',
       },
       losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse) => console.log(endreHarDokumentasjonOgFravaerRisiko, begrunnelse),
       vedtakFattetVilkarOppfylt: true,
@@ -212,10 +272,13 @@ describe('<VilkarKroniskSyktBarn>', () => {
       behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: false,
+      soknadsdato:  '2021-04-06',
+      tomDato: '',
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false,
-        avslagsArsakErIkkeRiskioFraFravaer: true
+        avslagsArsakErIkkeRiskioFraFravaer: true,
+        fraDato:  '2021-04-06',
       },
       losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse) => console.log(endreHarDokumentasjonOgFravaerRisiko, begrunnelse),
       vedtakFattetVilkarOppfylt: true,

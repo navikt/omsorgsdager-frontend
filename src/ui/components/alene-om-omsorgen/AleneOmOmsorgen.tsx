@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import {Hovedknapp} from 'nav-frontend-knapper';
 import {AleneOmOmsorgenProps} from '../../../types/AleneOmOmsorgenProps';
-import {booleanTilTekst, tekstTilBoolean} from '../../../util/stringUtils';
+import {booleanTilTekst, formatereDato, tekstTilBoolean} from '../../../util/stringUtils';
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
 import {valideringsFunksjonerMidlertidigAlene} from '../../../util/validationReactHookFormUtils';
 import AleneOmOmsorgenLesemodus from '../alene-om-omsorgen-lesemodus/AleneOmOmsorgenLesemodus';
@@ -22,6 +22,7 @@ import styleRadioknapper from '../styles/radioknapper/radioknapper.less';
 type FormData = {
   begrunnelse: string;
   fraDato: string;
+  tilDato: string;
   erSokerenAleneOmOmsorgen: string;
   avslagsArsakErPeriodeErIkkeOverSeksMån: string;
   åpenForRedigering: boolean;
@@ -32,6 +33,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
   aksjonspunktLost,
   lesemodus,
   fraDatoFraSoknad,
+  tomDato,
   informasjonTilLesemodus,
   vedtakFattetVilkarOppfylt,
   informasjonOmVilkar,
@@ -45,7 +47,8 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
     reValidateMode: 'onSubmit',
     defaultValues: {
       begrunnelse: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.begrunnelse : '',
-      fraDato: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.fraDato : fraDatoFraSoknad,
+      fraDato: harAksjonspunktOgVilkarLostTidligere ? formatereDato(informasjonTilLesemodus.fraDato) : formatereDato(fraDatoFraSoknad),
+      tilDato: harAksjonspunktOgVilkarLostTidligere ? formatereDato(informasjonTilLesemodus.tilDato) : formatereDato(tomDato),
       erSokerenAleneOmOmsorgen: harAksjonspunktOgVilkarLostTidligere ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt) : '',
       // avslagsArsakErPeriodeErIkkeOverSeksMån: aksjonspunktLost ? booleanTilTekst(informasjonTilLesemodus.avslagsArsakErPeriodeErIkkeOverSeksMån) : '',
       åpenForRedigering: false
@@ -76,13 +79,15 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
   begrunnelse,
   erSokerenAleneOmOmsorgen,
   fraDato,
+  tilDato,
   avslagsArsakErPeriodeErIkkeOverSeksMån,
 }) => {
-    if (!errors.begrunnelse && !errors.fraDato && !errors.erSokerenAleneOmOmsorgen) {
+    if (!errors.begrunnelse && !errors.fraDato && !errors.tilDato && !errors.erSokerenAleneOmOmsorgen) {
       losAksjonspunkt({
         begrunnelse,
         vilkarOppfylt: tekstTilBoolean(erSokerenAleneOmOmsorgen),
         fraDato: tekstTilBoolean(erSokerenAleneOmOmsorgen) ? fraDato.replaceAll('.', '-') : '',
+        tilDato: tekstTilBoolean(erSokerenAleneOmOmsorgen) ? tilDato.replaceAll('.', '-') : ''
         // avslagsArsakErPeriodeErIkkeOverSeksMån: tekstTilBoolean(avslagsArsakErPeriodeErIkkeOverSeksMån)
       });
       setValue('åpenForRedigering', false);
@@ -114,7 +119,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
 
         <OpplysningerFraSoknad
           periodeTekst={'Fra dato oppgitt'}
-          periode={fraDatoFraSoknad}
+          periode={formatereDato(fraDatoFraSoknad)}
         />
 
         <FormProvider {...methods} >
@@ -152,14 +157,21 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
             }
 
             {tekstTilBoolean(erSokerAleneOmOmsorgen) &&
-            <SkjemaGruppe className={styles.gyldigVedtaksPeriodeAleneOmOmsorgen}
+            <SkjemaGruppe className={styles.gyldigVedtaksPeriode}
                           legend={tekst.sporsmalPeriodeVedtakGyldig}
                           feil={errors.fraDato && errors.fraDato.type === 'erDatoFyltUt' && tekst.feilmedlingManglerFraDato
-                          || errors.fraDato && errors.fraDato.type === 'erDatoGyldig' && tekst.feilmedlingUgyldigDato}
+                          || errors.fraDato && errors.fraDato.type === 'erDatoGyldig' && tekst.feilmedlingUgyldigDato
+                          || errors.tilDato && errors.tilDato.type === 'erDatoFyltUt' && tekst.feilmeldingManglerTilDato
+                          || errors.tilDato && errors.tilDato.type === 'erDatoGyldig' && tekst.feilmedlingUgyldigDato}
             >
 
-              <DatePicker titel={''}
+              <DatePicker titel={'Fra'}
                           navn={'fraDato'}
+                          valideringsFunksjoner={{erDatoFyltUt, erDatoGyldig}}
+              />
+
+              <DatePicker titel={'Til'}
+                          navn={'tilDato'}
                           valideringsFunksjoner={{erDatoFyltUt, erDatoGyldig}}
               />
 

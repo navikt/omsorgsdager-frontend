@@ -12,6 +12,7 @@ describe('<AleneOmOmsorgen>', () => {
       aksjonspunktLost: false,
       lesemodus: false,
       fraDatoFraSoknad: '22.22.02',
+      tomDato: '23.22.02',
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -23,6 +24,7 @@ describe('<AleneOmOmsorgen>', () => {
         begrunnelse: '',
         vilkarOppfylt: true,
         fraDato: '',
+        tilDato: '22.12.2020',
         avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
       losAksjonspunkt: () => {
@@ -59,6 +61,7 @@ describe('<AleneOmOmsorgen>', () => {
       aksjonspunktLost: false,
       lesemodus: false,
       fraDatoFraSoknad: '22.22.02',
+      tomDato: '23.22.02',
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -70,6 +73,7 @@ describe('<AleneOmOmsorgen>', () => {
         begrunnelse: 'Begrunnelse',
         vilkarOppfylt: true,
         fraDato: '22.12.1994',
+        tilDato: '22.12.2020',
         avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
       losAksjonspunkt: () => {
@@ -86,7 +90,8 @@ describe('<AleneOmOmsorgen>', () => {
     const hentetFraDato = screen.getByDisplayValue(props.informasjonTilLesemodus.fraDato);
     expect(hentetFraDato).toBeDefined();
 
-
+    const hentetTilDato = screen.getByDisplayValue(props.informasjonTilLesemodus.tilDato);
+    expect(hentetTilDato).toBeDefined();
   });
 
   test('AleneOmOmsorgen viser lesemodus', () => {
@@ -95,6 +100,7 @@ describe('<AleneOmOmsorgen>', () => {
       aksjonspunktLost: false,
       lesemodus: true,
       fraDatoFraSoknad: '22.22.02',
+      tomDato: '23.22.02',
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -106,6 +112,7 @@ describe('<AleneOmOmsorgen>', () => {
         begrunnelse: 'Begrunnelse',
         vilkarOppfylt: true,
         fraDato: '22.12.1994',
+        tilDato: '22.12.2020',
         avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
       losAksjonspunkt: () => {
@@ -134,6 +141,12 @@ describe('<AleneOmOmsorgen>', () => {
 
     const hentetVilkarOppfylt = screen.getByText(props.informasjonTilLesemodus.vilkarOppfylt ? 'Ja' : 'Nei');
     expect(hentetVilkarOppfylt).toBeInTheDocument();
+
+    const hentetVilkarOppfyltPeriodeTekst = screen.getByText('I hvilken periode er vedtaket gyldig?');
+    expect(hentetVilkarOppfyltPeriodeTekst).toBeInTheDocument();
+
+    const hentetVilkarOppfyltPeriode = screen.getByText(`${props.informasjonTilLesemodus.fraDato} - ${props.informasjonTilLesemodus.tilDato}`);
+    expect(hentetVilkarOppfyltPeriode).toBeInTheDocument();
   });
 
   test('AleneOmOmsorgen viser lesemodus med rediger', () => {
@@ -142,6 +155,7 @@ describe('<AleneOmOmsorgen>', () => {
       aksjonspunktLost: true,
       lesemodus: true,
       fraDatoFraSoknad: '22.22.02',
+      tomDato: '23.22.02',
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -153,6 +167,7 @@ describe('<AleneOmOmsorgen>', () => {
         begrunnelse: 'Begrunnelse',
         vilkarOppfylt: true,
         fraDato: '22.12.1994',
+        tilDato: '22.12.2020',
         avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
       losAksjonspunkt: () => {
@@ -165,7 +180,6 @@ describe('<AleneOmOmsorgen>', () => {
       <AleneOmOmsorgen {...props}/>
     );
 
-
     const hentetRedigerVurderingTekst = screen.getByText('Rediger vurdering');
     expect(hentetRedigerVurderingTekst).toBeInTheDocument();
   });
@@ -176,6 +190,7 @@ describe('<AleneOmOmsorgen>', () => {
       aksjonspunktLost: false,
       lesemodus: false,
       fraDatoFraSoknad: '22.22.02',
+      tomDato: '23.22.02',
       vedtakFattetVilkarOppfylt: true,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -187,6 +202,7 @@ describe('<AleneOmOmsorgen>', () => {
         begrunnelse: 'Begrunnelse',
         vilkarOppfylt: true,
         fraDato: '22.12.1994',
+        tilDato: '22.12.2020',
         avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
       losAksjonspunkt: () => {
@@ -219,6 +235,7 @@ describe('<AleneOmOmsorgen>', () => {
       aksjonspunktLost: false,
       lesemodus: false,
       fraDatoFraSoknad: '22.22.02',
+      tomDato: '23.22.02',
       vedtakFattetVilkarOppfylt: true,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -230,6 +247,7 @@ describe('<AleneOmOmsorgen>', () => {
         begrunnelse: 'Begrunnelse',
         vilkarOppfylt: false,
         fraDato: '22.12.1994',
+        tilDato: '22.12.2020',
         avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
       losAksjonspunkt: () => {
@@ -257,6 +275,7 @@ describe('<AleneOmOmsorgen>', () => {
       aksjonspunktLost: false,
       lesemodus: false,
       fraDatoFraSoknad: '22.22.02',
+      tomDato: '23.22.02',
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -268,6 +287,7 @@ describe('<AleneOmOmsorgen>', () => {
         begrunnelse: 'Begrunnelse',
         vilkarOppfylt: true,
         fraDato: '22.12.1994',
+        tilDato: '22.12.2020',
         avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
       losAksjonspunkt: () => {

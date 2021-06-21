@@ -59,12 +59,15 @@
                 behandlingsID: '123',
                 aksjonspunktLost: false,
                 lesemodus: false,
+                soknadsdato: '2021-04-06',
+                tomDato: '2022-12-31',
                 informasjonTilLesemodus: {
                   begrunnelse: 'Begrunnelse til lesemodus',
-                  vilkarOppfylt: false,
-                  avslagsArsakErIkkeRiskioFraFravaer: true
+                  vilkarOppfylt: true,
+                  avslagsArsakErIkkeRiskioFraFravaer: true,
+                  fraDato: '25-6-2019'
                 },
-                losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse, avslagsKode) => console.log(endreHarDokumentasjonOgFravaerRisiko, begrunnelse, avslagsKode),
+                losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse, avslagsKode, fraDato) => console.log(endreHarDokumentasjonOgFravaerRisiko, begrunnelse, avslagsKode, fraDato),
                 vedtakFattetVilkarOppfylt: false,
                 informasjonOmVilkar: {
                   begrunnelse: 'begrunnelse',
@@ -96,7 +99,7 @@
                 },
                 informasjonTilLesemodus: {
                   begrunnelse: 'Begrunnelse',
-                  vilkarOppfylt: false,
+                  vilkarOppfylt: true,
                   dato: {
                     fra: '2021-06-06',
                     til: '2021-10-03'
@@ -143,6 +146,7 @@
                 aksjonspunktLost: false,
                 lesemodus: false,
                 fraDatoFraSoknad: '2021-04-06',
+                tomDato: '2023-12-31',
                 vedtakFattetVilkarOppfylt: false,
                 informasjonOmVilkar: {
                   begrunnelse: 'begrunnelse',
@@ -152,16 +156,18 @@
                 },
                 informasjonTilLesemodus: {
                   begrunnelse: 'Begrunnelse',
-                  vilkarOppfylt: false,
+                  vilkarOppfylt: true,
                   fraDato: '2021-06-06',
+                  tilDato: '2022-06-06',
                   avslagsArsakErPeriodeErIkkeOverSeksMån: true
                 },
                 losAksjonspunkt: ({
                                     begrunnelse,
                                     vilkarOppfylt,
                                     fraDato,
+                                    tilDato,
                                     avslagsArsakErPeriodeErIkkeOverSeksMån
-                                  }) => console.log(begrunnelse, vilkarOppfylt, fraDato),
+                                  }) => console.log(begrunnelse, vilkarOppfylt, fraDato, tilDato),
                 formState,
               }
             }
@@ -169,7 +175,7 @@
 
 
           setTimeout(() => {
-            window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.korrigerePerioder);
+            window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.aleneOmOmsorgen);
           }, 300);
         </script>
     </body>

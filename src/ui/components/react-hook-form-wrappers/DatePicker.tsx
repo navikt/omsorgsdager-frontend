@@ -2,7 +2,7 @@ import {Datepicker} from 'nav-datovelger';
 import {DatepickerLimitations} from 'nav-datovelger/lib/types';
 import React from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
-import styles from '../vilkar-midlertidig-alene/vilkarMidlertidigAlene.less';
+import styles from './datePicker.less';
 
 interface OwnProps {
   titel: string;
@@ -12,11 +12,11 @@ interface OwnProps {
 }
 
 const DatePicker: React.FunctionComponent<OwnProps> = ({
-                                                         titel,
-                                                         navn,
-                                                         valideringsFunksjoner,
-                                                         begrensningerIKalender
-                                                       }) => {
+  titel,
+  navn,
+  valideringsFunksjoner,
+  begrensningerIKalender
+}) => {
   const {control} = useFormContext();
 
   return (

@@ -6,6 +6,7 @@ export interface AleneOmOmsorgenProps {
   lesemodus: boolean;
   aksjonspunktLost: boolean;
   fraDatoFraSoknad: string;
+  tomDato: string;
   informasjonTilLesemodus: AleneOmOmsorgenAksjonspunktObjekt;
   vedtakFattetVilkarOppfylt: boolean;
   informasjonOmVilkar?: InformasjonOmVurdertVilkar;
@@ -17,5 +18,6 @@ export interface AleneOmOmsorgenAksjonspunktObjekt {
   begrunnelse: string;
   vilkarOppfylt: boolean;
   fraDato: string;
+  tilDato: string;
   avslagsArsakErPeriodeErIkkeOverSeksMån: boolean;
 }
