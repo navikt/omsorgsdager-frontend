@@ -12,7 +12,6 @@ describe('<VilkarKroniskSyktBarn>', () => {
       lesemodus: false,
       aksjonspunktLost: false,
       soknadsdato:  '2021-04-06',
-      tomDato: '',
       informasjonTilLesemodus: {
         begrunnelse: '',
         vilkarOppfylt: false,
@@ -53,7 +52,6 @@ describe('<VilkarKroniskSyktBarn>', () => {
       lesemodus: false,
       aksjonspunktLost: false,
       soknadsdato:  '2021-04-06',
-      tomDato: '',
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false,
@@ -83,7 +81,6 @@ describe('<VilkarKroniskSyktBarn>', () => {
       lesemodus: true,
       aksjonspunktLost: false,
       soknadsdato:  '2021-04-06',
-      tomDato: '',
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: true,
@@ -133,7 +130,6 @@ describe('<VilkarKroniskSyktBarn>', () => {
       lesemodus: true,
       aksjonspunktLost: false,
       soknadsdato:  '2021-04-06',
-      tomDato: '',
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false,
@@ -166,7 +162,6 @@ describe('<VilkarKroniskSyktBarn>', () => {
       lesemodus: true,
       aksjonspunktLost: true,
       soknadsdato:  '2021-04-06',
-      tomDato: '',
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false,
@@ -196,7 +191,6 @@ describe('<VilkarKroniskSyktBarn>', () => {
       lesemodus: false,
       aksjonspunktLost: false,
       soknadsdato:  '2021-04-06',
-      tomDato: '',
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false,
@@ -236,7 +230,6 @@ describe('<VilkarKroniskSyktBarn>', () => {
       aksjonspunktLost: false,
       lesemodus: false,
       soknadsdato:  '2021-04-06',
-      tomDato: '',
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false,
@@ -273,7 +266,6 @@ describe('<VilkarKroniskSyktBarn>', () => {
       aksjonspunktLost: false,
       lesemodus: false,
       soknadsdato:  '2021-04-06',
-      tomDato: '',
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse til lesemodus',
         vilkarOppfylt: false,
