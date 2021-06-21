@@ -10,6 +10,7 @@ export default tekst = {
   feilmeldingManglerTilDato: 'Mangler til-dato.',
   feilmedlingManglerFraDato: 'Mangler fra-dato.',
   feilmedlingUgyldigDato: 'Ugyldig dato.',
+  feilmedlingDatoErEtterBarnetFylt18: 'Til-dato kan være ut kalenderåret barnet fyller 18.',
   velgArsak: 'Velg årsak',
   arsak: 'Årsak',
   arsakIkkeAleneOmsorg: 'Avslagsårsak',

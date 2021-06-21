@@ -3,7 +3,7 @@ import {Hovedknapp} from 'nav-frontend-knapper';
 import {AleneOmOmsorgenProps} from '../../../types/AleneOmOmsorgenProps';
 import {booleanTilTekst, formatereDato, tekstTilBoolean} from '../../../util/stringUtils';
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
-import {valideringsFunksjonerMidlertidigAlene} from '../../../util/validationReactHookFormUtils';
+import {valideringsFunksjoner} from '../../../util/validationReactHookFormUtils';
 import AleneOmOmsorgenLesemodus from '../alene-om-omsorgen-lesemodus/AleneOmOmsorgenLesemodus';
 import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import OpplysningerFraSoknad from '../opplysninger-fra-soknad/OpplysningerFraSoknad';
@@ -58,12 +58,14 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
   const {formState: {errors}, getValues, handleSubmit, watch, setValue} = methods;
   const erSokerAleneOmOmsorgen = watch('erSokerenAleneOmOmsorgen');
   const åpenForRedigering = watch('åpenForRedigering');
-
+  const barnetsFodselsdato = new Date(tomDato);
+  const årBarnetFyller18 = `${barnetsFodselsdato.getFullYear() + 5}-12-31`;
   const {
     erDatoFyltUt,
     erDatoGyldig,
+    erDatoInnenBarnetEr18
   // erAvslagsArsakErPeriodeErIkkeOverSeksMånGyldig
-  } = valideringsFunksjonerMidlertidigAlene(getValues, 'erSokerenAleneOmOmsorgen');
+  } = valideringsFunksjoner(getValues, 'erSokerenAleneOmOmsorgen', årBarnetFyller18);
 
   const mellomlagringFormState = useFormSessionStorage(
     formStateKey,
@@ -162,6 +164,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
                           feil={errors.fraDato && errors.fraDato.type === 'erDatoFyltUt' && tekst.feilmedlingManglerFraDato
                           || errors.fraDato && errors.fraDato.type === 'erDatoGyldig' && tekst.feilmedlingUgyldigDato
                           || errors.tilDato && errors.tilDato.type === 'erDatoFyltUt' && tekst.feilmeldingManglerTilDato
+                          || errors.tilDato && errors.tilDato.type === 'erDatoInnenBarnetEr18' && tekst.feilmedlingDatoErEtterBarnetFylt18
                           || errors.tilDato && errors.tilDato.type === 'erDatoGyldig' && tekst.feilmedlingUgyldigDato}
             >
 
@@ -172,7 +175,8 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
 
               <DatePicker titel={'Til'}
                           navn={'tilDato'}
-                          valideringsFunksjoner={{erDatoFyltUt, erDatoGyldig}}
+                          valideringsFunksjoner={{erDatoFyltUt, erDatoGyldig, erDatoInnenBarnetEr18}}
+                          begrensningerIKalender={{maxDate: årBarnetFyller18}}
               />
 
             </SkjemaGruppe>

@@ -3,7 +3,7 @@ import {Hovedknapp} from 'nav-frontend-knapper';
 import {hanteringAvDatoForDatoVelger} from '../../../util/dateUtils';
 import {booleanTilTekst, tekstTilBoolean} from '../../../util/stringUtils';
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
-import {valideringsFunksjonerMidlertidigAlene} from '../../../util/validationReactHookFormUtils';
+import {valideringsFunksjoner} from '../../../util/validationReactHookFormUtils';
 import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import OpplysningerFraSoknad from '../opplysninger-fra-soknad/OpplysningerFraSoknad';
 import {RadioGruppe, SkjemaGruppe} from 'nav-frontend-skjema';
@@ -65,7 +65,7 @@ const VilkarMidlertidigAlene: React.FunctionComponent<VilkarMidlertidigAleneProp
     erDatoGyldig,
     erAvslagsArsakErPeriodeErIkkeOverSeksMånGyldig,
     erDatoSisteDagenIÅret
-  } = valideringsFunksjonerMidlertidigAlene(getValues, 'erSokerenMidlertidigAleneOmOmsorgen');
+  } = valideringsFunksjoner(getValues, 'erSokerenMidlertidigAleneOmOmsorgen');
 
   const mellomlagringFormState = useFormSessionStorage(
     formStateKey,

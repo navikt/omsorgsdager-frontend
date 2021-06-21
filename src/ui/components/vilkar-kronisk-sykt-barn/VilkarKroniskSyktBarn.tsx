@@ -5,7 +5,7 @@ import React from 'react';
 import {VilkarKroniskSyktBarnProps} from '../../../types/VilkarKroniskSyktBarnProps';
 import {booleanTilTekst, formatereDato, tekstTilBoolean} from '../../../util/stringUtils';
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
-import {valideringsFunksjonerMidlertidigAlene} from '../../../util/validationReactHookFormUtils';
+import {valideringsFunksjoner} from '../../../util/validationReactHookFormUtils';
 import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
 import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
@@ -51,8 +51,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   vedtakFattetVilkarOppfylt,
   informasjonOmVilkar,
   formState,
-  soknadsdato,
-  tomDato
+  soknadsdato
 }) => {
   const harAksjonspunktOgVilkarLostTidligere = informasjonTilLesemodus.begrunnelse.length > 0;
   const methods = useForm<FormData>({
@@ -71,7 +70,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   const {
     erDatoFyltUt,
     erDatoGyldig,
-  } = valideringsFunksjonerMidlertidigAlene(getValues, 'harDokumentasjonOgFravaerRisiko');
+  } = valideringsFunksjoner(getValues, 'harDokumentasjonOgFravaerRisiko');
 
   const erArsakErIkkeRiskioFraFravaer = val => {
     if(tekstTilBoolean(getValues().harDokumentasjonOgFravaerRisiko)) return true;
@@ -142,8 +141,10 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
       <AlertStripeTrekantVarsel text={tekst.instruksjon}/>
       <FormProvider {...methods} >
 
-        {/* <p className={styleLesemodus.label}>{tekst.soknadsdato}</p>
-        <p className={styleLesemodus.text}>{formatereDato(fraDatoFraSoknad)}</p> */}
+        {<>
+          <p className={styleLesemodus.label}>{tekst.soknadsdato}</p>
+          <p className={styleLesemodus.text}>{formatereDato(soknadsdato)}</p>
+        </>}
 
         <form className={styles.form} onSubmit={handleSubmit(bekreftAksjonspunkt)}>
 
@@ -183,7 +184,6 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
               <DatePicker titel={''}
                           navn={'fraDato'}
                           valideringsFunksjoner={{erDatoFyltUt, erDatoGyldig}}
-                          begrensningerIKalender={{maxDate: tomDato.substring(0, 10)}}
               />
 
             </SkjemaGruppe>
