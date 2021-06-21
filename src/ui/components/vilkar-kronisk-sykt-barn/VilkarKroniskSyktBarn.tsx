@@ -89,7 +89,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
 
   const bekreftAksjonspunkt = data => {
     if (!errors.begrunnelse && !errors.arsakErIkkeRiskioFraFravaer && !errors.fraDato && !errors.harDokumentasjonOgFravaerRisiko) {
-      losAksjonspunkt(data.harDokumentasjonOgFravaerRisiko, data.begrunnelse, data.arsakErIkkeRiskioFraFravaer, data.fraDato);
+      losAksjonspunkt(data.harDokumentasjonOgFravaerRisiko, data.begrunnelse, data.arsakErIkkeRiskioFraFravaer, tekstTilBoolean(harDokumentasjonOgFravaerRisiko) ? data.fraDato.replaceAll('.', '-') : '');
       setValue('åpenForRedigering', false);
       mellomlagringFormState.fjerneState();
     }
