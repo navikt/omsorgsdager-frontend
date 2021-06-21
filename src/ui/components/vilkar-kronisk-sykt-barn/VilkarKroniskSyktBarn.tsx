@@ -5,7 +5,7 @@ import React from 'react';
 import {VilkarKroniskSyktBarnProps} from '../../../types/VilkarKroniskSyktBarnProps';
 import {booleanTilTekst, formatereDato, tekstTilBoolean} from '../../../util/stringUtils';
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
-import {valideringsFunksjonerMidlertidigAlene} from '../../../util/validationReactHookFormUtils';
+import {valideringsFunksjoner} from '../../../util/validationReactHookFormUtils';
 import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
 import AlertStripeTrekantVarsel from '../alertstripe-trekant-varsel/AlertStripeTrekantVarsel';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
@@ -70,7 +70,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   const {
     erDatoFyltUt,
     erDatoGyldig,
-  } = valideringsFunksjonerMidlertidigAlene(getValues, 'harDokumentasjonOgFravaerRisiko');
+  } = valideringsFunksjoner(getValues, 'harDokumentasjonOgFravaerRisiko');
 
   const erArsakErIkkeRiskioFraFravaer = val => {
     if(tekstTilBoolean(getValues().harDokumentasjonOgFravaerRisiko)) return true;
