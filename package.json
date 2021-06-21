@@ -43,7 +43,7 @@
         "html-webpack-plugin": "^5.3.1",
         "jest": "^26.6.3",
         "jest-axe": "^4.1.0",
-        "jest-environment-jsdom-fourteen": "^1.0.1",
+        "jest-environment-jsdom": "^27.0.3",
         "jest-extended": "^0.11.5",
         "jest-transform-stub": "^2.0.0",
         "less": "^4.1.1",
@@ -110,7 +110,7 @@
             "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
             "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
         ],
-        "testEnvironment": "jest-environment-jsdom-fourteen",
+        "testEnvironment": "jest-environment-jsdom",
         "transform": {
             "^.+\\.(ts|tsx|js|jsx)?$": "ts-jest",
             "^.+.(css|less)$": "jest-transform-stub"
