@@ -51,7 +51,8 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   vedtakFattetVilkarOppfylt,
   informasjonOmVilkar,
   formState,
-  soknadsdato
+  soknadsdato,
+  tomDato
 }) => {
   const harAksjonspunktOgVilkarLostTidligere = informasjonTilLesemodus.begrunnelse.length > 0;
   const methods = useForm<FormData>({
@@ -182,6 +183,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
               <DatePicker titel={''}
                           navn={'fraDato'}
                           valideringsFunksjoner={{erDatoFyltUt, erDatoGyldig}}
+                          begrensningerIKalender={{maxDate: tomDato.substring(0, 10)}}
               />
 
             </SkjemaGruppe>

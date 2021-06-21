@@ -58,8 +58,9 @@
               props: {
                 behandlingsID: '123',
                 aksjonspunktLost: false,
-                lesemodus: true,
+                lesemodus: false,
                 soknadsdato: '2021-04-06',
+                tomDato: '2022-12-31',
                 informasjonTilLesemodus: {
                   begrunnelse: 'Begrunnelse til lesemodus',
                   vilkarOppfylt: true,
@@ -82,7 +83,7 @@
               props: {
                 behandlingsID: '123',
                 aksjonspunktLost: false,
-                lesemodus: true,
+                lesemodus: false,
                 soknadsopplysninger: {
                   årsak: 'Årsak',
                   beskrivelse: 'Beskrivelse',
@@ -143,7 +144,7 @@
               props: {
                 behandlingsID: '123',
                 aksjonspunktLost: false,
-                lesemodus: true,
+                lesemodus: false,
                 fraDatoFraSoknad: '2021-04-06',
                 tomDato: '2023-12-31',
                 vedtakFattetVilkarOppfylt: false,
@@ -174,7 +175,7 @@
 
 
           setTimeout(() => {
-            window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.vilkarKroniskSyktBarn);
+            window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.aleneOmOmsorgen);
           }, 300);
         </script>
     </body>
