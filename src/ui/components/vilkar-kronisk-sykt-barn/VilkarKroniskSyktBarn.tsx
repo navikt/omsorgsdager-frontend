@@ -59,7 +59,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
       begrunnelse: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.begrunnelse : '',
       harDokumentasjonOgFravaerRisiko: harAksjonspunktOgVilkarLostTidligere ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt) : '',
       arsakErIkkeRiskioFraFravaer: harAksjonspunktOgVilkarLostTidligere ? booleanTilTekst(informasjonTilLesemodus.avslagsArsakErIkkeRiskioFraFravaer) : '',
-      fraDato: harAksjonspunktOgVilkarLostTidligere ? formatereDato(informasjonTilLesemodus.fraDato) : formatereDato(soknadsdato),
+     // fraDato: harAksjonspunktOgVilkarLostTidligere ? formatereDato(informasjonTilLesemodus.fraDato) : formatereDato(soknadsdato),
     }
   });
 
@@ -88,8 +88,8 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   );
 
   const bekreftAksjonspunkt = data => {
-    if (!errors.begrunnelse && !errors.arsakErIkkeRiskioFraFravaer && !errors.fraDato && !errors.harDokumentasjonOgFravaerRisiko) {
-      losAksjonspunkt(data.harDokumentasjonOgFravaerRisiko, data.begrunnelse, data.arsakErIkkeRiskioFraFravaer, tekstTilBoolean(harDokumentasjonOgFravaerRisiko) ? data.fraDato.replaceAll('.', '-') : '');
+    if (!errors.begrunnelse && !errors.arsakErIkkeRiskioFraFravaer /* && !errors.fraDato */ && !errors.harDokumentasjonOgFravaerRisiko) {
+      losAksjonspunkt(data.harDokumentasjonOgFravaerRisiko, data.begrunnelse, data.arsakErIkkeRiskioFraFravaer /*, tekstTilBoolean(harDokumentasjonOgFravaerRisiko) ? data.fraDato.replaceAll('.', '-') : '' */);
       setValue('åpenForRedigering', false);
       mellomlagringFormState.fjerneState();
     }
@@ -112,10 +112,10 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
         åpneForRedigereInformasjon={() => setValue('åpenForRedigering',true)}
       />
 
-      {informasjonTilLesemodus.vilkarOppfylt && <>
+      {/* informasjonTilLesemodus.vilkarOppfylt && <>
         <p className={styleLesemodus.label}>{tekst.soknadsdato}</p>
         <p className={styleLesemodus.text}>{formatereDato(soknadsdato)}</p>
-      </>
+      </> */
       }
 
       <p className={styleLesemodus.label}>{tekst.sporsmalHarDokumentasjonOgFravaerRisiko}</p>
@@ -128,9 +128,10 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
         }</p></>
       }
 
-      {informasjonTilLesemodus.vilkarOppfylt && <>
+      {/*informasjonTilLesemodus.vilkarOppfylt && <>
         <p className={styleLesemodus.label}>{tekst.sporsmalPeriodeVedtakGyldig}</p>
         <p className={styleLesemodus.text}>{formatereDato(informasjonTilLesemodus.fraDato)}</p></>
+        */
       }
 
       <p className={styleLesemodus.label}>{tekst.begrunnelse}</p>
@@ -141,10 +142,10 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
       <AlertStripeTrekantVarsel text={tekst.instruksjon}/>
       <FormProvider {...methods} >
 
-        {<>
+        {/* <>
           <p className={styleLesemodus.label}>{tekst.soknadsdato}</p>
           <p className={styleLesemodus.text}>{formatereDato(soknadsdato)}</p>
-        </>}
+        </> */}
 
         <form className={styles.form} onSubmit={handleSubmit(bekreftAksjonspunkt)}>
 
@@ -174,7 +175,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
             {errors.arsakErIkkeRiskioFraFravaer && <p className="typo-feilmelding">{tekst.feilOppgiÅrsak}</p>}
           </div>}
 
-          {harDokumentasjonOgFravaerRisiko.length > 0 && tekstTilBoolean(harDokumentasjonOgFravaerRisiko) && <div>
+          {/*harDokumentasjonOgFravaerRisiko.length > 0 && tekstTilBoolean(harDokumentasjonOgFravaerRisiko) && <div>
             <SkjemaGruppe className={styles.fraDato}
                           legend={tekst.sporsmalPeriodeVedtakGyldig}
                           feil={errors.fraDato && errors.fraDato.type === 'erDatoFyltUt' && tekst.feilmedlingManglerFraDato
@@ -187,7 +188,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
               />
 
             </SkjemaGruppe>
-          </div>}
+          </div>*/}
 
           <Hovedknapp htmlType="submit">Bekreft og fortsett</Hovedknapp>
         </form>
