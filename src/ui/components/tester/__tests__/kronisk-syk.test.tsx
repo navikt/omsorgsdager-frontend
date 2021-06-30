@@ -105,11 +105,14 @@ describe('<VilkarKroniskSyktBarn>', () => {
     const hentetAksjonspunkt = screen.getByText(aksjonspunkt);
     expect(hentetAksjonspunkt).toBeInTheDocument();
 
-    const hentetSoknadsdatoTekst = screen.getByText('Søknadsdato');
+    /* const hentetSoknadsdatoTekst = screen.getByText('Søknadsdato');
     expect(hentetSoknadsdatoTekst).toBeInTheDocument();
 
     const hentetSoknadsdato = screen.getAllByText('2021.04.06');
     expect(hentetSoknadsdato).toHaveLength(2);
+
+    const hentetInformasjonOmVilkarTekst = screen.getByText('Fra hvilken dato er vedtaket gyldig?');
+    expect(hentetInformasjonOmVilkarTekst).toBeInTheDocument(); */
 
     const hentetBehandletAksjonspunktTekst = screen.getByText('Behandlet aksjonspunkt:');
     expect(hentetBehandletAksjonspunktTekst).toBeInTheDocument();
@@ -119,9 +122,6 @@ describe('<VilkarKroniskSyktBarn>', () => {
 
     const hentetVilkarOppfylt = screen.getByText(props.informasjonTilLesemodus.vilkarOppfylt ? 'Ja' : 'Nei');
     expect(hentetVilkarOppfylt).toBeInTheDocument();
-
-    const hentetInformasjonOmVilkarTekst = screen.getByText('Fra hvilken dato er vedtaket gyldig?');
-    expect(hentetInformasjonOmVilkarTekst).toBeInTheDocument();
   });
 
   test('VilkarKroniskSyktBarn viser lesemodus med avslagsårsak', () => {
