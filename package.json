@@ -48,7 +48,7 @@
         "jest-transform-stub": "^2.0.0",
         "less": "^4.1.1",
         "less-loader": "^10.0.1",
-        "mini-css-extract-plugin": "^2.0.0",
+        "mini-css-extract-plugin": "^2.1.0",
         "string.prototype.replaceall": "^1.0.5",
         "stylelint": "^13.7.2",
         "stylelint-config-prettier": "^8.0.2",
