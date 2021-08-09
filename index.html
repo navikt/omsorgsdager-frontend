@@ -66,7 +66,7 @@
                   avslagsArsakErIkkeRiskioFraFravaer: true,
                 },
                 losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse, avslagsKode, fraDato) => console.log(endreHarDokumentasjonOgFravaerRisiko, begrunnelse, avslagsKode, fraDato),
-                vedtakFattetVilkarOppfylt: true,
+                vedtakFattetVilkarOppfylt: false,
                 informasjonOmVilkar: {
                   begrunnelse: 'begrunnelse',
                   navnPåAksjonspunkt: 'Utvidet rett',
@@ -173,7 +173,7 @@
 
 
           setTimeout(() => {
-            window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.vilkarKroniskSyktBarn);
+            window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.vilkarMidlertidigAlene);
           }, 300);
         </script>
     </body>
