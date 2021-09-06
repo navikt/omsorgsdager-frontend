@@ -1,0 +1,81 @@
+name: Deploy Docker image
+on: [workflow_dispatch]
+env:
+  IMAGE_BASE: ghcr.io/${{ github.repository }}
+jobs:
+  deploy-docker-image:
+    name: Deploy Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hente kode
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Sette opp Node
+        uses: actions/setup-node@v2.4.0
+        with:
+          node-version: 12.x
+      - name: Installere dependencies
+        run: npm install
+      - name: Kjøre enhetstester
+        run: npm test
+      - name: Sette versjon
+        run: |
+          echo "MAJOR_VERSION=$(n pm run majorVersion --silent)" >> $GITHUB_ENV
+      - name: Sette tag
+        run: |
+          echo "TAG=$(date "+%Y.%m.%d-")-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+      - name: Sette miljøvariabler
+        run: |
+          echo "IMAGE=${IMAGE_BASE}:${TAG}" >> $GITHUB_ENV
+          echo "LATEST=${IMAGE_BASE}:latest" >> $GITHUB_ENV
+      - name: Bygg og laste opp docker-image
+        run: |
+          docker build --pull --tag ${IMAGE}:${MAJOR_VERSION} --tag ${IMAGE}:latest .
+          echo ${GITHUB_TOKEN} | docker login --username ${GITHUB_REPOSITORY} --password-stdin ghcr.io
+          docker push ${IMAGE}:${MAJOR_VERSION}
+          docker push ${IMAGE}:latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Deploy til prod-gcp
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: prod-gcp
+          RESOURCE: nais/naiserator.yml
+          VARS: nais/prod-gcp.json
+      - name: Set changelog
+        run: |
+          text="$(git --no-pager log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h %s")"
+          text="${text//$'\n'/\\n}"
+          echo "CHANGELOG=$text" >> $GITHUB_ENV
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: p-${{ env.TAG }}
+          release_name: PROD - ${{ env.TAG }}
+          body: |
+            For JS, add this to your app:
+            ```
+            <script
+              type="text/javascript"
+              src="https://omsorgsdager-frontend.intern.nav.no/${{ env.MAJOR_VERSION }}/app.js"
+              crossorigin="anonymous"
+            ></script>
+            ```
+            For CSS, add this to the `<head>` of your app:
+            ```
+            <link
+              rel="stylesheet"
+              href="https://omsorgsdager-frontend.intern.nav.no/${{ env.MAJOR_VERSION }}/styles.css"
+              crossorigin="anonymous"
+            >
+            ```
+            **Changes in this Release**
+            ${{ env.CHANGELOG }}
+          draft: false
+          prerelease: false
