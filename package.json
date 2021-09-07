@@ -7,6 +7,8 @@
         "start": "node ./server.js",
         "build": "webpack --config webpack/webpack-config.production.js",
         "buildNewVersion": "npm version patch --no-git-tag-version && webpack --config webpack/webpack-config.production.js",
+        "buildNewVersionToDev": "webpack --env buildToEnv=dev --config webpack/webpack-config.production.js",
+        "buildNewVersionToProd": "webpack --env buildToEnv=prod --config webpack/webpack-config.production.js",
         "buildDev": "webpack --config webpack/webpack-config.production.js && yarn calculateHashOnLatestBuild && yarn dev",
         "calculateHashOnLatestBuild": "node calculateHashFromBuild.js app.js && node calculateHashFromBuild.js styles.css",
         "dev": "node webpack/webpack-config.development.js",

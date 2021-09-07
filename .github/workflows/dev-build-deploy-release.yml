@@ -28,7 +28,7 @@ jobs:
           echo "LATEST=${IMAGE_BASE}:latest" >> $GITHUB_ENV
       - name: Bygg og laste opp docker-image
         run: |
-          docker build --pull --tag ${IMAGE} --tag ${IMAGE}:latest .
+          docker build --pull --tag ${IMAGE} --tag ${LATEST} .
           echo ${GITHUB_TOKEN} | docker login --username ${GITHUB_REPOSITORY} --password-stdin ghcr.io
           docker push ${IMAGE}
           docker push ${IMAGE}:latest
@@ -60,7 +60,7 @@ jobs:
             ```
             <script
               type="text/javascript"
-              src="https://omsorgsdager-frontend.dev.intern.nav.no/app.js"
+              src="https://omsorgsdager-frontend.dev.intern.nav.no/dev/app.js"
               crossorigin="anonymous"
             ></script>
             ```
@@ -68,7 +68,7 @@ jobs:
             ```
             <link
               rel="stylesheet"
-              href="https://omsorgsdager-frontend.dev.intern.nav.no/styles.css"
+              href="https://omsorgsdager-frontend.dev.intern.nav.no/dev/styles.css"
               crossorigin="anonymous"
             >
             ```
