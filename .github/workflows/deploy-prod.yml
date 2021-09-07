@@ -1,5 +1,11 @@
 name: Deploy Docker image
-on: [workflow_dispatch]
+on:
+  push:
+    paths:
+      - 'build/**'
+    branches:
+      - master
+  workflow_dispatch:
 env:
   IMAGE_BASE: ghcr.io/${{ github.repository }}
 jobs:
@@ -19,9 +25,6 @@ jobs:
         run: npm install
       - name: Kjøre enhetstester
         run: npm test
-      - name: Sette versjon
-        run: |
-          echo "MAJOR_VERSION=$(n pm run majorVersion --silent)" >> $GITHUB_ENV
       - name: Sette tag
         run: |
           echo "TAG=$(date "+%Y.%m.%d-")-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
@@ -31,9 +34,9 @@ jobs:
           echo "LATEST=${IMAGE_BASE}:latest" >> $GITHUB_ENV
       - name: Bygg og laste opp docker-image
         run: |
-          docker build --pull --tag ${IMAGE}:${MAJOR_VERSION} --tag ${IMAGE}:latest .
+          docker build --pull --tag ${IMAGE} --tag ${IMAGE}:latest .
           echo ${GITHUB_TOKEN} | docker login --username ${GITHUB_REPOSITORY} --password-stdin ghcr.io
-          docker push ${IMAGE}:${MAJOR_VERSION}
+          docker push ${IMAGE}
           docker push ${IMAGE}:latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -63,7 +66,7 @@ jobs:
             ```
             <script
               type="text/javascript"
-              src="https://omsorgsdager-frontend.intern.nav.no/${{ env.MAJOR_VERSION }}/app.js"
+              src="https://omsorgsdager-frontend.intern.nav.no/app.js"
               crossorigin="anonymous"
             ></script>
             ```
@@ -71,7 +74,7 @@ jobs:
             ```
             <link
               rel="stylesheet"
-              href="https://omsorgsdager-frontend.intern.nav.no/${{ env.MAJOR_VERSION }}/styles.css"
+              href="https://omsorgsdager-frontend.intern.nav.no/styles.css"
               crossorigin="anonymous"
             >
             ```
