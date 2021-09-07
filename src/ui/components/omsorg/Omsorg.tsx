@@ -50,7 +50,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
     instruksjon: `Vurder om søkeren har omsorgen for ${barnetEllerBarna}.`,
     sporsmalHarOmsorgen: `Har søker omsorgen for ${barnetEllerBarna}?`,
     begrunnelse: `Vurder om søker har omsorgen for ${barnetEllerBarna}`,
-    harBarnSoktForRammevedtakOmKroniskSykTekst: 'Det er allerede innvilget ekstra antall dager for dette barnet. Vurder om søknaden skal henlegges.',
+    harBarnSoktForRammevedtakOmKroniskSykTekst: 'Det er allerede innvilget ekstra antall dager for dette barnet. Vurder om søknaden skal henlegge.',
   };
   const tekst = {
     opplysningerFraSoknaden: 'Opplysninger fra søknaden:',
