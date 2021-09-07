@@ -16,6 +16,7 @@ describe('<Omsorg>', () => {
         vilkarOppfylt: false
       },
       barn: ['01010050053'],
+      harBarnSoktForRammevedtakOmKroniskSyk: false,
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -62,6 +63,7 @@ describe('<Omsorg>', () => {
         vilkarOppfylt: false
       },
       barn: ['01010050053'],
+      harBarnSoktForRammevedtakOmKroniskSyk: false,
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -90,6 +92,7 @@ describe('<Omsorg>', () => {
         vilkarOppfylt: false
       },
       barn: ['01010050053'],
+      harBarnSoktForRammevedtakOmKroniskSyk: false,
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -136,6 +139,7 @@ describe('<Omsorg>', () => {
         vilkarOppfylt: false
       },
       barn: ['01010050053'],
+      harBarnSoktForRammevedtakOmKroniskSyk: false,
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -187,6 +191,7 @@ describe('<Omsorg>', () => {
         vilkarOppfylt: false
       },
       barn: ['01010050053'],
+      harBarnSoktForRammevedtakOmKroniskSyk: false,
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -237,6 +242,7 @@ describe('<Omsorg>', () => {
         vilkarOppfylt: false
       },
       barn: ['01010050053'],
+      harBarnSoktForRammevedtakOmKroniskSyk: false,
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -265,6 +271,7 @@ describe('<Omsorg>', () => {
         vilkarOppfylt: false
       },
       barn: ['01010050053'],
+      harBarnSoktForRammevedtakOmKroniskSyk: false,
       vedtakFattetVilkarOppfylt: true,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -305,6 +312,7 @@ describe('<Omsorg>', () => {
         vilkarOppfylt: false
       },
       barn: ['01010050053'],
+      harBarnSoktForRammevedtakOmKroniskSyk: false,
       vedtakFattetVilkarOppfylt: true,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -340,6 +348,7 @@ describe('<Omsorg>', () => {
         vilkarOppfylt: false
       },
       barn: ['01010050053'],
+      harBarnSoktForRammevedtakOmKroniskSyk: false,
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
