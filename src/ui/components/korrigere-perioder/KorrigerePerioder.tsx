@@ -30,12 +30,21 @@ const tekst = {
   feilManglerDager: 'Antall dager må oppgis.'
 };
 
+const tekstKonfliktMedArbeidsgiver = {
+  instruksjon: 'Se på nødvendig dokumentasjon, og vurder om søker rett på omsorgspenger',
+  sporsmalErInnvilget: 'Har søker rett på omsorgspenger?',
+  begrunnelse: 'Vurder om søker har rett på omsorgspenger.',
+};
+
+//TODO Når saerlig smittevern ikke skal brukes lengre må denne ha en bedre navngivning for att brukes som AP for konfliktMedArbeidsgiver
+
 const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
   behandlingsID,
   aksjonspunktLost,
   informasjonTilLesemodus,
   losAksjonspunkt,
   lesemodus,
+  konfliktMedArbeidsgiver,
   formState
 }) => {
   const harAksjonspunktOgVilkarLostTidligere = informasjonTilLesemodus.begrunnelse.length > 0;
@@ -88,11 +97,11 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
   if (lesemodus && !åpenForRedigering) {
     return <div className={styleLesemodus.lesemodusboks}>
       <AksjonspunktLesemodus
-        aksjonspunktTekst={tekst.instruksjon}
+        aksjonspunktTekst={konfliktMedArbeidsgiver ? tekstKonfliktMedArbeidsgiver.instruksjon : tekst.instruksjon}
         harAksjonspunktBlivitLostTidligare={aksjonspunktLost}
         åpneForRedigereInformasjon={() => setValue('åpenForRedigering', true)}
       />
-      <p className={styleLesemodus.label}>{tekst.sporsmalErInnvilget}</p>
+      <p className={styleLesemodus.label}>{konfliktMedArbeidsgiver ? tekstKonfliktMedArbeidsgiver.sporsmalErInnvilget : tekst.sporsmalErInnvilget}</p>
       <p className={styleLesemodus.text}>{vilkarOppfyltTekstTilLesemodus(informasjonTilLesemodus.vilkarOppfylt, informasjonTilLesemodus.antallDagerDelvisInnvilget)} </p>
 
       {informasjonTilLesemodus.vilkarOppfylt && informasjonTilLesemodus.antallDagerDelvisInnvilget !== null &&<>
@@ -100,19 +109,19 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
         <p className={styleLesemodus.text}>{informasjonTilLesemodus.antallDagerDelvisInnvilget} </p>
       </>
       }
-      <p className={styleLesemodus.label}>{tekst.begrunnelse}</p>
+      <p className={styleLesemodus.label}>{konfliktMedArbeidsgiver ? tekstKonfliktMedArbeidsgiver.begrunnelse : tekst.begrunnelse}</p>
       <p className={styleLesemodus.fritekst}>{informasjonTilLesemodus.begrunnelse}</p>
     </div>;
   }
 
   return <div className={styles.korrigerePerioder}>
-    <AlertStripeTrekantVarsel text={tekst.instruksjon}/>
+    <AlertStripeTrekantVarsel text={konfliktMedArbeidsgiver ? tekstKonfliktMedArbeidsgiver.instruksjon : tekst.instruksjon}/>
 
     <FormProvider {...methods} >
       <form onSubmit={handleSubmit(bekreftAksjonspunkt)}>
-        <TextArea label={tekst.begrunnelse} name={'begrunnelse'}/>
+        <TextArea label={konfliktMedArbeidsgiver ? tekstKonfliktMedArbeidsgiver.begrunnelse : tekst.begrunnelse} name={'begrunnelse'}/>
           <RadioGruppe
-            legend={tekst.sporsmalErInnvilget}
+            legend={konfliktMedArbeidsgiver ? tekstKonfliktMedArbeidsgiver.sporsmalErInnvilget : tekst.sporsmalErInnvilget}
             className={styleRadioknapper.horisontalPlassering}
           >
             <RadioButtonWithBooleanValue label={'Ja'}

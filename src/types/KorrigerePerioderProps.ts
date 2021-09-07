@@ -6,6 +6,7 @@ export interface KorrigerePerioderProps {
   aksjonspunktLost: boolean;
   informasjonTilLesemodus?: KorrigerePerioderLesemodus;
   losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse, antallDagerDelvisInnvilget) => void;
+  konfliktMedArbeidsgiver: boolean;
   formState: FormState;
 }
 
