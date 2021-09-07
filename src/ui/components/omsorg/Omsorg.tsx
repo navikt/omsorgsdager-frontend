@@ -31,6 +31,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
   fagytelseType,
   aksjonspunktLost,
   barn,
+  harBarnSoktForRammevedtakOmKroniskSyk,
   vedtakFattetVilkarOppfylt,
   informasjonOmVilkar,
   losAksjonspunkt,
@@ -49,6 +50,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
     instruksjon: `Vurder om søkeren har omsorgen for ${barnetEllerBarna}.`,
     sporsmalHarOmsorgen: `Har søker omsorgen for ${barnetEllerBarna}?`,
     begrunnelse: `Vurder om søker har omsorgen for ${barnetEllerBarna}`,
+    harBarnSoktForRammevedtakOmKroniskSykTekst: 'Det er allerede innvilget ekstra antall dager for dette barnet. Vurder om søknaden skal henlegges.',
   };
   const tekst = {
     opplysningerFraSoknaden: 'Opplysninger fra søknaden:',
@@ -131,7 +133,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
 
       {(åpenForRedigering || !lesemodus && !vedtakFattetVilkarOppfylt) &&
       <>
-        <AlertStripeTrekantVarsel text={tekst.instruksjon}/>
+        <AlertStripeTrekantVarsel text={harBarnSoktForRammevedtakOmKroniskSyk ? tekstKroniskSyk.harBarnSoktForRammevedtakOmKroniskSykTekst : tekst.instruksjon}/>
         {opplysningerFraSoknaden}
 
         <hr/>

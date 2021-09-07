@@ -15,20 +15,21 @@ const webpackConfig = merge(commonWebpackConfig, {
         }),
     ],
 });
+const port = 8088;
 
 const devServerOptions = {
-    hot: true
+    hot: true,
+    port,
 };
-WebpackDevServer.addDevServerEntrypoints(webpackConfig, devServerOptions);
 
 const compiler = webpack(webpackConfig);
-const devServer = new WebpackDevServer(compiler, devServerOptions);
+const devServer = new WebpackDevServer(devServerOptions, compiler);
 compiler.close(() => console.info('Compiler closed'));
 
-const port = 8088;
-devServer.listen(port, 'localhost', (error) => {
+devServer.startCallback((error) => {
     if (error) {
-        return console.error(error);
+        console.error(error);
+    } else {
+        console.log(`Listening at port ${port}`);
     }
-    console.log(`Listening at port ${port}`);
 });

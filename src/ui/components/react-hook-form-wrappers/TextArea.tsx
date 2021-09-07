@@ -14,7 +14,11 @@ const TextArea: React.FunctionComponent<OwnProps> = ({label, name}) => {
     <Controller
       control={control}
       name={name}
-      rules={{required: {value: true, message: 'Vurdering må oppgis.'}}}
+      rules={{required: {value: true, message: 'Vurdering må oppgis.'},
+        pattern: {
+          value: /^[0-9a-zA-ZæøåÆØÅAaÁáBbCcČčDdĐđEeFfGgHhIiJjKkLlMmNnŊŋOoPpRrSsŠšTtŦŧUuVvZzŽžéôèÉöüäÖÜÄ .'\-‐–‑/§!?@_()#+:;,="&\s~*]*$/,
+          message: 'Feltet inneholder ugyldige tegn.'
+        }}}
       render={({
                  field: {onChange, value},
                  fieldState: {error}
