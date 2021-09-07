@@ -4,7 +4,7 @@ env:
   IMAGE_BASE: ghcr.io/${{ github.repository }}
 jobs:
   deploy-docker-image:
-    name: Deploy Docker image
+    name: Bygg og deploy til Dev
     runs-on: ubuntu-latest
     steps:
       - name: Hente kode
