@@ -17,6 +17,7 @@ describe('<KorrigerePerioder>', () => {
         antallDagerDelvisInnvilget: null
       },
       losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse),
+      konfliktMedArbeidsgiver: false,
       formState: FormStateTilTest,
     } as KorrigerePerioderProps;
 
@@ -53,6 +54,7 @@ describe('<KorrigerePerioder>', () => {
         antallDagerDelvisInnvilget: null
       },
       losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse),
+      konfliktMedArbeidsgiver: false,
       formState: FormStateTilTest,
     } as KorrigerePerioderProps;
 
@@ -74,6 +76,7 @@ describe('<KorrigerePerioder>', () => {
         antallDagerDelvisInnvilget: 10
       },
       losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse),
+      konfliktMedArbeidsgiver: false,
       formState: FormStateTilTest
     } as KorrigerePerioderProps;
     render(<KorrigerePerioder {...props}/>);
@@ -111,6 +114,7 @@ describe('<KorrigerePerioder>', () => {
         antallDagerDelvisInnvilget: null
       },
       losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse),
+      konfliktMedArbeidsgiver: false,
       formState: FormStateTilTest
     } as KorrigerePerioderProps;
     render(<KorrigerePerioder {...props}/>);
@@ -141,6 +145,7 @@ describe('<KorrigerePerioder>', () => {
         antallDagerDelvisInnvilget: null
       },
       losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse),
+      konfliktMedArbeidsgiver: false,
       formState: FormStateTilTest
     } as KorrigerePerioderProps;
     render(<KorrigerePerioder {...props}/>);
@@ -160,6 +165,7 @@ describe('<KorrigerePerioder>', () => {
         antallDagerDelvisInnvilget: null
       },
       losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse),
+      konfliktMedArbeidsgiver: false,
       formState: FormStateTilTest
     } as KorrigerePerioderProps;
 
