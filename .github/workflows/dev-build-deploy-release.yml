@@ -1,4 +1,4 @@
-name: Deploy Docker image
+name: Bygg og deploy til Dev
 on: [workflow_dispatch]
 env:
   IMAGE_BASE: ghcr.io/${{ github.repository }}
