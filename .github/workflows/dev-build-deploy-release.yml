@@ -30,7 +30,7 @@ jobs:
         run: |
           docker build --pull --tag ${IMAGE} --tag ${LATEST} .
           echo ${GITHUB_TOKEN} | docker login --username ${GITHUB_REPOSITORY} --password-stdin ghcr.io
-          docker push --all-tags
+          docker push -a
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Deploy til dev-gcp
