@@ -50,6 +50,7 @@
                   antallDagerDelvisInnvilget: 10
                 },
                 losAksjonspunkt: (fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse, antallDagerDelvisInnvilget) => console.log(fravaerGrunnetSmittevernhensynEllerStengt, begrunnelse,antallDagerDelvisInnvilget),
+                konfliktMedArbeidsgiver: true,
                 formState
               }
             },
@@ -174,7 +175,7 @@
 
 
           setTimeout(() => {
-            window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.omsorg);
+            window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.korrigerePerioder);
           }, 300);
         </script>
     </body>
