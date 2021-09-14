@@ -1,12 +1,14 @@
 {
     "name": "omsorgsdager-frontend",
-    "version": "2.0.9",
+    "version": "2.0.10",
     "main": "index.js",
     "scripts": {
         "test": "jest",
         "start": "node ./server.js",
         "build": "webpack --config webpack/webpack-config.production.js",
         "buildNewVersion": "npm version patch --no-git-tag-version && webpack --config webpack/webpack-config.production.js",
+        "buildToDev": "webpack --env buildToEnv=dev --config webpack/webpack-config.production.js",
+        "buildToProd": "webpack --env buildToEnv=prod --config webpack/webpack-config.production.js",
         "buildDev": "webpack --config webpack/webpack-config.production.js && yarn calculateHashOnLatestBuild && yarn dev",
         "calculateHashOnLatestBuild": "node calculateHashFromBuild.js app.js && node calculateHashFromBuild.js styles.css",
         "dev": "node webpack/webpack-config.development.js",
