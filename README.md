@@ -28,57 +28,17 @@ Komponenter som tas i bruk av behandlinger for [omsorgspenger](https://github.co
 
 `yarn start`
 
-### Generer bygg med ny minor versjonsnummer
+### Generer bygg under dev mappa
 
-`yarn buildNewVersion`
+`yarn buildToDev`
 
-### Generer nye byggfiler i siste buildmappa for lokal utvikling med k9-sak-web
+### Generer bygg under prod mappa
 
-`yarn buildDev`
-
-### Beregn SHA384 og SHA256 for den siste builden
-
-`yarn calculateHashOnLatestBuild`
+`yarn buildToProd`
 
 # Deploy ny versjon
-Når man skall deploye en ny versjon av omsorgsdager-frontend må scriptet `yarn buildNewVersion` kjøres. 
-Genererte endringer med ny versjon og byggfiler må merges in i master for en ny versjon skal deployes.
-
-Når en ny versjon er deployet må man oppdatere versjonen registrert for hver implementasjon av mikrofrontend i k9-sak-web med jsIntegrity, stylesheetIntegrity og versjon.
-De ulike mikrofrontends kan ha forskjellige versjoner.
-
-Exempel på oppdatering av versjon i Q (preprod).
-```
-const preprodVersjon = {
-    versjon: '1.5.37',
-    jsIntegrity: 'sha384-xxx',
-    stylesheetIntegrity: 'sha384-xxx',
-  };
-```
+Kör en av scripten over slik att det genereres nytt bygg i antingen prod eller dev mappen under build. Når innehold i dev endres i main deployes dette til Q. Når innehold i prod endres i main deployes dette til prod.
 
 # Utvikle lokalt med mikrofrontend i k9-sak-web
-Utfør endringene i omsorgsdager-frontend. Kjør kommando `yarn buildDev` som produserer nye byggfiler og kjører dem på server.
-Disse byggfilerne som skriver over eksisterende versjon skal ikke pushes til gitrepo. Ta sha256 output og oppdater preprod objektet for ønsket mikrofrontend.
+Utfør endringene i omsorgsdager-frontend. Kjør kommando `yarn start`.
 
-Exempel:
-```
-const preprodVersjon = {
-    versjon: '1.5.37',
-    jsIntegrity: 'sha256-xxx',
-    stylesheetIntegrity: 'sha256-xxx',
-  };
-```
-
-Legg til build mappa innen versjonsnummer.
-```javascript
-  return (
-    <MicroFrontend
-      id={omsorgenForVilkårAppID}
-      jsSrc={`/k9/microfrontend/omsorgsdager/build/${versjon}/app.js`}
-      jsIntegrity={jsIntegrity}
-      stylesheetSrc={`/k9/microfrontend/omsorgsdager/build/${versjon}/styles.css`}
-      stylesheetIntegrity={stylesheetIntegrity}
-      onReady={() => initializeOmsorgenForVilkar(omsorgenForVilkårAppID, props)}
-    />
-  );
-```
