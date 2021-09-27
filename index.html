@@ -146,7 +146,6 @@
                 aksjonspunktLost: false,
                 lesemodus: false,
                 fraDatoFraSoknad: '2021-04-06',
-                tomDato: '2023-12-31',
                 vedtakFattetVilkarOppfylt: false,
                 informasjonOmVilkar: {
                   begrunnelse: 'begrunnelse',
@@ -154,19 +153,18 @@
                   vilkarOppfylt: true,
                   vilkar: '§ 9-3 vilkar'
                 },
+                erBehandlingstypeRevurdering: true,
                 informasjonTilLesemodus: {
                   begrunnelse: 'Begrunnelse',
                   vilkarOppfylt: true,
                   fraDato: '2021-06-06',
-                  tilDato: '2022-06-06',
-                  avslagsArsakErPeriodeErIkkeOverSeksMån: true
+                  tilDato: '2021-09-10'
                 },
                 losAksjonspunkt: ({
                                     begrunnelse,
                                     vilkarOppfylt,
                                     fraDato,
                                     tilDato,
-                                    avslagsArsakErPeriodeErIkkeOverSeksMån
                                   }) => console.log(begrunnelse, vilkarOppfylt, fraDato, tilDato),
                 formState,
               }
@@ -175,7 +173,7 @@
 
 
           setTimeout(() => {
-            window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.korrigerePerioder);
+            window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.aleneOmOmsorgen);
           }, 300);
         </script>
     </body>

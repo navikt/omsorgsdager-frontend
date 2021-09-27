@@ -11,13 +11,16 @@ interface OwnProps {
   informasjonTilLesemodus: AleneOmOmsorgenAksjonspunktObjekt;
   harAksjonspunktBlivitLostTidligare: boolean;
   åpneForRedigereInformasjon: () => void;
+  erBehandlingstypeRevurdering: boolean;
 }
 
 const AleneOmOmsorgenLesemodus: React.FunctionComponent<OwnProps> = ({
   fraDatoFraSoknad,
   informasjonTilLesemodus,
   harAksjonspunktBlivitLostTidligare,
-  åpneForRedigereInformasjon
+  åpneForRedigereInformasjon,
+  erBehandlingstypeRevurdering
+
 }) => {
   return (
     <>
@@ -37,8 +40,10 @@ const AleneOmOmsorgenLesemodus: React.FunctionComponent<OwnProps> = ({
         begrunnelse={informasjonTilLesemodus.begrunnelse}
         tekstVilkarOppfylt={tekst.sporsmålVilkarOppfylt}
         erVilkarOppfylt={informasjonTilLesemodus.vilkarOppfylt}
-        textVilkarOppfylt={'I hvilken periode er vedtaket gyldig?'}
-        informasjonVilkarOppfylt={`${formatereDato(informasjonTilLesemodus.fraDato)} - ${formatereDato(informasjonTilLesemodus.tilDato)}`}
+        textVilkarOppfylt={erBehandlingstypeRevurdering ? 'I hvilken periode er vedtaket gyldig?' : 'Fra hvilken dato er vedtaket gyldig?'}
+        informasjonVilkarOppfylt={erBehandlingstypeRevurdering
+          ? `${formatereDato(informasjonTilLesemodus.fraDato)} - ${formatereDato(informasjonTilLesemodus.tilDato)}`
+          : `${formatereDato(informasjonTilLesemodus.fraDato)}`}
       />
     </>
   );
