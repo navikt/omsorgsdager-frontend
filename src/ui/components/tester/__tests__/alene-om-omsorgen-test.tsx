@@ -12,7 +12,6 @@ describe('<AleneOmOmsorgen>', () => {
       aksjonspunktLost: false,
       lesemodus: false,
       fraDatoFraSoknad: '22.22.02',
-      tomDato: '23.22.02',
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -25,8 +24,8 @@ describe('<AleneOmOmsorgen>', () => {
         vilkarOppfylt: true,
         fraDato: '',
         tilDato: '22.12.2020',
-        avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
+      erBehandlingstypeRevurdering: false,
       losAksjonspunkt: () => {
         console.log('losAksjonspunkt alene om omsorgen');
       },
@@ -61,7 +60,6 @@ describe('<AleneOmOmsorgen>', () => {
       aksjonspunktLost: false,
       lesemodus: false,
       fraDatoFraSoknad: '22.22.02',
-      tomDato: '23.22.02',
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -74,8 +72,43 @@ describe('<AleneOmOmsorgen>', () => {
         vilkarOppfylt: true,
         fraDato: '22.12.1994',
         tilDato: '22.12.2020',
-        avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
+      erBehandlingstypeRevurdering: false,
+      losAksjonspunkt: () => {
+        console.log('losAksjonspunkt alene om omsorgen');
+      },
+      formState: FormStateTilTest
+    } as AleneOmOmsorgenProps;
+
+    render(<AleneOmOmsorgen {...props}/>);
+
+    const hentetBegrunnelseInputText = screen.getByText(props.informasjonTilLesemodus.begrunnelse);
+    expect(hentetBegrunnelseInputText).toBeInTheDocument();
+
+    const hentetFraDato = screen.getByDisplayValue(props.informasjonTilLesemodus.fraDato);
+    expect(hentetFraDato).toBeDefined();
+  });
+
+  test('AleneOmOmsorgen viser åpen aksjonspunkt med informasjon fra tidigare lost vilkar (kommer tillbake etter totrinnskontroll) - revurdering', () => {
+    const props = {
+      behandlingsID: '123',
+      aksjonspunktLost: false,
+      lesemodus: false,
+      fraDatoFraSoknad: '22.22.02',
+      vedtakFattetVilkarOppfylt: false,
+      informasjonOmVilkar: {
+        begrunnelse: 'begrunnelse',
+        navnPåAksjonspunkt: 'Utvidet rett',
+        vilkarOppfylt: true,
+        vilkar: '§ 9-3 vilkar'
+      },
+      informasjonTilLesemodus: {
+        begrunnelse: 'Begrunnelse',
+        vilkarOppfylt: true,
+        fraDato: '22.12.1994',
+        tilDato: '22.12.2020',
+      },
+      erBehandlingstypeRevurdering: true,
       losAksjonspunkt: () => {
         console.log('losAksjonspunkt alene om omsorgen');
       },
@@ -100,7 +133,6 @@ describe('<AleneOmOmsorgen>', () => {
       aksjonspunktLost: false,
       lesemodus: true,
       fraDatoFraSoknad: '22.22.02',
-      tomDato: '23.22.02',
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -113,8 +145,62 @@ describe('<AleneOmOmsorgen>', () => {
         vilkarOppfylt: true,
         fraDato: '22.12.1994',
         tilDato: '22.12.2020',
-        avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
+      erBehandlingstypeRevurdering: false,
+      losAksjonspunkt: () => {
+        console.log('losAksjonspunkt alene om omsorgen');
+      },
+      formState: FormStateTilTest
+    } as AleneOmOmsorgenProps;
+
+    render(
+      <AleneOmOmsorgen {...props}/>
+    );
+
+    const aksjonspunkt = 'Vurder om vilkår for alene om omsorgen er oppfylt.';
+
+    const hentetAksjonspunkt = screen.getByText(aksjonspunkt);
+    expect(hentetAksjonspunkt).toBeInTheDocument();
+
+    const hentetPeriode = screen.getAllByText(props.fraDatoFraSoknad);
+    expect(hentetPeriode).toHaveLength(1);
+
+    const hentetBegrunnelseTekst = screen.getByText('Vurdering');
+    expect(hentetBegrunnelseTekst).toBeInTheDocument();
+
+    const hentetBegrunnelse = screen.getByText(props.informasjonTilLesemodus.begrunnelse);
+    expect(hentetBegrunnelse).toBeInTheDocument();
+
+    const hentetVilkarOppfylt = screen.getByText(props.informasjonTilLesemodus.vilkarOppfylt ? 'Ja' : 'Nei');
+    expect(hentetVilkarOppfylt).toBeInTheDocument();
+
+    const hentetVilkarOppfyltPeriodeTekst = screen.getByText('Fra hvilken dato er vedtaket gyldig?');
+    expect(hentetVilkarOppfyltPeriodeTekst).toBeInTheDocument();
+
+    const hentetVilkarOppfyltPeriode = screen.getByText(`${props.informasjonTilLesemodus.fraDato}`);
+    expect(hentetVilkarOppfyltPeriode).toBeInTheDocument();
+  });
+
+  test('AleneOmOmsorgen viser lesemodus - revurdering', () => {
+    const props = {
+      behandlingsID: '123',
+      aksjonspunktLost: false,
+      lesemodus: true,
+      fraDatoFraSoknad: '22.22.02',
+      vedtakFattetVilkarOppfylt: false,
+      informasjonOmVilkar: {
+        begrunnelse: 'begrunnelse',
+        navnPåAksjonspunkt: 'Utvidet rett',
+        vilkarOppfylt: true,
+        vilkar: '§ 9-3 vilkar'
+      },
+      informasjonTilLesemodus: {
+        begrunnelse: 'Begrunnelse',
+        vilkarOppfylt: true,
+        fraDato: '22.12.1994',
+        tilDato: '22.12.2020',
+      },
+      erBehandlingstypeRevurdering: true,
       losAksjonspunkt: () => {
         console.log('losAksjonspunkt alene om omsorgen');
       },
@@ -155,7 +241,6 @@ describe('<AleneOmOmsorgen>', () => {
       aksjonspunktLost: true,
       lesemodus: true,
       fraDatoFraSoknad: '22.22.02',
-      tomDato: '23.22.02',
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -168,8 +253,8 @@ describe('<AleneOmOmsorgen>', () => {
         vilkarOppfylt: true,
         fraDato: '22.12.1994',
         tilDato: '22.12.2020',
-        avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
+      erBehandlingstypeRevurdering: false,
       losAksjonspunkt: () => {
         console.log('losAksjonspunkt alene om omsorgen');
       },
@@ -190,7 +275,6 @@ describe('<AleneOmOmsorgen>', () => {
       aksjonspunktLost: false,
       lesemodus: false,
       fraDatoFraSoknad: '22.22.02',
-      tomDato: '23.22.02',
       vedtakFattetVilkarOppfylt: true,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -203,8 +287,8 @@ describe('<AleneOmOmsorgen>', () => {
         vilkarOppfylt: true,
         fraDato: '22.12.1994',
         tilDato: '22.12.2020',
-        avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
+      erBehandlingstypeRevurdering: false,
       losAksjonspunkt: () => {
         console.log('losAksjonspunkt alene om omsorgen');
       },
@@ -235,7 +319,6 @@ describe('<AleneOmOmsorgen>', () => {
       aksjonspunktLost: false,
       lesemodus: false,
       fraDatoFraSoknad: '22.22.02',
-      tomDato: '23.22.02',
       vedtakFattetVilkarOppfylt: true,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -248,8 +331,8 @@ describe('<AleneOmOmsorgen>', () => {
         vilkarOppfylt: false,
         fraDato: '22.12.1994',
         tilDato: '22.12.2020',
-        avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
+      erBehandlingstypeRevurdering: false,
       losAksjonspunkt: () => {
         console.log('losAksjonspunkt alene om omsorgen');
       },
@@ -275,7 +358,6 @@ describe('<AleneOmOmsorgen>', () => {
       aksjonspunktLost: false,
       lesemodus: false,
       fraDatoFraSoknad: '22.22.02',
-      tomDato: '23.22.02',
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -288,8 +370,8 @@ describe('<AleneOmOmsorgen>', () => {
         vilkarOppfylt: true,
         fraDato: '22.12.1994',
         tilDato: '22.12.2020',
-        avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
+      erBehandlingstypeRevurdering: false,
       losAksjonspunkt: () => {
         console.log('losAksjonspunkt alene om omsorgen');
       },

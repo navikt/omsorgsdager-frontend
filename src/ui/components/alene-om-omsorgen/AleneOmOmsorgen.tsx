@@ -24,7 +24,6 @@ type FormData = {
   fraDato: string;
   tilDato: string;
   erSokerenAleneOmOmsorgen: string;
-  avslagsArsakErPeriodeErIkkeOverSeksMån: string;
   åpenForRedigering: boolean;
 };
 
@@ -33,9 +32,9 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
   aksjonspunktLost,
   lesemodus,
   fraDatoFraSoknad,
-  tomDato,
   informasjonTilLesemodus,
   vedtakFattetVilkarOppfylt,
+  erBehandlingstypeRevurdering,
   informasjonOmVilkar,
   losAksjonspunkt,
   formState
@@ -48,9 +47,8 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
     defaultValues: {
       begrunnelse: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.begrunnelse : '',
       fraDato: harAksjonspunktOgVilkarLostTidligere ? formatereDato(informasjonTilLesemodus.fraDato) : formatereDato(fraDatoFraSoknad),
-      tilDato: harAksjonspunktOgVilkarLostTidligere ? formatereDato(informasjonTilLesemodus.tilDato) : formatereDato(tomDato),
+      tilDato: harAksjonspunktOgVilkarLostTidligere && erBehandlingstypeRevurdering ? formatereDato(informasjonTilLesemodus.tilDato) : 'dd.mm.åååå',
       erSokerenAleneOmOmsorgen: harAksjonspunktOgVilkarLostTidligere ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt) : '',
-      // avslagsArsakErPeriodeErIkkeOverSeksMån: aksjonspunktLost ? booleanTilTekst(informasjonTilLesemodus.avslagsArsakErPeriodeErIkkeOverSeksMån) : '',
       åpenForRedigering: false
     }
   });
@@ -58,14 +56,10 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
   const {formState: {errors}, getValues, handleSubmit, watch, setValue} = methods;
   const erSokerAleneOmOmsorgen = watch('erSokerenAleneOmOmsorgen');
   const åpenForRedigering = watch('åpenForRedigering');
-  const barnetsFodselsdato = new Date(tomDato);
-  const årBarnetFyller18 = `${barnetsFodselsdato.getFullYear() + 5}-12-31`;
   const {
     erDatoFyltUt,
     erDatoGyldig,
-    erDatoInnenBarnetEr18
-  // erAvslagsArsakErPeriodeErIkkeOverSeksMånGyldig
-  } = valideringsFunksjoner(getValues, 'erSokerenAleneOmOmsorgen', årBarnetFyller18);
+  } = valideringsFunksjoner(getValues, 'erSokerenAleneOmOmsorgen');
 
   const mellomlagringFormState = useFormSessionStorage(
     formStateKey,
@@ -82,15 +76,13 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
   erSokerenAleneOmOmsorgen,
   fraDato,
   tilDato,
-  avslagsArsakErPeriodeErIkkeOverSeksMån,
 }) => {
-    if (!errors.begrunnelse && !errors.fraDato && !errors.tilDato && !errors.erSokerenAleneOmOmsorgen) {
+    if (!errors.begrunnelse && !errors.fraDato && !errors.erSokerenAleneOmOmsorgen && !erBehandlingstypeRevurdering || !errors.begrunnelse && !errors.fraDato && !errors.tilDato && !errors.erSokerenAleneOmOmsorgen && erBehandlingstypeRevurdering) {
       losAksjonspunkt({
         begrunnelse,
         vilkarOppfylt: tekstTilBoolean(erSokerenAleneOmOmsorgen),
         fraDato: tekstTilBoolean(erSokerenAleneOmOmsorgen) ? fraDato.replaceAll('.', '-') : '',
         tilDato: tekstTilBoolean(erSokerenAleneOmOmsorgen) ? tilDato.replaceAll('.', '-') : ''
-        // avslagsArsakErPeriodeErIkkeOverSeksMån: tekstTilBoolean(avslagsArsakErPeriodeErIkkeOverSeksMån)
       });
       setValue('åpenForRedigering', false);
       mellomlagringFormState.fjerneState();
@@ -114,6 +106,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
         informasjonTilLesemodus={informasjonTilLesemodus}
         harAksjonspunktBlivitLostTidligare={aksjonspunktLost}
         åpneForRedigereInformasjon={() => setValue('åpenForRedigering', true)}
+        erBehandlingstypeRevurdering={erBehandlingstypeRevurdering}
       />}
 
       {(åpenForRedigering || !lesemodus && !vedtakFattetVilkarOppfylt) && <>
@@ -139,33 +132,13 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
               {errors.erSokerenAleneOmOmsorgen && <p className="typo-feilmelding">{tekst.feilIngenVurdering}</p>}
             </div>
 
-            {/* Utkommentert i väntan på funksjonellt beslutt om avslagsårsaker erSokerAleneOmOmsorgen !== null && erSokerAleneOmOmsorgen.length > 0 && !tekstTilBoolean(erSokerAleneOmOmsorgen) &&
-            <div>
-              <RadioGruppe
-                className={classNames(styleRadioknapper.horisontalPlassering, styles.avslagsArsakErPeriodeErIkkeOverSeksMån)}
-                legend={tekst.velgArsak}>
-                <RadioButtonWithBooleanValue label={tekst.arsakIkkeAleneOmsorg}
-                                             value={'false'}
-                                             name={'avslagsArsakErPeriodeErIkkeOverSeksMån'}
-                                             valideringsFunksjoner={erAvslagsArsakErPeriodeErIkkeOverSeksMånGyldig}/>
-                <RadioButtonWithBooleanValue label={tekst.arsakPeriodeIkkeOverSeksMån}
-                                             value={'true'}
-                                             name={'avslagsArsakErPeriodeErIkkeOverSeksMån'}
-                                             valideringsFunksjoner={erAvslagsArsakErPeriodeErIkkeOverSeksMånGyldig}/>
-              </RadioGruppe>
-              {errors.avslagsArsakErPeriodeErIkkeOverSeksMån &&
-              <p className="typo-feilmelding">{tekst.feilIngenÅrsak}</p>}
-            </div>*/
-            }
-
             {tekstTilBoolean(erSokerAleneOmOmsorgen) &&
             <SkjemaGruppe className={styles.gyldigVedtaksPeriode}
                           legend={tekst.sporsmalPeriodeVedtakGyldig}
                           feil={errors.fraDato && errors.fraDato.type === 'erDatoFyltUt' && tekst.feilmedlingManglerFraDato
                           || errors.fraDato && errors.fraDato.type === 'erDatoGyldig' && tekst.feilmedlingUgyldigDato
-                          || errors.tilDato && errors.tilDato.type === 'erDatoFyltUt' && tekst.feilmeldingManglerTilDato
-                          || errors.tilDato && errors.tilDato.type === 'erDatoInnenBarnetEr18' && tekst.feilmedlingDatoErEtterBarnetFylt18
-                          || errors.tilDato && errors.tilDato.type === 'erDatoGyldig' && tekst.feilmedlingUgyldigDato}
+                          || erBehandlingstypeRevurdering && errors.tilDato && errors.tilDato.type === 'erDatoFyltUt' && tekst.feilmeldingManglerTilDato
+                          || erBehandlingstypeRevurdering && errors.tilDato && errors.tilDato.type === 'erDatoGyldig' && tekst.feilmedlingUgyldigDato}
             >
 
               <DatePicker titel={'Fra'}
@@ -173,11 +146,11 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
                           valideringsFunksjoner={{erDatoFyltUt, erDatoGyldig}}
               />
 
-              <DatePicker titel={'Til'}
+
+              {erBehandlingstypeRevurdering && <DatePicker titel={'Til'}
                           navn={'tilDato'}
-                          valideringsFunksjoner={{erDatoFyltUt, erDatoGyldig, erDatoInnenBarnetEr18}}
-                          begrensningerIKalender={{maxDate: årBarnetFyller18}}
-              />
+                          valideringsFunksjoner={{erDatoFyltUt, erDatoGyldig}}
+              />}
 
             </SkjemaGruppe>
             }

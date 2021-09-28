@@ -1,6 +1,6 @@
 import {tekstTilBoolean} from './stringUtils';
 
-export function valideringsFunksjoner(getValues, prop: string, åretBarnetFyller18?: string) {
+export function valideringsFunksjoner(getValues, prop: string) {
   const erDatoFyltUt = dato => {
     if(!tekstTilBoolean(getValues()[prop])) return true;
     return dato.toLowerCase() !== 'dd.mm.åååå' && dato !== '';
@@ -27,14 +27,5 @@ export function valideringsFunksjoner(getValues, prop: string, åretBarnetFyller
     return val !== null && val.length > 0;
   };
 
-  const erDatoInnenBarnetEr18 = (dato: string) => {
-    if(!tekstTilBoolean(getValues()[prop])) return true;
-    const angittÅr = parseInt(dato.substr(0, 4));
-    const årBarnFyller18 = parseInt(åretBarnetFyller18.substr(0, 4));
-
-    if (årBarnFyller18 >= angittÅr) return true;
-    return false;
-  };
-
-  return {erDatoFyltUt, erDatoGyldig, erAvslagsArsakErPeriodeErIkkeOverSeksMånGyldig, erDatoSisteDagenIÅret, erDatoInnenBarnetEr18};
+  return {erDatoFyltUt, erDatoGyldig, erAvslagsArsakErPeriodeErIkkeOverSeksMånGyldig, erDatoSisteDagenIÅret};
 }
