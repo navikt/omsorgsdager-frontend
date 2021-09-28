@@ -133,7 +133,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
             </div>
 
             {tekstTilBoolean(erSokerAleneOmOmsorgen) &&
-            <SkjemaGruppe className={styles.gyldigVedtaksPeriode}
+            <SkjemaGruppe className={erBehandlingstypeRevurdering ? styles.gyldigVedtaksPeriode : styles.gyldigVedtaksPeriode_forstegangsbehandling_aleneOmOmsorgen}
                           legend={tekst.sporsmalPeriodeVedtakGyldig}
                           feil={errors.fraDato && errors.fraDato.type === 'erDatoFyltUt' && tekst.feilmedlingManglerFraDato
                           || errors.fraDato && errors.fraDato.type === 'erDatoGyldig' && tekst.feilmedlingUgyldigDato
