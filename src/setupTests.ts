@@ -5,6 +5,5 @@
 import '@testing-library/jest-dom';
 import { toHaveNoViolations } from 'jest-axe';
 import replaceAllInserter from 'string.prototype.replaceall';
-import 'jest-extended';
 replaceAllInserter.shim();
 expect.extend(toHaveNoViolations);
