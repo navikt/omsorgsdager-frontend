@@ -36,6 +36,12 @@ const tekstKonfliktMedArbeidsgiver = {
   begrunnelse: 'Vurder om søker har rett på omsorgspenger.',
 };
 
+const hentOmLostAksjonspunktHarBlivitLostHeltEllerDelvis = (vilkarOppfylt : boolean, dagerInnvilget: number) => {
+  if(vilkarOppfylt && !!dagerInnvilget && dagerInnvilget > 0){
+    return 'delvis';
+  }
+  return booleanTilTekst(vilkarOppfylt);
+};
 //TODO Når saerlig smittevern ikke skal brukes lengre må denne ha en bedre navngivning for att brukes som AP for konfliktMedArbeidsgiver
 
 const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
@@ -51,9 +57,9 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
   const methods = useForm<FormData>({
     defaultValues: {
       begrunnelse: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.begrunnelse : '',
-      fravaerGrunnetSmittevernhensynEllerStengt: harAksjonspunktOgVilkarLostTidligere ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt) : '',
+      fravaerGrunnetSmittevernhensynEllerStengt: harAksjonspunktOgVilkarLostTidligere ? hentOmLostAksjonspunktHarBlivitLostHeltEllerDelvis(informasjonTilLesemodus.vilkarOppfylt, informasjonTilLesemodus.antallDagerDelvisInnvilget) : '',
       åpenForRedigering: false,
-      antallDagerDelvisInnvilget: harAksjonspunktOgVilkarLostTidligere && typeof informasjonTilLesemodus.antallDagerDelvisInnvilget !== 'undefined'  ? informasjonTilLesemodus.antallDagerDelvisInnvilget : null,
+      antallDagerDelvisInnvilget: harAksjonspunktOgVilkarLostTidligere && typeof informasjonTilLesemodus.antallDagerDelvisInnvilget !== 'undefined' ? informasjonTilLesemodus.antallDagerDelvisInnvilget : null,
     }
   });
 
