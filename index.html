@@ -65,6 +65,7 @@
                   begrunnelse: 'Begrunnelse til lesemodus',
                   vilkarOppfylt: true,
                   avslagsArsakErIkkeRiskioFraFravaer: true,
+                  fraDato: '25-6-2019'
                 },
                 losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse, avslagsKode, fraDato) => console.log(endreHarDokumentasjonOgFravaerRisiko, begrunnelse, avslagsKode, fraDato),
                 vedtakFattetVilkarOppfylt: false,
@@ -173,7 +174,7 @@
 
 
           setTimeout(() => {
-            window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.aleneOmOmsorgen);
+            window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.vilkarKroniskSyktBarn);
           }, 300);
         </script>
     </body>
