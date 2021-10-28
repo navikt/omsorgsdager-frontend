@@ -20,7 +20,7 @@ jobs:
       - name: Sette opp Node
         uses: actions/setup-node@v2.4.1
         with:
-          node-version: 12.x
+          node-version: 16.x
       - name: Installere dependencies
         run: npm install
       - name: Kjøre enhetstester
