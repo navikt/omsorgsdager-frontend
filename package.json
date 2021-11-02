@@ -19,7 +19,7 @@
     "author": "NAV IT",
     "license": "MIT",
     "devDependencies": {
-        "@babel/cli": "^7.15.7",
+        "@babel/cli": "^7.16.0",
         "@babel/core": "^7.15.8",
         "@babel/node": "^7.15.8",
         "@babel/preset-env": "^7.15.8",
