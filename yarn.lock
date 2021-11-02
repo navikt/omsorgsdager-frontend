@@ -717,14 +717,14 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-"@babel/node@^7.15.8":
-  version "7.15.8"
-  resolved "https://registry.yarnpkg.com/@babel/node/-/node-7.15.8.tgz#5d6b815d0232ae4893727971f53deabfe06c4ca7"
-  integrity sha512-JbgTCrnx6IUECznEbQ7e2rbVYtrXKixSbEG2bxxbMkV648WdUf3tdc+ZUW2++dvnnAswcpwc76cRwf0xEQqsrw==
+"@babel/node@^7.16.0":
+  version "7.16.0"
+  resolved "https://registry.yarnpkg.com/@babel/node/-/node-7.16.0.tgz#855e783ba4cbca88dbdebf4b01c2d95844c4afdf"
+  integrity sha512-eFUU2RHkgMW0X1lHVVOWJYlaDTwCX2LduQQLfehAfID5VhAjNnBhGZ/r0zk3FSQfFn6enJ2aXyRCiZ829bYVeA==
   dependencies:
-    "@babel/register" "^7.15.3"
+    "@babel/register" "^7.16.0"
     commander "^4.0.1"
-    core-js "^3.16.0"
+    core-js "^3.19.0"
     node-environment-flags "^1.0.5"
     regenerator-runtime "^0.13.4"
     v8flags "^3.1.1"
@@ -1463,10 +1463,10 @@
     "@babel/helper-validator-option" "^7.14.5"
     "@babel/plugin-transform-typescript" "^7.15.0"
 
-"@babel/register@^7.15.3":
-  version "7.15.3"
-  resolved "https://registry.yarnpkg.com/@babel/register/-/register-7.15.3.tgz#6b40a549e06ec06c885b2ec42c3dd711f55fe752"
-  integrity sha512-mj4IY1ZJkorClxKTImccn4T81+UKTo4Ux0+OFSV9hME1ooqS9UV+pJ6BjD0qXPK4T3XW/KNa79XByjeEMZz+fw==
+"@babel/register@^7.16.0":
+  version "7.16.0"
+  resolved "https://registry.yarnpkg.com/@babel/register/-/register-7.16.0.tgz#f5d2aa14df37cf7146b9759f7c53818360f24ec6"
+  integrity sha512-lzl4yfs0zVXnooeLE0AAfYaT7F3SPA8yB2Bj4W1BiZwLbMS3MZH35ZvCWSRHvneUugwuM+Wsnrj7h0F7UmU3NQ==
   dependencies:
     clone-deep "^4.0.1"
     find-cache-dir "^2.0.0"
@@ -3369,10 +3369,10 @@ core-js-pure@^3.0.0:
   resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.12.1.tgz#934da8b9b7221e2a2443dc71dfa5bd77a7ea00b8"
   integrity sha512-1cch+qads4JnDSWsvc7d6nzlKAippwjUlf6vykkTLW53VSV+NkE6muGBToAjEA8pG90cSfcud3JgVmW2ds5TaQ==
 
-core-js@^3.16.0:
-  version "3.16.1"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.16.1.tgz#f4485ce5c9f3c6a7cb18fa80488e08d362097249"
-  integrity sha512-AAkP8i35EbefU+JddyWi12AWE9f2N/qr/pwnDtWz4nyUIBGMJPX99ANFFRSw6FefM374lDujdtLDyhN2A/btHw==
+core-js@^3.19.0:
+  version "3.19.0"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.19.0.tgz#9e40098a9bc326c7e81b486abbd5e12b9d275176"
+  integrity sha512-L1TpFRWXZ76vH1yLM+z6KssLZrP8Z6GxxW4auoCj+XiViOzNPJCAuTIkn03BGdFe6Z5clX5t64wRIRypsZQrUg==
 
 core-util-is@~1.0.0:
   version "1.0.2"
