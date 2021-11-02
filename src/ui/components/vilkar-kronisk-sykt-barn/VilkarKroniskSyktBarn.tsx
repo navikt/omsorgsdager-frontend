@@ -39,6 +39,7 @@ const tekst = {
   feilmedlingManglerDato: 'Mangler dato.',
   feilmedlingManglerFraDato: 'Mangler fra-dato.',
   feilmedlingUgyldigDato: 'Ugyldig dato.',
+  feilmedlingerDatoIkkeIFremtid: 'Fra-dato kan ikke være frem i tid.',
   soknadsdato: 'Søknadsdato'
 };
 
@@ -70,6 +71,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
   const {
     erDatoFyltUt,
     erDatoGyldig,
+    erDatoIkkeIFremtid
   } = valideringsFunksjoner(getValues, 'harDokumentasjonOgFravaerRisiko');
 
   const erArsakErIkkeRiskioFraFravaer = val => {
@@ -178,12 +180,13 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
             <SkjemaGruppe className={styles.fraDato}
                           legend={tekst.sporsmalPeriodeVedtakGyldig}
                           feil={errors.fraDato && errors.fraDato.type === 'erDatoFyltUt' && tekst.feilmedlingManglerFraDato
-                          || errors.fraDato && errors.fraDato.type === 'erDatoGyldig' && tekst.feilmedlingUgyldigDato}
+                          || errors.fraDato && errors.fraDato.type === 'erDatoGyldig' && tekst.feilmedlingUgyldigDato
+                          || errors.fraDato && errors.fraDato.type === 'erDatoIkkeIFremtid' && tekst.feilmedlingerDatoIkkeIFremtid}
             >
 
               <DatePicker titel={''}
                           navn={'fraDato'}
-                          valideringsFunksjoner={{erDatoFyltUt, erDatoGyldig}}
+                          valideringsFunksjoner={{erDatoFyltUt, erDatoGyldig, erDatoIkkeIFremtid}}
               />
 
             </SkjemaGruppe>
