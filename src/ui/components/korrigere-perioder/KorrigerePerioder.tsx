@@ -31,9 +31,9 @@ const tekst = {
 };
 
 const tekstKonfliktMedArbeidsgiver = {
-  instruksjon: 'Se på nødvendig dokumentasjon, og vurder om søker rett på omsorgspenger',
-  sporsmalErInnvilget: 'Har søker rett på omsorgspenger?',
-  begrunnelse: 'Vurder om søker har rett på omsorgspenger.',
+  instruksjon: 'Se på mottatt dokumentasjon, vurder om vi har nok til å vurdere om søker har rett til omsorgspenger fra NAV? Hvis ikke, be om nødvendig dokumentasjon. Ved uenighet, må vi ha skriftlig forklaring fra arbeidsgiver.',
+  sporsmalErInnvilget: 'Har søker rett på alle dagene det søkes om?',
+  begrunnelse: 'Vurder om søker har rett på omsorgspenger fra NAV',
 };
 
 const hentOmLostAksjonspunktHarBlivitLostHeltEllerDelvis = (vilkarOppfylt : boolean, dagerInnvilget: number) => {
