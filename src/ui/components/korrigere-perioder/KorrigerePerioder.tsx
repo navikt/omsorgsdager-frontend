@@ -121,7 +121,9 @@ const KorrigerePerioder: React.FunctionComponent<KorrigerePerioderProps> = ({
   }
 
   return <div className={styles.korrigerePerioder}>
-    <AlertStripeTrekantVarsel text={konfliktMedArbeidsgiver ? tekstKonfliktMedArbeidsgiver.instruksjon : tekst.instruksjon}/>
+    <div className={styles.korrigerePerioderAlertStripe}>
+      <AlertStripeTrekantVarsel text={konfliktMedArbeidsgiver ? tekstKonfliktMedArbeidsgiver.instruksjon : tekst.instruksjon}/>
+    </div>
 
     <FormProvider {...methods} >
       <form onSubmit={handleSubmit(bekreftAksjonspunkt)}>
