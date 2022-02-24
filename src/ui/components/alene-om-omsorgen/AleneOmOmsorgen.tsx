@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import {Hovedknapp} from 'nav-frontend-knapper';
 import {AleneOmOmsorgenProps} from '../../../types/AleneOmOmsorgenProps';
-import {booleanTilTekst, formatereDato, tekstTilBoolean} from '../../../util/stringUtils';
+import {booleanTilTekst, formatereDato, formatereDatoTilLesemodus, tekstTilBoolean} from '../../../util/stringUtils';
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
 import {valideringsFunksjoner} from '../../../util/validationReactHookFormUtils';
 import AleneOmOmsorgenLesemodus from '../alene-om-omsorgen-lesemodus/AleneOmOmsorgenLesemodus';
@@ -114,7 +114,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
 
         <OpplysningerFraSoknad
           periodeTekst={'Fra dato oppgitt'}
-          periode={formatereDato(fraDatoFraSoknad)}
+          periode={formatereDatoTilLesemodus(fraDatoFraSoknad)}
         />
 
         <FormProvider {...methods} >
