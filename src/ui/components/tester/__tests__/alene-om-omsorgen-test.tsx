@@ -132,7 +132,7 @@ describe('<AleneOmOmsorgen>', () => {
       behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: true,
-      fraDatoFraSoknad: '22.22.02',
+      fraDatoFraSoknad: '2002.07.22',
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -143,8 +143,8 @@ describe('<AleneOmOmsorgen>', () => {
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse',
         vilkarOppfylt: true,
-        fraDato: '22.12.1994',
-        tilDato: '22.12.2020',
+        fraDato: '1994-12-12',
+        tilDato: '2020-12-12',
       },
       erBehandlingstypeRevurdering: false,
       losAksjonspunkt: () => {
@@ -162,7 +162,7 @@ describe('<AleneOmOmsorgen>', () => {
     const hentetAksjonspunkt = screen.getByText(aksjonspunkt);
     expect(hentetAksjonspunkt).toBeInTheDocument();
 
-    const hentetPeriode = screen.getAllByText(props.fraDatoFraSoknad);
+    const hentetPeriode = screen.getAllByText('22.07.2002');
     expect(hentetPeriode).toHaveLength(1);
 
     const hentetBegrunnelseTekst = screen.getByText('Vurdering');
@@ -177,7 +177,7 @@ describe('<AleneOmOmsorgen>', () => {
     const hentetVilkarOppfyltPeriodeTekst = screen.getByText('Fra hvilken dato er vedtaket gyldig?');
     expect(hentetVilkarOppfyltPeriodeTekst).toBeInTheDocument();
 
-    const hentetVilkarOppfyltPeriode = screen.getByText(`${props.informasjonTilLesemodus.fraDato}`);
+    const hentetVilkarOppfyltPeriode = screen.getByText('12.12.1994');
     expect(hentetVilkarOppfyltPeriode).toBeInTheDocument();
   });
 
@@ -186,7 +186,7 @@ describe('<AleneOmOmsorgen>', () => {
       behandlingsID: '123',
       aksjonspunktLost: false,
       lesemodus: true,
-      fraDatoFraSoknad: '22.22.02',
+      fraDatoFraSoknad: '2000.02.02',
       vedtakFattetVilkarOppfylt: false,
       informasjonOmVilkar: {
         begrunnelse: 'begrunnelse',
@@ -197,8 +197,8 @@ describe('<AleneOmOmsorgen>', () => {
       informasjonTilLesemodus: {
         begrunnelse: 'Begrunnelse',
         vilkarOppfylt: true,
-        fraDato: '22.12.1994',
-        tilDato: '22.12.2020',
+        fraDato: '1993.02.02',
+        tilDato: '1994.02.02',
       },
       erBehandlingstypeRevurdering: true,
       losAksjonspunkt: () => {
@@ -216,7 +216,7 @@ describe('<AleneOmOmsorgen>', () => {
     const hentetAksjonspunkt = screen.getByText(aksjonspunkt);
     expect(hentetAksjonspunkt).toBeInTheDocument();
 
-    const hentetPeriode = screen.getAllByText(props.fraDatoFraSoknad);
+    const hentetPeriode = screen.getAllByText('02.02.2000');
     expect(hentetPeriode).toHaveLength(1);
 
     const hentetBegrunnelseTekst = screen.getByText('Vurdering');
@@ -231,7 +231,7 @@ describe('<AleneOmOmsorgen>', () => {
     const hentetVilkarOppfyltPeriodeTekst = screen.getByText('I hvilken periode er vedtaket gyldig?');
     expect(hentetVilkarOppfyltPeriodeTekst).toBeInTheDocument();
 
-    const hentetVilkarOppfyltPeriode = screen.getByText(`${props.informasjonTilLesemodus.fraDato} - ${props.informasjonTilLesemodus.tilDato}`);
+    const hentetVilkarOppfyltPeriode = screen.getByText('02.02.1993 - 02.02.1994');
     expect(hentetVilkarOppfyltPeriode).toBeInTheDocument();
   });
 
