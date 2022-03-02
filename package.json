@@ -29,7 +29,7 @@
         "@testing-library/react": "^12.1.3",
         "@types/jest": "^27.4.1",
         "@types/jest-axe": "^3.5.3",
-        "@types/testing-library__jest-dom": "^5.14.2",
+        "@types/testing-library__jest-dom": "^5.14.3",
         "@typescript-eslint/eslint-plugin": "^5.12.1",
         "@typescript-eslint/parser": "^5.12.1",
         "babel-loader": "^8.2.3",
