@@ -40,16 +40,5 @@ Komponenter som tas i bruk av behandlinger for [omsorgspenger](https://github.co
 Kör en av scripten over slik att det genereres nytt bygg i antingen prod eller dev mappen under build. Når innehold i dev endres i main deployes dette til Q. Når innehold i prod endres i main deployes dette til prod.
 
 # Utvikle lokalt med mikrofrontend i k9-sak-web
-Utfør endringene i omsorgsdager-frontend. Kjør kommando `yarn start`. Kjør k9-sak-web lokalt. Legg in URLen til omsorgsdager-frontend lokalt (http://localhost:8088) på linje 32 og 33 [her](https://github.com/navikt/k9-sak-web/blob/master/packages/behandling-utvidet-rett/src/panelDefinisjoner/prosessStegPaneler/utvidetRettPanel/utvidetRettMikrofrontend/UtvidetRettMikrofrontend.tsx#L32).
-
-Exempelvis:
-```
-  <MicroFrontend
-      id={utvidetRettVilkårAppID}
-      jsSrc={`http://localhost:8088/${path}/app.js`}
-      stylesheetSrc={`http://localhost:8088/${path}/styles.css`}
-      onReady={() => initializeUtvidetRettVilkar(utvidetRettVilkårAppID, { ...props, FormState })}
-    />
-```
-
+Utfør endringene i omsorgsdager-frontend. Kjør kommando `yarn buildToDev följt av yarn start`. Kjør k9-sak-web lokalt. 
 
