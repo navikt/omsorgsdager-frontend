@@ -108,7 +108,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
     const hentetSoknadsdatoTekst = screen.getByText('Søknadsdato');
     expect(hentetSoknadsdatoTekst).toBeInTheDocument();
 
-    const hentetSoknadsdato = screen.getAllByText('2021.04.06');
+    const hentetSoknadsdato = screen.getAllByText('06.04.2021');
     expect(hentetSoknadsdato).toHaveLength(2);
 
     const hentetInformasjonOmVilkarTekst = screen.getByText('Fra hvilken dato er vedtaket gyldig?');
