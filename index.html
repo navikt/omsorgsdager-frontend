@@ -58,17 +58,17 @@
               visKomponent: 'VilkarKroniskSyktBarn',
               props: {
                 behandlingsID: '123',
-                aksjonspunktLost: false,
-                lesemodus: false,
+                aksjonspunktLost: true,
+                lesemodus: true,
                 soknadsdato: '2021-04-06',
                 informasjonTilLesemodus: {
                   begrunnelse: 'Begrunnelse til lesemodus',
                   vilkarOppfylt: true,
                   avslagsArsakErIkkeRiskioFraFravaer: true,
-                  fraDato: '25-6-2019'
+                  fraDato: '2019-06-25'
                 },
                 losAksjonspunkt: (endreHarDokumentasjonOgFravaerRisiko, begrunnelse, avslagsKode, fraDato) => console.log(endreHarDokumentasjonOgFravaerRisiko, begrunnelse, avslagsKode, fraDato),
-                vedtakFattetVilkarOppfylt: false,
+                vedtakFattetVilkarOppfylt: true,
                 informasjonOmVilkar: {
                   begrunnelse: 'begrunnelse',
                   navnPåAksjonspunkt: 'Utvidet rett',
@@ -82,15 +82,15 @@
               visKomponent: 'VilkarMidlertidigAlene',
               props: {
                 behandlingsID: '123',
-                aksjonspunktLost: false,
-                lesemodus: false,
+                aksjonspunktLost: true,
+                lesemodus: true,
                 soknadsopplysninger: {
                   årsak: 'Årsak',
                   beskrivelse: 'Beskrivelse',
                   periode: 'DD.MM.ÅÅÅÅ - DD.MM.ÅÅÅÅ',
                   soknadsdato: '2021-04-06'
                 },
-                vedtakFattetVilkarOppfylt: false,
+                vedtakFattetVilkarOppfylt: true,
                 informasjonOmVilkar: {
                   begrunnelse: 'begrunnelse',
                   navnPåAksjonspunkt: 'Utvidet rett',
@@ -129,7 +129,7 @@
                 },
                 barn: ['01010050053', '34324'],
                 harBarnSoktForRammevedtakOmKroniskSyk: true,
-                vedtakFattetVilkarOppfylt: false,
+                vedtakFattetVilkarOppfylt: true,
                 informasjonOmVilkar: {
                   begrunnelse: 'begrunnelse',
                   navnPåAksjonspunkt: 'Utvidet rett',
@@ -145,9 +145,9 @@
               props: {
                 behandlingsID: '123',
                 aksjonspunktLost: false,
-                lesemodus: false,
+                lesemodus: true,
                 fraDatoFraSoknad: '2021-04-06',
-                vedtakFattetVilkarOppfylt: false,
+                vedtakFattetVilkarOppfylt: true,
                 informasjonOmVilkar: {
                   begrunnelse: 'begrunnelse',
                   navnPåAksjonspunkt: 'Utvidet rett',
@@ -174,7 +174,7 @@
 
 
           setTimeout(() => {
-            window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.vilkarKroniskSyktBarn);
+            window.renderMicrofrontendOmsorgsdagerApp('app', inputMocks.vilkarMidlertidigAlene);
           }, 300);
         </script>
     </body>
