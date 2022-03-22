@@ -3,7 +3,7 @@ import {Hovedknapp} from 'nav-frontend-knapper';
 import {RadioGruppe, SkjemaGruppe} from 'nav-frontend-skjema';
 import React from 'react';
 import {VilkarKroniskSyktBarnProps} from '../../../types/VilkarKroniskSyktBarnProps';
-import {booleanTilTekst, formatereDato, tekstTilBoolean} from '../../../util/stringUtils';
+import {booleanTilTekst, formatereDato, formatereDatoTilLesemodus, tekstTilBoolean} from '../../../util/stringUtils';
 import useFormSessionStorage from '../../../util/useFormSessionStorageUtils';
 import {valideringsFunksjoner} from '../../../util/validationReactHookFormUtils';
 import AksjonspunktLesemodus from '../aksjonspunkt-lesemodus/AksjonspunktLesemodus';
@@ -116,7 +116,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
 
       {informasjonTilLesemodus.vilkarOppfylt && <>
         <p className={styleLesemodus.label}>{tekst.soknadsdato}</p>
-        <p className={styleLesemodus.text}>{formatereDato(soknadsdato)}</p>
+        <p className={styleLesemodus.text}>{formatereDatoTilLesemodus(soknadsdato)}</p>
       </>
       }
 
@@ -132,7 +132,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
 
       {informasjonTilLesemodus.vilkarOppfylt && <>
         <p className={styleLesemodus.label}>{tekst.sporsmalPeriodeVedtakGyldig}</p>
-        <p className={styleLesemodus.text}>{formatereDato(informasjonTilLesemodus.fraDato)}</p></>
+        <p className={styleLesemodus.text}>{formatereDatoTilLesemodus(informasjonTilLesemodus.fraDato)}</p></>
       }
 
       <p className={styleLesemodus.label}>{tekst.begrunnelse}</p>
@@ -145,7 +145,7 @@ const VilkarKroniskSyktBarn: React.FunctionComponent<VilkarKroniskSyktBarnProps>
 
         {<>
           <p className={styleLesemodus.label}>{tekst.soknadsdato}</p>
-          <p className={styleLesemodus.text}>{formatereDato(soknadsdato)}</p>
+          <p className={styleLesemodus.text}>{formatereDatoTilLesemodus(soknadsdato)}</p>
         </>}
 
         <form className={styles.form} onSubmit={handleSubmit(bekreftAksjonspunkt)}>

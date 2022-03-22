@@ -133,8 +133,8 @@ describe('<VilkarMidlertidigAlene>', () => {
         begrunnelse: 'Begrunnelse',
         vilkarOppfylt: true,
         dato: {
-          fra: '22.03.1993',
-          til: '22.12.1994'
+          fra: '1993.03.22',
+          til: '1994.12.22'
         },
         avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
@@ -164,11 +164,11 @@ describe('<VilkarMidlertidigAlene>', () => {
     const hentetVilkarOppfylt = screen.getByText(props.informasjonTilLesemodus.vilkarOppfylt ? 'Ja' : 'Nei');
     expect(hentetVilkarOppfylt).toBeInTheDocument();
 
-    const hentetDato = screen.getByText(`${props.informasjonTilLesemodus.dato.fra} - ${props.informasjonTilLesemodus.dato.til}`);
+    const hentetDato = screen.getByText('22.03.1993 - 22.12.1994');
     expect(hentetDato).toBeInTheDocument();
   });
 
-  test('VilkarMidlertidigAlene viser lesemodus', () => {
+  test('VilkarMidlertidigAlene viser redigerbart lesemodus', () => {
     const props = {
       behandlingsID: '123',
       aksjonspunktLost: true,
@@ -190,8 +190,8 @@ describe('<VilkarMidlertidigAlene>', () => {
         begrunnelse: 'Begrunnelse',
         vilkarOppfylt: true,
         dato: {
-          fra: '22.03.1993',
-          til: '22.12.1994'
+          fra: '1993.03.22',
+          til: '1994.12.22'
         },
         avslagsArsakErPeriodeErIkkeOverSeksMån: false
       },
