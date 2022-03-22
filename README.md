@@ -1,7 +1,7 @@
 # omsorgsdager-frontend
 
 Dette er en mikrofrontend for omsorgspenger som blir tatt i bruk av [k9-sak-web](https://github.com/navikt/k9-sak-web).
-Mikrofrontenden består av fire ulike komponenter. 
+Mikrofrontenden består av fire ulike komponenter. Applikasjonen er en clone av [medisinsk vilkar](https://github.com/navikt/medisinsk-vilkar-frontend)
 
 Komponenter som tas i bruk av behandlinger for [utvidet rett](https://github.com/navikt/k9-sak-web/tree/master/packages/behandling-utvidet-rett).
 
