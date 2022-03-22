@@ -31,7 +31,7 @@
         "@types/jest-axe": "^3.5.3",
         "@types/testing-library__jest-dom": "^5.14.2",
         "@typescript-eslint/eslint-plugin": "^5.12.1",
-        "@typescript-eslint/parser": "^5.12.1",
+        "@typescript-eslint/parser": "^5.16.0",
         "babel-loader": "^8.2.3",
         "css-loader": "^6.6.0",
         "css-minimizer-webpack-plugin": "^3.4.1",
