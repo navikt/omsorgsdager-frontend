@@ -3,14 +3,14 @@ import {InformasjonOmVurdertVilkar} from './InformasjonOmVurdertVilkar';
 
 export interface AleneOmOmsorgenProps {
   behandlingsID: string;
-  lesemodus: boolean;
+  lesemodus?: boolean;
   aksjonspunktLost: boolean;
   fraDatoFraSoknad: string;
-  informasjonTilLesemodus: AleneOmOmsorgenAksjonspunktObjekt;
+  informasjonTilLesemodus?: AleneOmOmsorgenAksjonspunktObjekt;
   vedtakFattetVilkarOppfylt: boolean;
   erBehandlingstypeRevurdering: boolean;
   informasjonOmVilkar?: InformasjonOmVurdertVilkar;
-  losAksjonspunkt: (AleneOmOmsorgenAksjonspunktObjekt) => void;
+  losAksjonspunkt?: (AleneOmOmsorgenAksjonspunktObjekt) => void;
   formState: FormState;
 }
 
