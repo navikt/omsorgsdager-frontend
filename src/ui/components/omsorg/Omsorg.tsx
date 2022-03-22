@@ -63,7 +63,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
     begrunnelseLesemodus: 'Vurdering'
   };
 
-  const harAksjonspunktOgVilkarLostTidligere = informasjonTilLesemodus.begrunnelse.length > 0;
+  const harAksjonspunktOgVilkarLostTidligere = informasjonTilLesemodus?.begrunnelse.length > 0;
 
   const methods = useForm<FormData>({
     defaultValues: {
@@ -88,7 +88,7 @@ const Omsorg: React.FunctionComponent<OmsorgProps> = ({
   );
 
   const bekreftAksjonspunkt = data => {
-    if (!errors.begrunnelse && !errors.harOmsorgen) {
+    if (!errors.begrunnelse && !errors.harOmsorgen && losAksjonspunkt) {
       losAksjonspunkt(data.harOmsorgen, data.begrunnelse);
       setValue('åpenForRedigering', false);
 
