@@ -13,6 +13,7 @@ interface OwnProps {
   beskrivelseForOmsorgenFor?: string;
   vilkarOppfylt: boolean;
   vilkarReferanse: string;
+  periode?: string;
 }
 
 const VilkarStatus: React.FunctionComponent<OwnProps> = ({
@@ -21,7 +22,8 @@ const VilkarStatus: React.FunctionComponent<OwnProps> = ({
   erVilkaretForOmsorgenFor,
   beskrivelseForOmsorgenFor,
   vilkarOppfylt,
-  vilkarReferanse
+  vilkarReferanse,
+  periode
 }) => {
     return (<>
         <div className={styles.vilkarStatusOverskrift}>
@@ -43,11 +45,18 @@ const VilkarStatus: React.FunctionComponent<OwnProps> = ({
           <SjekkIkon/> <h4>{beskrivelseForOmsorgenFor}</h4>
         </div>}
 
+        {periode && <>
+          <p className={styles.begrunnelseOverskrift}>Periode</p>
+          <p className={classNames(styleLesemodus.fritekst)}>{periode}</p>
+        </>
+        }
+
         {begrunnelse && <>
           <p className={styles.begrunnelseOverskrift}>Vurdering</p>
           <p className={classNames(styleLesemodus.fritekst, styles.begrunnelse)}>{begrunnelse}</p>
         </>
         }
+
       </>
     );
   }
