@@ -98,6 +98,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
         vilkarReferanse={informasjonOmVilkar.vilkar}
         begrunnelse={informasjonOmVilkar.begrunnelse}
         erVilkaretForOmsorgenFor={false}
+        periode={informasjonOmVilkar.periode}
       />}
 
       {lesemodus && !åpenForRedigering && !vedtakFattetVilkarOppfylt &&
