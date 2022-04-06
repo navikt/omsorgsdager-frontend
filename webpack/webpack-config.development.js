@@ -5,7 +5,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackDevServer = require('webpack-dev-server');
 const commonWebpackConfig = require('./webpack.common.js');
 
-
 const webpackConfig = merge(commonWebpackConfig, {
     mode: 'development',
     devtool: 'inline-source-map',
