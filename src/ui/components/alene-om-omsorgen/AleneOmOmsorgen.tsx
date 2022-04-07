@@ -40,7 +40,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
   formState
 }) => {
   const formStateKey = `${behandlingsID}-utvidetrett-alene-om-omsorgen`;
-  const harAksjonspunktOgVilkarLostTidligere = informasjonTilLesemodus?.fraDato.length > 0 && informasjonTilLesemodus?.begrunnelse.length > 0;
+  const harAksjonspunktOgVilkarLostTidligere = informasjonTilLesemodus.fraDato.length > 0 && informasjonTilLesemodus.begrunnelse.length > 0;
 
   const methods = useForm<FormData>({
     reValidateMode: 'onSubmit',
