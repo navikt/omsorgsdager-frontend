@@ -43,7 +43,6 @@ const VilkarStatus: React.FunctionComponent<OwnProps> = ({
         </div>}
         <p className={styles.begrunnelseOverskrift}>Vurdering</p>
         <p className={classNames(styleLesemodus.fritekst, styles.begrunnelse)}>{begrunnelse}</p>
-
       </>
     );
   }
