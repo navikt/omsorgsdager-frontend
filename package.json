@@ -5,14 +5,13 @@
     "scripts": {
         "test": "jest",
         "start": "node ./server.js",
-        "build": "webpack --config webpack/webpack-config.production_ny_versjon.js",
-        "buildToDev": "webpack --env buildToEnv=dev --config webpack/webpack-config.production.js",
+        "build": "webpack --config webpack-config.production_ny_versjon.js",
         "buildToProd": "webpack --env buildToEnv=prod --config webpack/webpack-config.production.js",
         "dev": "node webpack/webpack-config.development.js",
         "version": "node ./version.js",
         "lint": "eslint src/**/*.{ts,tsx,js,jsx}",
         "lint:css": "stylelint src/**/*.{less,css}",
-        "checkPackageUpgrade": "yarn test && yarn lint && yarn lint:css && yarn buildToDev"
+        "checkPackageUpgrade": "yarn test && yarn lint && yarn lint:css && yarn build"
     },
     "keywords": [],
     "author": "NAV IT",
