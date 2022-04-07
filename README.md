@@ -1,6 +1,6 @@
 # omsorgsdager-frontend
 
-Dette er en mikrofrontend for omsorgspenger som blir tatt i bruk av [k9-sak-web](https://github.com/navikt/k9-sak-web).
+Dette er en mikrofrontend for omsorgsdager (rammevedtak) som blir tatt i bruk av [k9-sak-web](https://github.com/navikt/k9-sak-web).
 Mikrofrontenden består av fire ulike komponenter. Applikasjonen er en klone av [medisinsk vilkar](https://github.com/navikt/medisinsk-vilkar-frontend).
 
 Komponenter som tas i bruk av behandlinger for [utvidet rett](https://github.com/navikt/k9-sak-web/tree/master/packages/behandling-utvidet-rett).
@@ -15,7 +15,7 @@ Komponenter som tas i bruk av behandlinger for [omsorgspenger](https://github.co
 
 [Saerlig smittevernshensyn](https://github.com/navikt/k9-sak-web/tree/master/packages/prosess-aarskvantum-oms/src/components/saerlige-smittevernhensyn)
 
-## Kommando
+## Komme i gang
 ### Kjør utviklingsmiljø
 
 `yarn dev`
@@ -28,17 +28,16 @@ Komponenter som tas i bruk av behandlinger for [omsorgspenger](https://github.co
 
 `yarn start`
 
-### Generer bygg under dev mappa
+### Utvikle lokalt med mikrofrontend i k9-sak-web
+Utfør endringene i omsorgsdager-frontend. Kjør kommando `yarn build följt av yarn start`. Kjør k9-sak-web lokalt. 
 
-`yarn buildToDev`
+---
 
-### Generer bygg under prod mappa
+# Henvendelser
 
-`yarn buildToProd`
+Spørsmål knyttet til koden eller prosjektet kan stilles som issues her på GitHub
 
-# Deploy ny versjon
-Kör en av scripten over slik att det genereres nytt bygg i antingen prod eller dev mappen under build. Når innehold i dev endres i main deployes dette til Q. Når innehold i prod endres i main deployes dette til prod.
+## For NAV-ansatte
 
-# Utvikle lokalt med mikrofrontend i k9-sak-web
-Utfør endringene i omsorgsdager-frontend. Kjør kommando `yarn buildToDev följt av yarn start`. Kjør k9-sak-web lokalt. 
+Interne henvendelser kan sendes via Slack i kanalen #k9sak-frontend-tech.
 
