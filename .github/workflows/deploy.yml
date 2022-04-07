@@ -39,7 +39,7 @@ jobs:
       - name: Bygg og laste opp docker-image
         run: |
           docker build --pull --tag ${IMAGE} --tag ${LATEST} .
-          echo "$GITHUB_TOKEN" | docker login --username "x-access-token" --password-stdin https://docker.pkg.github.com
+          echo ${GITHUB_TOKEN} | docker login --username ${GITHUB_REPOSITORY} --password-stdin ghcr.io
           docker push ${IMAGE_BASE} -a
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
