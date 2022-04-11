@@ -1,10 +1,10 @@
 import classNames from 'classnames';
-import Feilikon from '../../icons/Feilikon';
 import React from 'react';
-import styles from './vilkarStatus.less';
+import Feilikon from '../../icons/Feilikon';
+import SjekkIkon from '../../icons/SjekkIkon';
 import Suksessikon from '../../icons/Suksessikon';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
-import SjekkIkon from '../../icons/SjekkIkon';
+import styles from './vilkarStatus.less';
 
 interface OwnProps {
   aksjonspunktNavn: string;
@@ -13,6 +13,7 @@ interface OwnProps {
   beskrivelseForOmsorgenFor?: string;
   vilkarOppfylt: boolean;
   vilkarReferanse: string;
+  periode?: string;
 }
 
 const VilkarStatus: React.FunctionComponent<OwnProps> = ({
@@ -21,7 +22,8 @@ const VilkarStatus: React.FunctionComponent<OwnProps> = ({
   erVilkaretForOmsorgenFor,
   beskrivelseForOmsorgenFor,
   vilkarOppfylt,
-  vilkarReferanse
+  vilkarReferanse,
+  periode
 }) => {
     return (<>
         <div className={styles.vilkarStatusOverskrift}>
@@ -38,9 +40,16 @@ const VilkarStatus: React.FunctionComponent<OwnProps> = ({
             : 'Vilkåret er ikke oppfylt'
           }
         </p>
+
         {erVilkaretForOmsorgenFor && vilkarOppfylt && <div className={styles.beskrivelseForOmsorgenForOppfyltVilkar}>
           <SjekkIkon/> <h4>{beskrivelseForOmsorgenFor}</h4>
         </div>}
+        
+        {periode && <>
+          <p className={styles.begrunnelseOverskrift}>Periode</p>
+          <p className={classNames(styleLesemodus.fritekst)}>{periode}</p>
+        </>
+        }
 
         {begrunnelse && <>
           <p className={styles.begrunnelseOverskrift}>Vurdering</p>

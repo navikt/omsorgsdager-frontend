@@ -40,7 +40,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
   formState
 }) => {
   const formStateKey = `${behandlingsID}-utvidetrett-alene-om-omsorgen`;
-  const harAksjonspunktOgVilkarLostTidligere = informasjonTilLesemodus.fraDato.length > 0 && informasjonTilLesemodus.begrunnelse.length > 0;
+  const harAksjonspunktOgVilkarLostTidligere = informasjonTilLesemodus?.fraDato.length > 0 && informasjonTilLesemodus?.begrunnelse.length > 0;
 
   const methods = useForm<FormData>({
     reValidateMode: 'onSubmit',
@@ -98,6 +98,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
         vilkarReferanse={informasjonOmVilkar.vilkar}
         begrunnelse={informasjonOmVilkar.begrunnelse}
         erVilkaretForOmsorgenFor={false}
+        periode={informasjonOmVilkar.periode}
       />}
 
       {lesemodus && !åpenForRedigering && !vedtakFattetVilkarOppfylt &&
