@@ -60,7 +60,7 @@
     },
     "dependencies": {
         "@navikt/fnrvalidator": "^1.2.0",
-        "@types/react": "^17.0.43",
+        "@types/react": "^18.0.2",
         "@types/react-dom": "^17.0.14",
         "classnames": "^2.2.6",
         "cors": "^2.8.5",
