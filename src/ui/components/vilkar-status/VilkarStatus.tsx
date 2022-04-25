@@ -1,10 +1,10 @@
 import classNames from 'classnames';
-import React from 'react';
 import Feilikon from '../../icons/Feilikon';
-import SjekkIkon from '../../icons/SjekkIkon';
+import React from 'react';
+import styles from './vilkarStatus.less';
 import Suksessikon from '../../icons/Suksessikon';
 import styleLesemodus from '../lesemodus/lesemodusboks.less';
-import styles from './vilkarStatus.less';
+import SjekkIkon from '../../icons/SjekkIkon';
 
 interface OwnProps {
   aksjonspunktNavn: string;
@@ -38,7 +38,6 @@ const VilkarStatus: React.FunctionComponent<OwnProps> = ({
             : 'Vilkåret er ikke oppfylt'
           }
         </p>
-
         {erVilkaretForOmsorgenFor && vilkarOppfylt && <div className={styles.beskrivelseForOmsorgenForOppfyltVilkar}>
           <SjekkIkon/> <h4>{beskrivelseForOmsorgenFor}</h4>
         </div>}

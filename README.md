@@ -38,6 +38,5 @@ Utfør endringene i omsorgsdager-frontend. Kjør kommando `yarn build följt av 
 Spørsmål knyttet til koden eller prosjektet kan stilles som issues her på GitHub
 
 ## For NAV-ansatte
-
 Interne henvendelser kan sendes via Slack i kanalen #k9sak-frontend-tech.
 
