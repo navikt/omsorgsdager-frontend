@@ -28,14 +28,6 @@ Komponenter som tas i bruk av behandlinger for [omsorgspenger](https://github.co
 
 `yarn start`
 
-### Generer bygg under dev mappa
-
-`yarn buildToDev`
-
-### Generer bygg under prod mappa
-
-`yarn buildToProd`
-
 # Deploy ny versjon
 Kör en av scripten over slik att det genereres nytt bygg i antingen prod eller dev mappen under build. Når innehold i dev endres i main deployes dette til Q. Når innehold i prod endres i main deployes dette til prod.
 
