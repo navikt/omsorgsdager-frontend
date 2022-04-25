@@ -2,6 +2,7 @@
 .DS_Store
 .idea
 dist
+build
 *.iml
 lsp
 node_modules
