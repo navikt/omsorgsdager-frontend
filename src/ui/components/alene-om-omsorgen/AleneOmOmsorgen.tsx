@@ -46,8 +46,8 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
     reValidateMode: 'onSubmit',
     defaultValues: {
       begrunnelse: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.begrunnelse : '',
-      fraDato: harAksjonspunktOgVilkarLostTidligere ? formatereDato(informasjonTilLesemodus.fraDato) : formatereDato(fraDatoFraSoknad),
-      tilDato: harAksjonspunktOgVilkarLostTidligere && erBehandlingstypeRevurdering ? formatereDato(informasjonTilLesemodus.tilDato) : 'dd.mm.åååå',
+      fraDato: harAksjonspunktOgVilkarLostTidligere ? formatereDato(informasjonTilLesemodus.fraDato) : 'dd.mm.åååå',
+      tilDato: harAksjonspunktOgVilkarLostTidligere ? formatereDato(informasjonTilLesemodus.tilDato) : 'dd.mm.åååå',
       erSokerenAleneOmOmsorgen: harAksjonspunktOgVilkarLostTidligere ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt) : '',
       åpenForRedigering: false
     }

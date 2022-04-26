@@ -44,7 +44,7 @@ const VilkarStatus: React.FunctionComponent<OwnProps> = ({
         {erVilkaretForOmsorgenFor && vilkarOppfylt && <div className={styles.beskrivelseForOmsorgenForOppfyltVilkar}>
           <SjekkIkon/> <h4>{beskrivelseForOmsorgenFor}</h4>
         </div>}
-        
+
         {periode && <>
           <p className={styles.begrunnelseOverskrift}>Periode</p>
           <p className={classNames(styleLesemodus.fritekst)}>{periode}</p>
