@@ -1,4 +1,4 @@
-import {render, screen} from '@testing-library/react';
+  import {render, screen} from '@testing-library/react';
 import {axe} from 'jest-axe';
 import React from 'react';
 import {AleneOmOmsorgenProps} from '../../../../types/AleneOmOmsorgenProps';
