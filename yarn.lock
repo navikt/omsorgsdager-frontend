@@ -4332,10 +4332,10 @@ eslint-plugin-import@^2.26.0:
     resolve "^1.22.0"
     tsconfig-paths "^3.14.1"
 
-eslint-plugin-react-hooks@^4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-4.4.0.tgz#71c39e528764c848d8253e1aa2c7024ed505f6c4"
-  integrity sha512-U3RVIfdzJaeKDQKEJbz5p3NW8/L80PCATJAfuojwbaEL+gBjfGdhUcGde+WGUW46Q5sr/NgxevsIiDtNXrvZaQ==
+eslint-plugin-react-hooks@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-4.5.0.tgz#5f762dfedf8b2cf431c689f533c9d3fa5dcf25ad"
+  integrity sha512-8k1gRt7D7h03kd+SAAlzXkQwWK22BnK6GKZG+FJA6BAGy22CFvl8kCIXKpVux0cCxMWDQUPqSok0LKaZ0aOcCw==
 
 eslint-plugin-react@^7.29.4:
   version "7.29.4"
@@ -6678,10 +6678,10 @@ natural-compare@^1.4.0:
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=
 
-nav-datovelger@^12.2.0:
-  version "12.2.0"
-  resolved "https://registry.yarnpkg.com/nav-datovelger/-/nav-datovelger-12.2.0.tgz#bdc02b0434df6124a9aaf95db3538c9d62c7c095"
-  integrity sha512-CPWa8wf8Hz2QuexnjD+xCRq1Um2mDLQcHzZSemdr5yhzVQCcZpCr0C5ME6BvW0X6biU48cS2c/9FqHiVQv5/0g==
+nav-datovelger@^12.3.0:
+  version "12.3.0"
+  resolved "https://registry.yarnpkg.com/nav-datovelger/-/nav-datovelger-12.3.0.tgz#385c256d9a12354988592aa83dd1628a8ad48db0"
+  integrity sha512-d4jqSimUixUaRib6E+QktstCqjSedT4Kqc0Gie6NMiMGeA2MY6jPUGZ8lPfZhb6gX4ggKOhsX4s37rRwU67ZLQ==
   dependencies:
     focus-trap-react "^8.6.0"
 
