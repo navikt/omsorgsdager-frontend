@@ -40,14 +40,14 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
   formState
 }) => {
   const formStateKey = `${behandlingsID}-utvidetrett-alene-om-omsorgen`;
-  const harAksjonspunktOgVilkarLostTidligere = informasjonTilLesemodus.fraDato.length > 0 && informasjonTilLesemodus.begrunnelse.length > 0;
+  const harAksjonspunktOgVilkarLostTidligere = informasjonTilLesemodus?.fraDato.length > 0 && informasjonTilLesemodus?.begrunnelse.length > 0;
 
   const methods = useForm<FormData>({
     reValidateMode: 'onSubmit',
     defaultValues: {
       begrunnelse: harAksjonspunktOgVilkarLostTidligere ? informasjonTilLesemodus.begrunnelse : '',
-      fraDato: harAksjonspunktOgVilkarLostTidligere ? formatereDato(informasjonTilLesemodus.fraDato) : formatereDato(fraDatoFraSoknad),
-      tilDato: harAksjonspunktOgVilkarLostTidligere && erBehandlingstypeRevurdering ? formatereDato(informasjonTilLesemodus.tilDato) : 'dd.mm.åååå',
+      fraDato: harAksjonspunktOgVilkarLostTidligere ? formatereDato(informasjonTilLesemodus.fraDato) : 'dd.mm.åååå',
+      tilDato: harAksjonspunktOgVilkarLostTidligere ? formatereDato(informasjonTilLesemodus.tilDato) : 'dd.mm.åååå',
       erSokerenAleneOmOmsorgen: harAksjonspunktOgVilkarLostTidligere ? booleanTilTekst(informasjonTilLesemodus.vilkarOppfylt) : '',
       åpenForRedigering: false
     }
@@ -98,6 +98,7 @@ const AleneOmOmsorgen: React.FunctionComponent<AleneOmOmsorgenProps> = ({
         vilkarReferanse={informasjonOmVilkar.vilkar}
         begrunnelse={informasjonOmVilkar.begrunnelse}
         erVilkaretForOmsorgenFor={false}
+        periode={informasjonOmVilkar.periode}
       />}
 
       {lesemodus && !åpenForRedigering && !vedtakFattetVilkarOppfylt &&
