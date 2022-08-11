@@ -46,7 +46,7 @@
         "less-loader": "^10.2.0",
         "mini-css-extract-plugin": "^2.6.0",
         "string.prototype.replaceall": "^1.0.6",
-        "stylelint": "^14.8.0",
+        "stylelint": "^14.10.0",
         "stylelint-config-prettier": "^9.0.3",
         "stylelint-order": "^5.0.0",
         "terser-webpack-plugin": "^5.3.1",
