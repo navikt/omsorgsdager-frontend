@@ -1,14 +1,10 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import { render } from 'react-dom';
 import MainComponent from '../ui/MainComponent';
 import ContainerContract from '../types/ContainerContract';
 
-const renderAppInSuccessfulState = (appId: string, data: ContainerContract) => {
-        const container = document.getElementById(appId);
-        const root = createRoot(container);
-        root.render(<MainComponent containerData={data} />);
-    };
-
+const renderAppInSuccessfulState = (appId: string, data: ContainerContract) =>
+    render(<MainComponent containerData={data} />, document.getElementById(appId));
 
 export default {
     renderAppInSuccessfulState,
