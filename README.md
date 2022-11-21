@@ -1,5 +1,11 @@
 # omsorgsdager-frontend
 
+## Deploy
+Push til master deployer til prod, deploye til dev via workflow dispatch.
+Legg til "ci skip" i commit-melding for att unngå deploy til prod.
+
+## Beskrivelse
+
 Dette er en mikrofrontend for omsorgsdager (rammevedtak) som blir tatt i bruk av [k9-sak-web](https://github.com/navikt/k9-sak-web).
 Mikrofrontenden består av fire ulike komponenter. Applikasjonen er en klone av [medisinsk vilkar](https://github.com/navikt/medisinsk-vilkar-frontend).
 
