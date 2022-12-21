@@ -31,9 +31,9 @@ describe('<VilkarKroniskSyktBarn>', () => {
 
     render(<VilkarKroniskSyktBarn {...props}/>);
 
-    const aksjonspunkt = 'Se på vedlagt legeerklæring og vurder om barnet har en kronisk sykdom eller en funksjonshemming, og om det er økt risiko for fravær.';
+    const aksjonspunkt = 'Se på vedlagt legeerklæring og vurder om barnet har en kronisk eller langvarig sykdom, eller en funksjonshemming. Vurder også om det er en markert økt risiko for fravær. Langvarig syk gjelder fra 1.1.2023.';
     const begrunnelseText = 'Vurdering';
-    const vilkarOppfyltText = 'Er det dokumentert at barnet har en kronisk sykdom eller funksjonshemming som gir rett?';
+    const vilkarOppfyltText = 'Er det dokumentert at barnet har en kronisk eller langvarig sykdom, eller en funksjonshemming, som gir markert økt risiko for fravær?';
 
     const hentetAksjonspunkt = screen.getByText(aksjonspunkt);
     expect(hentetAksjonspunkt).toBeInTheDocument();
@@ -100,7 +100,7 @@ describe('<VilkarKroniskSyktBarn>', () => {
 
     render(<VilkarKroniskSyktBarn {...props}/>);
 
-    const aksjonspunkt = 'Se på vedlagt legeerklæring og vurder om barnet har en kronisk sykdom eller en funksjonshemming, og om det er økt risiko for fravær.';
+    const aksjonspunkt = 'Se på vedlagt legeerklæring og vurder om barnet har en kronisk eller langvarig sykdom, eller en funksjonshemming. Vurder også om det er en markert økt risiko for fravær. Langvarig syk gjelder fra 1.1.2023.';
 
     const hentetAksjonspunkt = screen.getByText(aksjonspunkt);
     expect(hentetAksjonspunkt).toBeInTheDocument();
