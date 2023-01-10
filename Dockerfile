@@ -1,4 +1,4 @@
-FROM node:16-alpine
+FROM node:19-alpine
 LABEL org.opencontainers.image.source=https://github.com/navikt/omsorgsdager-frontend
 
 WORKDIR /omsorgsdager-frontend-app
