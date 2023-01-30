@@ -1,12 +1,10 @@
-FROM node:16-alpine
-LABEL org.opencontainers.image.source=https://github.com/navikt/omsorgsdager-frontend
+FROM nginxinc/nginx-unprivileged:1.23.3-alpine
 
-WORKDIR /omsorgsdager-frontend-app
+ADD server.nginx /etc/nginx/conf.d/app.conf.template
+COPY build /usr/share/nginx/html
+ADD start-server.sh ./start-server.sh
 
-COPY build ./build
-COPY server.js .
-COPY node_modules ./node_modules
-COPY package.json .
+EXPOSE 8088
 
-EXPOSE 8088:8088
-CMD ["node", "server.js"]
+# using bash over sh for betterssignal-handling
+CMD sh /start-server.sh          
