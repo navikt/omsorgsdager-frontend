@@ -29,7 +29,7 @@
         "@types/testing-library__jest-dom": "^5.14.5",
         "@typescript-eslint/eslint-plugin": "^5.40.1",
         "@typescript-eslint/parser": "^5.40.1",
-        "babel-loader": "^8.2.5",
+        "babel-loader": "^9.1.2",
         "css-loader": "^6.7.1",
         "css-minimizer-webpack-plugin": "^4.2.2",
         "eslint": "^8.25.0",
