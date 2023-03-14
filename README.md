@@ -1,4 +1,7 @@
-# omsorgsdager-frontend
+# Flyttet til https://github.com/navikt/k9-saksbehandling-frontend
+
+
+## omsorgsdager-frontend
 
 ## Deploy
 Push til master deployer til prod, deploye til dev via workflow dispatch.
